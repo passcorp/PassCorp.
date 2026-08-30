@@ -1494,9 +1494,12 @@ const app = {
 
   loadCatalog() {
     let siteProducts = [];
-    let contentObj = (typeof CONTENT !== 'undefined' && CONTENT && CONTENT.products) ? CONTENT : ((typeof DEFAULT_CONTENT !== 'undefined' && DEFAULT_CONTENT.products) ? DEFAULT_CONTENT : null);
-    if (!contentObj && typeof loadContent === 'function') {
+    let contentObj = null;
+    if (typeof loadContent === 'function') {
       try { contentObj = loadContent(); } catch(e){}
+    }
+    if (!contentObj && typeof DEFAULT_CONTENT !== 'undefined') {
+      contentObj = DEFAULT_CONTENT;
     }
 
     if (contentObj && Array.isArray(contentObj.products)) {
@@ -1517,7 +1520,7 @@ const app = {
 
         return {
           id: p.id,
-          name: p.name + (p.brand ? ` (${p.brand})` : ''),
+          name: p.name + (p.brand && !p.name.toLowerCase().includes(p.brand.toLowerCase()) ? ` (${p.brand})` : ''),
           specs: specsText,
           brand: p.brand || 'PASS',
           brandLogo: BRAND_LOGOS_MAP[(p.brand || '').toLowerCase()] || '',
@@ -1531,21 +1534,7 @@ const app = {
       });
     }
 
-    try {
-      const saved = localStorage.getItem('PASS_MASTER_CATALOG_V3');
-      if (saved) {
-        this.catalog = JSON.parse(saved);
-        const existingIds = new Set(this.catalog.map(x => x.id));
-        siteProducts.forEach(sp => {
-          if (!existingIds.has(sp.id)) this.catalog.push(sp);
-        });
-      } else {
-        this.catalog = siteProducts.length > 0 ? [...siteProducts] : [...DEFAULT_CATALOG];
-        this.saveCatalog();
-      }
-    } catch(e) {
-      this.catalog = siteProducts.length > 0 ? [...siteProducts] : [...DEFAULT_CATALOG];
-    }
+    this.catalog = siteProducts.length > 0 ? [...siteProducts] : [...DEFAULT_CATALOG];
     this.renderCatalog(this.catalog);
   },
 
