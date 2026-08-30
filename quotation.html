@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>PASS CORP. | Enterprise Automatic Quotation Generator</title>
+<title>PASS CORP. | Enterprise Quotation Portal</title>
 
 <!-- Favicon -->
 <link rel="icon" type="image/png" href="https://passcorp.in/assets/favicon-96x96.png" />
 
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
 <style>
@@ -52,6 +52,128 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+}
+
+/* ============================================================
+   PASSWORD SECURITY LOGIN SCREEN
+   ============================================================ */
+.auth-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, #0e2a5a 0%, #061530 100%);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.auth-overlay.hidden {
+  display: none !important;
+}
+
+.auth-card {
+  background: #1e293b;
+  border: 1.5px solid #3b82f6;
+  border-radius: 12px;
+  width: 420px;
+  max-width: 100%;
+  padding: 30px 24px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(37, 99, 235, 0.2);
+  text-align: center;
+}
+
+.auth-logo {
+  width: 160px;
+  height: auto;
+  margin-bottom: 12px;
+  background: #ffffff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+.auth-title {
+  font-size: 19px;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.auth-subtitle {
+  font-size: 12px;
+  color: #93c5fd;
+  margin-bottom: 20px;
+}
+
+.auth-input-group {
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.auth-input-group label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #94a3b8;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.auth-input {
+  width: 100%;
+  background: #0f172a;
+  border: 1.5px solid #475569;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: #ffffff;
+  outline: none;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.auth-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+.auth-error {
+  display: none;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid #ef4444;
+  color: #fca5a5;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 10px;
+  border-radius: 6px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.auth-btn {
+  width: 100%;
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 11px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.auth-btn:hover {
+  background: #1d4ed8;
 }
 
 /* App Header */
@@ -1023,6 +1145,7 @@ body {
     overflow: visible !important;
   }
 
+  .auth-overlay,
   .app-header,
   .sidebar-editor,
   .preview-toolbar,
@@ -1055,6 +1178,30 @@ body {
 </head>
 <body>
 
+<!-- PASSWORD AUTHENTICATION SCREEN -->
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-card">
+    <img src="https://passcorp.in/assets/logo.png" alt="PASS CORP." class="auth-logo" onerror="this.src='https://passcorp.in/assets/pass_logo.png'" />
+    <div class="auth-title">PASS CORP. Security Lock</div>
+    <div class="auth-subtitle">Authorized Access Only — Enter Security Password</div>
+    
+    <div class="auth-error" id="authErrorMsg">
+      ❌ Invalid Password. Access Denied.
+    </div>
+
+    <form onsubmit="event.preventDefault(); app.verifyPassword();">
+      <div class="auth-input-group">
+        <label>Enter Passcode</label>
+        <input type="password" id="authPassInput" class="auth-input" placeholder="••••••••••••" autofocus autocomplete="current-password" />
+      </div>
+      <button type="submit" class="auth-btn">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+        Unlock Quotation Portal
+      </button>
+    </form>
+  </div>
+</div>
+
 <!-- Application Top Navbar -->
 <header class="app-header">
   <div class="brand-badge">
@@ -1081,6 +1228,10 @@ body {
     <button class="btn btn-primary" onclick="window.print()">
       <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4H7v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
       Print / PDF
+    </button>
+    <button class="btn btn-outline btn-sm" onclick="app.lockApp()" title="Lock / Sign Out" style="color: #fca5a5;">
+      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+      Lock
     </button>
   </div>
 </header>
@@ -1268,8 +1419,8 @@ body {
   <main class="preview-viewport">
     
     <div class="preview-toolbar no-print">
-      <div class="preview-title">👁️ Live Enterprise A4 Preview (Customer Auto-Directory Active)</div>
-      <div style="font-size: 12px; color: #34d399; font-weight: 600;">✓ Ready for Print / PDF Export</div>
+      <div class="preview-title">👁️ Live Enterprise A4 Preview (Password Protected)</div>
+      <div style="font-size: 12px; color: #34d399; font-weight: 600;">🔒 Secure Session Active</div>
     </div>
 
     <!-- THE A4 SHEET -->
@@ -1592,6 +1743,11 @@ body {
 <!-- APPLICATION JAVASCRIPT LOGIC -->
 <script>
 /* ============================================================
+   PASS CORP. SECRET PASSCODE CONFIGURATION
+   ============================================================ */
+const SECRET_PASSCODE = "Pawanjali@241997";
+
+/* ============================================================
    DEFAULT PASS CORP. MASTER CATALOG DATABASE
    ============================================================ */
 const DEFAULT_CATALOG = [
@@ -1893,10 +2049,53 @@ const app = {
   },
 
   init() {
+    this.checkAuth();
     this.loadCatalog();
     this.loadBuyers();
     this.createNewQuote();
     this.loadSampleQuote();
+  },
+
+  /* Security Authentication */
+  checkAuth() {
+    const isAuth = sessionStorage.getItem('PASS_AUTH_TOKEN');
+    const overlay = document.getElementById('authOverlay');
+    if (isAuth === 'AUTHORIZED') {
+      overlay.classList.add('hidden');
+    } else {
+      overlay.classList.remove('hidden');
+      setTimeout(() => {
+        const inp = document.getElementById('authPassInput');
+        if (inp) inp.focus();
+      }, 100);
+    }
+  },
+
+  verifyPassword() {
+    const inp = document.getElementById('authPassInput');
+    const errMsg = document.getElementById('authErrorMsg');
+    const val = (inp.value || '').trim();
+
+    if (val === SECRET_PASSCODE) {
+      sessionStorage.setItem('PASS_AUTH_TOKEN', 'AUTHORIZED');
+      document.getElementById('authOverlay').classList.add('hidden');
+      errMsg.style.display = 'none';
+      inp.value = '';
+    } else {
+      errMsg.style.display = 'block';
+      inp.value = '';
+      inp.focus();
+    }
+  },
+
+  lockApp() {
+    sessionStorage.removeItem('PASS_AUTH_TOKEN');
+    document.getElementById('authOverlay').classList.remove('hidden');
+    const inp = document.getElementById('authPassInput');
+    if (inp) {
+      inp.value = '';
+      inp.focus();
+    }
   },
 
   /* Customer / Buyer Directory Logic */
