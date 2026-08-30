@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Position Finder - Exact Match</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#f8fafc; font-family: Arial, sans-serif; }
+    .topbar { background:#fff; border-bottom:1px solid #e5e7eb; padding:10px 20px; font-size:13px; color:#374151; display:flex; align-items:center; gap:16px; }
+    .topbar span { color:#dc2626; font-weight:800; }
+    .wrapper { display:flex; align-items:flex-start; height:calc(100vh - 45px); }
+
+    /* EXACT SAME as website right panel */
+    .hero-right {
+      flex: 0 0 52%;
+      height: 100%;
+      background: #f8fafc;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      position: relative;
+    }
+    .ppe-stage {
+      position: relative;
+      display: inline-block;
+      line-height: 0;
+      cursor: crosshair;
+    }
+    .ppe-stage img {
+      height: 88vh;
+      max-height: 680px;
+      width: auto;
+      display: block;
+    }
+    .dot-preview {
+      position: absolute;
+      width: 16px; height: 16px;
+      background: #dc2626;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      transform: translate(-50%,-50%);
+      pointer-events: none;
+      box-shadow: 0 0 0 3px rgba(220,38,38,0.3);
+    }
+    .dot-preview span {
+      position: absolute;
+      left: 18px; top: -3px;
+      font-size: 10px; font-weight: 700;
+      color: #1a3a8f; white-space: nowrap;
+      background:#fff; padding:1px 4px; border-radius:4px;
+    }
+
+    /* Log panel */
+    .log { flex:1; background:#fff; padding:16px; overflow-y:auto; height:100%; border-left:1px solid #e5e7eb; }
+    .log h3 { font-size:13px; font-weight:700; margin-bottom:8px; }
+    .log-item { background:#f3f4f6; border-radius:6px; padding:8px 10px; margin-bottom:6px; font-size:11px; color:#374151; border-left:3px solid #dc2626; }
+    .clear-btn { display:block; width:100%; margin-top:10px; padding:8px; background:#dc2626; color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:700; font-size:12px; }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    🎯 <strong>Position Finder</strong> — Image bilkul website jaisi hai. <span>Click karo sahi jagah pe.</span>
+    Pehle woh 2 dot click karo jo galat the.
+  </div>
+  <div class="wrapper">
+    <div class="hero-right">
+      <div class="ppe-stage" id="stage">
+        <img src="assets/worker_cropped.png" alt="Worker" />
+      </div>
+    </div>
+    <div class="log">
+      <h3>📍 Clicked Positions</h3>
+      <p style="font-size:11px;color:#6b7280;margin-bottom:10px;">Jo dot galat tha uska naam bhi bolo mujhe.</p>
+      <div id="log-list"></div>
+      <button class="clear-btn" onclick="document.getElementById('log-list').innerHTML='';document.querySelectorAll('.dot-preview').forEach(d=>d.remove());count=0;">🗑 Clear</button>
+    </div>
+  </div>
+  <script>
+    let count = 0;
+    document.getElementById('stage').addEventListener('click', function(e) {
+      const rect = this.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
+      const y = ((e.clientY - rect.top) / rect.height * 100).toFixed(1);
+      count++;
+      const dot = document.createElement('div');
+      dot.className = 'dot-preview';
+      dot.style.left = x + '%';
+      dot.style.top = y + '%';
+      dot.innerHTML = '<span>Click ' + count + '</span>';
+      this.appendChild(dot);
+      const item = document.createElement('div');
+      item.className = 'log-item';
+      item.innerHTML = '<b>Click ' + count + '</b>: top:' + y + '%, left:' + x + '%';
+      document.getElementById('log-list').prepend(item);
+    });
+  </script>
+</body>
+</html>

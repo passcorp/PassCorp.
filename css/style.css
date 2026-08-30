@@ -1,0 +1,322 @@
+/* PASS CORP. - Master Stylesheet with Interactive 3D PPE Inspector */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  --navy-darkest: #050b14;
+  --navy-dark: #07101e;
+  --navy-surface: #0a192f;
+  --navy-card: #0f2444;
+  --safety-red: #dc2626;
+  --safety-red-glow: rgba(220, 38, 38, 0.45);
+  --cyan-glow: rgba(6, 182, 212, 0.5);
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--navy-darkest);
+  color: #f1f5f9;
+  overflow-x: hidden;
+}
+
+code, .font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Glassmorphism */
+.glass-nav {
+  background: rgba(5, 11, 20, 0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel {
+  background: rgba(10, 25, 47, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%), rgba(10, 25, 47, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(220, 38, 38, 0.6);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px -10px rgba(220, 38, 38, 0.3);
+}
+
+.red-glow-btn {
+  background-color: var(--safety-red);
+  box-shadow: 0 8px 24px -4px var(--safety-red-glow);
+  transition: all 0.25s ease;
+}
+
+.red-glow-btn:hover {
+  background-color: #b91c1c;
+  box-shadow: 0 12px 30px -2px rgba(220, 38, 38, 0.6);
+  transform: translateY(-2px);
+}
+
+/* 3D Worker Showcase Stage */
+.worker-3d-stage {
+  position: relative;
+  width: 100%;
+  max-width: 580px;
+  height: 680px;
+  margin: 0 auto;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.worker-card-3d {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 28px;
+  background: radial-gradient(circle at 50% 30%, rgba(15, 36, 68, 0.95) 0%, rgba(5, 11, 20, 0.98) 80%);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.85), inset 0 0 50px rgba(6, 182, 212, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+}
+
+.worker-image {
+  height: 94%;
+  width: auto;
+  max-width: 95%;
+  object-fit: contain;
+  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.8));
+  user-select: none;
+  pointer-events: none;
+  transition: transform 0.3s ease;
+}
+
+/* Holographic Laser Scanline */
+.hologram-scanner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, transparent 0%, rgba(6, 182, 212, 0.9) 50%, transparent 100%);
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.9), 0 0 40px rgba(220, 38, 38, 0.4);
+  animation: scanLoop 4.5s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 15;
+}
+
+@keyframes scanLoop {
+  0% { top: 2%; opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { top: 98%; opacity: 0; }
+}
+
+/* Hotspot Nodes */
+.hotspot-point {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 25;
+  cursor: pointer;
+}
+
+.hotspot-radar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(220, 38, 38, 0.35);
+  border: 2px solid #ef4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(220, 38, 38, 0.9);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hotspot-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 10px #ffffff;
+}
+
+.hotspot-radar::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px dashed rgba(220, 38, 38, 0.7);
+  animation: spinRadar 6s linear infinite;
+}
+
+.hotspot-radar::after {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  background: rgba(220, 38, 38, 0.4);
+  animation: pulseRadar 2s ease-out infinite;
+  z-index: -1;
+}
+
+@keyframes spinRadar {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulseRadar {
+  0% { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+.hotspot-point:hover .hotspot-radar,
+.hotspot-point.active .hotspot-radar {
+  transform: scale(1.3);
+  background: #dc2626;
+  border-color: #ffffff;
+  box-shadow: 0 0 30px rgba(239, 68, 68, 1);
+}
+
+/* Tooltip Card */
+.hotspot-card {
+  position: absolute;
+  width: 310px;
+  background: rgba(7, 16, 30, 0.97);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(220, 38, 38, 0.7);
+  box-shadow: 0 25px 50px -10px rgba(0, 0, 0, 0.95), 0 0 25px rgba(220, 38, 38, 0.3);
+  border-radius: 20px;
+  padding: 16px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px) scale(0.95);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 45;
+}
+
+/* Placement adjustments for tooltips depending on side */
+.tooltip-right {
+  left: 42px;
+  top: -20px;
+}
+
+.tooltip-left {
+  right: 42px;
+  top: -20px;
+}
+
+.tooltip-top {
+  left: 50%;
+  bottom: 42px;
+  transform: translateX(-50%) translateY(12px) scale(0.95);
+}
+
+.hotspot-point:hover .hotspot-card,
+.hotspot-point.active .hotspot-card {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.hotspot-point:hover .tooltip-top,
+.hotspot-point.active .tooltip-top {
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+/* Floating Actions */
+.floating-actions-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.floating-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+}
+
+.floating-btn:hover {
+  transform: scale(1.1) translateY(-3px);
+}
+
+.floating-btn-whatsapp {
+  background-color: #25d366;
+  color: #ffffff;
+}
+
+.floating-btn-whatsapp::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: rgba(37, 211, 102, 0.4);
+  animation: pulsePulse 2s infinite;
+  z-index: -1;
+}
+
+.floating-btn-call {
+  background-color: #dc2626;
+  color: #ffffff;
+}
+
+.floating-btn-call::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: rgba(220, 38, 38, 0.4);
+  animation: pulsePulse 2.4s infinite;
+  z-index: -1;
+}
+
+@keyframes pulsePulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  70% { transform: scale(1.35); opacity: 0; }
+  100% { transform: scale(1.35); opacity: 0; }
+}
+
+.floating-tooltip {
+  position: absolute;
+  right: 68px;
+  white-space: nowrap;
+  background: rgba(10, 25, 47, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.floating-btn:hover .floating-tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
