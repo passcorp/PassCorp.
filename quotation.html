@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
-<title>PASS CORP. | Quotor</title>
+<title>PASS CORP. | Quotor Enterprise</title>
 <link rel="icon" type="image/png" href="https://passcorp.in/assets/favicon-96x96.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -100,61 +100,61 @@ body {
 .auth-subtitle {
   font-size: 12px;
   color: #64748b;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
+}
+
+.auth-error {
+  background: #fee2e2;
+  border: 1px solid #ef4444;
+  color: #b91c1c;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  display: none;
 }
 
 .auth-input-group {
-  margin-bottom: 14px;
   text-align: left;
+  margin-bottom: 16px;
 }
 
 .auth-input-group label {
   display: block;
   font-size: 11px;
   font-weight: 700;
-  color: #475569;
+  color: #334155;
   margin-bottom: 6px;
   text-transform: uppercase;
 }
 
 .auth-input {
   width: 100%;
+  padding: 11px 14px;
   background: #f8fafc;
   border: 1.5px solid #cbd5e1;
-  border-radius: 6px;
-  padding: 10px 12px;
-  font-size: 14px;
+  border-radius: 8px;
   color: #0f172a;
-  outline: none;
+  font-size: 14px;
   font-family: inherit;
   transition: all 0.2s ease;
 }
 
 .auth-input:focus {
-  background: #ffffff;
+  outline: none;
   border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
-}
-
-.auth-error {
-  display: none;
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid #ef4444;
-  color: #dc2626;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 8px 10px;
-  border-radius: 6px;
-  margin-bottom: 12px;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 .auth-btn {
   width: 100%;
+  padding: 12px;
   background: #0c2340;
   color: white;
   border: none;
-  padding: 12px;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
@@ -171,7 +171,7 @@ body {
 .app-header {
   background: #ffffff;
   border-bottom: 1px solid #e2e8f0;
-  padding: 10px 20px;
+  padding: 9px 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -181,20 +181,20 @@ body {
   box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 
-.brand-badge { display: flex; align-items: center; gap: 12px; }
-.brand-badge img { height: 36px; width: auto; border-radius: 4px; background: transparent; padding: 0; }
-.brand-title { font-size: 17px; font-weight: 800; color: #0c2340; }
-.brand-subtitle { font-size: 11px; font-weight: 700; color: #2563eb; text-transform: uppercase; letter-spacing: 1px; }
+.brand-badge { display: flex; align-items: center; gap: 10px; }
+.brand-badge img { height: 34px; width: auto; border-radius: 4px; background: transparent; }
+.brand-title { font-size: 16px; font-weight: 800; color: #0c2340; line-height: 1.1; }
+.brand-subtitle { font-size: 10.5px; font-weight: 700; color: #2563eb; text-transform: uppercase; letter-spacing: 1px; }
 
-.header-actions { display: flex; align-items: center; gap: 8px; }
+.header-actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 7px 14px;
+  gap: 5px;
+  padding: 6px 12px;
   border-radius: 6px;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 600;
   cursor: pointer;
   border: none;
@@ -210,13 +210,61 @@ body {
 .btn-whatsapp:hover { background: #20ba5a; }
 .btn-outline { background: #ffffff; border: 1.5px solid #cbd5e1; color: #334155; }
 .btn-outline:hover { background: #f1f5f9; border-color: #94a3b8; color: #0f172a; }
-.btn-sm { padding: 5px 9px; font-size: 11px; }
+.btn-sm { padding: 4px 8px; font-size: 10.5px; }
+
+/* Doc Type Group */
+.doc-type-pills {
+  display: flex;
+  background: #f1f5f9;
+  padding: 3px;
+  border-radius: 6px;
+  gap: 3px;
+  margin-bottom: 10px;
+}
+
+.doc-type-btn {
+  flex: 1;
+  text-align: center;
+  padding: 5px 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  border: none;
+  background: transparent;
+  color: #475569;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.doc-type-btn.active {
+  background: #0c2340;
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Status Badges */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.status-pending { background: #fef9c3; color: #854d0e; border: 1px solid #fef08a; }
+.status-won { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+.status-discussion { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+.status-revised { background: #ffedd5; color: #9a3412; border: 1px solid #fed7aa; }
+.status-closed { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
 
 /* Main Layout */
 .app-container {
   display: flex;
   flex: 1;
-  height: calc(100vh - 58px);
+  height: calc(100vh - 54px);
   overflow: hidden;
   background: #f8fafc;
 }
@@ -233,17 +281,17 @@ body {
 }
 
 .editor-section {
-  padding: 16px 18px;
+  padding: 14px 16px;
   border-bottom: 1px solid #f1f5f9;
 }
 
 .section-heading {
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.6px;
   color: #0c2340;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -252,19 +300,19 @@ body {
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  gap: 8px;
 }
 
 .form-grid-full { grid-column: span 2; }
-.form-group { display: flex; flex-direction: column; gap: 4px; }
-.form-group label { font-size: 10.5px; font-weight: 700; color: #475569; text-transform: uppercase; }
+.form-group { display: flex; flex-direction: column; gap: 3px; }
+.form-group label { font-size: 10px; font-weight: 700; color: #475569; text-transform: uppercase; }
 
 .form-control {
   background: #f8fafc;
   border: 1.5px solid #cbd5e1;
   border-radius: 6px;
-  padding: 7px 9px;
-  font-size: 12px;
+  padding: 6px 8px;
+  font-size: 11.5px;
   color: #0f172a;
   font-family: inherit;
   transition: all 0.15s ease;
@@ -281,39 +329,39 @@ body {
   background: #f0f9ff;
   border: 1.5px solid #93c5fd;
   border-radius: 8px;
-  padding: 10px 12px;
-  margin-bottom: 12px;
+  padding: 9px 10px;
+  margin-bottom: 10px;
 }
 
 .buyer-directory-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 }
 
-.buyer-directory-title { font-size: 11px; font-weight: 800; color: #1e40af; }
-.buyer-directory-count { font-size: 10px; font-weight: 700; color: #047857; background: #d1fae5; padding: 1px 6px; border-radius: 4px; }
-.buyer-directory-actions { display: flex; gap: 6px; }
+.buyer-directory-title { font-size: 10.5px; font-weight: 800; color: #1e40af; }
+.buyer-directory-count { font-size: 9.5px; font-weight: 700; color: #047857; background: #d1fae5; padding: 1px 6px; border-radius: 4px; }
+.buyer-directory-actions { display: flex; gap: 5px; }
 
 .catalog-picker {
   background: #f8fafc;
   border: 1.5px solid #e2e8f0;
   border-radius: 8px;
-  padding: 10px;
-  margin-top: 6px;
+  padding: 9px;
+  margin-top: 4px;
 }
 
-.catalog-search-wrap { position: relative; margin-bottom: 8px; }
-.catalog-search-input { width: 100%; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 7px 10px 7px 32px; color: #0f172a; font-size: 12px; }
-.catalog-search-icon { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); color: #64748b; width: 14px; height: 14px; }
+.catalog-search-wrap { position: relative; margin-bottom: 6px; }
+.catalog-search-input { width: 100%; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 6px 8px 6px 28px; color: #0f172a; font-size: 11.5px; }
+.catalog-search-icon { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); color: #64748b; width: 13px; height: 13px; }
 
 .catalog-items-scroll {
-  max-height: 240px;
+  max-height: 220px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
 }
 
 .catalog-item-card {
@@ -323,17 +371,17 @@ body {
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 6px;
-  padding: 7px 9px;
+  padding: 6px 8px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
-.catalog-item-card:hover { background: #eff6ff; border-color: #3b82f6; box-shadow: 0 2px 6px rgba(59,130,246,0.15); }
+.catalog-item-card:hover { background: #eff6ff; border-color: #3b82f6; box-shadow: 0 1px 4px rgba(59,130,246,0.12); }
 .catalog-item-info { display: flex; align-items: center; gap: 8px; min-width: 0; }
-.catalog-item-thumb { width: 34px; height: 34px; object-fit: contain; background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 2px; flex-shrink: 0; }
-.catalog-item-title { font-size: 11.5px; font-weight: 600; color: #0f172a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.catalog-item-meta { font-size: 9.5px; color: #64748b; }
-.catalog-item-price { font-size: 11.5px; font-weight: 700; color: #047857; flex-shrink: 0; }
+.catalog-item-thumb { width: 32px; height: 32px; object-fit: contain; background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 2px; flex-shrink: 0; }
+.catalog-item-title { font-size: 11px; font-weight: 600; color: #0f172a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.catalog-item-meta { font-size: 9px; color: #64748b; }
+.catalog-item-price { font-size: 11px; font-weight: 700; color: #047857; flex-shrink: 0; }
 
 /* Modal */
 .modal-overlay {
@@ -349,20 +397,83 @@ body {
 }
 
 .modal-overlay.active { display: flex; }
-.modal-box { background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; width: 560px; max-width: 100%; max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
-.modal-header { padding: 14px 18px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; }
-.modal-title { font-size: 14px; font-weight: 800; color: #0c2340; }
-.modal-body { padding: 18px; display: flex; flex-direction: column; gap: 12px; background: #ffffff; }
-.modal-footer { padding: 12px 18px; border-top: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: flex-end; gap: 10px; background: #f8fafc; }
-.img-preview-box { display: flex; align-items: center; gap: 12px; background: #f8fafc; padding: 8px 12px; border-radius: 6px; border: 1px dashed #cbd5e1; }
-.img-preview-box img { width: 50px; height: 50px; object-fit: contain; background: white; border-radius: 4px; border: 1px solid #e2e8f0; padding: 2px; }
+.modal-box { background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; width: 620px; max-width: 100%; max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
+.modal-header { padding: 12px 16px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; }
+.modal-title { font-size: 13.5px; font-weight: 800; color: #0c2340; }
+.modal-body { padding: 16px; display: flex; flex-direction: column; gap: 10px; background: #ffffff; }
+.modal-footer { padding: 10px 16px; border-top: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: flex-end; gap: 8px; background: #f8fafc; }
+.img-preview-box { display: flex; align-items: center; gap: 10px; background: #f8fafc; padding: 6px 10px; border-radius: 6px; border: 1px dashed #cbd5e1; }
+.img-preview-box img { width: 44px; height: 44px; object-fit: contain; background: white; border-radius: 4px; border: 1px solid #e2e8f0; padding: 2px; }
 
-.items-editor-container { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
-.item-edit-card { background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+.items-editor-container { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.item-edit-card { background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 8px; padding: 10px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
 .item-edit-card-header { display: flex; align-items: center; justify-content: space-between; }
-.item-badge { background: #e0e7ff; color: #1e40af; font-size: 10.5px; font-weight: 800; padding: 2px 8px; border-radius: 4px; }
-.btn-remove-item { background: transparent; color: #ef4444; border: none; cursor: pointer; font-size: 18px; font-weight: 700; padding: 0 4px; }
+.item-badge { background: #e0e7ff; color: #1e40af; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; }
+.btn-remove-item { background: transparent; color: #ef4444; border: none; cursor: pointer; font-size: 16px; font-weight: 700; padding: 0 4px; }
 .btn-remove-item:hover { color: #b91c1c; }
+
+/* History List Card */
+.history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #ffffff;
+  transition: all 0.15s ease;
+  gap: 10px;
+}
+
+.history-item:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+}
+
+.history-main-info { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+.history-quote-no { font-weight: 800; font-size: 12px; color: #0c2340; }
+.history-company { font-size: 11.5px; font-weight: 600; color: #1e293b; }
+.history-date { font-size: 9.5px; color: #64748b; }
+.history-amount { font-size: 13px; font-weight: 900; color: #047857; }
+.history-actions { display: flex; align-items: center; gap: 5px; }
+
+/* Analytics Metric Grid */
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.metric-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metric-card.highlight {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.metric-lbl { font-size: 10.5px; font-weight: 700; color: #64748b; text-transform: uppercase; }
+.metric-val { font-size: 20px; font-weight: 900; color: #0c2340; }
+.metric-val.green { color: #166534; }
+
+/* Signature Canvas */
+#signCanvas {
+  border: 1.5px dashed #cbd5e1;
+  background: #ffffff;
+  border-radius: 6px;
+  cursor: crosshair;
+  width: 100%;
+  height: 140px;
+  display: block;
+}
 
 /* Right Viewport */
 .preview-viewport {
@@ -372,7 +483,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 24px 16px;
+  padding: 20px 14px;
   border-left: 1px solid #cbd5e1;
 }
 
@@ -382,15 +493,15 @@ body {
   justify-content: space-between;
   width: 210mm;
   max-width: 100%;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
   background: #ffffff;
-  padding: 9px 16px;
+  padding: 8px 14px;
   border-radius: 8px;
   border: 1px solid #cbd5e1;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 
-.preview-title { font-size: 12.5px; font-weight: 700; color: #0c2340; }
+.preview-title { font-size: 12px; font-weight: 700; color: #0c2340; }
 
 /* ============================================================
    A4 SHEET - PIXEL PERFECT SINGLE PAGE & MULTI-PAGE ADAPTIVE
@@ -515,6 +626,9 @@ body {
   letter-spacing: 1.2px;
   color: #000000;
 }
+
+.quote-meta-header.pi-mode { background: #dbeafe; color: #1e3a8a; }
+.quote-meta-header.dc-mode { background: #e2e8f0; color: #0f172a; }
 
 .quote-meta-table {
   width: 100%;
@@ -681,7 +795,7 @@ body {
 
 .total-summary-row {
   display: grid;
-  grid-template-columns: 1fr 190px;
+  grid-template-columns: 1fr 220px;
   border-top: 1.5px solid #000000;
   border-bottom: 1.5px solid #000000;
   min-height: 26px;
@@ -699,15 +813,27 @@ body {
 .words-label { font-weight: 700; color: #000000; }
 .words-text { font-weight: 800; color: #000000; font-style: italic; }
 
-.total-amount-col {
-  background: #fef08a;
+.total-breakdown-col {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  font-size: 8px;
+}
+
+.breakdown-line {
+  display: flex;
   justify-content: space-between;
-  padding: 3px 10px;
+  padding: 1.5px 8px;
+  border-bottom: 0.5px solid #cbd5e1;
+  font-weight: 600;
+}
+
+.breakdown-line.grand-total {
+  background: #fef08a;
+  border-bottom: none;
   font-size: 9.5px;
   font-weight: 900;
   color: #000000;
+  padding: 3px 8px;
 }
 
 .quote-footer-grid {
@@ -867,13 +993,16 @@ body {
       <img src="https://passcorp.in/assets/logo.png" alt="PASS CORP." onerror="this.src='https://passcorp.in/assets/pass_logo.png'" />
       <div>
         <div class="brand-title">PASS CORP.</div>
-        <div class="brand-subtitle">Quotor</div>
+        <div class="brand-subtitle">Quotor Enterprise</div>
       </div>
     </div>
 
     <div class="header-actions">
+      <button class="btn btn-outline btn-sm" onclick="app.openHistoryModal()">📂 History (<span id="topHistoryCount">0</span>)</button>
+      <button class="btn btn-success btn-sm" onclick="app.saveCurrentQuoteToHistory()">💾 Save Record</button>
+      <button class="btn btn-outline btn-sm" onclick="app.openAnalyticsModal()">📊 Analytics</button>
       <button class="btn btn-outline btn-sm" onclick="app.loadSampleQuote()">Sample</button>
-      <button class="btn btn-outline btn-sm" onclick="app.createNewQuote()">New Quote</button>
+      <button class="btn btn-outline btn-sm" onclick="app.createNewQuote()">+ New Quote</button>
       <button class="btn btn-whatsapp" onclick="app.shareWhatsApp()">WhatsApp</button>
       <button class="btn btn-primary" onclick="app.printPdf()">Print / PDF</button>
       <button class="btn btn-outline btn-sm" onclick="app.lockApp()" style="color: #dc2626; border-color: #fca5a5; background: #fff5f5;">🔒 Lock</button>
@@ -883,13 +1012,33 @@ body {
   <div class="app-container">
     <aside class="sidebar-editor">
       
-      <!-- Meta -->
+      <!-- Doc Info -->
       <div class="editor-section">
-        <div class="section-heading"><span>📋 Quotation Info</span></div>
+        <div class="section-heading">
+          <span>📋 Document Info & Status</span>
+          <span id="activeStatusBadge" class="status-badge status-pending">Sent / Pending</span>
+        </div>
+
+        <div class="doc-type-pills">
+          <button type="button" class="doc-type-btn active" id="btnDocQuote" onclick="app.setDocType('QUOTATION')">Quotation</button>
+          <button type="button" class="doc-type-btn" id="btnDocPI" onclick="app.setDocType('PROFORMA INVOICE')">Proforma Invoice</button>
+          <button type="button" class="doc-type-btn" id="btnDocDC" onclick="app.setDocType('DELIVERY CHALLAN')">Delivery Challan</button>
+        </div>
+
         <div class="form-grid">
           <div class="form-group">
-            <label>Quotation No.</label>
+            <label id="lblDocNo">Quotation No.</label>
             <input type="text" id="quoteNo" class="form-control" oninput="app.updateMeta()" />
+          </div>
+          <div class="form-group">
+            <label>Sales Pipeline Status</label>
+            <select id="quoteStatus" class="form-control" onchange="app.onStatusChange(this.value)">
+              <option value="pending" selected>🟡 Sent / Pending</option>
+              <option value="won">🟢 PO Received / Won</option>
+              <option value="discussion">🔵 In Discussion</option>
+              <option value="revised">🔴 Revised Quote</option>
+              <option value="closed">⚫ Cancelled / Closed</option>
+            </select>
           </div>
           <div class="form-group">
             <label>Date (Auto +15 Days)</label>
@@ -926,11 +1075,11 @@ body {
               <option value="To Pay (Freight by Buyer)">To Pay (Freight by Buyer)</option>
             </select>
           </div>
-          <div class="form-group">
+          <div class="form-group form-grid-full">
             <label>GST Terms</label>
             <select id="quoteGst" class="form-control" onchange="app.updateMeta()">
-              <option value="EXTRA" selected>EXTRA</option>
-              <option value="INCLUDED">INCLUDED</option>
+              <option value="EXTRA" selected>EXTRA (As Applicable)</option>
+              <option value="INCLUDED">INCLUDED in Rates</option>
               <option value="18% EXTRA">18% EXTRA</option>
               <option value="12% EXTRA">12% EXTRA</option>
               <option value="NIL / EXEMPTED">NIL / EXEMPTED</option>
@@ -968,12 +1117,12 @@ body {
             <input type="text" id="clientAddress" class="form-control" placeholder="Plot No. 45, MIDC Bhosari, Pune" oninput="app.updateClient()" />
           </div>
           <div class="form-group">
-            <label>GSTIN</label>
+            <label>GSTIN Number</label>
             <input type="text" id="clientGst" class="form-control" placeholder="27AAACA0000A1Z5" oninput="app.updateClient()" />
           </div>
           <div class="form-group">
-            <label>State & Code</label>
-            <input type="text" id="clientState" class="form-control" placeholder="Maharashtra (27)" oninput="app.updateClient()" />
+            <label>State & State Code</label>
+            <input type="text" id="clientState" class="form-control" value="Maharashtra (Code: 27)" oninput="app.updateClient()" />
           </div>
         </div>
       </div>
@@ -1023,10 +1172,55 @@ body {
       <!-- Items List -->
       <div class="editor-section">
         <div class="section-heading">
-          <span>🛒 Active Quote Items (<span id="itemCount">0</span>)</span>
+          <span>🛒 Active Items (<span id="itemCount">0</span>)</span>
           <button class="btn btn-primary btn-sm" onclick="app.addCustomItem()">+ Blank Row</button>
         </div>
         <div class="items-editor-container" id="itemsEditContainer"></div>
+      </div>
+
+      <!-- Extra Pricing & Discounts -->
+      <div class="editor-section">
+        <div class="section-heading"><span>🏷️ Discounts & Extra Charges</span></div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Discount Type</label>
+            <select id="extraDiscType" class="form-control" onchange="app.updatePricingExtras()">
+              <option value="none">No Discount</option>
+              <option value="percent">% Percentage Discount</option>
+              <option value="flat">₹ Flat Cash Discount</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Discount Value</label>
+            <input type="number" step="0.01" id="extraDiscVal" class="form-control" placeholder="e.g. 5 or 500" value="0" oninput="app.updatePricingExtras()" />
+          </div>
+          <div class="form-group">
+            <label>Freight / Transport (₹)</label>
+            <input type="number" step="0.01" id="extraFreight" class="form-control" placeholder="0.00" value="0" oninput="app.updatePricingExtras()" />
+          </div>
+          <div class="form-group">
+            <label>Packaging / Handling (₹)</label>
+            <input type="number" step="0.01" id="extraPkg" class="form-control" placeholder="0.00" value="0" oninput="app.updatePricingExtras()" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Digital Signature & Stamp -->
+      <div class="editor-section">
+        <div class="section-heading">
+          <span>✍️ Stamp & Digital Sign</span>
+          <button class="btn btn-outline btn-sm" onclick="app.openSignModal()">✍️ Draw Sign</button>
+        </div>
+        <div class="form-grid">
+          <div class="form-group form-grid-full">
+            <label>Signatory Mode</label>
+            <select id="signMode" class="form-control" onchange="app.onSignModeChange(this.value)">
+              <option value="stamp" selected>Official Stamp Seal (PASS CORP.)</option>
+              <option value="digital">Drawn Digital Signature</option>
+              <option value="upload">Upload Custom Signature PNG</option>
+            </select>
+          </div>
+        </div>
       </div>
 
     </aside>
@@ -1068,9 +1262,9 @@ body {
             </div>
 
             <div class="quote-meta-col">
-              <div class="quote-meta-header">QUOTATION</div>
+              <div class="quote-meta-header" id="viewDocTypeTitle">QUOTATION</div>
               <table class="quote-meta-table">
-                <tr><td class="meta-label">Quotation No.</td><td class="meta-val" id="viewQuoteNo">PC/25-26/00078</td></tr>
+                <tr><td class="meta-label" id="viewLabelDocNo">Quotation No.</td><td class="meta-val" id="viewQuoteNo">PC/25-26/00078</td></tr>
                 <tr><td class="meta-label">Date</td><td class="meta-val" id="viewQuoteDate">2 August 2026</td></tr>
                 <tr><td class="meta-label">Valid Upto</td><td class="meta-val" id="viewQuoteValid">17 August 2026</td></tr>
                 <tr><td class="meta-label">Payment Terms</td><td class="meta-val" id="viewQuotePayment">As Agreed</td></tr>
@@ -1129,18 +1323,20 @@ body {
           <div class="total-summary-row">
             <div class="words-col">
               <span class="words-label">Amount in Words:</span>
-              <span class="words-text" id="viewAmountWords">Four Hundred Thirty Five Rupees Only</span>
+              <span class="words-text" id="viewAmountWords">Zero Rupees Only</span>
             </div>
-            <div class="total-amount-col">
-              <span>Grand Total (₹)</span>
-              <span id="viewTotalAmount" style="font-size: 11px;">₹435.00</span>
+            <div class="total-breakdown-col" id="viewSummaryBreakdown">
+              <div class="breakdown-line grand-total">
+                <span>Grand Total (₹)</span>
+                <span id="viewTotalAmount">₹0.00</span>
+              </div>
             </div>
           </div>
 
           <div class="quote-footer-grid">
             <div class="terms-col">
-              <div class="footer-box-title">TERMS & CONDITIONS</div>
-              <ul class="terms-list">
+              <div class="footer-box-title" id="viewFooterTermsTitle">TERMS & CONDITIONS</div>
+              <ul class="terms-list" id="viewTermsList">
                 <li>Prices are subject to change without prior notice.</li>
                 <li>Goods once sold will not be taken back.</li>
                 <li>Delivery time is indicative and may change.</li>
@@ -1162,7 +1358,7 @@ body {
 
             <div class="signatory-col">
               <div class="for-company-title">For PASS CORP.</div>
-              <img src="stamp.png" class="sign-stamp-img" alt="PASS CORP. Stamp" />
+              <img id="viewSignStampImg" src="stamp.png" class="sign-stamp-img" alt="Sign / Stamp" />
               <div class="signatory-label">Authorized Signatory</div>
             </div>
           </div>
@@ -1270,14 +1466,106 @@ body {
   </div>
 </div>
 
+<!-- MODAL: QUOTATION HISTORY & ARCHIVES -->
+<div class="modal-overlay" id="historyModal">
+  <div class="modal-box" style="width: 720px;">
+    <div class="modal-header">
+      <div class="modal-title">📂 Quotation & Order History</div>
+      <button class="btn btn-outline btn-sm" onclick="app.closeHistoryModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex; gap:8px; align-items:center;">
+        <input type="text" id="historySearchInput" class="form-control" placeholder="Search by Company, Quote No, or Date..." oninput="app.filterHistory(this.value)" style="flex:1;" />
+        <select id="historyFilterStatus" class="form-control" style="width: 170px;" onchange="app.filterHistory(document.getElementById('historySearchInput').value)">
+          <option value="all">All Statuses</option>
+          <option value="pending">🟡 Sent / Pending</option>
+          <option value="won">🟢 PO Received / Won</option>
+          <option value="discussion">🔵 In Discussion</option>
+          <option value="revised">🔴 Revised</option>
+          <option value="closed">⚫ Closed</option>
+        </select>
+      </div>
+
+      <div id="historyListContainer" style="display:flex; flex-direction:column; gap:8px; max-height: 400px; overflow-y:auto; margin-top:4px;"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="app.closeHistoryModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: SALES ANALYTICS DASHBOARD -->
+<div class="modal-overlay" id="analyticsModal">
+  <div class="modal-box" style="width: 640px;">
+    <div class="modal-header">
+      <div class="modal-title">📊 Sales & Quotation Analytics Dashboard</div>
+      <button class="btn btn-outline btn-sm" onclick="app.closeAnalyticsModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="analytics-grid">
+        <div class="metric-card">
+          <div class="metric-lbl">Total Quotations Issued</div>
+          <div class="metric-val" id="anTotalQuotes">0</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-lbl">Total Pipeline Quoted Value</div>
+          <div class="metric-val" id="anTotalValue">₹0.00</div>
+        </div>
+        <div class="metric-card highlight">
+          <div class="metric-lbl">Confirmed Orders (Won / PO)</div>
+          <div class="metric-val green" id="anWonValue">₹0.00</div>
+        </div>
+        <div class="metric-card highlight">
+          <div class="metric-lbl">Conversion Win-Rate</div>
+          <div class="metric-val green" id="anWinRate">0%</div>
+        </div>
+      </div>
+
+      <div style="font-size: 11px; font-weight:800; color:#0c2340; text-transform:uppercase; margin-top:6px;">Top Quoted Brands & Items:</div>
+      <div id="anTopItemsList" style="display:flex; flex-direction:column; gap:6px; font-size:12px;"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="app.closeAnalyticsModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: DIGITAL SIGNATURE CANVAS -->
+<div class="modal-overlay" id="signModal">
+  <div class="modal-box" style="width: 440px;">
+    <div class="modal-header">
+      <div class="modal-title">✍️ Draw Digital Signature</div>
+      <button class="btn btn-outline btn-sm" onclick="app.closeSignModal()">✕</button>
+    </div>
+    <div class="modal-body" style="text-align:center;">
+      <div style="font-size:11.5px; color:#64748b; margin-bottom:8px;">Draw your official signature using mouse or finger touch below:</div>
+      <canvas id="signCanvas" width="400" height="140"></canvas>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+        <button class="btn btn-outline btn-sm" onclick="app.clearSignCanvas()">🧹 Clear Canvas</button>
+        <span style="font-size:10px; color:#94a3b8;">High-Resolution Vector Sign</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="app.closeSignModal()">Cancel</button>
+      <button class="btn btn-success" onclick="app.saveSignCanvas()">💾 Apply to Quotation</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const SECRET_PASSCODE = "Pawanjali@241997";
 
 const DEFAULT_CATALOG = [
-  { id: "helm_udyogi_7000", name: "Safety Helmet Udyogi Ultravent 7000", specs: "Safety Helmet\nUdyogi Ultravent 7000\nISI Certified, Ratchet, Yellow", brand: "UDYOGI", brandLogo: "https://passcorp.in/assets/brands/udyogi.png", hsn: "6506", unit: "Nos.", price: 245.00, gst: 18, leadTime: "1-2 Days", image: "https://passcorp.in/assets/products/head/ultravent_7000.png" },
-  { id: "helm_karam_pn501", name: "Safety Helmet Karam PN 501", specs: "Safety Helmet\nKaram PN 501\nISI Certified, Manual, Yellow", brand: "KARAM", brandLogo: "https://passcorp.in/assets/brands/karam.png", hsn: "6506", unit: "Nos.", price: 190.00, gst: 18, leadTime: "1-2 Days", image: "https://passcorp.in/assets/products/head/karam_pn521.png" },
-  { id: "shoe_hillson_power", name: "Safety Shoe Hillson Power Plus", specs: "Safety Shoe Power Plus\nSteel Toe 200J, High Ankle, ISI Marked", brand: "HILLSON", brandLogo: "https://passcorp.in/assets/brands/hillson.png", hsn: "6403", unit: "Pairs", price: 780.00, gst: 18, leadTime: "1-2 Days", image: "https://passcorp.in/assets/products/shoes/power_plus.png" },
-  { id: "glove_cut5_fortuner", name: "Cut Level 5 HPPE Gloves Fortuner CPU5", specs: "Cut Level 5 Gloves CPU5\nEN 388 4X43D, PU Coated Palm", brand: "UDYOGI", brandLogo: "https://passcorp.in/assets/brands/udyogi.png", hsn: "6116", unit: "Pairs", price: 185.00, gst: 18, leadTime: "Ready Stock", image: "https://passcorp.in/assets/products/gloves/fortuner_cpu5.png" }
+  { id: "helm_udyogi_7000", name: "Safety Helmet Udyogi Ultravent 7000", specs: "Safety Helmet
+Udyogi Ultravent 7000
+ISI Certified, Ratchet, Yellow", brand: "UDYOGI", brandLogo: "https://passcorp.in/assets/brands/udyogi.png", hsn: "6506", unit: "Nos.", price: 245.00, gst: 18, leadTime: "1-2 Days", image: "https://passcorp.in/assets/products/head/ultravent_7000.png" },
+  { id: "helm_karam_pn501", name: "Safety Helmet Karam PN 501", specs: "Safety Helmet
+Karam PN 501
+ISI Certified, Manual, Yellow", brand: "KARAM", brandLogo: "https://passcorp.in/assets/brands/karam.png", hsn: "6506", unit: "Nos.", price: 190.00, gst: 18, leadTime: "1-2 Days", image: "https://passcorp.in/assets/products/head/karam_pn521.png" },
+  { id: "shoe_hillson_power", name: "Safety Shoe Hillson Power Plus", specs: "Safety Shoe Power Plus
+Steel Toe 200J, High Ankle, ISI Marked", brand: "HILLSON", brandLogo: "https://passcorp.in/assets/brands/hillson.png", hsn: "6403", unit: "Pairs", price: 780.00, gst: 18, leadTime: "1-2 Days", image: "https://passcorp.in/assets/products/shoes/power_plus.png" },
+  { id: "glove_cut5_fortuner", name: "Cut Level 5 HPPE Gloves Fortuner CPU5", specs: "Cut Level 5 Gloves CPU5
+EN 388 4X43D, PU Coated Palm", brand: "UDYOGI", brandLogo: "https://passcorp.in/assets/brands/udyogi.png", hsn: "6116", unit: "Pairs", price: 185.00, gst: 18, leadTime: "Ready Stock", image: "https://passcorp.in/assets/products/gloves/fortuner_cpu5.png" }
 ];
 
 const DEFAULT_BUYERS = [
@@ -1369,20 +1657,34 @@ function formatDateLong(d) {
 const app = {
   catalog: [],
   buyers: [],
+  history: [],
+  editingProductId: null,
   modalImgData: "https://passcorp.in/assets/logo.png",
+  digitalSignData: null,
+  
   quote: {
+    docType: "QUOTATION",
+    status: "pending",
     meta: { no: "PC/25-26/00078", rawDate: new Date().toISOString().split('T')[0], date: "", valid: "", payment: "As Agreed", delivery: "Ex-Works / Pune", gst: "EXTRA" },
     client: { company: "M/s. ABC Industries Pvt. Ltd.", address: "Plot No. 45, MIDC Bhosari, Pune - 411026", gst: "27AAACA0000A1Z5", state: "Maharashtra (Code: 27)", name: "Mr. Rajesh Sharma (Purchase Head)" },
     inquiry: { ref: "RFQ/2026/08/042", date: "", dept: "Safety & EHS Dept", project: "Annual Safety Supply / Bhosari" },
-    items: []
+    items: [],
+    pricing: { discType: "none", discVal: 0, freight: 0, pkg: 0 },
+    signMode: "stamp"
   },
 
   init() {
     this.checkAuth();
+    if (typeof loadContent === 'function') {
+      try { loadContent(); } catch(e){}
+    }
     this.loadCatalog();
     this.loadBuyers();
+    this.loadHistory();
+    this.loadSavedSignature();
     this.createNewQuote();
     this.loadSampleQuote();
+    this.initSignCanvas();
   },
 
   checkAuth() {
@@ -1428,6 +1730,7 @@ const app = {
     if (inp) { inp.value = ''; inp.focus(); }
   },
 
+  /* ---------------- BUYERS DIRECTORY ---------------- */
   loadBuyers() {
     try {
       const saved = localStorage.getItem('PASS_MASTER_BUYERS');
@@ -1492,6 +1795,7 @@ const app = {
     }
   },
 
+  /* ---------------- MASTER PRODUCTS CATALOG ---------------- */
   loadCatalog() {
     let siteProducts = [];
     let contentObj = null;
@@ -1505,9 +1809,11 @@ const app = {
     if (contentObj && Array.isArray(contentObj.products)) {
       siteProducts = contentObj.products.map(p => {
         let specsText = p.name;
-        if (p.brand) specsText += '\nBrand: ' + p.brand;
+        if (p.brand) specsText += '
+Brand: ' + p.brand;
         if (p.cert) specsText += ' | ' + p.cert;
-        if (p.desc) specsText += '\n' + p.desc;
+        if (p.desc) specsText += '
+' + p.desc;
         
         let cat = p.category || '';
         let defaultHsn = (cat === 'shoes' ? '6403' : cat === 'gloves' ? '6116' : cat === 'eye' ? '9004' : cat === 'resp' ? '6307' : '6506');
@@ -1538,104 +1844,6 @@ const app = {
     this.renderCatalog(this.catalog);
   },
 
-  saveCatalog() {
-    try { localStorage.setItem('PASS_MASTER_CATALOG_V3', JSON.stringify(this.catalog)); } catch(e){}
-  },
-
-  calculate15DaysValidity(baseDateStr) {
-    const d = baseDateStr ? new Date(baseDateStr) : new Date();
-    const dateFormatted = formatDateLong(d);
-    const validD = new Date(d);
-    validD.setDate(validD.getDate() + 15);
-    return { dateFormatted, validFormatted: formatDateLong(validD) };
-  },
-
-  onDateChange(newDateVal) {
-    this.quote.meta.rawDate = newDateVal;
-    const { dateFormatted, validFormatted } = this.calculate15DaysValidity(newDateVal);
-    this.quote.meta.date = dateFormatted;
-    this.quote.meta.valid = validFormatted;
-    document.getElementById('quoteValid').value = validFormatted;
-    this.renderPreview();
-  },
-
-  loadSampleQuote() {
-    const today = new Date();
-    const isoDate = today.toISOString().split('T')[0];
-    const { dateFormatted, validFormatted } = this.calculate15DaysValidity(isoDate);
-
-    this.quote.meta = { no: "PC/25-26/00078", rawDate: isoDate, date: dateFormatted, valid: validFormatted, payment: "As Agreed", delivery: "Ex-Works / Pune", gst: "EXTRA" };
-    this.quote.client = { company: "M/s. ABC Industries Pvt. Ltd.", address: "Plot No. 45, MIDC Bhosari, Pune - 411026", gst: "27AAACA0000A1Z5", state: "Maharashtra (Code: 27)", name: "Mr. Rajesh Sharma (Purchase Head)" };
-    this.quote.inquiry = { ref: "RFQ/2026/08/042", date: dateFormatted, dept: "Safety & EHS Dept", project: "Annual Safety Supply / Bhosari" };
-    this.quote.items = [
-      { leadTime: "1-2 Days", image: "https://passcorp.in/assets/products/head/ultravent_7000.png", title: "Safety Helmet", specs: "Safety Helmet\nUdyogi Ultravent 7000\nISI Certified, Ratchet, Yellow", brand: "UDYOGI", brandLogo: "https://passcorp.in/assets/brands/udyogi.png", hsn: "6506", unit: "Nos.", qty: 1, price: 245.00, gst: 18 },
-      { leadTime: "1-2 Days", image: "https://passcorp.in/assets/products/head/karam_pn521.png", title: "Safety Helmet", specs: "Safety Helmet\nKaram PN 501\nISI Certified, Manual, Yellow", brand: "KARAM", brandLogo: "https://passcorp.in/assets/brands/karam.png", hsn: "6506", unit: "Nos.", qty: 1, price: 190.00, gst: 18 }
-    ];
-    this.populateInputs();
-    this.renderAll();
-  },
-
-  createNewQuote() {
-    const today = new Date();
-    const isoDate = today.toISOString().split('T')[0];
-    const { dateFormatted, validFormatted } = this.calculate15DaysValidity(isoDate);
-    const randomNum = String(Math.floor(10000 + Math.random() * 90000)).substring(1);
-    
-    this.quote.meta = { no: `PC/25-26/000${randomNum}`, rawDate: isoDate, date: dateFormatted, valid: validFormatted, payment: "As Agreed", delivery: "Ex-Works / Pune", gst: "EXTRA" };
-    this.quote.client = { company: "", address: "", gst: "", state: "Maharashtra (Code: 27)", name: "" };
-    this.quote.inquiry = { ref: "", date: dateFormatted, dept: "Safety Dept", project: "" };
-    this.quote.items = [];
-
-    this.populateInputs();
-    this.renderAll();
-  },
-
-  populateInputs() {
-    document.getElementById('quoteNo').value = this.quote.meta.no;
-    document.getElementById('quoteDateInput').value = this.quote.meta.rawDate;
-    document.getElementById('quoteValid').value = this.quote.meta.valid;
-    document.getElementById('quotePayment').value = this.quote.meta.payment;
-    document.getElementById('quoteDelivery').value = this.quote.meta.delivery;
-    document.getElementById('quoteGst').value = this.quote.meta.gst;
-
-    document.getElementById('clientCompany').value = this.quote.client.company;
-    document.getElementById('clientAddress').value = this.quote.client.address;
-    document.getElementById('clientGst').value = this.quote.client.gst;
-    document.getElementById('clientState').value = this.quote.client.state || "Maharashtra (Code: 27)";
-    document.getElementById('clientName').value = this.quote.client.name;
-
-    document.getElementById('inqRef').value = this.quote.inquiry.ref || "";
-    document.getElementById('inqDate').value = this.quote.inquiry.date || this.quote.meta.date;
-    document.getElementById('inqDept').value = this.quote.inquiry.dept || "";
-    document.getElementById('inqProject').value = this.quote.inquiry.project || "";
-  },
-
-  updateMeta() {
-    this.quote.meta.no = document.getElementById('quoteNo').value;
-    this.quote.meta.valid = document.getElementById('quoteValid').value;
-    this.quote.meta.payment = document.getElementById('quotePayment').value;
-    this.quote.meta.delivery = document.getElementById('quoteDelivery').value;
-    this.quote.meta.gst = document.getElementById('quoteGst').value;
-    this.renderPreview();
-  },
-
-  updateClient() {
-    this.quote.client.company = document.getElementById('clientCompany').value;
-    this.quote.client.address = document.getElementById('clientAddress').value;
-    this.quote.client.gst = document.getElementById('clientGst').value;
-    this.quote.client.state = document.getElementById('clientState').value;
-    this.quote.client.name = document.getElementById('clientName').value;
-    this.renderPreview();
-  },
-
-  updateInquiry() {
-    this.quote.inquiry.ref = document.getElementById('inqRef').value;
-    this.quote.inquiry.date = document.getElementById('inqDate').value;
-    this.quote.inquiry.dept = document.getElementById('inqDept').value;
-    this.quote.inquiry.project = document.getElementById('inqProject').value;
-    this.renderPreview();
-  },
-
   renderCatalog(items) {
     const countElem = document.getElementById('catalogCount');
     if (countElem) countElem.innerText = `${items ? items.length : 0}`;
@@ -1653,10 +1861,10 @@ const app = {
             <div class="catalog-item-meta">${it.brand} | HSN: ${it.hsn} | ${it.unit}</div>
           </div>
         </div>
-        <div style="display:flex; align-items:center; gap:6px;">
+        <div style="display:flex; align-items:center; gap:5px;">
           <div class="catalog-item-price">₹${parseFloat(it.price || 0).toFixed(2)}</div>
-          <button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); app.editCatalogProduct('${it.id}')" title="Edit Product in Master Library" style="padding:2px 6px; font-size:10px; border-color:#cbd5e1; color:#2563eb; background:#ffffff;">✏️</button>
-          <button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); app.deleteCatalogProduct('${it.id}')" title="Delete Product" style="padding:2px 6px; font-size:10px; border-color:#fca5a5; color:#dc2626; background:#ffffff;">🗑️</button>
+          <button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); app.editCatalogProduct('${it.id}')" title="Edit Product" style="padding:2px 5px; font-size:9.5px; border-color:#cbd5e1; color:#2563eb; background:#ffffff;">✏️</button>
+          <button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); app.deleteCatalogProduct('${it.id}')" title="Delete Product" style="padding:2px 5px; font-size:9.5px; border-color:#fca5a5; color:#dc2626; background:#ffffff;">🗑️</button>
         </div>
       </div>
     `).join('');
@@ -1718,103 +1926,11 @@ const app = {
     document.getElementById('productModal').classList.add('active');
   },
 
-  syncProductToWebsite(p, isDelete = false) {
-    if (!p || typeof loadContent !== 'function' || typeof saveContent !== 'function') return;
-    try {
-      if (!CONTENT || !CONTENT.products) {
-        loadContent();
-      }
-      if (!CONTENT || !Array.isArray(CONTENT.products)) return;
-
-      if (isDelete) {
-        CONTENT.products = CONTENT.products.filter(x => x.id !== p.id && x.name.toLowerCase() !== p.name.toLowerCase());
-        saveContent();
-        return;
-      }
-
-      // Infer category from product name / specs / HSN
-      let cat = "misc";
-      const txt = (p.name + " " + (p.specs || "")).toLowerCase();
-      if (txt.includes("shoe") || txt.includes("boot") || p.hsn === "6403") cat = "shoes";
-      else if (txt.includes("glove") || txt.includes("hand") || p.hsn === "6116") cat = "gloves";
-      else if (txt.includes("spectacle") || txt.includes("goggle") || txt.includes("eye") || txt.includes("faceshield") || txt.includes("shield") || p.hsn === "9004") cat = "eye";
-      else if (txt.includes("mask") || txt.includes("respirat") || txt.includes("cartridge") || txt.includes("n95") || p.hsn === "6307") cat = "resp";
-      else if (txt.includes("helmet") || txt.includes("hard hat") || txt.includes("head") || txt.includes("cap") || p.hsn === "6506") cat = "head";
-      else if (txt.includes("ear") || txt.includes("hearing") || txt.includes("plug") || txt.includes("muff")) cat = "hear";
-      else if (txt.includes("harness") || txt.includes("fall") || txt.includes("lanyard") || txt.includes("carabiner") || txt.includes("rope")) cat = "fall";
-      else if (txt.includes("jacket") || txt.includes("vest") || txt.includes("coverall") || txt.includes("suit") || txt.includes("workwear")) cat = "wear";
-      else if (txt.includes("electr") || txt.includes("voltage") || txt.includes("mat")) cat = "elec";
-      else if (txt.includes("spill") || txt.includes("absorbent")) cat = "spill";
-      else if (txt.includes("tripod") || txt.includes("winch") || txt.includes("confined")) cat = "confined";
-
-      // Convert specs string to key-value pairs
-      const specsLines = (p.specs || '').split('\n').filter(Boolean);
-      let specsPairs = [];
-      specsLines.forEach(line => {
-        if (line.includes(':')) {
-          const parts = line.split(':');
-          specsPairs.push([parts[0].trim(), parts.slice(1).join(':').trim()]);
-        } else {
-          specsPairs.push(["Feature / Spec", line.trim()]);
-        }
-      });
-      if (specsPairs.length === 0) {
-        specsPairs = [
-          ["Product Name", p.name],
-          ["Brand / Manufacturer", p.brand || "PASS"],
-          ["HSN Code", p.hsn || "6506"],
-          ["Unit", p.unit || "Nos."],
-          ["GST Rate", (p.gst || 18) + "%"]
-        ];
-      }
-
-      let existingIdx = CONTENT.products.findIndex(x => x.id === p.id);
-      if (existingIdx === -1) {
-        existingIdx = CONTENT.products.findIndex(x => x.name.toLowerCase().trim() === p.name.toLowerCase().trim());
-      }
-
-      const websiteItem = {
-        id: p.id,
-        category: cat,
-        name: p.name,
-        brand: p.brand || "PASS",
-        img: p.image || "assets/logo.png",
-        cert: "IS / EN Certified",
-        price: parseFloat(p.price || 0),
-        rating: 4.8,
-        reviews: 15,
-        bestseller: false,
-        stock: p.leadTime && p.leadTime.toLowerCase().includes("ready") ? "in" : "low",
-        desc: p.specs ? p.specs.split('\n')[0] : p.name,
-        specs: specsPairs
-      };
-
-      if (existingIdx >= 0) {
-        CONTENT.products[existingIdx] = {
-          ...CONTENT.products[existingIdx],
-          name: p.name,
-          brand: p.brand || CONTENT.products[existingIdx].brand,
-          img: p.image || CONTENT.products[existingIdx].img,
-          price: parseFloat(p.price || 0),
-          desc: p.specs ? p.specs.split('\n')[0] : p.name,
-          specs: specsPairs
-        };
-      } else {
-        CONTENT.products.unshift(websiteItem);
-      }
-
-      saveContent();
-    } catch(e) {
-      console.warn("Could not sync product to website storage:", e);
-    }
-  },
-
   deleteCatalogProduct(id) {
     const p = this.catalog.find(x => x.id === id);
     if (!p) return;
     if (confirm(`Master Library aur Website se "${p.name}" ko permanently delete karein?`)) {
       this.catalog = this.catalog.filter(x => x.id !== id);
-      this.saveCatalog();
       this.syncProductToWebsite(p, true);
       this.renderCatalog(this.catalog);
     }
@@ -1877,18 +1993,19 @@ const app = {
     if (this.editingProductId) {
       const idx = this.catalog.findIndex(x => x.id === this.editingProductId);
       if (idx >= 0) {
-        this.catalog[idx] = { id: this.editingProductId, name, specs: specs || `${name}\nISI / EN Certified Standard Quality`, brand, brandLogo, hsn, unit, price, gst, leadTime, image };
+        this.catalog[idx] = { id: this.editingProductId, name, specs: specs || `${name}
+ISI / EN Certified Standard Quality`, brand, brandLogo, hsn, unit, price, gst, leadTime, image };
         targetProd = this.catalog[idx];
       }
       this.editingProductId = null;
     } else {
-      const newProd = { id: "prod_" + Date.now(), name, specs: specs || `${name}\nISI / EN Certified Standard Quality`, brand, brandLogo, hsn, unit, price, gst, leadTime, image };
+      const newProd = { id: "prod_" + Date.now(), name, specs: specs || `${name}
+ISI / EN Certified Standard Quality`, brand, brandLogo, hsn, unit, price, gst, leadTime, image };
       this.catalog.unshift(newProd);
       targetProd = newProd;
       this.quote.items.push({ leadTime: newProd.leadTime, image: newProd.image, title: newProd.name, specs: newProd.specs, brand: newProd.brand, brandLogo: newProd.brandLogo, hsn: newProd.hsn, unit: newProd.unit, qty: 1, price: newProd.price, gst: newProd.gst });
     }
 
-    this.saveCatalog();
     if (targetProd) {
       this.syncProductToWebsite(targetProd, false);
     }
@@ -1897,8 +2014,279 @@ const app = {
     this.renderAll();
   },
 
+  syncProductToWebsite(p, isDelete = false) {
+    if (!p || typeof loadContent !== 'function' || typeof saveContent !== 'function') return;
+    try {
+      if (!CONTENT || !CONTENT.products) {
+        loadContent();
+      }
+      if (!CONTENT || !Array.isArray(CONTENT.products)) return;
+
+      if (isDelete) {
+        CONTENT.products = CONTENT.products.filter(x => x.id !== p.id && x.name.toLowerCase() !== p.name.toLowerCase());
+        saveContent();
+        return;
+      }
+
+      let cat = "misc";
+      const txt = (p.name + " " + (p.specs || "")).toLowerCase();
+      if (txt.includes("shoe") || txt.includes("boot") || p.hsn === "6403") cat = "shoes";
+      else if (txt.includes("glove") || txt.includes("hand") || p.hsn === "6116") cat = "gloves";
+      else if (txt.includes("spectacle") || txt.includes("goggle") || txt.includes("eye") || txt.includes("faceshield") || txt.includes("shield") || p.hsn === "9004") cat = "eye";
+      else if (txt.includes("mask") || txt.includes("respirat") || txt.includes("cartridge") || txt.includes("n95") || p.hsn === "6307") cat = "resp";
+      else if (txt.includes("helmet") || txt.includes("hard hat") || txt.includes("head") || txt.includes("cap") || p.hsn === "6506") cat = "head";
+      else if (txt.includes("ear") || txt.includes("hearing") || txt.includes("plug") || txt.includes("muff")) cat = "hear";
+      else if (txt.includes("harness") || txt.includes("fall") || txt.includes("lanyard") || txt.includes("carabiner") || txt.includes("rope")) cat = "fall";
+      else if (txt.includes("jacket") || txt.includes("vest") || txt.includes("coverall") || txt.includes("suit") || txt.includes("workwear")) cat = "wear";
+      else if (txt.includes("electr") || txt.includes("voltage") || txt.includes("mat")) cat = "elec";
+      else if (txt.includes("spill") || txt.includes("absorbent")) cat = "spill";
+      else if (txt.includes("tripod") || txt.includes("winch") || txt.includes("confined")) cat = "confined";
+
+      const specsLines = (p.specs || '').split('
+').filter(Boolean);
+      let specsPairs = [];
+      specsLines.forEach(line => {
+        if (line.includes(':')) {
+          const parts = line.split(':');
+          specsPairs.push([parts[0].trim(), parts.slice(1).join(':').trim()]);
+        } else {
+          specsPairs.push(["Feature / Spec", line.trim()]);
+        }
+      });
+      if (specsPairs.length === 0) {
+        specsPairs = [
+          ["Product Name", p.name],
+          ["Brand / Manufacturer", p.brand || "PASS"],
+          ["HSN Code", p.hsn || "6506"],
+          ["Unit", p.unit || "Nos."],
+          ["GST Rate", (p.gst || 18) + "%"]
+        ];
+      }
+
+      let existingIdx = CONTENT.products.findIndex(x => x.id === p.id);
+      if (existingIdx === -1) {
+        existingIdx = CONTENT.products.findIndex(x => x.name.toLowerCase().trim() === p.name.toLowerCase().trim());
+      }
+
+      const websiteItem = {
+        id: p.id,
+        category: cat,
+        name: p.name,
+        brand: p.brand || "PASS",
+        img: p.image || "assets/logo.png",
+        cert: "IS / EN Certified",
+        price: parseFloat(p.price || 0),
+        rating: 4.8,
+        reviews: 15,
+        bestseller: false,
+        stock: p.leadTime && p.leadTime.toLowerCase().includes("ready") ? "in" : "low",
+        desc: p.specs ? p.specs.split('
+')[0] : p.name,
+        specs: specsPairs
+      };
+
+      if (existingIdx >= 0) {
+        CONTENT.products[existingIdx] = {
+          ...CONTENT.products[existingIdx],
+          name: p.name,
+          brand: p.brand || CONTENT.products[existingIdx].brand,
+          img: p.image || CONTENT.products[existingIdx].img,
+          price: parseFloat(p.price || 0),
+          desc: p.specs ? p.specs.split('
+')[0] : p.name,
+          specs: specsPairs
+        };
+      } else {
+        CONTENT.products.unshift(websiteItem);
+      }
+
+      saveContent();
+    } catch(e) {
+      console.warn("Could not sync product to website storage:", e);
+    }
+  },
+
+  /* ---------------- QUOTE & DOC MANAGEMENT ---------------- */
+  calculate15DaysValidity(baseDateStr) {
+    const d = baseDateStr ? new Date(baseDateStr) : new Date();
+    const dateFormatted = formatDateLong(d);
+    const validD = new Date(d);
+    validD.setDate(validD.getDate() + 15);
+    return { dateFormatted, validFormatted: formatDateLong(validD) };
+  },
+
+  onDateChange(newDateVal) {
+    this.quote.meta.rawDate = newDateVal;
+    const { dateFormatted, validFormatted } = this.calculate15DaysValidity(newDateVal);
+    this.quote.meta.date = dateFormatted;
+    this.quote.meta.valid = validFormatted;
+    document.getElementById('quoteValid').value = validFormatted;
+    this.renderPreview();
+  },
+
+  setDocType(type) {
+    this.quote.docType = type;
+    document.getElementById('btnDocQuote').classList.toggle('active', type === 'QUOTATION');
+    document.getElementById('btnDocPI').classList.toggle('active', type === 'PROFORMA INVOICE');
+    document.getElementById('btnDocDC').classList.toggle('active', type === 'DELIVERY CHALLAN');
+
+    const lbl = type === 'PROFORMA INVOICE' ? 'PI No.' : (type === 'DELIVERY CHALLAN' ? 'DC No.' : 'Quotation No.');
+    document.getElementById('lblDocNo').innerText = lbl;
+    document.getElementById('viewLabelDocNo').innerText = lbl;
+
+    const titleElem = document.getElementById('viewDocTypeTitle');
+    titleElem.innerText = type;
+    titleElem.className = 'quote-meta-header' + (type === 'PROFORMA INVOICE' ? ' pi-mode' : (type === 'DELIVERY CHALLAN' ? ' dc-mode' : ''));
+
+    this.renderPreview();
+  },
+
+  onStatusChange(val) {
+    this.quote.status = val;
+    this.renderStatusBadge();
+  },
+
+  renderStatusBadge() {
+    const badge = document.getElementById('activeStatusBadge');
+    const map = {
+      pending: { lbl: "🟡 Sent / Pending", cls: "status-pending" },
+      won: { lbl: "🟢 PO Received / Won", cls: "status-won" },
+      discussion: { lbl: "🔵 In Discussion", cls: "status-discussion" },
+      revised: { lbl: "🔴 Revised Quote", cls: "status-revised" },
+      closed: { lbl: "⚫ Cancelled", cls: "status-closed" }
+    };
+    const s = map[this.quote.status] || map.pending;
+    badge.className = `status-badge ${s.cls}`;
+    badge.innerText = s.lbl;
+  },
+
+  loadSampleQuote() {
+    const today = new Date();
+    const isoDate = today.toISOString().split('T')[0];
+    const { dateFormatted, validFormatted } = this.calculate15DaysValidity(isoDate);
+
+    this.quote.docType = "QUOTATION";
+    this.quote.status = "pending";
+    this.quote.meta = { no: "PC/25-26/00078", rawDate: isoDate, date: dateFormatted, valid: validFormatted, payment: "As Agreed", delivery: "Ex-Works / Pune", gst: "EXTRA" };
+    this.quote.client = { company: "M/s. ABC Industries Pvt. Ltd.", address: "Plot No. 45, MIDC Bhosari, Pune - 411026", gst: "27AAACA0000A1Z5", state: "Maharashtra (Code: 27)", name: "Mr. Rajesh Sharma (Purchase Head)" };
+    this.quote.inquiry = { ref: "RFQ/2026/08/042", date: dateFormatted, dept: "Safety & EHS Dept", project: "Annual Safety Supply / Bhosari" };
+    this.quote.pricing = { discType: "none", discVal: 0, freight: 0, pkg: 0 };
+    this.quote.signMode = "stamp";
+    this.quote.items = [
+      { leadTime: "1-2 Days", image: "https://passcorp.in/assets/products/head/ultravent_7000.png", title: "Safety Helmet", specs: "Safety Helmet
+Udyogi Ultravent 7000
+ISI Certified, Ratchet, Yellow", brand: "UDYOGI", brandLogo: "https://passcorp.in/assets/brands/udyogi.png", hsn: "6506", unit: "Nos.", price: 245.00, gst: 18 },
+      { leadTime: "1-2 Days", image: "https://passcorp.in/assets/products/head/karam_pn521.png", title: "Safety Helmet", specs: "Safety Helmet
+Karam PN 501
+ISI Certified, Manual, Yellow", brand: "KARAM", brandLogo: "https://passcorp.in/assets/brands/karam.png", hsn: "6506", unit: "Nos.", price: 190.00, gst: 18 }
+    ];
+    this.populateInputs();
+    this.setDocType("QUOTATION");
+    this.renderStatusBadge();
+    this.renderAll();
+  },
+
+  createNewQuote() {
+    const today = new Date();
+    const isoDate = today.toISOString().split('T')[0];
+    const { dateFormatted, validFormatted } = this.calculate15DaysValidity(isoDate);
+    const randomNum = String(Math.floor(10000 + Math.random() * 90000)).substring(1);
+    
+    this.quote.docType = "QUOTATION";
+    this.quote.status = "pending";
+    this.quote.meta = { no: `PC/25-26/000${randomNum}`, rawDate: isoDate, date: dateFormatted, valid: validFormatted, payment: "As Agreed", delivery: "Ex-Works / Pune", gst: "EXTRA" };
+    this.quote.client = { company: "", address: "", gst: "", state: "Maharashtra (Code: 27)", name: "" };
+    this.quote.inquiry = { ref: "", date: dateFormatted, dept: "Safety Dept", project: "" };
+    this.quote.pricing = { discType: "none", discVal: 0, freight: 0, pkg: 0 };
+    this.quote.items = [];
+
+    this.populateInputs();
+    this.setDocType("QUOTATION");
+    this.renderStatusBadge();
+    this.renderAll();
+  },
+
+  populateInputs() {
+    document.getElementById('quoteNo').value = this.quote.meta.no;
+    document.getElementById('quoteDateInput').value = this.quote.meta.rawDate;
+    document.getElementById('quoteValid').value = this.quote.meta.valid;
+    document.getElementById('quotePayment').value = this.quote.meta.payment;
+    document.getElementById('quoteDelivery').value = this.quote.meta.delivery;
+    document.getElementById('quoteGst').value = this.quote.meta.gst;
+    document.getElementById('quoteStatus').value = this.quote.status || "pending";
+
+    document.getElementById('clientCompany').value = this.quote.client.company;
+    document.getElementById('clientAddress').value = this.quote.client.address;
+    document.getElementById('clientGst').value = this.quote.client.gst;
+    document.getElementById('clientState').value = this.quote.client.state || "Maharashtra (Code: 27)";
+    document.getElementById('clientName').value = this.quote.client.name;
+
+    document.getElementById('inqRef').value = this.quote.inquiry.ref || "";
+    document.getElementById('inqDate').value = this.quote.inquiry.date || this.quote.meta.date;
+    document.getElementById('inqDept').value = this.quote.inquiry.dept || "";
+    document.getElementById('inqProject').value = this.quote.inquiry.project || "";
+
+    document.getElementById('extraDiscType').value = this.quote.pricing?.discType || "none";
+    document.getElementById('extraDiscVal').value = this.quote.pricing?.discVal || 0;
+    document.getElementById('extraFreight').value = this.quote.pricing?.freight || 0;
+    document.getElementById('extraPkg').value = this.quote.pricing?.pkg || 0;
+
+    document.getElementById('signMode').value = this.quote.signMode || "stamp";
+  },
+
+  updateMeta() {
+    this.quote.meta.no = document.getElementById('quoteNo').value;
+    this.quote.meta.valid = document.getElementById('quoteValid').value;
+    this.quote.meta.payment = document.getElementById('quotePayment').value;
+    this.quote.meta.delivery = document.getElementById('quoteDelivery').value;
+    this.quote.meta.gst = document.getElementById('quoteGst').value;
+    this.renderPreview();
+  },
+
+  updateClient() {
+    this.quote.client.company = document.getElementById('clientCompany').value;
+    this.quote.client.address = document.getElementById('clientAddress').value;
+    this.quote.client.gst = document.getElementById('clientGst').value;
+    this.quote.client.state = document.getElementById('clientState').value;
+    this.quote.client.name = document.getElementById('clientName').value;
+    this.renderPreview();
+  },
+
+  updateInquiry() {
+    this.quote.inquiry.ref = document.getElementById('inqRef').value;
+    this.quote.inquiry.date = document.getElementById('inqDate').value;
+    this.quote.inquiry.dept = document.getElementById('inqDept').value;
+    this.quote.inquiry.project = document.getElementById('inqProject').value;
+    this.renderPreview();
+  },
+
+  updatePricingExtras() {
+    this.quote.pricing = {
+      discType: document.getElementById('extraDiscType').value,
+      discVal: parseFloat(document.getElementById('extraDiscVal').value) || 0,
+      freight: parseFloat(document.getElementById('extraFreight').value) || 0,
+      pkg: parseFloat(document.getElementById('extraPkg').value) || 0
+    };
+    this.renderPreview();
+  },
+
+  onSignModeChange(val) {
+    this.quote.signMode = val;
+    this.renderSignatoryStamp();
+  },
+
+  renderSignatoryStamp() {
+    const imgElem = document.getElementById('viewSignStampImg');
+    if (this.quote.signMode === 'digital' && this.digitalSignData) {
+      imgElem.src = this.digitalSignData;
+    } else {
+      imgElem.src = 'stamp.png';
+    }
+  },
+
   addCustomItem() {
-    this.quote.items.push({ leadTime: "1-2 Days", image: "https://passcorp.in/assets/logo.png", title: "Safety Equipment", specs: "Safety Equipment\nSpecification / Model Details", brand: "PASS", brandLogo: "", hsn: "6506", unit: "Nos.", qty: 1, price: 100.00, gst: 18 });
+    this.quote.items.push({ leadTime: "1-2 Days", image: "https://passcorp.in/assets/logo.png", title: "Safety Equipment", specs: "Safety Equipment
+Specification / Model Details", brand: "PASS", brandLogo: "", hsn: "6506", unit: "Nos.", qty: 1, price: 100.00, gst: 18 });
     this.renderAll();
   },
 
@@ -1925,26 +2313,25 @@ const app = {
     document.getElementById('itemCount').innerText = this.quote.items.length;
     const container = document.getElementById('itemsEditContainer');
     if (this.quote.items.length === 0) {
-      container.innerHTML = `<div style="text-align:center; padding:20px; color:#94a3b8; font-size:12px;">No items in quotation. Select from Master Catalog above!</div>`;
+      container.innerHTML = `<div style="padding:15px; text-align:center; color:#94a3b8; font-size:11px; background:#f8fafc; border-radius:6px; border:1px dashed #cbd5e1;">Quote empty. Pick items from Master Library or click '+ Blank Row'!</div>`;
       return;
     }
+
     container.innerHTML = this.quote.items.map((item, idx) => `
       <div class="item-edit-card">
         <div class="item-edit-card-header">
-          <span class="item-badge">Item #${idx + 1}</span>
-          <button class="btn-remove-item" onclick="app.removeItem(${idx})">×</button>
-        </div>
-        <div class="form-group">
-          <label>Product Specs</label>
-          <textarea class="form-control" rows="2" oninput="app.updateItemProp(${idx}, 'specs', this.value)">${item.specs}</textarea>
+          <span class="item-badge">Item #${idx + 1} — ${item.brand || 'PASS'}</span>
+          <button class="btn-remove-item" onclick="app.removeItem(${idx})" title="Remove Item">✕</button>
         </div>
         <div class="form-grid">
-          <div class="form-group"><label>Brand</label><input type="text" class="form-control" value="${item.brand}" oninput="app.updateItemProp(${idx}, 'brand', this.value)" /></div>
-          <div class="form-group"><label>Lead Time</label><input type="text" class="form-control" value="${item.leadTime}" oninput="app.updateItemProp(${idx}, 'leadTime', this.value)" /></div>
-          <div class="form-group"><label>Qty</label><input type="number" step="1" class="form-control" value="${item.qty}" oninput="app.updateItemProp(${idx}, 'qty', this.value)" /></div>
-          <div class="form-group"><label>Price (₹)</label><input type="number" step="0.01" class="form-control" value="${item.price}" oninput="app.updateItemProp(${idx}, 'price', this.value)" /></div>
+          <div class="form-group form-grid-full"><label>Description / Specs</label><textarea class="form-control" rows="2" oninput="app.updateItemProp(${idx}, 'specs', this.value)">${item.specs}</textarea></div>
+          <div class="form-group"><label>Brand Name</label><input type="text" class="form-control" value="${item.brand}" oninput="app.updateItemProp(${idx}, 'brand', this.value)" /></div>
+          <div class="form-group"><label>Lead Time</label><input type="text" class="form-control" value="${item.leadTime || '1-2 Days'}" oninput="app.updateItemProp(${idx}, 'leadTime', this.value)" /></div>
+          <div class="form-group"><label>Qty</label><input type="number" class="form-control" value="${item.qty}" oninput="app.updateItemProp(${idx}, 'qty', this.value)" /></div>
+          <div class="form-group"><label>Rate / Price (₹)</label><input type="number" step="0.01" class="form-control" value="${item.price}" oninput="app.updateItemProp(${idx}, 'price', this.value)" /></div>
+          <div class="form-group"><label>GST %</label><input type="number" class="form-control" value="${item.gst}" oninput="app.updateItemProp(${idx}, 'gst', this.value)" /></div>
           <div class="form-group"><label>HSN</label><input type="text" class="form-control" value="${item.hsn}" oninput="app.updateItemProp(${idx}, 'hsn', this.value)" /></div>
-          <div class="form-group"><label>Unit</label><input type="text" class="form-control" value="${item.unit}" oninput="app.updateItemProp(${idx}, 'unit', this.value)" /></div>
+          <div class="form-group form-grid-full"><label>Unit</label><input type="text" class="form-control" value="${item.unit}" oninput="app.updateItemProp(${idx}, 'unit', this.value)" /></div>
         </div>
       </div>
     `).join('');
@@ -1970,7 +2357,7 @@ const app = {
     document.getElementById('viewInqProject').innerText = this.quote.inquiry.project || '-';
 
     const tbody = document.getElementById('tableBody');
-    let grandTotal = 0;
+    let subtotal = 0;
 
     let rowsHtml = "";
     if (this.quote.items.length === 0) {
@@ -1984,14 +2371,15 @@ const app = {
     } else {
       rowsHtml = this.quote.items.map((item, idx) => {
         const lineAmt = item.qty * item.price;
-        grandTotal += lineAmt;
+        subtotal += lineAmt;
         return `
           <tr class="item-row">
             <td class="td-center">${idx + 1}</td>
             <td class="td-center">${item.leadTime || '1-2 Days'}</td>
             <td class="product-thumb-cell"><img src="${item.image}" alt="" onerror="this.style.display='none'" /></td>
-            <td class="product-desc-cell"><div class="product-specs-text">${(item.specs || '').replace(/\n/g, '<br>')}</div></td>
-            <td class="brand-badge-cell td-center">${item.brandLogo ? `<img src="${item.brandLogo}" alt="${item.brand}" onerror="this.outerHTML='<strong>${item.brand}</strong>'" />` : `<strong>${item.brand}</strong>`}</td>
+            <td class="product-desc-cell"><div class="product-specs-text">${(item.specs || '').replace(/
+/g, '<br>')}</div></td>
+            <td class="brand-badge-cell td-center">${item.brandLogo ? `<img src="${item.brandLogo}" alt="${item.brand}" onerror="this.outerHTML='<strong>${item.brand}</strong>'"` : `<strong>${item.brand}</strong>`}</td>
             <td class="td-center">${item.hsn || '-'}</td>
             <td class="td-center">${item.unit || 'Nos.'}</td>
             <td class="td-center">${item.qty}</td>
@@ -2004,29 +2392,327 @@ const app = {
     }
 
     tbody.innerHTML = rowsHtml;
-    document.getElementById('viewTotalAmount').innerText = `₹${grandTotal.toFixed(2)}`;
+
+    // Calculate Discounts, Freight & Grand Total
+    const p = this.quote.pricing || { discType: "none", discVal: 0, freight: 0, pkg: 0 };
+    let discountAmt = 0;
+    if (p.discType === 'percent' && p.discVal > 0) {
+      discountAmt = (subtotal * p.discVal) / 100;
+    } else if (p.discType === 'flat' && p.discVal > 0) {
+      discountAmt = p.discVal;
+    }
+    discountAmt = Math.min(discountAmt, subtotal);
+
+    const netTaxable = Math.max(0, subtotal - discountAmt);
+    const extraCharges = (p.freight || 0) + (p.pkg || 0);
+    const grandTotal = netTaxable + extraCharges;
+
+    // Render Summary breakdown
+    const bElem = document.getElementById('viewSummaryBreakdown');
+    let breakdownHtml = "";
+    if (discountAmt > 0 || extraCharges > 0) {
+      breakdownHtml += `<div class="breakdown-line"><span>Subtotal:</span><span>₹${subtotal.toFixed(2)}</span></div>`;
+      if (discountAmt > 0) {
+        breakdownHtml += `<div class="breakdown-line" style="color:#b91c1c;"><span>Discount (${p.discType === 'percent' ? p.discVal + '%' : 'Cash'}):</span><span>-₹${discountAmt.toFixed(2)}</span></div>`;
+      }
+      if (p.freight > 0) {
+        breakdownHtml += `<div class="breakdown-line"><span>Freight / Transport:</span><span>+₹${p.freight.toFixed(2)}</span></div>`;
+      }
+      if (p.pkg > 0) {
+        breakdownHtml += `<div class="breakdown-line"><span>Packaging & Handling:</span><span>+₹${p.pkg.toFixed(2)}</span></div>`;
+      }
+    }
+    breakdownHtml += `
+      <div class="breakdown-line grand-total">
+        <span>Grand Total (₹)</span>
+        <span id="viewTotalAmount">₹${grandTotal.toFixed(2)}</span>
+      </div>
+    `;
+    bElem.innerHTML = breakdownHtml;
+
     document.getElementById('viewAmountWords').innerText = numberToIndianWords(grandTotal);
+    this.renderSignatoryStamp();
   },
 
+  /* ---------------- HISTORY & ARCHIVES ---------------- */
+  loadHistory() {
+    try {
+      const saved = localStorage.getItem('PASS_SAVED_QUOTES');
+      this.history = saved ? JSON.parse(saved) : [];
+    } catch(e) { this.history = []; }
+    document.getElementById('topHistoryCount').innerText = `${this.history.length}`;
+  },
+
+  saveHistory() {
+    try { localStorage.setItem('PASS_SAVED_QUOTES', JSON.stringify(this.history)); } catch(e){}
+    document.getElementById('topHistoryCount').innerText = `${this.history.length}`;
+  },
+
+  saveCurrentQuoteToHistory() {
+    const qNo = this.quote.meta.no || "PC/25-26/0001";
+    const comp = this.quote.client.company || "Valued Customer";
+    
+    let subtotal = 0;
+    this.quote.items.forEach(it => { subtotal += it.qty * it.price; });
+    const p = this.quote.pricing || { discType: "none", discVal: 0, freight: 0, pkg: 0 };
+    let discountAmt = (p.discType === 'percent') ? (subtotal * p.discVal) / 100 : (p.discType === 'flat' ? p.discVal : 0);
+    const grandTotal = Math.max(0, subtotal - discountAmt) + (p.freight || 0) + (p.pkg || 0);
+
+    const record = {
+      id: "quote_" + Date.now(),
+      savedAt: new Date().toISOString(),
+      quoteData: JSON.parse(JSON.stringify(this.quote)),
+      quoteNo: qNo,
+      company: comp,
+      date: this.quote.meta.date,
+      docType: this.quote.docType,
+      status: this.quote.status,
+      itemsCount: this.quote.items.length,
+      total: grandTotal
+    };
+
+    const existingIdx = this.history.findIndex(x => x.quoteNo === qNo);
+    if (existingIdx >= 0) {
+      this.history[existingIdx] = record;
+    } else {
+      this.history.unshift(record);
+    }
+
+    this.saveHistory();
+    alert(`✓ ${this.quote.docType} "${qNo}" (${comp}) successfully saved to Record History!`);
+  },
+
+  openHistoryModal() {
+    this.filterHistory("");
+    document.getElementById('historyModal').classList.add('active');
+  },
+
+  closeHistoryModal() {
+    document.getElementById('historyModal').classList.remove('active');
+  },
+
+  filterHistory(query = "") {
+    const statusFilter = document.getElementById('historyFilterStatus')?.value || "all";
+    const q = (query || "").toLowerCase().trim();
+
+    const filtered = this.history.filter(h => {
+      const matchQuery = !q || h.quoteNo.toLowerCase().includes(q) || h.company.toLowerCase().includes(q) || h.date.toLowerCase().includes(q);
+      const matchStatus = (statusFilter === 'all') || (h.status === statusFilter);
+      return matchQuery && matchStatus;
+    });
+
+    const container = document.getElementById('historyListContainer');
+    if (filtered.length === 0) {
+      container.innerHTML = `<div style="padding:24px; text-align:center; color:#94a3b8; font-size:12px;">No quotation records found. Click '💾 Save Record' in top bar to archive quotes!</div>`;
+      return;
+    }
+
+    const statusMap = {
+      pending: { lbl: "🟡 Sent", cls: "status-pending" },
+      won: { lbl: "🟢 Won", cls: "status-won" },
+      discussion: { lbl: "🔵 In Discuss", cls: "status-discussion" },
+      revised: { lbl: "🔴 Revised", cls: "status-revised" },
+      closed: { lbl: "⚫ Closed", cls: "status-closed" }
+    };
+
+    container.innerHTML = filtered.map(h => {
+      const s = statusMap[h.status] || statusMap.pending;
+      return `
+        <div class="history-item">
+          <div class="history-main-info">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="history-quote-no">${h.quoteNo}</span>
+              <span class="status-badge ${s.cls}">${s.lbl}</span>
+              <span style="font-size:10px; color:#64748b; font-weight:700; text-transform:uppercase;">${h.docType || 'QUOTE'}</span>
+            </div>
+            <div class="history-company">${h.company}</div>
+            <div class="history-date">📅 ${h.date} &nbsp;•&nbsp; 🛒 ${h.itemsCount} Items</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="history-amount">₹${(h.total || 0).toFixed(2)}</div>
+            <div class="history-actions" style="margin-top:4px;">
+              <button class="btn btn-primary btn-sm" onclick="app.loadQuoteFromHistory('${h.id}')" title="Load Quote">👁️ Load</button>
+              <button class="btn btn-outline btn-sm" onclick="app.duplicateQuoteFromHistory('${h.id}')" title="Duplicate Quote" style="color:#1e40af; border-color:#93c5fd;">📋 Duplicate</button>
+              <button class="btn btn-outline btn-sm" onclick="app.deleteQuoteFromHistory('${h.id}')" title="Delete" style="color:#dc2626; border-color:#fca5a5;">🗑️</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  },
+
+  loadQuoteFromHistory(id) {
+    const rec = this.history.find(x => x.id === id);
+    if (!rec || !rec.quoteData) return;
+    this.quote = JSON.parse(JSON.stringify(rec.quoteData));
+    this.populateInputs();
+    this.setDocType(this.quote.docType || "QUOTATION");
+    this.renderStatusBadge();
+    this.renderAll();
+    this.closeHistoryModal();
+  },
+
+  duplicateQuoteFromHistory(id) {
+    const rec = this.history.find(x => x.id === id);
+    if (!rec || !rec.quoteData) return;
+    this.quote = JSON.parse(JSON.stringify(rec.quoteData));
+    
+    const today = new Date();
+    const isoDate = today.toISOString().split('T')[0];
+    const { dateFormatted, validFormatted } = this.calculate15DaysValidity(isoDate);
+    const randomNum = String(Math.floor(10000 + Math.random() * 90000)).substring(1);
+    
+    this.quote.meta.no = `PC/25-26/000${randomNum}`;
+    this.quote.meta.rawDate = isoDate;
+    this.quote.meta.date = dateFormatted;
+    this.quote.meta.valid = validFormatted;
+    this.quote.status = "pending";
+
+    this.populateInputs();
+    this.setDocType(this.quote.docType || "QUOTATION");
+    this.renderStatusBadge();
+    this.renderAll();
+    this.closeHistoryModal();
+    alert(`✓ Quote duplicated as "${this.quote.meta.no}" with today's date!`);
+  },
+
+  deleteQuoteFromHistory(id) {
+    const rec = this.history.find(x => x.id === id);
+    if (!rec) return;
+    if (confirm(`Record History se "${rec.quoteNo} - ${rec.company}" ko delete karein?`)) {
+      this.history = this.history.filter(x => x.id !== id);
+      this.saveHistory();
+      this.filterHistory(document.getElementById('historySearchInput')?.value || "");
+    }
+  },
+
+  /* ---------------- SALES ANALYTICS ---------------- */
+  openAnalyticsModal() {
+    let totalQuotes = this.history.length;
+    let totalPipelineValue = 0;
+    let totalWonValue = 0;
+    let wonCount = 0;
+    const brandCounts = {};
+
+    this.history.forEach(h => {
+      const amt = h.total || 0;
+      totalPipelineValue += amt;
+      if (h.status === 'won') {
+        totalWonValue += amt;
+        wonCount++;
+      }
+      if (h.quoteData && Array.isArray(h.quoteData.items)) {
+        h.quoteData.items.forEach(it => {
+          const b = it.brand || 'PASS';
+          brandCounts[b] = (brandCounts[b] || 0) + (it.qty || 1);
+        });
+      }
+    });
+
+    const winRate = totalQuotes > 0 ? Math.round((wonCount / totalQuotes) * 100) : 0;
+
+    document.getElementById('anTotalQuotes').innerText = `${totalQuotes}`;
+    document.getElementById('anTotalValue').innerText = `₹${totalPipelineValue.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
+    document.getElementById('anWonValue').innerText = `₹${totalWonValue.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
+    document.getElementById('anWinRate').innerText = `${winRate}%`;
+
+    const topBrands = Object.entries(brandCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+    const topContainer = document.getElementById('anTopItemsList');
+    if (topBrands.length === 0) {
+      topContainer.innerHTML = `<div style="color:#94a3b8; font-size:11px;">Save quotations to view analytics breakdown.</div>`;
+    } else {
+      topContainer.innerHTML = topBrands.map(([brand, count], idx) => `
+        <div style="display:flex; justify-content:space-between; padding:4px 8px; background:#f8fafc; border-radius:4px;">
+          <span><strong>#${idx + 1} ${brand}</strong></span>
+          <span style="font-weight:700; color:#1e40af;">${count} Units Quoted</span>
+        </div>
+      `).join('');
+    }
+
+    document.getElementById('analyticsModal').classList.add('active');
+  },
+
+  closeAnalyticsModal() {
+    document.getElementById('analyticsModal').classList.remove('active');
+  },
+
+  /* ---------------- DIGITAL SIGNATURE CANVAS ---------------- */
+  loadSavedSignature() {
+    try {
+      this.digitalSignData = localStorage.getItem('PASS_DIGITAL_SIGN');
+    } catch(e){}
+  },
+
+  initSignCanvas() {
+    const canvas = document.getElementById('signCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let isDrawing = false;
+
+    ctx.lineWidth = 2.5;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#0c2340';
+
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return { x: clientX - rect.left, y: clientY - rect.top };
+    }
+
+    canvas.addEventListener('mousedown', (e) => { isDrawing = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); });
+    canvas.addEventListener('mousemove', (e) => { if (!isDrawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); });
+    canvas.addEventListener('mouseup', () => { isDrawing = false; });
+    canvas.addEventListener('mouseleave', () => { isDrawing = false; });
+
+    // Touch
+    canvas.addEventListener('touchstart', (e) => { e.preventDefault(); isDrawing = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); }, { passive: false });
+    canvas.addEventListener('touchmove', (e) => { e.preventDefault(); if (!isDrawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); }, { passive: false });
+    canvas.addEventListener('touchend', () => { isDrawing = false; });
+  },
+
+  openSignModal() {
+    document.getElementById('signModal').classList.add('active');
+    setTimeout(() => { this.clearSignCanvas(); }, 100);
+  },
+
+  closeSignModal() {
+    document.getElementById('signModal').classList.remove('active');
+  },
+
+  clearSignCanvas() {
+    const canvas = document.getElementById('signCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  },
+
+  saveSignCanvas() {
+    const canvas = document.getElementById('signCanvas');
+    if (!canvas) return;
+    this.digitalSignData = canvas.toDataURL('image/png');
+    try { localStorage.setItem('PASS_DIGITAL_SIGN', this.digitalSignData); } catch(e){}
+    this.quote.signMode = 'digital';
+    document.getElementById('signMode').value = 'digital';
+    this.renderSignatoryStamp();
+    this.closeSignModal();
+  },
+
+  /* ---------------- PDF PRINT & WHATSAPP ---------------- */
   getPdfFileName() {
     let comp = (this.quote.client.company || '').trim();
-    // Remove "M/s.", "M/s", "Messrs" from beginning
     comp = comp.replace(/^(m\/s\.?|messrs\.?)\s*/i, '').trim();
-    // Take first company keyword
     let words = comp.split(/[\s,.-]+/).filter(Boolean);
     let rawWord = words[0] || 'Quotation';
-    // Capitalize first letter, lower remaining (e.g. abc -> Abc, TATA -> Tata)
     let cleanComp = rawWord.charAt(0).toUpperCase() + rawWord.slice(1).toLowerCase();
 
-    // Parse Quote Number: e.g. PC/25-26/00078 -> 2526-078
     let quoteNo = (this.quote.meta.no || '').trim();
-    let cleanNo = "Quote";
+    let cleanNo = "Doc";
     if (quoteNo) {
       const match = quoteNo.match(/(\d{2})[-/](\d{2})[-/](\d+)/);
       if (match) {
-        const year = match[1] + match[2]; // "2526"
+        const year = match[1] + match[2];
         const rawNum = match[3];
-        // Format to 3 digits (e.g. "00078" -> "078", "78" -> "078")
         const numFormatted = rawNum.length > 3 ? rawNum.slice(-3) : rawNum.padStart(3, '0');
         cleanNo = `${year}-${numFormatted}`;
       } else {
@@ -2034,7 +2720,8 @@ const app = {
       }
     }
 
-    return `${cleanComp}-${cleanNo}`;
+    const docPrefix = this.quote.docType === 'PROFORMA INVOICE' ? 'PI-' : (this.quote.docType === 'DELIVERY CHALLAN' ? 'DC-' : '');
+    return `${docPrefix}${cleanComp}-${cleanNo}`;
   },
 
   printPdf() {
@@ -2049,19 +2736,44 @@ const app = {
 
   shareWhatsApp() {
     const clientMob = (this.quote.client.mob || '').replace(/[^0-9]/g, '');
-    let text = `*PASS CORP. — ENTERPRISE QUOTATION*\n`;
-    text += `*Quotation No:* ${this.quote.meta.no}\n*Date:* ${this.quote.meta.date}\n*Valid Upto:* ${this.quote.meta.valid}\n\n`;
-    text += `*To:* ${this.quote.client.company || 'Valued Customer'}\n`;
-    if (this.quote.inquiry.ref) text += `*Inquiry Ref:* ${this.quote.inquiry.ref}\n`;
-    if (this.quote.client.name) text += `*Attn:* ${this.quote.client.name}\n\n`;
-    text += `*Items:*\n`;
-    let grandTotal = 0;
+    let text = `*PASS CORP. — ${this.quote.docType || 'ENTERPRISE QUOTATION'}*
+`;
+    text += `*Doc No:* ${this.quote.meta.no}
+*Date:* ${this.quote.meta.date}
+*Valid Upto:* ${this.quote.meta.valid}
+
+`;
+    text += `*To:* ${this.quote.client.company || 'Valued Customer'}
+`;
+    if (this.quote.inquiry.ref) text += `*Inquiry Ref:* ${this.quote.inquiry.ref}
+`;
+    if (this.quote.client.name) text += `*Attn:* ${this.quote.client.name}
+
+`;
+    text += `*Items:*
+`;
+    let subtotal = 0;
     this.quote.items.forEach((it, idx) => {
       const amt = it.qty * it.price;
-      grandTotal += amt;
-      text += `${idx + 1}. ${it.specs.split('\n')[0]} — ${it.qty} ${it.unit} @ ₹${it.price} = ₹${amt.toFixed(2)}\n`;
+      subtotal += amt;
+      text += `${idx + 1}. ${it.specs.split('
+')[0]} — ${it.qty} ${it.unit} @ ₹${it.price} = ₹${amt.toFixed(2)}
+`;
     });
-    text += `\n*Total Amount:* ₹${grandTotal.toFixed(2)} (GST ${this.quote.meta.gst})\n*Delivery:* ${this.quote.meta.delivery}\n\n*PASS CORP.* | Mob: +91 97676 72497`;
+    
+    const p = this.quote.pricing || { discType: "none", discVal: 0, freight: 0, pkg: 0 };
+    let discountAmt = (p.discType === 'percent') ? (subtotal * p.discVal) / 100 : (p.discType === 'flat' ? p.discVal : 0);
+    const grandTotal = Math.max(0, subtotal - discountAmt) + (p.freight || 0) + (p.pkg || 0);
+
+    if (discountAmt > 0) text += `*Discount:* -₹${discountAmt.toFixed(2)}
+`;
+    if (p.freight > 0) text += `*Freight:* +₹${p.freight.toFixed(2)}
+`;
+    text += `
+*Total Amount:* ₹${grandTotal.toFixed(2)} (GST ${this.quote.meta.gst})
+*Delivery:* ${this.quote.meta.delivery}
+
+*PASS CORP.* | Mob: +91 97676 72497`;
     const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
     window.open(url, '_blank');
   }
