@@ -314,6 +314,24 @@
       }
     }
 
+  
+    function triggerPdfDownload(e) {
+      const pdfUrl = 'assets/Pass_Corp_Product_Catalogue.pdf';
+      try {
+        const link = document.createElement('a');
+        link.href = pdfUrl;
+        link.download = 'Pass_Corp_Product_Catalogue.pdf';
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch(err) {}
+      // Fallback direct redirection so mobile Safari/Chrome opens PDF directly
+      setTimeout(() => {
+        window.location.href = pdfUrl;
+      }, 50);
+    }
+
   </script>
 
   <!-- html2pdf.js for 1-Click Client-Side Corporate PDF Catalog Generator -->
@@ -536,6 +554,24 @@
           </div>
         `;
       }
+    }
+
+  
+    function triggerPdfDownload(e) {
+      const pdfUrl = 'assets/Pass_Corp_Product_Catalogue.pdf';
+      try {
+        const link = document.createElement('a');
+        link.href = pdfUrl;
+        link.download = 'Pass_Corp_Product_Catalogue.pdf';
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch(err) {}
+      // Fallback direct redirection so mobile Safari/Chrome opens PDF directly
+      setTimeout(() => {
+        window.location.href = pdfUrl;
+      }, 50);
     }
 
   </script>
@@ -4548,7 +4584,7 @@
           <span>Explore Products</span>
           <span>&rarr;</span>
         </a>
-        <a href="assets/Pass_Corp_Product_Catalogue.pdf" download="Pass_Corp_Product_Catalogue.pdf" target="_blank" class="cta-download">
+        <a href="assets/Pass_Corp_Product_Catalogue.pdf" download="Pass_Corp_Product_Catalogue.pdf" onclick="triggerPdfDownload(event)" class="cta-download">
           <span>📥 Download Catalogue</span>
         </a>
       </div>
@@ -5044,7 +5080,12 @@
             <input type="text" id="catalogSearchInput" placeholder="Search product model, brand (Wild Bull, Udyogi, Karam, Honeywell, JCB...), or standard..." oninput="filterCatalog()" />
             <button type="button" id="clearSearchBtn" onclick="clearCatalogSearch()" style="display:none;">✕</button>
           </div>
-          <div class="catalog-status-bar">
+          <div style="margin-bottom: 12px; display: flex; justify-content: flex-end;">
+          <a href="assets/Pass_Corp_Product_Catalogue.pdf" download="Pass_Corp_Product_Catalogue.pdf" onclick="triggerPdfDownload(event)" class="btn-catalog-pdf" style="display:inline-flex; align-items:center; gap:8px; padding:10px 18px; background:linear-gradient(135deg, #0f2847, #1a3a8f); border:1.5px solid #38bdf8; border-radius:10px; color:#38bdf8; font-size:13.5px; font-weight:800; text-decoration:none; box-shadow:0 4px 12px rgba(56,189,248,0.2);">
+            📥 Download 17-Page PDF Catalogue (2.7 MB)
+          </a>
+        </div>
+        <div class="catalog-status-bar">
             <span id="catalogCountText">Showing <strong>23 products</strong> in Safety Shoes</span>
             <a href="https://wa.me/919767672497?text=Hello%20Pass%20Corp%2C%20I%20need%20a%20quotation%20for%20safety%20products." target="_blank" class="quick-rfq-link">💬 Instant WhatsApp RFQ</a>
           </div>
@@ -10202,6 +10243,24 @@ Location / MIDC:`;
           </div>
         `;
       }
+    }
+
+  
+    function triggerPdfDownload(e) {
+      const pdfUrl = 'assets/Pass_Corp_Product_Catalogue.pdf';
+      try {
+        const link = document.createElement('a');
+        link.href = pdfUrl;
+        link.download = 'Pass_Corp_Product_Catalogue.pdf';
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch(err) {}
+      // Fallback direct redirection so mobile Safari/Chrome opens PDF directly
+      setTimeout(() => {
+        window.location.href = pdfUrl;
+      }, 50);
     }
 
   </script>
