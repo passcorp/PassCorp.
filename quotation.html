@@ -2074,6 +2074,18 @@ window.addEventListener('beforeprint', () => {
   }
 });
 
+// Live 3-Way Synchronization Listener
+window.addEventListener('storage', (e) => {
+  if (e.key === 'passCorpContent_v8' || (typeof STORAGE_KEY !== 'undefined' && e.key === STORAGE_KEY)) {
+    if (typeof loadContent === 'function') {
+      try { loadContent(); } catch(err){}
+    }
+    if (typeof app !== 'undefined' && app.loadCatalog) {
+      app.loadCatalog();
+    }
+  }
+});
+
 document.addEventListener('DOMContentLoaded', () => { app.init(); });
 </script>
 

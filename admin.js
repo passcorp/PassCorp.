@@ -408,5 +408,13 @@ function renderAdminHeader(){
 }
 
 /* ---------------- INIT ---------------- */
+// Live 3-Way Synchronization Listener
+window.addEventListener("storage", (e) => {
+  if (e.key === STORAGE_KEY || e.key === "passCorpContent_v8") {
+    CONTENT = loadContent();
+    render();
+  }
+});
+
 CONTENT = loadContent();
 render();
