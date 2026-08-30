@@ -4595,6 +4595,106 @@
       }
     }
 
+  
+    /* =========================================================================
+       CRITICAL MOBILE FIX FOR .p-catalog-grid AND LAYOUT CONTAINERS
+       ========================================================================= */
+    @media (max-width: 768px) {
+      /* Force all major containers to 100% width vertical flex */
+      .catalog-layout-container,
+      .matchmaker-layout-grid,
+      .contact-container,
+      .about-container,
+      .footer-grid,
+      .header-container {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        gap: 16px !important;
+      }
+
+      .catalog-sidebar-v,
+      .mm-vertical-sidebar,
+      .catalog-main-area,
+      .mm-right-panel {
+        width: 100% !important;
+        max-width: 100% !important;
+        position: static !important;
+        box-sizing: border-box !important;
+      }
+
+      /* 100% Mobile Full-Width Single-Column Product Cards */
+      .p-catalog-grid,
+      #catalogGrid {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        gap: 14px !important;
+        box-sizing: border-box !important;
+      }
+
+      .p-catalog-card {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        background: #ffffff !important;
+        border: 1.5px solid #e2e8f0 !important;
+        border-radius: 16px !important;
+        padding: 16px !important;
+        box-sizing: border-box !important;
+        gap: 12px !important;
+      }
+
+      .p-card-img-wrap {
+        height: 180px !important;
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: #f8fafc !important;
+        border-radius: 12px !important;
+      }
+
+      .p-card-img-wrap img {
+        max-height: 160px !important;
+        max-width: 90% !important;
+        object-fit: contain !important;
+      }
+
+      .p-card-title {
+        font-size: 16px !important;
+        font-weight: 800 !important;
+        color: #0f172a !important;
+      }
+
+      .p-card-desc {
+        font-size: 13px !important;
+        color: #475569 !important;
+        line-height: 1.4 !important;
+      }
+
+      .p-card-actions {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 8px !important;
+        width: 100% !important;
+      }
+
+      .p-btn-specs, .p-btn-rfq {
+        flex: 1 !important;
+        padding: 11px 8px !important;
+        font-size: 13px !important;
+        font-weight: 800 !important;
+        border-radius: 8px !important;
+        text-align: center !important;
+        justify-content: center !important;
+      }
+    }
+
   </style>
 </head>
 <body>
