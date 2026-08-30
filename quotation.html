@@ -392,15 +392,15 @@ body {
 .preview-title { font-size: 12.5px; font-weight: 700; color: #0c2340; }
 
 /* ============================================================
-   A4 SHEET - ENTERPRISE FORMAT
+   A4 SHEET - PIXEL PERFECT SINGLE PAGE & MULTI-PAGE ADAPTIVE
    ============================================================ */
 .a4-sheet {
   width: 210mm;
   min-height: 297mm;
   background: #ffffff;
   color: #000000;
-  padding: 8mm 8mm 8mm 8mm;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  padding: 6mm 6mm 6mm 6mm;
+  box-shadow: 0 4px 25px rgba(0,0,0,0.12);
   display: flex;
   flex-direction: column;
   position: relative;
@@ -410,7 +410,7 @@ body {
 }
 
 .top-industrial-accent {
-  height: 4px;
+  height: 3.5px;
   background: linear-gradient(90deg, #0c2340 0%, #1d4ed8 65%, #f59e0b 65%, #f59e0b 100%);
   width: 100%;
   margin-bottom: 2px;
@@ -426,9 +426,9 @@ body {
 
 .quote-header-grid {
   display: grid;
-  grid-template-columns: 155px 1fr 190px;
+  grid-template-columns: 140px 1fr 185px;
   border-bottom: 1.5px solid #000000;
-  min-height: 115px;
+  min-height: 98px;
   background: #ffffff;
 }
 
@@ -437,19 +437,19 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 6px;
+  padding: 6px 4px;
   background: #ffffff;
 }
 
 .quote-logo-col img {
-  width: 145px;
-  max-height: 98px;
+  width: 130px;
+  max-height: 84px;
   object-fit: contain;
   display: block;
 }
 
 .quote-company-col {
-  padding: 6px 12px;
+  padding: 4px 8px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -459,44 +459,44 @@ body {
 }
 
 .company-main-title {
-  font-size: 23px;
+  font-size: 21px;
   font-weight: 900;
   color: #0c2340;
-  letter-spacing: 1.2px;
+  letter-spacing: 1px;
   font-family: Arial Black, Impact, sans-serif;
-  line-height: 1.1;
+  line-height: 1.05;
 }
 
 .company-scope-banner {
   background: #0c2340;
   color: #ffffff;
-  font-size: 7.5px;
+  font-size: 7px;
   font-weight: 800;
-  letter-spacing: 0.8px;
-  padding: 2px 9px;
+  letter-spacing: 0.6px;
+  padding: 1.5px 7px;
   border-radius: 2px;
-  margin: 3.5px 0;
+  margin: 2.5px 0;
   text-transform: uppercase;
   display: inline-block;
 }
 
 .company-details-text {
-  font-size: 8px;
-  line-height: 1.35;
+  font-size: 7.5px;
+  line-height: 1.3;
   color: #000000;
   font-weight: 600;
 }
 
 .company-credentials-row {
-  margin-top: 3px;
-  font-size: 7px;
+  margin-top: 2px;
+  font-size: 6.5px;
   font-weight: 700;
   color: #1e3a8a;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   border-top: 0.5px solid #e2e8f0;
-  padding-top: 2px;
+  padding-top: 1.5px;
 }
 
 .quote-meta-col {
@@ -508,30 +508,30 @@ body {
   background: #fef08a;
   border-bottom: 1px solid #000000;
   text-align: center;
-  font-size: 13px;
+  font-size: 11.5px;
   font-weight: 900;
-  padding: 3px 0;
-  letter-spacing: 1.5px;
+  padding: 2.5px 0;
+  letter-spacing: 1.2px;
   color: #000000;
 }
 
 .quote-meta-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 8.5px;
+  font-size: 8px;
   flex: 1;
 }
 
 .quote-meta-table td {
-  padding: 2.5px 5px;
-  border-bottom: 0.5px solid #d1d5db;
+  padding: 2px 4px;
+  border-bottom: 0.5px solid #e2e8f0;
 }
 
 .quote-meta-table td.meta-label {
   font-weight: 600;
   color: #4b5563;
   width: 48%;
-  font-size: 8px;
+  font-size: 7.5px;
 }
 
 .quote-meta-table td.meta-val {
@@ -543,49 +543,49 @@ body {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
   border-bottom: 1.5px solid #000000;
-  min-height: 85px;
+  min-height: 72px;
 }
 
 .client-buyer-col {
   border-right: 1.5px solid #000000;
-  padding: 5px 8px;
+  padding: 4px 6px;
   display: flex;
   flex-direction: column;
 }
 
 .client-inquiry-col {
-  padding: 5px 8px;
+  padding: 4px 6px;
   display: flex;
   flex-direction: column;
   background: #fafafa;
 }
 
 .client-section-title {
-  font-size: 8.5px;
+  font-size: 8px;
   font-weight: 900;
   color: #0c2340;
   text-transform: uppercase;
-  margin-bottom: 3px;
+  margin-bottom: 2px;
   border-bottom: 0.5px solid #cbd5e1;
   padding-bottom: 1px;
 }
 
 .client-table {
   width: 100%;
-  font-size: 8.5px;
+  font-size: 8px;
   border-collapse: collapse;
 }
 
 .client-table td {
-  padding: 1.5px 2px;
+  padding: 1px 2px;
   vertical-align: top;
 }
 
 .client-table td.c-label {
-  width: 70px;
+  width: 65px;
   font-weight: 600;
   color: #374151;
-  font-size: 8px;
+  font-size: 7.5px;
 }
 
 .client-table td.c-val {
@@ -597,17 +597,17 @@ body {
   background: #ffffff !important;
   color: #000000 !important;
   text-align: center;
-  font-size: 8px;
+  font-size: 7.5px;
   font-weight: 900;
   letter-spacing: 2px;
-  padding: 3.5px 0;
+  padding: 2.5px 0;
   border-bottom: 1.5px solid #000000;
 }
 
 .quote-products-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 8.5px;
+  font-size: 8px;
   flex: 1;
 }
 
@@ -616,9 +616,9 @@ body {
   color: #ffffff;
   border: 1px solid #000000;
   border-top: none;
-  font-size: 8px;
+  font-size: 7.5px;
   font-weight: 800;
-  padding: 4px 2px;
+  padding: 3px 2px;
   text-align: center;
 }
 
@@ -626,12 +626,12 @@ body {
   border-right: 1px solid #000000;
   border-left: 1px solid #000000;
   border-bottom: 0.5px solid #e5e7eb;
-  padding: 4px 4px;
+  padding: 3px 4px;
   vertical-align: middle;
 }
 
 .quote-products-table tr.item-row {
-  min-height: 75px;
+  min-height: 58px;
 }
 
 .quote-products-table tr.item-row:last-child td {
@@ -643,24 +643,24 @@ body {
 
 .product-thumb-cell {
   text-align: center;
-  padding: 4px 2px !important;
+  padding: 3px 2px !important;
 }
 
 .product-thumb-cell img {
-  width: 70px;
-  height: 70px;
+  width: 54px;
+  height: 54px;
   object-fit: contain;
   display: block;
   margin: 0 auto;
   background: #ffffff;
-  border: 0.5px solid #f1f5f9;
+  border: 0.5px solid #e2e8f0;
   border-radius: 4px;
 }
 
 .product-desc-cell {
-  line-height: 1.35;
+  line-height: 1.3;
   word-break: break-word;
-  padding: 4px 6px !important;
+  padding: 3px 5px !important;
 }
 
 .product-specs-text {
@@ -671,35 +671,28 @@ body {
 }
 
 .brand-badge-cell img {
-  max-width: 50px;
-  max-height: 22px;
+  max-width: 46px;
+  max-height: 20px;
   object-fit: contain;
   display: block;
   margin: 0 auto;
 }
 
-.empty-fill-row td {
-  height: 28px;
-  border-right: 1px solid #000000;
-  border-left: 1px solid #000000;
-  border-bottom: none;
-}
-
 .total-summary-row {
   display: grid;
-  grid-template-columns: 1fr 200px;
+  grid-template-columns: 1fr 190px;
   border-top: 1.5px solid #000000;
   border-bottom: 1.5px solid #000000;
-  min-height: 32px;
+  min-height: 26px;
 }
 
 .words-col {
   border-right: 1.5px solid #000000;
-  padding: 5px 10px;
+  padding: 3px 8px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  font-size: 8.5px;
+  font-size: 8px;
 }
 
 .words-label { font-weight: 700; color: #000000; }
@@ -710,8 +703,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 5px 12px;
-  font-size: 10px;
+  padding: 3px 10px;
+  font-size: 9.5px;
   font-weight: 900;
   color: #000000;
 }
@@ -720,25 +713,25 @@ body {
   display: grid;
   grid-template-columns: 1.2fr 1fr 1fr;
   border-bottom: 1.5px solid #000000;
-  min-height: 105px;
+  min-height: 88px;
 }
 
-.terms-col { border-right: 1.5px solid #000000; padding: 5px 8px; }
+.terms-col { border-right: 1.5px solid #000000; padding: 4px 6px; }
 
 .footer-box-title {
   background: #e2e8f0;
   border: 1px solid #000000;
   text-align: center;
-  font-size: 7.5px;
+  font-size: 7px;
   font-weight: 900;
-  padding: 1.5px 0;
-  margin-bottom: 4px;
+  padding: 1px 0;
+  margin-bottom: 3px;
 }
 
 .terms-list {
   list-style: none;
-  font-size: 7px;
-  line-height: 1.35;
+  font-size: 6.5px;
+  line-height: 1.3;
   color: #000000;
 }
 
@@ -747,15 +740,15 @@ body {
   font-weight: 900;
 }
 
-.bank-col { border-right: 1.5px solid #000000; padding: 5px 8px; }
+.bank-col { border-right: 1.5px solid #000000; padding: 4px 6px; }
 
-.bank-table { width: 100%; font-size: 7.5px; border-collapse: collapse; }
-.bank-table td { padding: 1px 2px; }
-.bank-table td.b-label { font-weight: 600; color: #374151; width: 60px; font-size: 7px; }
+.bank-table { width: 100%; font-size: 7px; border-collapse: collapse; }
+.bank-table td { padding: 0.5px 2px; }
+.bank-table td.b-label { font-weight: 600; color: #374151; width: 55px; font-size: 6.5px; }
 .bank-table td.b-val { font-weight: 800; color: #000000; }
 
 .signatory-col {
-  padding: 5px 8px;
+  padding: 4px 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -763,40 +756,78 @@ body {
   text-align: center;
 }
 
-.for-company-title { font-size: 8px; font-weight: 900; color: #0c2340; }
-.sign-stamp-img { width: 70px; height: 70px; object-fit: contain; margin: 1px 0; }
-.signatory-label { font-size: 7.5px; font-weight: 800; border-top: 0.5px solid #000000; width: 85%; padding-top: 1px; }
+.for-company-title { font-size: 7.5px; font-weight: 900; color: #0c2340; }
+.sign-stamp-img { width: 56px; height: 56px; object-fit: contain; margin: 1px 0; }
+.signatory-label { font-size: 7px; font-weight: 800; border-top: 0.5px solid #000000; width: 85%; padding-top: 1px; }
 
 .bottom-safety-strip {
   background: #ffffff;
   color: #000000;
   text-align: center;
-  font-size: 7.5px;
+  font-size: 7px;
   font-weight: 800;
-  padding: 3.5px 0;
+  padding: 2.5px 0;
   letter-spacing: 0.5px;
 }
 
 @media print {
-  @page { size: A4 portrait; margin: 0; }
+  @page {
+    size: A4 portrait;
+    margin: 4mm 4mm 4mm 4mm;
+  }
+  
   html, body {
     background: #ffffff !important;
     color: #000000 !important;
-    width: 210mm !important;
-    height: 297mm !important;
+    width: 100% !important;
+    height: auto !important;
     padding: 0 !important;
     margin: 0 !important;
   }
+
   .auth-overlay, .app-header, .sidebar-editor, .preview-toolbar, .modal-overlay, .no-print {
     display: none !important;
   }
-  .app-container { height: auto !important; }
-  .preview-viewport { padding: 0 !important; background: #ffffff !important; }
+
+  .app-container {
+    height: auto !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+  }
+
+  .preview-viewport {
+    padding: 0 !important;
+    background: #ffffff !important;
+    overflow: visible !important;
+    border: none !important;
+  }
+
   .a4-sheet {
     box-shadow: none !important;
-    padding: 6mm !important;
-    width: 210mm !important;
-    height: 297mm !important;
+    padding: 0 !important;
+    width: 100% !important;
+    min-height: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+  }
+
+  .quotation-box {
+    border: 1.5px solid #000000 !important;
+  }
+
+  .quote-header-grid,
+  .client-enterprise-row,
+  .tagline-strip,
+  .total-summary-row,
+  .quote-footer-grid,
+  .bottom-safety-strip {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .quote-products-table tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
 }
 </style>
@@ -1695,30 +1726,35 @@ const app = {
     const tbody = document.getElementById('tableBody');
     let grandTotal = 0;
 
-    let rowsHtml = this.quote.items.map((item, idx) => {
-      const lineAmt = item.qty * item.price;
-      grandTotal += lineAmt;
-      return `
+    let rowsHtml = "";
+    if (this.quote.items.length === 0) {
+      rowsHtml = `
         <tr class="item-row">
-          <td class="td-center">${idx + 1}</td>
-          <td class="td-center">${item.leadTime || '1-2 Days'}</td>
-          <td class="product-thumb-cell"><img src="${item.image}" alt="" onerror="this.style.display='none'" /></td>
-          <td class="product-desc-cell"><div class="product-specs-text">${(item.specs || '').replace(/\n/g, '<br>')}</div></td>
-          <td class="brand-badge-cell td-center">${item.brandLogo ? `<img src="${item.brandLogo}" alt="${item.brand}" onerror="this.outerHTML='<strong>${item.brand}</strong>'" />` : `<strong>${item.brand}</strong>`}</td>
-          <td class="td-center">${item.hsn || '-'}</td>
-          <td class="td-center">${item.unit || 'Nos.'}</td>
-          <td class="td-center">${item.qty}</td>
-          <td class="td-right">₹${item.price.toFixed(2)}</td>
-          <td class="td-center">${item.gst}%</td>
-          <td class="td-right">₹${lineAmt.toFixed(2)}</td>
+          <td colspan="11" style="text-align:center; padding: 22px 10px; color:#64748b; font-size: 8.5px; font-weight: 600;">
+            No items in quotation. Select products from the Master Catalog Library on the left.
+          </td>
         </tr>
       `;
-    }).join('');
-
-    const minRows = 4;
-    const extraRows = Math.max(0, minRows - this.quote.items.length);
-    for (let i = 0; i < extraRows; i++) {
-      rowsHtml += `<tr class="empty-fill-row"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>`;
+    } else {
+      rowsHtml = this.quote.items.map((item, idx) => {
+        const lineAmt = item.qty * item.price;
+        grandTotal += lineAmt;
+        return `
+          <tr class="item-row">
+            <td class="td-center">${idx + 1}</td>
+            <td class="td-center">${item.leadTime || '1-2 Days'}</td>
+            <td class="product-thumb-cell"><img src="${item.image}" alt="" onerror="this.style.display='none'" /></td>
+            <td class="product-desc-cell"><div class="product-specs-text">${(item.specs || '').replace(/\n/g, '<br>')}</div></td>
+            <td class="brand-badge-cell td-center">${item.brandLogo ? `<img src="${item.brandLogo}" alt="${item.brand}" onerror="this.outerHTML='<strong>${item.brand}</strong>'" />` : `<strong>${item.brand}</strong>`}</td>
+            <td class="td-center">${item.hsn || '-'}</td>
+            <td class="td-center">${item.unit || 'Nos.'}</td>
+            <td class="td-center">${item.qty}</td>
+            <td class="td-right">₹${item.price.toFixed(2)}</td>
+            <td class="td-center">${item.gst}%</td>
+            <td class="td-right">₹${lineAmt.toFixed(2)}</td>
+          </tr>
+        `;
+      }).join('');
     }
 
     tbody.innerHTML = rowsHtml;
