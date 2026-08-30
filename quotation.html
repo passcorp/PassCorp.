@@ -1008,7 +1008,7 @@ body {
       <!-- Catalog -->
       <div class="editor-section">
         <div class="section-heading">
-          <span>⚡ Master Catalog Library</span>
+          <span>⚡ Master Catalog (<span id="catalogCount">0</span> Products)</span>
           <button class="btn btn-success btn-sm" onclick="app.openNewProductModal()">+ Save New Item</button>
         </div>
         <div class="catalog-picker">
@@ -1435,45 +1435,63 @@ const app = {
 
   loadCatalog() {
     let siteProducts = [];
-    if (typeof DEFAULT_CONTENT !== 'undefined' && DEFAULT_CONTENT.products) {
-      siteProducts = DEFAULT_CONTENT.products.map(p => ({
-        id: p.id,
-        name: p.name,
-        specs: `${p.name}\n${p.brand || 'PASS'} | ${p.cert || 'IS / EN Certified'}\n${p.desc || ''}`.trim(),
-        brand: p.brand || 'PASS',
-        brandLogo: BRAND_LOGOS_MAP[(p.brand || '').toLowerCase()] || '',
-        hsn: p.hsn || (p.category === 'shoes' ? '6403' : p.category === 'gloves' ? '6116' : '6506'),
-        unit: p.unit || (p.category === 'shoes' || p.category === 'gloves' ? 'Pairs' : 'Nos.'),
-        price: parseFloat(p.price || 150),
-        gst: 18,
-        leadTime: p.stock === 'ready' ? 'Ready Stock' : '1-2 Days',
-        image: p.img && p.img.startsWith('assets') ? ('https://passcorp.in/' + p.img) : (p.img || 'https://passcorp.in/assets/logo.png')
-      }));
+    let contentObj = (typeof CONTENT !== 'undefined' && CONTENT && CONTENT.products) ? CONTENT : ((typeof DEFAULT_CONTENT !== 'undefined' && DEFAULT_CONTENT.products) ? DEFAULT_CONTENT : null);
+    if (!contentObj && typeof loadContent === 'function') {
+      try { contentObj = loadContent(); } catch(e){}
+    }
+
+    if (contentObj && Array.isArray(contentObj.products)) {
+      siteProducts = contentObj.products.map(p => {
+        let specsText = p.name;
+        if (p.brand) specsText += '\nBrand: ' + p.brand;
+        if (p.cert) specsText += ' | ' + p.cert;
+        if (p.desc) specsText += '\n' + p.desc;
+        
+        let cat = p.category || '';
+        let defaultHsn = (cat === 'shoes' ? '6403' : cat === 'gloves' ? '6116' : cat === 'eye' ? '9004' : cat === 'resp' ? '6307' : '6506');
+        let defaultUnit = (cat === 'shoes' || cat === 'gloves' ? 'Pairs' : 'Nos.');
+        
+        let imgUrl = p.img || '';
+        if (imgUrl && !imgUrl.startsWith('http') && !imgUrl.startsWith('data:')) {
+          imgUrl = 'https://passcorp.in/' + imgUrl.replace(/^\.?\//, '');
+        }
+
+        return {
+          id: p.id,
+          name: p.name + (p.brand ? ` (${p.brand})` : ''),
+          specs: specsText,
+          brand: p.brand || 'PASS',
+          brandLogo: BRAND_LOGOS_MAP[(p.brand || '').toLowerCase()] || '',
+          hsn: p.hsn || defaultHsn,
+          unit: p.unit || defaultUnit,
+          price: parseFloat(p.price || 150),
+          gst: 18,
+          leadTime: p.stock === 'ready' ? 'Ready Stock' : '1-2 Days',
+          image: imgUrl || 'https://passcorp.in/assets/logo.png'
+        };
+      });
     }
 
     try {
-      const saved = localStorage.getItem('PASS_MASTER_CATALOG');
+      const saved = localStorage.getItem('PASS_MASTER_CATALOG_V3');
       if (saved) {
         this.catalog = JSON.parse(saved);
-        if (this.catalog.length <= 4 && siteProducts.length > 0) {
-          const existingIds = new Set(this.catalog.map(x => x.id));
-          siteProducts.forEach(sp => {
-            if (!existingIds.has(sp.id)) this.catalog.push(sp);
-          });
-          this.saveCatalog();
-        }
+        const existingIds = new Set(this.catalog.map(x => x.id));
+        siteProducts.forEach(sp => {
+          if (!existingIds.has(sp.id)) this.catalog.push(sp);
+        });
       } else {
-        this.catalog = [...DEFAULT_CATALOG, ...siteProducts];
+        this.catalog = siteProducts.length > 0 ? [...siteProducts] : [...DEFAULT_CATALOG];
         this.saveCatalog();
       }
     } catch(e) {
-      this.catalog = [...DEFAULT_CATALOG, ...siteProducts];
+      this.catalog = siteProducts.length > 0 ? [...siteProducts] : [...DEFAULT_CATALOG];
     }
     this.renderCatalog(this.catalog);
   },
 
   saveCatalog() {
-    try { localStorage.setItem('PASS_MASTER_CATALOG', JSON.stringify(this.catalog)); } catch(e){}
+    try { localStorage.setItem('PASS_MASTER_CATALOG_V3', JSON.stringify(this.catalog)); } catch(e){}
   },
 
   calculate15DaysValidity(baseDateStr) {
@@ -1571,6 +1589,8 @@ const app = {
   },
 
   renderCatalog(items) {
+    const countElem = document.getElementById('catalogCount');
+    if (countElem) countElem.innerText = `${items ? items.length : 0}`;
     const list = document.getElementById('catalogList');
     if (!items || items.length === 0) {
       list.innerHTML = `<div style="padding:15px; text-align:center; color:#94a3b8; font-size:11px;">No items found. Click '+ Save New Item' above!</div>`;
