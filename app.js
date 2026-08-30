@@ -14,7 +14,8 @@ const STATE = {
   toast: "",
   scrolled: false,
   rfqOpen: false,
-  rfqItems: []
+  rfqItems: [],
+  mobileMenuOpen: false
 };
 
 function showToast(msg){
@@ -25,16 +26,18 @@ function showToast(msg){
 
 /* ---------------- ACTIONS ---------------- */
 const Actions = {
-  goHome(){ STATE.view = "home"; window.scrollTo(0,0); render(); },
-  goShop(cat, brand){ STATE.activeCategory = cat || "all"; STATE.activeBrand = brand || "all"; STATE.view = "shop"; window.scrollTo(0,0); render(); },
-  goBrands(){ STATE.view = "brands"; window.scrollTo(0,0); render(); },
-  goAbout(){ STATE.view = "about"; window.scrollTo(0,0); render(); },
-  goContact(){ STATE.view = "contact"; window.scrollTo(0,0); render(); },
+  goHome(){ STATE.view = "home"; STATE.mobileMenuOpen = false; window.scrollTo(0,0); render(); },
+  goShop(cat, brand){ STATE.activeCategory = cat || "all"; STATE.activeBrand = brand || "all"; STATE.view = "shop"; STATE.mobileMenuOpen = false; window.scrollTo(0,0); render(); },
+  goBrands(){ STATE.view = "brands"; STATE.mobileMenuOpen = false; window.scrollTo(0,0); render(); },
+  goAbout(){ STATE.view = "about"; STATE.mobileMenuOpen = false; window.scrollTo(0,0); render(); },
+  goContact(){ STATE.view = "contact"; STATE.mobileMenuOpen = false; window.scrollTo(0,0); render(); },
+  toggleMobileMenu(){ STATE.mobileMenuOpen = !STATE.mobileMenuOpen; render(); },
+  closeMobileMenu(){ STATE.mobileMenuOpen = false; render(); },
   setCategory(cat){ STATE.activeCategory = cat; render(); },
   setBrand(brand){ STATE.activeBrand = brand; render(); },
   setSort(v){ STATE.sort = v; render(); },
   toggleInStockOnly(){ STATE.inStockOnly = !STATE.inStockOnly; render(); },
-  openProduct(id){ STATE.selectedId = id; STATE.view = "product"; window.scrollTo(0,0); render(); },
+  openProduct(id){ STATE.selectedId = id; STATE.view = "product"; STATE.mobileMenuOpen = false; window.scrollTo(0,0); render(); },
   downloadCatalog(){
     showToast("Downloading Official Product Catalogue PDF...");
     const a = document.createElement("a");
@@ -196,7 +199,7 @@ function renderHeader(){
     <header class="header${STATE.scrolled?' is-scrolled':''}">
       <div class="header-inner">
         <div class="brand-lockup" onclick="A.goHome()">
-          <img src="${LOGO_URI}" alt="Pass Corp" style="width:40px;height:40px;object-fit:contain;flex-shrink:0" />
+          <img src="${LOGO_URI}" alt="Pass Corp" style="width:38px;height:38px;object-fit:contain;flex-shrink:0" />
           <div>
             <div class="brand-word">PASS CORP.</div>
             <div class="brand-tag">PRECISION <i>|</i> ASSURANCE <i>|</i> SAFETY <i>|</i> SOLUTION</div>
@@ -213,7 +216,20 @@ function renderHeader(){
           </nav>
           <div class="header-actions">
             <button class="whatsapp-pill" onclick="A.openRFQ()">${icon("chat",15)} Get Quote ${STATE.rfqItems.length ? `<span class="rfq-count-badge">${STATE.rfqItems.length}</span>` : ''}</button>
+            <button class="mobile-menu-btn" onclick="A.toggleMobileMenu()" aria-label="Menu">${STATE.mobileMenuOpen ? '✕' : '☰'}</button>
           </div>
+        </div>
+      </div>
+      <div class="mobile-nav-drawer${STATE.mobileMenuOpen ? ' open' : ''}">
+        <button class="mobile-nav-link${STATE.view==="home"?" active":""}" onclick="A.goHome()"><span>🏠 Home</span> ${icon("chevronRight",14)}</button>
+        <button class="mobile-nav-link${STATE.view==="about"?" active":""}" onclick="A.goAbout()"><span>🏢 About PASS CORP.</span> ${icon("chevronRight",14)}</button>
+        <button class="mobile-nav-link${STATE.view==="shop"?" active":""}" onclick="A.goShop('all')"><span>🛡️ Full Catalogue (186+ Products)</span> ${icon("chevronRight",14)}</button>
+        <button class="mobile-nav-link${STATE.view==="brands"?" active":""}" onclick="A.goBrands()"><span>⭐ Authorised Brands</span> ${icon("chevronRight",14)}</button>
+        <button class="mobile-nav-link" onclick="A.openRFQ();A.closeMobileMenu()"><span>⚡ Instant RFQ Engine</span> ${STATE.rfqItems.length ? `<span class="rfq-count-badge">${STATE.rfqItems.length}</span>` : icon("chevronRight",14)}</button>
+        <button class="mobile-nav-link${STATE.view==="contact"?" active":""}" onclick="A.goContact()"><span>📞 Contact & Location</span> ${icon("chevronRight",14)}</button>
+        <div style="padding-top:12px;margin-top:8px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px">
+          <a class="btn-secondary" style="width:100%;justify-content:center;font-size:13px;padding:10px" href="assets/Pass_Corp_Product_Catalogue.pdf" download="Pass_Corp_Product_Catalogue.pdf" target="_blank">${icon("download",15)} Download 17-Page Catalogue PDF</a>
+          <a class="btn-primary" style="width:100%;justify-content:center;background:#25D366;border-color:#25D366;font-size:13px;padding:10px" href="${whatsappHref('Hi PASS CORP, I have a bulk enquiry.')}" target="_blank" rel="noopener">${icon("chat",15)} Chat on WhatsApp</a>
         </div>
       </div>
     </header>
@@ -734,6 +750,12 @@ function render(){
     '<main>' + pageBody() + '</main>' +
     renderFooter() +
     renderRFQModal() +
+    `
+    <div class="mobile-bottom-bar">
+      <a class="mobile-bar-btn-wa" href="${whatsappHref('Hi PASS CORP, I have an urgent enquiry.')}" target="_blank" rel="noopener">${icon("chat",16)} WhatsApp</a>
+      <button class="mobile-bar-btn-rfq" onclick="A.openRFQ()">⚡ Instant RFQ ${STATE.rfqItems.length ? `(${STATE.rfqItems.length})` : ''}</button>
+    </div>
+    ` +
     (STATE.toast ? '<div class="toast" id="toast">'+icon("check",16)+' '+esc(STATE.toast)+'</div>' : '');
   setupReveal();
 }
