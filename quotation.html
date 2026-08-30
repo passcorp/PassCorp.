@@ -874,7 +874,7 @@ body {
       <button class="btn btn-outline btn-sm" onclick="app.loadSampleQuote()">Sample</button>
       <button class="btn btn-outline btn-sm" onclick="app.createNewQuote()">New Quote</button>
       <button class="btn btn-whatsapp" onclick="app.shareWhatsApp()">WhatsApp</button>
-      <button class="btn btn-primary" onclick="window.print()">Print / PDF</button>
+      <button class="btn btn-primary" onclick="app.printPdf()">Print / PDF</button>
       <button class="btn btn-outline btn-sm" onclick="app.lockApp()" style="color: #dc2626; border-color: #fca5a5; background: #fff5f5;">🔒 Lock</button>
     </div>
   </header>
@@ -1762,6 +1762,45 @@ const app = {
     document.getElementById('viewAmountWords').innerText = numberToIndianWords(grandTotal);
   },
 
+  getPdfFileName() {
+    let comp = (this.quote.client.company || '').trim();
+    // Remove "M/s.", "M/s", "Messrs" from beginning
+    comp = comp.replace(/^(m\/s\.?|messrs\.?)\s*/i, '').trim();
+    // Take first company keyword
+    let words = comp.split(/[\s,.-]+/).filter(Boolean);
+    let rawWord = words[0] || 'Quotation';
+    // Capitalize first letter, lower remaining (e.g. abc -> Abc, TATA -> Tata)
+    let cleanComp = rawWord.charAt(0).toUpperCase() + rawWord.slice(1).toLowerCase();
+
+    // Parse Quote Number: e.g. PC/25-26/00078 -> 2526-078
+    let quoteNo = (this.quote.meta.no || '').trim();
+    let cleanNo = "Quote";
+    if (quoteNo) {
+      const match = quoteNo.match(/(\d{2})[-/](\d{2})[-/](\d+)/);
+      if (match) {
+        const year = match[1] + match[2]; // "2526"
+        const rawNum = match[3];
+        // Format to 3 digits (e.g. "00078" -> "078", "78" -> "078")
+        const numFormatted = rawNum.length > 3 ? rawNum.slice(-3) : rawNum.padStart(3, '0');
+        cleanNo = `${year}-${numFormatted}`;
+      } else {
+        cleanNo = quoteNo.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+      }
+    }
+
+    return `${cleanComp}-${cleanNo}`;
+  },
+
+  printPdf() {
+    const filename = this.getPdfFileName();
+    const originalTitle = document.title;
+    document.title = filename;
+    window.print();
+    setTimeout(() => {
+      document.title = originalTitle;
+    }, 4000);
+  },
+
   shareWhatsApp() {
     const clientMob = (this.quote.client.mob || '').replace(/[^0-9]/g, '');
     let text = `*PASS CORP. — ENTERPRISE QUOTATION*\n`;
@@ -1781,6 +1820,13 @@ const app = {
     window.open(url, '_blank');
   }
 };
+
+// Automatic PDF Filename for Keyboard Shortcuts (Cmd+P / Ctrl+P)
+window.addEventListener('beforeprint', () => {
+  if (typeof app !== 'undefined' && app.getPdfFileName) {
+    document.title = app.getPdfFileName();
+  }
+});
 
 document.addEventListener('DOMContentLoaded', () => { app.init(); });
 </script>
