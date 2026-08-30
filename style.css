@@ -52,8 +52,7 @@ svg.ic{display:inline-block;vertical-align:middle;}
 .btn-ghost{background:none;border:1px solid var(--line);color:var(--ink);padding:8px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
 .btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
 .hero-stamp-wrap{display:flex;justify-content:center;align-items:center;position:relative;animation:fadeIn .9s .2s cubic-bezier(.16,.84,.44,1) both;}
-.hero-stamp-wrap::before{content:'';position:absolute;width:230px;height:230px;border-radius:50%;background:var(--accent-tint);z-index:0;}
-.hero-stamp-wrap img{position:relative;z-index:1;width:220px;height:220px;object-fit:contain;}
+.hero-stamp-wrap img{width:220px;height:220px;object-fit:contain;filter:drop-shadow(0 12px 28px rgba(18,41,125,.12));}
 
 .trust-bar{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--surface);}
 .trust-inner{max-width:1180px;margin:0 auto;padding:20px 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
