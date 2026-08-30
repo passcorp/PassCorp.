@@ -3,6 +3,8 @@
    Requires data.js to be loaded first.
 ========================================================= */
 
+const PASS_SECRET = "Pawanjali@241997";
+
 const STATE = {
   authed: false,
   adminTab: "products",   // products | categories | content
@@ -20,8 +22,12 @@ function showToast(msg){
 /* ---------------- ACTIONS ---------------- */
 const Actions = {
   loginSubmit(code){
-    if (code === ADMIN_CODE) { STATE.authed = true; STATE.loginError = ""; }
-    else { STATE.loginError = "Incorrect passcode. Try again."; }
+    if (code === PASS_SECRET || (typeof ADMIN_CODE !== "undefined" && code === ADMIN_CODE && code === "Pawanjali@241997")) {
+      STATE.authed = true;
+      STATE.loginError = "";
+    } else {
+      STATE.loginError = "Incorrect passcode. Try again.";
+    }
     render();
   },
   logout(){ window.location.href = "index.html"; },
