@@ -168,8 +168,8 @@ body {
 
 /* App Header */
 .app-header {
-  background: #0c2340;
-  border-bottom: 1px solid rgba(255,255,255,0.15);
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
   padding: 10px 20px;
   display: flex;
   align-items: center;
@@ -177,13 +177,13 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 
 .brand-badge { display: flex; align-items: center; gap: 12px; }
-.brand-badge img { height: 36px; width: auto; border-radius: 4px; background: white; padding: 2px 6px; }
-.brand-title { font-size: 17px; font-weight: 700; color: #ffffff; }
-.brand-subtitle { font-size: 11px; color: #93c5fd; text-transform: uppercase; letter-spacing: 1px; }
+.brand-badge img { height: 36px; width: auto; border-radius: 4px; background: transparent; padding: 0; }
+.brand-title { font-size: 17px; font-weight: 800; color: #0c2340; }
+.brand-subtitle { font-size: 11px; font-weight: 700; color: #2563eb; text-transform: uppercase; letter-spacing: 1px; }
 
 .header-actions { display: flex; align-items: center; gap: 8px; }
 
@@ -207,8 +207,8 @@ body {
 .btn-success:hover { background: #059669; }
 .btn-whatsapp { background: #25D366; color: #064e3b; font-weight: 700; }
 .btn-whatsapp:hover { background: #20ba5a; }
-.btn-outline { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25); color: #ffffff; }
-.btn-outline:hover { background: rgba(255,255,255,0.2); }
+.btn-outline { background: #ffffff; border: 1.5px solid #cbd5e1; color: #334155; }
+.btn-outline:hover { background: #f1f5f9; border-color: #94a3b8; color: #0f172a; }
 .btn-sm { padding: 5px 9px; font-size: 11px; }
 
 /* Main Layout */
@@ -844,7 +844,7 @@ body {
       <button class="btn btn-outline btn-sm" onclick="app.createNewQuote()">New Quote</button>
       <button class="btn btn-whatsapp" onclick="app.shareWhatsApp()">WhatsApp</button>
       <button class="btn btn-primary" onclick="window.print()">Print / PDF</button>
-      <button class="btn btn-outline btn-sm" onclick="app.lockApp()" style="color: #fca5a5;">🔒 Lock</button>
+      <button class="btn btn-outline btn-sm" onclick="app.lockApp()" style="color: #dc2626; border-color: #fca5a5; background: #fff5f5;">🔒 Lock</button>
     </div>
   </header>
 
