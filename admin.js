@@ -177,7 +177,7 @@ function adminNav(){
   const tabs = [["products","box","Products"],["categories","grid","Categories"],["content","settings","Site content"]];
   return `
     <div class="admin-side">
-      <a href="quotation.html" target="_blank" style="background:#2563eb;color:#ffffff;display:flex;align-items:center;justify-content:center;gap:8px;padding:9px 12px;border-radius:6px;font-weight:700;font-size:13px;text-decoration:none;margin-bottom:12px;box-shadow:0 2px 8px rgba(37,99,235,0.3);text-align:center;">
+      <a href="quotation.html?secure=1" target="_blank" style="background:#2563eb;color:#ffffff;display:flex;align-items:center;justify-content:center;gap:8px;padding:9px 12px;border-radius:6px;font-weight:700;font-size:13px;text-decoration:none;margin-bottom:12px;box-shadow:0 2px 8px rgba(37,99,235,0.3);text-align:center;">
         📄 Quotation Generator ↗
       </a>
       ${tabs.map(t => '<button class="'+(STATE.adminTab===t[0]?"active":"")+'" onclick="A.setAdminTab(\''+t[0]+'\')">'+icon(t[1],16)+' '+t[2]+'</button>').join("")}
