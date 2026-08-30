@@ -4695,6 +4695,254 @@
       }
     }
 
+  
+    /* =========================================================================
+       OPTION 2: E-COMMERCE CATEGORY GRID & SELECTION STYLING
+       ========================================================================= */
+    .ecom-categories-container {
+      max-width: 1320px;
+      margin: 0 auto 30px;
+      width: 100%;
+    }
+
+    .ecom-grid-header {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .ecom-pill-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+      padding: 4px 14px;
+      border-radius: 100px;
+      margin-bottom: 8px;
+    }
+
+    .ecom-grid-heading {
+      font-size: 26px;
+      font-weight: 900;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+
+    .ecom-grid-sub {
+      font-size: 14.5px;
+      color: #64748b;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .ecom-cat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      width: 100%;
+    }
+
+    .ecom-cat-card {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 24px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ecom-cat-card:hover {
+      transform: translateY(-4px);
+      border-color: #2563eb;
+      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.12);
+    }
+
+    .ecom-cat-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ecom-cat-icon {
+      font-size: 32px;
+      width: 52px;
+      height: 52px;
+      background: #f1f5f9;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #e2e8f0;
+    }
+
+    .ecom-cat-count-badge {
+      font-size: 12px;
+      font-weight: 800;
+      background: #eff6ff;
+      color: #1d4ed8;
+      padding: 4px 10px;
+      border-radius: 100px;
+      border: 1px solid #dbeafe;
+    }
+
+    .ecom-cat-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.3;
+      margin: 0;
+    }
+
+    .ecom-cat-desc {
+      font-size: 12.5px;
+      color: #64748b;
+      line-height: 1.5;
+      margin: 0;
+      flex-grow: 1;
+    }
+
+    .ecom-cat-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 12px;
+      margin-top: 4px;
+    }
+
+    .ecom-cat-brands {
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: 600;
+      max-width: 150px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ecom-cat-action {
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #2563eb;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Products View Top Navigation Bar */
+    .cat-nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 12px 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      flex-wrap: wrap;
+      gap: 12px;
+      max-width: 1320px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn-back-categories {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #0f172a;
+      color: #ffffff !important;
+      font-size: 13.5px;
+      font-weight: 800;
+      padding: 9px 18px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.15);
+    }
+
+    .btn-back-categories:hover {
+      background: #2563eb;
+      transform: translateX(-2px);
+    }
+
+    .cat-active-title-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .active-count-tag {
+      font-size: 12px;
+      background: #dbeafe;
+      color: #1e40af;
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-weight: 800;
+    }
+
+    @media (max-width: 640px) {
+      .ecom-cat-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+      }
+      .ecom-cat-card {
+        padding: 14px 12px !important;
+        border-radius: 14px !important;
+        gap: 8px !important;
+      }
+      .ecom-cat-icon {
+        font-size: 24px !important;
+        width: 42px !important;
+        height: 42px !important;
+        border-radius: 10px !important;
+      }
+      .ecom-cat-count-badge {
+        font-size: 10px !important;
+        padding: 2px 6px !important;
+      }
+      .ecom-cat-title {
+        font-size: 13.5px !important;
+        line-height: 1.25 !important;
+      }
+      .ecom-cat-desc {
+        display: none !important; /* Clean compact tile on mobile */
+      }
+      .ecom-cat-footer {
+        padding-top: 6px !important;
+        margin-top: 0 !important;
+      }
+      .ecom-cat-brands {
+        display: none !important;
+      }
+      .ecom-cat-action {
+        font-size: 11px !important;
+      }
+      .cat-nav-bar {
+        padding: 10px 14px !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+      }
+      .btn-back-categories {
+        width: 100% !important;
+        justify-content: center !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -5064,7 +5312,180 @@
       <p class="sec-subtitle">Direct OEM sourced safety equipment from India's &amp; global certified brands. Select a category from the left menu or search below.</p>
     </div>
 
-    <div class="catalog-layout-container">
+    
+      <!-- OPTION 2: E-COMMERCE CATEGORY GRID VIEW (Default Display) -->
+      <div class="ecom-categories-container" id="ecomCategoriesContainer">
+        <div class="ecom-grid-header">
+          <div class="ecom-grid-title-wrap">
+            <span class="ecom-pill-badge">SELECT SAFETY DISCIPLINE</span>
+            <h3 class="ecom-grid-heading">Browse Products by Certified Category</h3>
+            <p class="ecom-grid-sub">Select an industrial PPE category below to explore certified product models and instant RFQ quotations.</p>
+          </div>
+        </div>
+        <div class="ecom-cat-grid">
+
+        <div class="ecom-cat-card" onclick="selectEcomCategory('shoes')">
+          <div class="ecom-cat-top">
+            <div class="ecom-cat-icon">👟</div>
+            <span class="ecom-cat-count-badge">23 Products</span>
+          </div>
+          <h3 class="ecom-cat-title">Safety Shoes & Footwear</h3>
+          <p class="ecom-cat-desc">Steel Toe · IS 15298 · Anti-Skid · Heat Resistant · Executive & Heavy Duty</p>
+          <div class="ecom-cat-footer">
+            <span class="ecom-cat-brands">OEMs: Wild Bull, Udyogi, PERF, JCB</span>
+            <span class="ecom-cat-action">View Products &rarr;</span>
+          </div>
+        </div>
+        <div class="ecom-cat-card" onclick="selectEcomCategory('gloves')">
+          <div class="ecom-cat-top">
+            <div class="ecom-cat-icon">🧤</div>
+            <span class="ecom-cat-count-badge">29 Products</span>
+          </div>
+          <h3 class="ecom-cat-title">Hand Gloves & Sleeves</h3>
+          <p class="ecom-cat-desc">Cut Level 1-5 · EN 388 · Nitrile Chemical · Kevlar 550°C · Cryogenic</p>
+          <div class="ecom-cat-footer">
+            <span class="ecom-cat-brands">OEMs: Udyogi, Honeywell, DPL, ATG</span>
+            <span class="ecom-cat-action">View Products &rarr;</span>
+          </div>
+        </div>
+        <div class="ecom-cat-card" onclick="selectEcomCategory('eye')">
+          <div class="ecom-cat-top">
+            <div class="ecom-cat-icon">🥽</div>
+            <span class="ecom-cat-count-badge">27 Products</span>
+          </div>
+          <h3 class="ecom-cat-title">Safety Goggles & Face Shields</h3>
+          <p class="ecom-cat-desc">Anti-Fog · EN 166 · Polycarbonate · Arc Flash · Clear & Green Visors</p>
+          <div class="ecom-cat-footer">
+            <span class="ecom-cat-brands">OEMs: Udyogi, Honeywell, Unicare, Uvex</span>
+            <span class="ecom-cat-action">View Products &rarr;</span>
+          </div>
+        </div>
+        <div class="ecom-cat-card" onclick="selectEcomCategory('resp')">
+          <div class="ecom-cat-top">
+            <div class="ecom-cat-icon">😷</div>
+            <span class="ecom-cat-count-badge">20 Products</span>
+          </div>
+          <h3 class="ecom-cat-title">Masks & Respiratory Protection</h3>
+          <p class="ecom-cat-desc">IS 9473 · N95 · FFP1/FFP2/FFP3 · SCBA Self-Contained · PAPR Powered</p>
+          <div class="ecom-cat-footer">
+            <span class="ecom-cat-brands">OEMs: Magnum, Honeywell, Udyogi</span>
+            <span class="ecom-cat-action">View Products &rarr;</span>
+          </div>
+        </div>
+        <div class="ecom-cat-card" onclick="selectEcomCategory('head')">
+          <div class="ecom-cat-top">
+            <div class="ecom-cat-icon">⛑️</div>
+            <span class="ecom-cat-count-badge">8 Products</span>
+          </div>
+          <h3 class="ecom-cat-title">Industrial Safety Helmets</h3>
+          <p class="ecom-cat-desc">IS 2925 · Ultravent 7000 · Fusion Pro · Ratchet Suspension · Bump Caps</p>
+          <div class="ecom-cat-footer">
+            <span class="ecom-cat-brands">OEMs: Udyogi, Karam, PERF</span>
+            <span class="ecom-cat-action">View Products &rarr;</span>
+          </div>
+        </div>
+        <div class="ecom-cat-card" onclick="selectEcomCategory('ear')">
+          <div class="ecom-cat-top">
+            <div class="ecom-cat-icon">🎧</div>
+            <span class="ecom-cat-count-badge">9 Products</span>
+          </div>
+          <h3 class="ecom-cat-title">Ear Plugs & Ear Muffs</h3>
+          <p class="ecom-cat-desc">IS 9167 · EN 352 · SNR 28-34dB · Dispenser Stations · Corded/Uncorded</p>
+          <div class="ecom-cat-footer">
+            <span class="ecom-cat-brands">OEMs: Honeywell, 3M, Udyogi, Delta Plus</span>
+            <span class="ecom-cat-action">View Products &rarr;</span>
+          </div>
+        </div>
+        <div class="ecom-cat-card" onclick="selectEcomCategory('fall')">
+          <div class="ecom-cat-top">
+            <div class="ecom-cat-icon">🧗</div>
+            <span class="ecom-cat-count-badge">21 Products</span>
+          </div>
+          <h3 class="ecom-cat-title">Fall Protection & Harnesses</h3>
+          <p class="ecom-cat-desc">EN 361 · Full Body Harness · Retractable Fall Arresters · Lanyards · Ropes</p>
+          <div class="ecom-cat-footer">
+            <span class="ecom-cat-brands">OEMs: Udyogi, Karam, Tango</span>
+            <span class="ecom-cat-action">View Products &rarr;</span>
+          </div>
+        </div>
+        <div class="ecom-cat-card" onclick="selectEcomCategory('confined')">
+          <div class="ecom-cat-top">
+            <div class="ecom-cat-icon">🤿</div>
+            <span class="ecom-cat-count-badge">10 Products</span>
+          </div>
+          <h3 class="ecom-cat-title">Confined Space & Gas Detectors</h3>
+          <p class="ecom-cat-desc">4-Gas Monitors (LEL/O2/H2S/CO) · Rescue Tripods · Exhaust Blowers · Eye Wash</p>
+          <div class="ecom-cat-footer">
+            <span class="ecom-cat-brands">OEMs: Honeywell, Wintact, Udyogi</span>
+            <span class="ecom-cat-action">View Products &rarr;</span>
+          </div>
+        </div>
+        <div class="ecom-cat-card" onclick="selectEcomCategory('body')">
+          <div class="ecom-cat-top">
+            <div class="ecom-cat-icon">🦺</div>
+            <span class="ecom-cat-count-badge">11 Products</span>
+          </div>
+          <h3 class="ecom-cat-title">Body Protection & Workwear</h3>
+          <p class="ecom-cat-desc">EN ISO 20471 · Cotton Boiler Suits · 40 CAL Arc Flash · Chemical Tyvek</p>
+          <div class="ecom-cat-footer">
+            <span class="ecom-cat-brands">OEMs: ReflectoSafe, Mutex, DuPont</span>
+            <span class="ecom-cat-action">View Products &rarr;</span>
+          </div>
+        </div>
+        <div class="ecom-cat-card" onclick="selectEcomCategory('electrical')">
+          <div class="ecom-cat-top">
+            <div class="ecom-cat-icon">⚡</div>
+            <span class="ecom-cat-count-badge">6 Products</span>
+          </div>
+          <h3 class="ecom-cat-title">Electrical Safety & Mats</h3>
+          <p class="ecom-cat-desc">IS 15652 Insulating Mats · 33kV Discharge Rods · Rescue Hooks · Master LOTO</p>
+          <div class="ecom-cat-footer">
+            <span class="ecom-cat-brands">OEMs: MasterLock, Pass Safe</span>
+            <span class="ecom-cat-action">View Products &rarr;</span>
+          </div>
+        </div>
+        <div class="ecom-cat-card" onclick="selectEcomCategory('spill')">
+          <div class="ecom-cat-top">
+            <div class="ecom-cat-icon">🛢️</div>
+            <span class="ecom-cat-count-badge">6 Products</span>
+          </div>
+          <h3 class="ecom-cat-title">Spill Kits & Containment</h3>
+          <p class="ecom-cat-desc">Chemical Spill Kits · Oil Only Spill Kits · Universal Absorbers · 50L - 240L</p>
+          <div class="ecom-cat-footer">
+            <span class="ecom-cat-brands">OEMs: New Pig, Pass Safe</span>
+            <span class="ecom-cat-action">View Products &rarr;</span>
+          </div>
+        </div>
+        <div class="ecom-cat-card" onclick="selectEcomCategory('misc')">
+          <div class="ecom-cat-top">
+            <div class="ecom-cat-icon">🩹</div>
+            <span class="ecom-cat-count-badge">16 Products</span>
+          </div>
+          <h3 class="ecom-cat-title">First Aid & Emergency Safety</h3>
+          <p class="ecom-cat-desc">Industrial First Aid Stations · Snake Bite Kits · Anti-Skid Tapes · Fire Gear</p>
+          <div class="ecom-cat-footer">
+            <span class="ecom-cat-brands">OEMs: HealKit, MediKit, Pass Safe</span>
+            <span class="ecom-cat-action">View Products &rarr;</span>
+          </div>
+        </div>
+        </div>
+      </div>
+
+      
+      <!-- PRODUCTS DISPLAY VIEW (Shows when a category is selected) -->
+      <div class="catalog-products-wrapper" id="catalogProductsWrapper" style="display:none;">
+        <div class="cat-nav-bar">
+          <button type="button" class="btn-back-categories" onclick="showAllCategoriesView()">
+            <span>&larr;</span> <span>All PPE Categories</span>
+          </button>
+          <div class="cat-active-title-pill" id="catActiveTitlePill">
+            <span id="activeCatIcon">👟</span>
+            <span id="activeCatTitleText">Safety Shoes</span>
+            <span id="activeCatCountBadge" class="active-count-tag">23 Products</span>
+          </div>
+        </div>
+        
+        <div class="catalog-layout-container">
       
       <!-- LEFT: Clean Vertical Sidebar -->
       <aside class="catalog-sidebar-v">
@@ -9687,6 +10108,46 @@
     'special': 'Electrical Safety & Hazmat Spill Kits (20 Models)',
     'all': 'All Certified Safety Products'
   };
+
+  
+    const CAT_INFO = {
+      'shoes': { icon: '👟', title: 'Safety Shoes & Footwear', count: '23 Products' },
+      'gloves': { icon: '🧤', title: 'Hand Gloves & Sleeves', count: '29 Products' },
+      'eye': { icon: '🥽', title: 'Safety Goggles & Face Shields', count: '27 Products' },
+      'resp': { icon: '😷', title: 'Masks & Respirators', count: '20 Products' },
+      'head': { icon: '⛑️', title: 'Industrial Safety Helmets', count: '8 Products' },
+      'ear': { icon: '🎧', title: 'Ear Plugs & Ear Muffs', count: '9 Products' },
+      'fall': { icon: '🧗', title: 'Fall Protection & Harnesses', count: '21 Products' },
+      'confined': { icon: '🤿', title: 'Confined Space Equipment', count: '10 Products' },
+      'body': { icon: '🦺', title: 'Body Protection & Workwear', count: '11 Products' },
+      'electrical': { icon: '⚡', title: 'Electrical Safety & Mats', count: '6 Products' },
+      'spill': { icon: '🛢️', title: 'Spill Kits & Containment', count: '6 Products' },
+      'misc': { icon: '🩹', title: 'First Aid & Emergency Safety', count: '16 Products' }
+    };
+
+    function selectEcomCategory(catId) {
+      document.getElementById('ecomCategoriesContainer').style.display = 'none';
+      document.getElementById('catalogProductsWrapper').style.display = 'block';
+
+      const info = CAT_INFO[catId] || { icon: '🛡️', title: catId, count: '' };
+      document.getElementById('activeCatIcon').innerText = info.icon;
+      document.getElementById('activeCatTitleText').innerText = info.title;
+      document.getElementById('activeCatCountBadge').innerText = info.count;
+
+      // Filter products
+      setCatalogFilter(catId);
+
+      // Smooth scroll to product wrapper
+      const wrapper = document.getElementById('catalogProductsWrapper');
+      if (wrapper) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function showAllCategoriesView() {
+      document.getElementById('catalogProductsWrapper').style.display = 'none';
+      document.getElementById('ecomCategoriesContainer').style.display = 'block';
+      const container = document.getElementById('ecomCategoriesContainer');
+      if (container) container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 
   function setCatalogFilter(cat, btn) {
     currentCategory = cat;
