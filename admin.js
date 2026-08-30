@@ -22,7 +22,7 @@ function showToast(msg){
 /* ---------------- ACTIONS ---------------- */
 const Actions = {
   loginSubmit(code){
-    if (code === PASS_SECRET || (typeof ADMIN_CODE !== "undefined" && code === ADMIN_CODE && code === "Pawanjali@241997")) {
+    if (code === "Pawanjali@241997") {
       STATE.authed = true;
       STATE.loginError = "";
     } else {
@@ -167,7 +167,6 @@ function renderAdminLogin(){
           ${STATE.loginError ? '<p class="field-error" style="margin-bottom:10px">'+STATE.loginError+'</p>' : ''}
           <button class="btn-primary" style="width:100%;justify-content:center" type="submit">Sign in</button>
         </form>
-        <p class="admin-note">Demo passcode: <span class="mono">pass2026</span>. This is a lightweight, front-end-only gate — wire up real authentication before going live.</p>
         <a class="btn-ghost" style="margin-top:16px;display:inline-flex" href="index.html">${icon("arrowLeft",14)} Back to site</a>
       </div>
     </div>
