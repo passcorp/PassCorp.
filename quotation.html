@@ -7,11 +7,7 @@
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
 <title>PASS CORP. | Enterprise Quotation Portal</title>
-
-<!-- Favicon -->
 <link rel="icon" type="image/png" href="https://passcorp.in/assets/favicon-96x96.png" />
-
-<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -50,7 +46,7 @@ body {
   overflow-x: hidden;
 }
 
-/* HARD LOCK: HIDE EVERYTHING UNTIL AUTHENTICATED */
+/* HARD LOCK: HIDE MAIN WRAPPER UNTIL UNLOCKED */
 #appWrapper {
   display: none;
   flex: 1;
@@ -164,9 +160,7 @@ body {
   transition: background 0.2s ease;
 }
 
-.auth-btn:hover {
-  background: #1d4ed8;
-}
+.auth-btn:hover { background: #1d4ed8; }
 
 /* App Header */
 .app-header {
@@ -179,42 +173,14 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 
-.brand-badge {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+.brand-badge { display: flex; align-items: center; gap: 12px; }
+.brand-badge img { height: 36px; width: auto; border-radius: 4px; background: white; padding: 2px 6px; }
+.brand-title { font-size: 17px; font-weight: 700; color: #ffffff; }
+.brand-subtitle { font-size: 11px; color: #93c5fd; text-transform: uppercase; letter-spacing: 1px; }
 
-.brand-badge img {
-  height: 36px;
-  width: auto;
-  border-radius: 4px;
-  background: white;
-  padding: 2px 6px;
-}
-
-.brand-title {
-  font-size: 17px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  color: #ffffff;
-}
-
-.brand-subtitle {
-  font-size: 11px;
-  color: #93c5fd;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+.header-actions { display: flex; align-items: center; gap: 8px; }
 
 .btn {
   display: inline-flex;
@@ -225,7 +191,6 @@ body {
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
   border: none;
   text-decoration: none;
 }
@@ -282,20 +247,8 @@ body {
 }
 
 .form-grid-full { grid-column: span 2; }
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.form-group label {
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
+.form-group { display: flex; flex-direction: column; gap: 4px; }
+.form-group label { font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; }
 
 .form-control {
   background: #0f172a;
@@ -328,25 +281,9 @@ body {
   margin-bottom: 5px;
 }
 
-.buyer-directory-title {
-  font-size: 11px;
-  font-weight: 800;
-  color: #60a5fa;
-}
-
-.buyer-directory-count {
-  font-size: 10px;
-  font-weight: 700;
-  color: #34d399;
-  background: rgba(52, 211, 153, 0.15);
-  padding: 1px 6px;
-  border-radius: 4px;
-}
-
-.buyer-directory-actions {
-  display: flex;
-  gap: 6px;
-}
+.buyer-directory-title { font-size: 11px; font-weight: 800; color: #60a5fa; }
+.buyer-directory-count { font-size: 10px; font-weight: 700; color: #34d399; background: rgba(52, 211, 153, 0.15); padding: 1px 6px; border-radius: 4px; }
+.buyer-directory-actions { display: flex; gap: 6px; }
 
 .catalog-picker {
   background: #0f172a;
@@ -356,30 +293,9 @@ body {
   margin-top: 6px;
 }
 
-.catalog-search-wrap {
-  position: relative;
-  margin-bottom: 8px;
-}
-
-.catalog-search-input {
-  width: 100%;
-  background: #1e293b;
-  border: 1px solid #475569;
-  border-radius: 5px;
-  padding: 7px 10px 7px 32px;
-  color: white;
-  font-size: 12px;
-}
-
-.catalog-search-icon {
-  position: absolute;
-  left: 9px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #94a3b8;
-  width: 14px;
-  height: 14px;
-}
+.catalog-search-wrap { position: relative; margin-bottom: 8px; }
+.catalog-search-input { width: 100%; background: #1e293b; border: 1px solid #475569; border-radius: 5px; padding: 7px 10px 7px 32px; color: white; font-size: 12px; }
+.catalog-search-icon { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); color: #94a3b8; width: 14px; height: 14px; }
 
 .catalog-items-scroll {
   max-height: 240px;
@@ -401,55 +317,14 @@ body {
   transition: all 0.15s ease;
 }
 
-.catalog-item-card:hover {
-  background: #2563eb;
-  border-color: #60a5fa;
-}
-
-.catalog-item-info {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
-}
-
-.catalog-item-thumb {
-  width: 34px;
-  height: 34px;
-  object-fit: contain;
-  background: white;
-  border-radius: 4px;
-  padding: 2px;
-  flex-shrink: 0;
-}
-
-.catalog-item-title {
-  font-size: 11px;
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.catalog-item-meta {
-  font-size: 9px;
-  color: #94a3b8;
-}
-
-.catalog-item-card:hover .catalog-item-meta {
-  color: #e0e7ff;
-}
-
-.catalog-item-price {
-  font-size: 11px;
-  font-weight: 700;
-  color: #34d399;
-  flex-shrink: 0;
-}
-
-.catalog-item-card:hover .catalog-item-price {
-  color: white;
-}
+.catalog-item-card:hover { background: #2563eb; border-color: #60a5fa; }
+.catalog-item-info { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.catalog-item-thumb { width: 34px; height: 34px; object-fit: contain; background: white; border-radius: 4px; padding: 2px; flex-shrink: 0; }
+.catalog-item-title { font-size: 11px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.catalog-item-meta { font-size: 9px; color: #94a3b8; }
+.catalog-item-card:hover .catalog-item-meta { color: #e0e7ff; }
+.catalog-item-price { font-size: 11px; font-weight: 700; color: #34d399; flex-shrink: 0; }
+.catalog-item-card:hover .catalog-item-price { color: white; }
 
 /* Modal */
 .modal-overlay {
@@ -465,113 +340,19 @@ body {
 }
 
 .modal-overlay.active { display: flex; }
+.modal-box { background: #1e293b; border: 1px solid #475569; border-radius: 10px; width: 560px; max-width: 100%; max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; }
+.modal-header { padding: 14px 18px; border-bottom: 1px solid #334155; display: flex; align-items: center; justify-content: space-between; }
+.modal-title { font-size: 14px; font-weight: 700; color: #60a5fa; }
+.modal-body { padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+.modal-footer { padding: 12px 18px; border-top: 1px solid #334155; display: flex; align-items: center; justify-content: flex-end; gap: 10px; background: #0f172a; }
+.img-preview-box { display: flex; align-items: center; gap: 12px; background: #0f172a; padding: 8px 12px; border-radius: 6px; border: 1px dashed #475569; }
+.img-preview-box img { width: 50px; height: 50px; object-fit: contain; background: white; border-radius: 4px; padding: 2px; }
 
-.modal-box {
-  background: #1e293b;
-  border: 1px solid #475569;
-  border-radius: 10px;
-  width: 560px;
-  max-width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.7);
-  display: flex;
-  flex-direction: column;
-}
-
-.modal-header {
-  padding: 14px 18px;
-  border-bottom: 1px solid #334155;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.modal-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: #60a5fa;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.modal-body {
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.modal-footer {
-  padding: 12px 18px;
-  border-top: 1px solid #334155;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 10px;
-  background: #0f172a;
-}
-
-.img-preview-box {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: #0f172a;
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px dashed #475569;
-}
-
-.img-preview-box img {
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-  background: white;
-  border-radius: 4px;
-  padding: 2px;
-}
-
-.items-editor-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.item-edit-card {
-  background: #0f172a;
-  border: 1px solid #334155;
-  border-radius: 6px;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.item-edit-card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.item-badge {
-  background: #1e3a8a;
-  color: #93c5fd;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
-.btn-remove-item {
-  background: transparent;
-  color: #ef4444;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  padding: 0 4px;
-}
+.items-editor-container { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+.item-edit-card { background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+.item-edit-card-header { display: flex; align-items: center; justify-content: space-between; }
+.item-badge { background: #1e3a8a; color: #93c5fd; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; }
+.btn-remove-item { background: transparent; color: #ef4444; border: none; cursor: pointer; font-size: 16px; padding: 0 4px; }
 
 /* Right Viewport */
 .preview-viewport {
@@ -597,11 +378,7 @@ body {
   border: 1px solid #334155;
 }
 
-.preview-title {
-  font-size: 12px;
-  font-weight: 600;
-  color: #94a3b8;
-}
+.preview-title { font-size: 12px; font-weight: 600; color: #94a3b8; }
 
 /* ============================================================
    A4 SHEET - ENTERPRISE FORMAT
@@ -1015,7 +792,7 @@ body {
 </head>
 <body>
 
-<!-- PASSWORD AUTHENTICATION SCREEN (ALWAYS VISIBLE UNTIL AUTH) -->
+<!-- PASSWORD AUTHENTICATION SCREEN -->
 <div class="auth-overlay" id="authOverlay">
   <div class="auth-card">
     <img src="https://passcorp.in/assets/logo.png" alt="PASS CORP." class="auth-logo" onerror="this.src='https://passcorp.in/assets/pass_logo.png'" />
@@ -1039,7 +816,7 @@ body {
   </div>
 </div>
 
-<!-- MAIN APPLICATION WRAPPER (HIDDEN UNTIL UNLOCKED) -->
+<!-- MAIN APP (HIDDEN UNTIL UNLOCKED) -->
 <div id="appWrapper">
   
   <header class="app-header">
@@ -1507,10 +1284,10 @@ const app = {
   },
 
   checkAuth() {
-    const isAuth = sessionStorage.getItem('PASS_AUTH_SECURE');
+    const isAuth = sessionStorage.getItem('PASS_AUTH_KEY_2026');
     const overlay = document.getElementById('authOverlay');
     const wrapper = document.getElementById('appWrapper');
-    if (isAuth === 'UNLOCKED') {
+    if (isAuth === 'AUTHORIZED_PASS_CORP') {
       overlay.style.display = 'none';
       wrapper.style.display = 'flex';
     } else {
@@ -1529,7 +1306,7 @@ const app = {
     const val = (inp.value || '').trim();
 
     if (val === SECRET_PASSCODE) {
-      sessionStorage.setItem('PASS_AUTH_SECURE', 'UNLOCKED');
+      sessionStorage.setItem('PASS_AUTH_KEY_2026', 'AUTHORIZED_PASS_CORP');
       document.getElementById('authOverlay').style.display = 'none';
       document.getElementById('appWrapper').style.display = 'flex';
       errMsg.style.display = 'none';
@@ -1542,7 +1319,7 @@ const app = {
   },
 
   lockApp() {
-    sessionStorage.removeItem('PASS_AUTH_SECURE');
+    sessionStorage.removeItem('PASS_AUTH_KEY_2026');
     document.getElementById('authOverlay').style.display = 'flex';
     document.getElementById('appWrapper').style.display = 'none';
     const inp = document.getElementById('authPassInput');
