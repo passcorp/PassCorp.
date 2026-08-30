@@ -54,17 +54,36 @@ body {
   height: 100vh;
 }
 
-/* AUTHENTICATION OVERLAY */
+/* AUTHENTICATION OVERLAY WITH VIBRANT BLUE & SAFETY DOODLES */
 .auth-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(12, 35, 64, 0.85);
-  backdrop-filter: blur(8px);
+  background-color: #082247;
+  background-image: 
+    radial-gradient(circle at 50% 40%, rgba(13, 59, 122, 0.95) 0%, rgba(8, 33, 70, 0.98) 70%, #04142b 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%2338bdf8' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round' opacity='0.22'%3E%3C!-- Helmet --%3E%3Cpath d='M15 35 A 16 16 0 0 1 45 35 Z M10 35 L50 35' /%3E%3C!-- Shield --%3E%3Cpath d='M75 15 L95 15 L95 28 C95 38 85 45 85 45 C85 45 75 38 75 28 Z' /%3E%3C!-- Goggles --%3E%3Ccircle cx='25' cy='85' r='8' /%3E%3Ccircle cx='45' cy='85' r='8' /%3E%3Cline x1='33' y1='85' x2='37' y2='85' /%3E%3C!-- Glove --%3E%3Cpath d='M80 75 L80 95 L100 95 L100 82 L96 82 L96 75 Z' /%3E%3C!-- Extinguisher / Cone --%3E%3Cpath d='M85 75 L75 105 L95 105 Z' /%3E%3C!-- Hazard / Bolt --%3E%3Cpolygon points='25,10 20,22 27,22 22,34 33,20 26,20' /%3E%3C/g%3E%3C/svg%3E");
+  background-size: cover, 140px 140px;
   z-index: 999999;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-doodle-float {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.28;
+  color: #38bdf8;
+  filter: drop-shadow(0 2px 8px rgba(56, 189, 248, 0.3));
+  animation: doodleFloat 6s ease-in-out infinite alternate;
+}
+
+@keyframes doodleFloat {
+  0% { transform: translateY(0px) rotate(0deg); }
+  100% { transform: translateY(-10px) rotate(3deg); }
 }
 
 .auth-card {
@@ -1020,6 +1039,16 @@ body {
 
 <!-- PASSWORD AUTHENTICATION SCREEN -->
 <div class="auth-overlay" id="authOverlay">
+  <!-- FLOATING SAFETY DOODLES -->
+  <div class="auth-doodle-float" style="top: 8%; left: 8%; font-size: 38px;">🪖</div>
+  <div class="auth-doodle-float" style="top: 12%; right: 12%; font-size: 34px; animation-delay: 1s;">🥽</div>
+  <div class="auth-doodle-float" style="bottom: 14%; left: 10%; font-size: 40px; animation-delay: 2s;">🦺</div>
+  <div class="auth-doodle-float" style="bottom: 12%; right: 9%; font-size: 36px; animation-delay: 1.5s;">🧤</div>
+  <div class="auth-doodle-float" style="top: 50%; left: 4%; font-size: 32px; animation-delay: 3s;">🛡️</div>
+  <div class="auth-doodle-float" style="top: 48%; right: 5%; font-size: 34px; animation-delay: 2.5s;">🥾</div>
+  <div class="auth-doodle-float" style="top: 22%; left: 28%; font-size: 26px; animation-delay: 0.5s;">⚡</div>
+  <div class="auth-doodle-float" style="bottom: 24%; right: 26%; font-size: 28px; animation-delay: 3.5s;">🧯</div>
+
   <div class="auth-card">
     <div class="auth-logo-wrap">
       <img src="assets/logo.png" alt="PASS CORP." class="auth-logo" onerror="this.src='assets/pass_watermark.jpg'" />
