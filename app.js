@@ -272,7 +272,10 @@ function renderFooter(){
       </div>
       <div class="footer-bottom">
         <span>© 2026 Pass Corp.</span>
-        <a href="admin.html" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer">${icon("settings",13)} Manage content</a>
+        <div style="display:inline-flex;align-items:center;gap:18px;">
+          <a href="quotation.html" target="_blank" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer;color:#3b82f6;font-weight:600;">${icon("box",13)} Quotation Generator</a>
+          <a href="admin.html" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer">${icon("settings",13)} Manage content</a>
+        </div>
       </div>
     </footer>
   `;

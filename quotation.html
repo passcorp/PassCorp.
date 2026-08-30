@@ -1,0 +1,2550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PASS CORP. | Enterprise Automatic Quotation Generator</title>
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="https://passcorp.in/assets/favicon-96x96.png" />
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   PASS CORP. ENTERPRISE QUOTATION GENERATOR - MASTER STYLES
+   ============================================================ */
+:root {
+  --pass-blue: #0c2340;
+  --pass-red: #d92525;
+  --navy-primary: #0a1f44;
+  --navy-dark: #061530;
+  --navy-light: #163670;
+  --accent-blue: #2563eb;
+  --accent-amber: #fef08a;
+  --safety-gold: #f59e0b;
+  --header-yellow: #fff9db;
+  --border-color: #000000;
+  --border-light: #cbd5e1;
+  --bg-app: #0f172a;
+  --bg-panel: #1e293b;
+  --bg-card: #334155;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --success: #10b981;
+  --danger: #ef4444;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* App Header */
+.app-header {
+  background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-primary) 100%);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.brand-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-badge img {
+  height: 36px;
+  width: auto;
+  border-radius: 4px;
+  background: white;
+  padding: 2px 6px;
+}
+
+.brand-title {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+}
+
+.brand-subtitle {
+  font-size: 11px;
+  color: #93c5fd;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Action Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: #2563eb;
+  color: white;
+}
+.btn-primary:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.btn-success {
+  background: #10b981;
+  color: white;
+}
+.btn-success:hover {
+  background: #059669;
+}
+
+.btn-whatsapp {
+  background: #25D366;
+  color: #064e3b;
+  font-weight: 700;
+}
+.btn-whatsapp:hover {
+  background: #20ba5a;
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #e2e8f0;
+}
+.btn-outline:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 11px;
+}
+
+/* App Main Layout */
+.app-container {
+  display: flex;
+  flex: 1;
+  height: calc(100vh - 58px);
+  overflow: hidden;
+}
+
+/* Left Sidebar: Controls & Data Entry */
+.sidebar-editor {
+  width: 490px;
+  background: var(--bg-panel);
+  border-right: 1px solid rgba(255,255,255,0.1);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.editor-section {
+  padding: 16px 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.section-heading {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #93c5fd;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.form-grid-full {
+  grid-column: span 2;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-group label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-control {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 5px;
+  padding: 7px 9px;
+  font-size: 12px;
+  color: #ffffff;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
+}
+
+/* Prominent Buyer Directory Card */
+.buyer-directory-card {
+  background: #0f172a;
+  border: 1.5px solid #3b82f6;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.buyer-directory-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.buyer-directory-title {
+  font-size: 11px;
+  font-weight: 800;
+  color: #60a5fa;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.buyer-directory-count {
+  font-size: 10px;
+  font-weight: 700;
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.15);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.buyer-directory-actions {
+  display: flex;
+  gap: 6px;
+}
+
+/* Catalog Quick Picker */
+.catalog-picker {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 6px;
+}
+
+.catalog-search-wrap {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.catalog-search-input {
+  width: 100%;
+  background: #1e293b;
+  border: 1px solid #475569;
+  border-radius: 5px;
+  padding: 7px 10px 7px 32px;
+  color: white;
+  font-size: 12px;
+}
+
+.catalog-search-icon {
+  position: absolute;
+  left: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  width: 14px;
+  height: 14px;
+}
+
+.catalog-items-scroll {
+  max-height: 240px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.catalog-item-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 5px;
+  padding: 6px 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.catalog-item-card:hover {
+  background: #2563eb;
+  border-color: #60a5fa;
+}
+
+.catalog-item-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.catalog-item-thumb {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  background: white;
+  border-radius: 4px;
+  padding: 2px;
+  flex-shrink: 0;
+}
+
+.catalog-item-title {
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.catalog-item-meta {
+  font-size: 9px;
+  color: #94a3b8;
+}
+
+.catalog-item-card:hover .catalog-item-meta {
+  color: #e0e7ff;
+}
+
+.catalog-item-price {
+  font-size: 11px;
+  font-weight: 700;
+  color: #34d399;
+  flex-shrink: 0;
+}
+
+.catalog-item-card:hover .catalog-item-price {
+  color: white;
+}
+
+/* Master Product Modal */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-box {
+  background: #1e293b;
+  border: 1px solid #475569;
+  border-radius: 10px;
+  width: 580px;
+  max-width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid #334155;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #60a5fa;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-footer {
+  padding: 12px 18px;
+  border-top: 1px solid #334155;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  background: #0f172a;
+}
+
+.img-preview-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #0f172a;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px dashed #475569;
+}
+
+.img-preview-box img {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+  background: white;
+  border-radius: 4px;
+  padding: 2px;
+}
+
+/* Items Editor List */
+.items-editor-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.item-edit-card {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.item-edit-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.item-badge {
+  background: #1e3a8a;
+  color: #93c5fd;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.btn-remove-item {
+  background: transparent;
+  color: #ef4444;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0 4px;
+}
+.btn-remove-item:hover {
+  color: #f87171;
+}
+
+/* Right Viewport: Live A4 Document Preview */
+.preview-viewport {
+  flex: 1;
+  background: #090d16;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px;
+}
+
+.preview-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 210mm;
+  max-width: 100%;
+  margin-bottom: 14px;
+  background: #1e293b;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid #334155;
+}
+
+.preview-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+/* ============================================================
+   A4 SHEET - ENTERPRISE FORMAT WITH BRAND MATCHED HEADING
+   ============================================================ */
+.a4-sheet {
+  width: 210mm;
+  min-height: 297mm;
+  background: #ffffff;
+  color: #000000;
+  padding: 8mm 8mm 8mm 8mm;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+/* Top Accent Industrial Strip */
+.top-industrial-accent {
+  height: 4px;
+  background: linear-gradient(90deg, #0c2340 0%, #1d4ed8 65%, #f59e0b 65%, #f59e0b 100%);
+  width: 100%;
+  margin-bottom: 2px;
+}
+
+/* Main Outer Box Border */
+.quotation-box {
+  border: 1.5px solid #000000;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+}
+
+/* Rich Executive Header Grid with BADA PASS LOGO */
+.quote-header-grid {
+  display: grid;
+  grid-template-columns: 155px 1fr 190px;
+  border-bottom: 1.5px solid #000000;
+  min-height: 115px;
+  background: #ffffff;
+}
+
+.quote-logo-col {
+  border-right: 1.5px solid #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 6px;
+  background: #ffffff;
+}
+
+/* BADA PASS LOGO */
+.quote-logo-col img {
+  width: 145px;
+  max-height: 98px;
+  object-fit: contain;
+  display: block;
+}
+
+.quote-company-col {
+  padding: 6px 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-right: 1.5px solid #000000;
+}
+
+/* BRAND COLOR MATCHED PASS CORP. TITLE */
+.company-main-title {
+  font-size: 23px;
+  font-weight: 900;
+  color: #0c2340; /* PASS Corp Brand Royal Navy */
+  letter-spacing: 1.2px;
+  font-family: Arial Black, Impact, sans-serif;
+  line-height: 1.1;
+  text-shadow: 0.5px 0.5px 0px rgba(0,0,0,0.15);
+}
+
+/* SOLID PERMANENT HEADER BADGE */
+.company-scope-banner {
+  background: #0c2340;
+  color: #ffffff;
+  font-size: 7.5px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  padding: 2px 9px;
+  border-radius: 2px;
+  margin: 3.5px 0;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+.company-details-text {
+  font-size: 8px;
+  line-height: 1.35;
+  color: #000000;
+  font-weight: 600;
+}
+
+.company-credentials-row {
+  margin-top: 3px;
+  font-size: 7px;
+  font-weight: 700;
+  color: #1e3a8a;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-top: 0.5px solid #e2e8f0;
+  padding-top: 2px;
+}
+
+.quote-meta-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.quote-meta-header {
+  background: #fef08a; /* Subtle Yellow */
+  border-bottom: 1px solid #000000;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 900;
+  padding: 3px 0;
+  letter-spacing: 1.5px;
+  color: #000000;
+}
+
+.quote-meta-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 8.5px;
+  flex: 1;
+}
+
+.quote-meta-table td {
+  padding: 2.5px 5px;
+  border-bottom: 0.5px solid #d1d5db;
+}
+
+.quote-meta-table td.meta-label {
+  font-weight: 600;
+  color: #4b5563;
+  width: 48%;
+  font-size: 8px;
+}
+
+.quote-meta-table td.meta-val {
+  font-weight: 800;
+  color: #000000;
+}
+
+/* Enterprise Split Row: Buyer Details (Left) & Client Inquiry Details (Right) */
+.client-enterprise-row {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  border-bottom: 1.5px solid #000000;
+  min-height: 85px;
+}
+
+.client-buyer-col {
+  border-right: 1.5px solid #000000;
+  padding: 5px 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.client-inquiry-col {
+  padding: 5px 8px;
+  display: flex;
+  flex-direction: column;
+  background: #fafafa;
+}
+
+.client-section-title {
+  font-size: 8.5px;
+  font-weight: 900;
+  color: #0c2340;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+  border-bottom: 0.5px solid #cbd5e1;
+  padding-bottom: 1px;
+}
+
+.client-table {
+  width: 100%;
+  font-size: 8.5px;
+  border-collapse: collapse;
+}
+
+.client-table td {
+  padding: 1.5px 2px;
+  vertical-align: top;
+}
+
+.client-table td.c-label {
+  width: 70px;
+  font-weight: 600;
+  color: #374151;
+  font-size: 8px;
+}
+
+.client-table td.c-val {
+  font-weight: 700;
+  color: #000000;
+}
+
+/* Tagline Bar - Clean WHITE Background */
+.tagline-strip {
+  background: #ffffff !important;
+  color: #000000 !important;
+  text-align: center;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  padding: 3.5px 0;
+  border-bottom: 1.5px solid #000000;
+}
+
+/* Product Table: BADA Image (70px) + Compact Auto-Adjusting Description */
+.quote-products-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 8.5px;
+  flex: 1;
+}
+
+.quote-products-table th {
+  background: #0c2340;
+  color: #ffffff;
+  border: 1px solid #000000;
+  border-top: none;
+  font-size: 8px;
+  font-weight: 800;
+  padding: 4px 2px;
+  text-align: center;
+}
+
+.quote-products-table td {
+  border-right: 1px solid #000000;
+  border-left: 1px solid #000000;
+  border-bottom: 0.5px solid #e5e7eb;
+  padding: 4px 4px;
+  vertical-align: middle;
+}
+
+.quote-products-table tr.item-row {
+  min-height: 75px;
+}
+
+.quote-products-table tr.item-row:last-child td {
+  border-bottom: 1.5px solid #000000;
+}
+
+.td-center {
+  text-align: center;
+}
+
+.td-right {
+  text-align: right;
+  font-weight: 700;
+}
+
+/* BADA Product Image (70px x 70px) */
+.product-thumb-cell {
+  text-align: center;
+  padding: 4px 2px !important;
+}
+
+.product-thumb-cell img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  background: #ffffff;
+  border: 0.5px solid #f1f5f9;
+  border-radius: 4px;
+}
+
+/* Compact Auto-Adjusting Description */
+.product-desc-cell {
+  line-height: 1.35;
+  word-break: break-word;
+  padding: 4px 6px !important;
+}
+
+.product-title-bold {
+  font-weight: 800;
+  color: #000000;
+  font-size: 8.5px;
+  margin-bottom: 1px;
+}
+
+.product-specs-text {
+  font-size: 7.5px;
+  color: #1f2937;
+  font-weight: 500;
+  white-space: pre-line;
+}
+
+.brand-badge-cell img {
+  max-width: 50px;
+  max-height: 22px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Table Empty Spacer Rows */
+.empty-fill-row td {
+  height: 28px;
+  border-right: 1px solid #000000;
+  border-left: 1px solid #000000;
+  border-bottom: none;
+}
+
+/* Total & Amount In Words Row */
+.total-summary-row {
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  border-top: 1.5px solid #000000;
+  border-bottom: 1.5px solid #000000;
+  min-height: 32px;
+}
+
+.words-col {
+  border-right: 1.5px solid #000000;
+  padding: 5px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 8.5px;
+}
+
+.words-label {
+  font-weight: 700;
+  color: #000000;
+}
+
+.words-text {
+  font-weight: 800;
+  color: #000000;
+  font-style: italic;
+}
+
+.total-amount-col {
+  background: #fef08a; /* Yellow */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 12px;
+  font-size: 10px;
+  font-weight: 900;
+  color: #000000;
+}
+
+/* Footer 3-Box Section */
+.quote-footer-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  border-bottom: 1.5px solid #000000;
+  min-height: 105px;
+}
+
+.terms-col {
+  border-right: 1.5px solid #000000;
+  padding: 5px 8px;
+}
+
+.footer-box-title {
+  background: #e2e8f0;
+  border: 1px solid #000000;
+  text-align: center;
+  font-size: 7.5px;
+  font-weight: 900;
+  padding: 1.5px 0;
+  margin-bottom: 4px;
+}
+
+.terms-list {
+  list-style: none;
+  font-size: 7px;
+  line-height: 1.35;
+  color: #000000;
+}
+
+.terms-list li::before {
+  content: "• ";
+  font-weight: 900;
+}
+
+.bank-col {
+  border-right: 1.5px solid #000000;
+  padding: 5px 8px;
+}
+
+.bank-table {
+  width: 100%;
+  font-size: 7.5px;
+  border-collapse: collapse;
+}
+
+.bank-table td {
+  padding: 1px 2px;
+}
+
+.bank-table td.b-label {
+  font-weight: 600;
+  color: #374151;
+  width: 60px;
+  font-size: 7px;
+}
+
+.bank-table td.b-val {
+  font-weight: 800;
+  color: #000000;
+}
+
+.signatory-col {
+  padding: 5px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.for-company-title {
+  font-size: 8px;
+  font-weight: 900;
+  color: #0c2340;
+}
+
+.sign-stamp-img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  margin: 1px 0;
+}
+
+.signatory-label {
+  font-size: 7.5px;
+  font-weight: 800;
+  border-top: 0.5px solid #000000;
+  width: 85%;
+  padding-top: 1px;
+}
+
+/* Bottom Safety Banner */
+.bottom-safety-strip {
+  background: #ffffff;
+  color: #000000;
+  text-align: center;
+  font-size: 7.5px;
+  font-weight: 800;
+  padding: 3.5px 0;
+  letter-spacing: 0.5px;
+}
+
+/* ============================================================
+   PRINT STYLES - PIXEL PERFECT A4 OUTPUT
+   ============================================================ */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+  
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+
+  .app-header,
+  .sidebar-editor,
+  .preview-toolbar,
+  .modal-overlay,
+  .no-print {
+    display: none !important;
+  }
+
+  .app-container {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .preview-viewport {
+    padding: 0 !important;
+    background: #ffffff !important;
+    overflow: visible !important;
+  }
+
+  .a4-sheet {
+    box-shadow: none !important;
+    padding: 6mm 6mm 6mm 6mm !important;
+    width: 210mm !important;
+    min-height: 297mm !important;
+    height: 297mm !important;
+    margin: 0 !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Application Top Navbar -->
+<header class="app-header">
+  <div class="brand-badge">
+    <img src="https://passcorp.in/assets/logo.png" alt="PASS CORP." onerror="this.src='https://passcorp.in/assets/pass_logo.png'" />
+    <div>
+      <div class="brand-title">PASS CORP.</div>
+      <div class="brand-subtitle">Enterprise Quotation Generator</div>
+    </div>
+  </div>
+
+  <div class="header-actions">
+    <button class="btn btn-outline btn-sm" onclick="app.loadSampleQuote()">
+      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+      Sample
+    </button>
+    <button class="btn btn-outline btn-sm" onclick="app.createNewQuote()">
+      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+      New Quote
+    </button>
+    <button class="btn btn-whatsapp" onclick="app.shareWhatsApp()">
+      <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+      WhatsApp
+    </button>
+    <button class="btn btn-primary" onclick="window.print()">
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4H7v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+      Print / PDF
+    </button>
+  </div>
+</header>
+
+<!-- Main Container -->
+<div class="app-container">
+  
+  <!-- Left Controls & Editor -->
+  <aside class="sidebar-editor">
+    
+    <!-- Quotation Meta Editor -->
+    <div class="editor-section">
+      <div class="section-heading">
+        <span>📋 Quotation Info</span>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Quotation No.</label>
+          <input type="text" id="quoteNo" class="form-control" oninput="app.updateMeta()" />
+        </div>
+        <div class="form-group">
+          <label>Date (Auto +15 Days Valid)</label>
+          <input type="date" id="quoteDateInput" class="form-control" onchange="app.onDateChange(this.value)" />
+        </div>
+        <div class="form-group">
+          <label>Valid Upto (Auto 15 Days)</label>
+          <input type="text" id="quoteValid" class="form-control" oninput="app.updateMeta()" />
+        </div>
+        
+        <!-- Payment Terms Dropdown -->
+        <div class="form-group">
+          <label>Payment Terms</label>
+          <select id="quotePayment" class="form-control" onchange="app.updateMeta()">
+            <option value="As Agreed">As Agreed</option>
+            <option value="100% Advance Against PI">100% Advance Against PI</option>
+            <option value="50% Advance & 50% Against Delivery">50% Advance & 50% Against Delivery</option>
+            <option value="Against Delivery (COD)">Against Delivery (COD)</option>
+            <option value="Immediate on Receipt of Invoice">Immediate on Receipt of Invoice</option>
+            <option value="15 Days Credit">15 Days Credit</option>
+            <option value="30 Days Credit">30 Days Credit</option>
+            <option value="45 Days Credit">45 Days Credit</option>
+            <option value="60 Days Credit">60 Days Credit</option>
+          </select>
+        </div>
+
+        <!-- Delivery Terms Dropdown -->
+        <div class="form-group">
+          <label>Delivery Terms</label>
+          <select id="quoteDelivery" class="form-control" onchange="app.updateMeta()">
+            <option value="Ex-Works / Pune">Ex-Works / Pune</option>
+            <option value="Ex-Works / Chikhali">Ex-Works / Chikhali</option>
+            <option value="F.O.R. Destination (Site Delivery)">F.O.R. Destination (Site)</option>
+            <option value="Ready Stock / Immediate Dispatch">Ready Stock / Immediate Dispatch</option>
+            <option value="Within 1-2 Days from PO">Within 1-2 Days from PO</option>
+            <option value="Within 2-3 Days from PO">Within 2-3 Days from PO</option>
+            <option value="Within 5-7 Days from PO">Within 5-7 Days from PO</option>
+            <option value="To Pay (Freight by Buyer)">To Pay (Freight by Buyer)</option>
+          </select>
+        </div>
+
+        <!-- GST Terms Dropdown -->
+        <div class="form-group">
+          <label>GST Terms</label>
+          <select id="quoteGst" class="form-control" onchange="app.updateMeta()">
+            <option value="EXTRA" selected>EXTRA</option>
+            <option value="INCLUDED">INCLUDED</option>
+            <option value="18% EXTRA">18% EXTRA</option>
+            <option value="12% EXTRA">12% EXTRA</option>
+            <option value="NIL / EXEMPTED">NIL / EXEMPTED</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Client / Buyer Section (WITH PROMINENT SAVED BUYERS DIRECTORY) -->
+    <div class="editor-section">
+      <div class="section-heading">
+        <span>👤 Buyer (TO) Details</span>
+        <button class="btn btn-success btn-sm" onclick="app.saveCurrentBuyerToDirectory()" title="Save current company into directory">
+          💾 Save Client
+        </button>
+      </div>
+
+      <!-- PROMINENT SAVED BUYER SELECTOR BOX -->
+      <div class="buyer-directory-card">
+        <div class="buyer-directory-head">
+          <div class="buyer-directory-title">
+            <span>⚡ 1-Click Load Saved Company:</span>
+          </div>
+          <div class="buyer-directory-count" id="savedBuyerCount">4 Saved</div>
+        </div>
+        <div class="buyer-directory-actions">
+          <select id="buyerSelectDropdown" class="form-control" style="font-weight: 700; color: #fef08a; background: #1e293b; border-color: #3b82f6; flex: 1;" onchange="app.loadBuyerFromSelect(this.value)">
+            <!-- Populated by JS -->
+          </select>
+          <button class="btn btn-outline btn-sm" onclick="app.deleteSelectedBuyer()" title="Delete Selected Customer" style="color: #ef4444; border-color: #ef4444;">
+            🗑️
+          </button>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group form-grid-full">
+          <label>Buyer Company Name</label>
+          <input type="text" id="clientCompany" class="form-control" placeholder="M/s. ABC Industries Pvt. Ltd." oninput="app.updateClient()" />
+        </div>
+        <div class="form-group form-grid-full">
+          <label>Billing Address</label>
+          <input type="text" id="clientAddress" class="form-control" placeholder="Plot No. 45, MIDC Bhosari, Pune" oninput="app.updateClient()" />
+        </div>
+        <div class="form-group">
+          <label>GSTIN</label>
+          <input type="text" id="clientGst" class="form-control" placeholder="27AAACA0000A1Z5" oninput="app.updateClient()" />
+        </div>
+        <div class="form-group">
+          <label>State & Code</label>
+          <input type="text" id="clientState" class="form-control" placeholder="Maharashtra (27)" oninput="app.updateClient()" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Client Inquiry & Reference Section (Option 1) -->
+    <div class="editor-section">
+      <div class="section-heading">
+        <span>📋 Client Inquiry & RFQ Reference</span>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Inquiry / RFQ Ref No.</label>
+          <input type="text" id="inqRef" class="form-control" placeholder="RFQ/2026/08/042" oninput="app.updateInquiry()" />
+        </div>
+        <div class="form-group">
+          <label>Inquiry Date</label>
+          <input type="text" id="inqDate" class="form-control" placeholder="28 August 2026" oninput="app.updateInquiry()" />
+        </div>
+        <div class="form-group">
+          <label>Department / Sector</label>
+          <input type="text" id="inqDept" class="form-control" placeholder="Safety & EHS Dept" oninput="app.updateInquiry()" />
+        </div>
+        <div class="form-group">
+          <label>Project / Site</label>
+          <input type="text" id="inqProject" class="form-control" placeholder="Annual Safety Supply / Bhosari" oninput="app.updateInquiry()" />
+        </div>
+        <div class="form-group form-grid-full">
+          <label>Kind Attn / Contact Person</label>
+          <input type="text" id="clientName" class="form-control" placeholder="Mr. Rajesh Sharma (Purchase Head)" oninput="app.updateClient()" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Master Catalog Quick Inserter & Add New Master Button -->
+    <div class="editor-section">
+      <div class="section-heading">
+        <span>⚡ Master Catalog Library</span>
+        <button class="btn btn-success btn-sm" onclick="app.openNewProductModal()">
+          + Save New Item
+        </button>
+      </div>
+      <div class="catalog-picker">
+        <div class="catalog-search-wrap">
+          <svg class="catalog-search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          <input type="text" id="catalogSearch" class="catalog-search-input" placeholder="1-Click add: Helmets, Shoes, Gloves..." oninput="app.filterCatalog(this.value)" />
+        </div>
+        <div class="catalog-items-scroll" id="catalogList">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Quotation Items List Editor -->
+    <div class="editor-section">
+      <div class="section-heading">
+        <span>🛒 Active Quote Items (<span id="itemCount">0</span>)</span>
+        <button class="btn btn-primary btn-sm" onclick="app.addCustomItem()">+ Blank Row</button>
+      </div>
+      
+      <div class="items-editor-container" id="itemsEditContainer">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- Right Live Preview Viewport -->
+  <main class="preview-viewport">
+    
+    <div class="preview-toolbar no-print">
+      <div class="preview-title">👁️ Live Enterprise A4 Preview (Customer Auto-Directory Active)</div>
+      <div style="font-size: 12px; color: #34d399; font-weight: 600;">✓ Ready for Print / PDF Export</div>
+    </div>
+
+    <!-- THE A4 SHEET -->
+    <div class="a4-sheet" id="printSheet">
+      
+      <!-- Top Industrial Color Accent Strip -->
+      <div class="top-industrial-accent"></div>
+
+      <div class="quotation-box">
+        
+        <!-- Rich Header Grid with BADA PASS LOGO -->
+        <div class="quote-header-grid">
+          <!-- Logo Col (BADA LOGO, NO TEXT BELOW) -->
+          <div class="quote-logo-col">
+            <img src="https://passcorp.in/assets/logo.png" alt="PASS CORP." onerror="this.src='https://passcorp.in/assets/pass_logo.png'" />
+          </div>
+
+          <!-- Company Details Col (Brand Matched Title) -->
+          <div class="quote-company-col">
+            <div class="company-main-title">PASS CORP.</div>
+            <div class="company-scope-banner">
+              INDUSTRIAL SAFETY EQUIPMENT & WORKPLACE PROTECTION SOLUTIONS
+            </div>
+            <div class="company-details-text">
+              📍 Dehu Alandi Road, Chikhali, Pune - 411062, Maharashtra, India<br>
+              📞 <strong>Mob:</strong> +91 97676 72497 &nbsp;|&nbsp; ✉️ <strong>Email:</strong> sales@passcorp.in / passcorpsafety@gmail.com<br>
+              🌐 <strong>Web:</strong> www.passcorp.in &nbsp;|&nbsp; <strong>GSTIN:</strong> Unregistered / Regular
+            </div>
+            <div class="company-credentials-row">
+              <span>🛡️ IS / EN / CE Certified Safety Gear</span>
+              <span>•</span>
+              <span>⚡ Ready Stock in PCMC MIDC</span>
+              <span>•</span>
+              <span>⭐ Genuine OEM Products</span>
+            </div>
+          </div>
+
+          <!-- Quotation Meta Col -->
+          <div class="quote-meta-col">
+            <div class="quote-meta-header">QUOTATION</div>
+            <table class="quote-meta-table">
+              <tr>
+                <td class="meta-label">Quotation No.</td>
+                <td class="meta-val" id="viewQuoteNo">PC/25-26/00078</td>
+              </tr>
+              <tr>
+                <td class="meta-label">Date</td>
+                <td class="meta-val" id="viewQuoteDate">2 August 2026</td>
+              </tr>
+              <tr>
+                <td class="meta-label">Valid Upto</td>
+                <td class="meta-val" id="viewQuoteValid">17 August 2026</td>
+              </tr>
+              <tr>
+                <td class="meta-label">Payment Terms</td>
+                <td class="meta-val" id="viewQuotePayment">As Agreed</td>
+              </tr>
+              <tr>
+                <td class="meta-label">Delivery Terms</td>
+                <td class="meta-val" id="viewQuoteDelivery">Ex-Works / Pune</td>
+              </tr>
+              <tr>
+                <td class="meta-label">GST</td>
+                <td class="meta-val" id="viewQuoteGst" style="color:#b91c1c;">EXTRA</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- Enterprise Client & Inquiry Reference Row (Option 1) -->
+        <div class="client-enterprise-row">
+          <!-- Buyer Col -->
+          <div class="client-buyer-col">
+            <div class="client-section-title">TO / BUYER DETAILS</div>
+            <table class="client-table">
+              <tr>
+                <td class="c-label">Company:</td>
+                <td class="c-val" id="viewClientCompany">M/s. ABC Industries Pvt. Ltd.</td>
+              </tr>
+              <tr>
+                <td class="c-label">Address:</td>
+                <td class="c-val" id="viewClientAddress">Plot No. 45, MIDC Bhosari, Pune</td>
+              </tr>
+              <tr>
+                <td class="c-label">GSTIN:</td>
+                <td class="c-val" id="viewClientGst">27AAACA0000A1Z5</td>
+              </tr>
+              <tr>
+                <td class="c-label">State:</td>
+                <td class="c-val" id="viewClientState">Maharashtra (Code: 27)</td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Client Inquiry & Reference Col (Option 1) -->
+          <div class="client-inquiry-col">
+            <div class="client-section-title">CLIENT INQUIRY & REFERENCE</div>
+            <table class="client-table">
+              <tr>
+                <td class="c-label">Inquiry / RFQ:</td>
+                <td class="c-val" id="viewInqRef">RFQ/2026/08/042</td>
+              </tr>
+              <tr>
+                <td class="c-label">Inquiry Date:</td>
+                <td class="c-val" id="viewInqDate">28 August 2026</td>
+              </tr>
+              <tr>
+                <td class="c-label">Department:</td>
+                <td class="c-val" id="viewInqDept">Safety & EHS Dept</td>
+              </tr>
+              <tr>
+                <td class="c-label">Project / Site:</td>
+                <td class="c-val" id="viewInqProject">Annual Safety Supply / Bhosari</td>
+              </tr>
+              <tr>
+                <td class="c-label">Kind Attn:</td>
+                <td class="c-val" id="viewClientName">Mr. Rajesh Sharma (Purchase Head)</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- Tagline Strip: Clean WHITE Background -->
+        <div class="tagline-strip">
+          PRECISION | ASSURANCE | SAFETY | SOLUTION
+        </div>
+
+        <!-- Product Table with BADA Image & Compact Auto-Adjusting Description -->
+        <table class="quote-products-table" id="quoteTable">
+          <thead>
+            <tr>
+              <th style="width: 4%;">Sr. No.</th>
+              <th style="width: 7%;">Lead Time</th>
+              <th style="width: 17%;">Product Image</th>
+              <th style="width: 22%;">Product Description</th>
+              <th style="width: 9%;">Brand</th>
+              <th style="width: 7%;">HSN</th>
+              <th style="width: 6%;">Unit</th>
+              <th style="width: 5%;">Qty</th>
+              <th style="width: 8%;">Price (₹)</th>
+              <th style="width: 5%;">GST %</th>
+              <th style="width: 10%;">Amount (₹)</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <!-- Populated by JS -->
+          </tbody>
+        </table>
+
+        <!-- Total & Words Row -->
+        <div class="total-summary-row">
+          <div class="words-col">
+            <span class="words-label">Amount in Words:</span>
+            <span class="words-text" id="viewAmountWords">Four Hundred Thirty Five Rupees Only</span>
+          </div>
+          <div class="total-amount-col">
+            <span>Grand Total (₹)</span>
+            <span id="viewTotalAmount" style="font-size: 11px;">₹435.00</span>
+          </div>
+        </div>
+
+        <!-- Footer Grid: Terms, Bank Details, Signatory -->
+        <div class="quote-footer-grid">
+          <!-- Terms & Conditions -->
+          <div class="terms-col">
+            <div class="footer-box-title">TERMS & CONDITIONS</div>
+            <ul class="terms-list">
+              <li>Prices are subject to change without prior notice.</li>
+              <li>Goods once sold will not be taken back.</li>
+              <li>Delivery time is indicative and may change.</li>
+              <li>Warranty as per manufacturer's standard policy.</li>
+              <li>Subject to Pune Jurisdiction only.</li>
+            </ul>
+          </div>
+
+          <!-- Bank Details -->
+          <div class="bank-col">
+            <div class="footer-box-title">BANK DETAILS</div>
+            <table class="bank-table">
+              <tr>
+                <td class="b-label">Bank Name:</td>
+                <td class="b-val">HDFC Bank</td>
+              </tr>
+              <tr>
+                <td class="b-label">A/c Name:</td>
+                <td class="b-val">PASS CORP.</td>
+              </tr>
+              <tr>
+                <td class="b-label">A/c No.:</td>
+                <td class="b-val">50200012345678</td>
+              </tr>
+              <tr>
+                <td class="b-label">IFSC Code:</td>
+                <td class="b-val">HDFC0001234</td>
+              </tr>
+              <tr>
+                <td class="b-label">Branch:</td>
+                <td class="b-val">Chikhali, Pune</td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Signatory with Uploaded PASS CORP. Stamp -->
+          <div class="signatory-col">
+            <div class="for-company-title">For PASS CORP.</div>
+            <img src="stamp.png" class="sign-stamp-img" alt="PASS CORP. Stamp" />
+            <div class="signatory-label">Authorized Signatory</div>
+          </div>
+        </div>
+
+        <!-- Bottom Safety Banner -->
+        <div class="bottom-safety-strip">
+          Thank you for the opportunity! | STAY SAFE, WORK SAFE. WE CARE FOR YOUR SAFETY.
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- MODAL: ADD / SAVE NEW PRODUCT TO MASTER CATALOG -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        Save New Product to Master Library
+      </div>
+      <button class="btn btn-outline btn-sm" onclick="app.closeNewProductModal()">✕</button>
+    </div>
+
+    <div class="modal-body">
+      
+      <div class="form-group">
+        <label>Product Display Name</label>
+        <input type="text" id="mProdName" class="form-control" placeholder="e.g., Safety Helmet Udyogi Ultravent 7000" />
+      </div>
+
+      <div class="form-group">
+        <label>Full Specifications / Description (Will appear in Quotation)</label>
+        <textarea id="mProdSpecs" class="form-control" rows="3" placeholder="Safety Helmet&#10;Udyogi Ultravent 7000&#10;ISI Certified, Ratchet Type, Yellow"></textarea>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Brand Name</label>
+          <input type="text" id="mBrandName" class="form-control" placeholder="e.g. KARAM, UDYOGI, 3M, HILLSON" oninput="app.autoMatchBrandLogo(this.value)" />
+        </div>
+
+        <div class="form-group">
+          <label>Preset Brand Logo</label>
+          <select id="mBrandSelect" class="form-control" onchange="app.onBrandSelectChange(this.value)">
+            <option value="">-- Select or Type Custom --</option>
+            <option value="https://passcorp.in/assets/brands/karam.png">KARAM</option>
+            <option value="https://passcorp.in/assets/brands/udyogi.png">UDYOGI</option>
+            <option value="https://passcorp.in/assets/brands/hillson.png">HILLSON</option>
+            <option value="https://passcorp.in/assets/brands/3m.png">3M</option>
+            <option value="https://passcorp.in/assets/brands/honeywell.png">HONEYWELL</option>
+            <option value="https://passcorp.in/assets/brands/dpl.png">DPL</option>
+            <option value="https://passcorp.in/assets/brands/perf.png">PERF</option>
+            <option value="https://passcorp.in/assets/brands/reflectosafe.png">REFLECTOSAFE</option>
+            <option value="https://passcorp.in/assets/brands/wildbull.jpg">WILDBULL / PASS</option>
+          </select>
+        </div>
+
+        <div class="form-group form-grid-full">
+          <label>Product Image (Upload Local Photo OR Paste Web URL)</label>
+          <div class="img-preview-box">
+            <img id="mImgPreview" src="https://passcorp.in/assets/logo.png" alt="Preview" />
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
+              <input type="file" id="mImgFile" accept="image/*" class="form-control" onchange="app.handleImageFileUpload(event)" />
+              <input type="text" id="mImgUrl" class="form-control" placeholder="Or paste image link (https://...)" oninput="app.onImgUrlInput(this.value)" />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>HSN Code</label>
+          <input type="text" id="mHsn" class="form-control" placeholder="6506" value="6506" />
+        </div>
+
+        <div class="form-group">
+          <label>Unit</label>
+          <input type="text" id="mUnit" class="form-control" placeholder="Nos. / Pairs / Set" value="Nos." />
+        </div>
+
+        <div class="form-group">
+          <label>Default Unit Price (₹)</label>
+          <input type="number" step="0.01" id="mPrice" class="form-control" placeholder="245.00" />
+        </div>
+
+        <div class="form-group">
+          <label>GST Rate (%)</label>
+          <select id="mGst" class="form-control">
+            <option value="18" selected>18% (Standard Safety Gear)</option>
+            <option value="12">12% (Apparel/Jackets/Cotton)</option>
+            <option value="5">5%</option>
+            <option value="28">28%</option>
+            <option value="0">0% (Nil)</option>
+          </select>
+        </div>
+
+        <div class="form-group form-grid-full">
+          <label>Default Lead Time</label>
+          <input type="text" id="mLeadTime" class="form-control" placeholder="Ready Stock / 1-2 Days / 2-3 Days" value="1-2 Days" />
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="app.closeNewProductModal()">Cancel</button>
+      <button class="btn btn-success" onclick="app.saveNewProductToMaster()">💾 Save & Add to Master Library</button>
+    </div>
+  </div>
+</div>
+
+<!-- APPLICATION JAVASCRIPT LOGIC -->
+<script>
+/* ============================================================
+   DEFAULT PASS CORP. MASTER CATALOG DATABASE
+   ============================================================ */
+const DEFAULT_CATALOG = [
+  {
+    id: "helm_udyogi_7000",
+    name: "Safety Helmet Udyogi Ultravent 7000",
+    specs: "Safety Helmet\nUdyogi Ultravent 7000\nISI Certified, Ratchet, Yellow",
+    brand: "UDYOGI",
+    brandLogo: "https://passcorp.in/assets/brands/udyogi.png",
+    hsn: "6506",
+    unit: "Nos.",
+    price: 245.00,
+    gst: 18,
+    leadTime: "1-2 Days",
+    image: "https://passcorp.in/assets/products/head/ultravent_7000.png"
+  },
+  {
+    id: "helm_karam_pn501",
+    name: "Safety Helmet Karam PN 501",
+    specs: "Safety Helmet\nKaram PN 501\nISI Certified, Manual, Yellow",
+    brand: "KARAM",
+    brandLogo: "https://passcorp.in/assets/brands/karam.png",
+    hsn: "6506",
+    unit: "Nos.",
+    price: 190.00,
+    gst: 18,
+    leadTime: "1-2 Days",
+    image: "https://passcorp.in/assets/products/head/karam_pn521.png"
+  },
+  {
+    id: "helm_fusion_pro",
+    name: "Safety Helmet Karam Fusion Pro",
+    specs: "Safety Helmet\nKaram Fusion Pro\nEN 397 & ISI Certified",
+    brand: "KARAM",
+    brandLogo: "https://passcorp.in/assets/brands/karam.png",
+    hsn: "6506",
+    unit: "Nos.",
+    price: 320.00,
+    gst: 18,
+    leadTime: "2-3 Days",
+    image: "https://passcorp.in/assets/products/head/fusion_pro.png"
+  },
+  {
+    id: "shoe_hillson_power",
+    name: "Safety Shoe Hillson Power Plus",
+    specs: "Safety Shoe Power Plus\nSteel Toe 200J, High Ankle, ISI Marked",
+    brand: "HILLSON",
+    brandLogo: "https://passcorp.in/assets/brands/hillson.png",
+    hsn: "6403",
+    unit: "Pairs",
+    price: 780.00,
+    gst: 18,
+    leadTime: "1-2 Days",
+    image: "https://passcorp.in/assets/products/shoes/power_plus.png"
+  },
+  {
+    id: "shoe_apollo_plus",
+    name: "Safety Shoe Apollo Plus Low Ankle",
+    specs: "Safety Shoe Apollo Plus\nDouble Density PU Sole, Steel Toe",
+    brand: "HILLSON",
+    brandLogo: "https://passcorp.in/assets/brands/hillson.png",
+    hsn: "6403",
+    unit: "Pairs",
+    price: 650.00,
+    gst: 18,
+    leadTime: "1-2 Days",
+    image: "https://passcorp.in/assets/products/shoes/apollo_plus.png"
+  },
+  {
+    id: "shoe_champion_pro",
+    name: "Safety Shoe Champion Pro",
+    specs: "Safety Shoe Champion Pro\nLightweight Sporty, Breathable Mesh",
+    brand: "PERF",
+    brandLogo: "https://passcorp.in/assets/brands/perf.png",
+    hsn: "6403",
+    unit: "Pairs",
+    price: 920.00,
+    gst: 18,
+    leadTime: "2-3 Days",
+    image: "https://passcorp.in/assets/products/shoes/champion_pro.png"
+  },
+  {
+    id: "glove_cut5_fortuner",
+    name: "Cut Level 5 HPPE Gloves Fortuner CPU5",
+    specs: "Cut Level 5 Gloves CPU5\nEN 388 4X43D, PU Coated Palm",
+    brand: "UDYOGI",
+    brandLogo: "https://passcorp.in/assets/brands/udyogi.png",
+    hsn: "6116",
+    unit: "Pairs",
+    price: 185.00,
+    gst: 18,
+    leadTime: "Ready Stock",
+    image: "https://passcorp.in/assets/products/gloves/fortuner_cpu5.png"
+  },
+  {
+    id: "glove_nitrile_blue",
+    name: "Chemical Nitrile Chemical Resistant Gloves",
+    specs: "Chemical Nitrile Gloves\n15 Mil, Flock Lined, Diamond Grip",
+    brand: "DPL",
+    brandLogo: "https://passcorp.in/assets/brands/dpl.png",
+    hsn: "4015",
+    unit: "Pairs",
+    price: 95.00,
+    gst: 18,
+    leadTime: "Ready Stock",
+    image: "https://passcorp.in/assets/products/gloves/disposable_nitrile_blue.webp"
+  },
+  {
+    id: "glove_dotted_cotton",
+    name: "Seamless Dotted Cotton Working Gloves",
+    specs: "Dotted Cotton Working Gloves\nPVC Single Side Dotted, 7 Gauge",
+    brand: "PASS",
+    brandLogo: "https://passcorp.in/assets/brands/wildbull.jpg",
+    hsn: "6116",
+    unit: "Pairs",
+    price: 22.00,
+    gst: 12,
+    leadTime: "Ready Stock",
+    image: "https://passcorp.in/assets/products/gloves/dotted_cotton.png"
+  },
+  {
+    id: "harness_karam_pn112",
+    name: "Full Body Harness Karam PN 112",
+    specs: "Full Body Harness PN 112\nIS 3521:1999 & EN 361 Certified",
+    brand: "KARAM",
+    brandLogo: "https://passcorp.in/assets/brands/karam.png",
+    hsn: "6307",
+    unit: "Nos.",
+    price: 680.00,
+    gst: 18,
+    leadTime: "1-2 Days",
+    image: "https://passcorp.in/assets/cover_harness.png"
+  },
+  {
+    id: "jacket_reflective",
+    name: "High Visibility Reflective Safety Jacket",
+    specs: "Reflective Safety Jacket\n120 GSM Fabric, Class 2 Tape",
+    brand: "ReflectoSafe",
+    brandLogo: "https://passcorp.in/assets/brands/reflectosafe.png",
+    hsn: "6217",
+    unit: "Nos.",
+    price: 110.00,
+    gst: 12,
+    leadTime: "Ready Stock",
+    image: "https://passcorp.in/assets/cover_industry_refinery.png"
+  },
+  {
+    id: "goggle_honeywell",
+    name: "Safety Goggles Honeywell A800 Anti-Scratch",
+    specs: "Safety Goggles A800\nEN 166 Certified, Clear Lens, 99.9% UV",
+    brand: "Honeywell",
+    brandLogo: "https://passcorp.in/assets/brands/honeywell.png",
+    hsn: "9004",
+    unit: "Nos.",
+    price: 115.00,
+    gst: 18,
+    leadTime: "Ready Stock",
+    image: "https://passcorp.in/assets/cover_goggle.png"
+  }
+];
+
+/* DEFAULT SAVED BUYERS DIRECTORY */
+const DEFAULT_BUYERS = [
+  {
+    id: "buyer_1",
+    company: "M/s. ABC Industries Pvt. Ltd.",
+    address: "Plot No. 45, MIDC Bhosari, Pune - 411026",
+    gst: "27AAACA0000A1Z5",
+    state: "Maharashtra (Code: 27)",
+    name: "Mr. Rajesh Sharma (Purchase Head)"
+  },
+  {
+    id: "buyer_2",
+    company: "M/s. Tata Motors Limited",
+    address: "Pimpri Works, Sector 10, MIDC Pimpri, Pune - 411018",
+    gst: "27AAACT2727Q1ZW",
+    state: "Maharashtra (Code: 27)",
+    name: "Mr. Suresh Kulkarni (EHS Officer)"
+  },
+  {
+    id: "buyer_3",
+    company: "M/s. Bajaj Auto Limited",
+    address: "A-1, Mahalunge Village, Chakan MIDC Phase 2, Pune - 410501",
+    gst: "27AAACB0000K1Z9",
+    state: "Maharashtra (Code: 27)",
+    name: "Mr. Pravin Deshmukh (Safety Dept)"
+  },
+  {
+    id: "buyer_4",
+    company: "M/s. Bharat Forge Limited",
+    address: "Mundhwa Industrial Area, Pune - 411036",
+    gst: "27AAACB1234D1ZP",
+    state: "Maharashtra (Code: 27)",
+    name: "Mr. Amit Jadhav (Plant Incharge)"
+  }
+];
+
+const BRAND_LOGOS_MAP = {
+  "karam": "https://passcorp.in/assets/brands/karam.png",
+  "udyogi": "https://passcorp.in/assets/brands/udyogi.png",
+  "hillson": "https://passcorp.in/assets/brands/hillson.png",
+  "3m": "https://passcorp.in/assets/brands/3m.png",
+  "honeywell": "https://passcorp.in/assets/brands/honeywell.png",
+  "dpl": "https://passcorp.in/assets/brands/dpl.png",
+  "perf": "https://passcorp.in/assets/brands/perf.png",
+  "reflectosafe": "https://passcorp.in/assets/brands/reflectosafe.png",
+  "pass": "https://passcorp.in/assets/brands/wildbull.jpg",
+  "wildbull": "https://passcorp.in/assets/brands/wildbull.jpg"
+};
+
+/* ============================================================
+   INDIAN CURRENCY AMOUNT IN WORDS CONVERTER
+   ============================================================ */
+function numberToIndianWords(num) {
+  if (isNaN(num) || num === null || num === 0) return "Zero Rupees Only";
+  
+  const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+  const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+  
+  function convertGroup(n) {
+    let output = '';
+    if (n >= 100) {
+      output += a[Math.floor(n / 100)] + ' Hundred ';
+      n %= 100;
+    }
+    if (n >= 20) {
+      output += b[Math.floor(n / 10)] + ' ';
+      n %= 10;
+    }
+    if (n > 0) {
+      output += a[n] + ' ';
+    }
+    return output.trim();
+  }
+
+  let integerPart = Math.floor(num);
+  let decimalPart = Math.round((num - integerPart) * 100);
+
+  let crore = Math.floor(integerPart / 10000000);
+  integerPart %= 10000000;
+  let lakh = Math.floor(integerPart / 100000);
+  integerPart %= 100000;
+  let thousand = Math.floor(integerPart / 1000);
+  integerPart %= 1000;
+  let hundred = integerPart;
+
+  let words = '';
+  if (crore > 0) words += convertGroup(crore) + ' Crore ';
+  if (lakh > 0) words += convertGroup(lakh) + ' Lakh ';
+  if (thousand > 0) words += convertGroup(thousand) + ' Thousand ';
+  if (hundred > 0) words += convertGroup(hundred);
+
+  words = words.trim() + ' Rupees';
+
+  if (decimalPart > 0) {
+    words += ' and ' + convertGroup(decimalPart) + ' Paise';
+  }
+
+  return words + ' Only';
+}
+
+/* Helper: Format Date to "2 August 2026" */
+function formatDateLong(d) {
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+/* ============================================================
+   MAIN APPLICATION OBJECT
+   ============================================================ */
+const app = {
+  catalog: [],
+  buyers: [],
+  modalImgData: "https://passcorp.in/assets/logo.png",
+  
+  quote: {
+    meta: {
+      no: "PC/25-26/00078",
+      rawDate: new Date().toISOString().split('T')[0],
+      date: "",
+      valid: "",
+      payment: "As Agreed",
+      delivery: "Ex-Works / Pune",
+      gst: "EXTRA"
+    },
+    client: {
+      company: "M/s. ABC Industries Pvt. Ltd.",
+      address: "Plot No. 45, MIDC Bhosari, Pune - 411026",
+      gst: "27AAACA0000A1Z5",
+      state: "Maharashtra (Code: 27)",
+      name: "Mr. Rajesh Sharma (Purchase Head)"
+    },
+    inquiry: {
+      ref: "RFQ/2026/08/042",
+      date: "",
+      dept: "Safety & EHS Dept",
+      project: "Annual Safety Supply / Bhosari"
+    },
+    items: []
+  },
+
+  init() {
+    this.loadCatalog();
+    this.loadBuyers();
+    this.createNewQuote();
+    this.loadSampleQuote();
+  },
+
+  /* Customer / Buyer Directory Logic */
+  loadBuyers() {
+    try {
+      const saved = localStorage.getItem('PASS_MASTER_BUYERS');
+      if (saved) {
+        this.buyers = JSON.parse(saved);
+      } else {
+        this.buyers = [...DEFAULT_BUYERS];
+        this.saveBuyers();
+      }
+    } catch (e) {
+      this.buyers = [...DEFAULT_BUYERS];
+    }
+    this.renderBuyersDropdown();
+  },
+
+  saveBuyers() {
+    try {
+      localStorage.setItem('PASS_MASTER_BUYERS', JSON.stringify(this.buyers));
+    } catch (e) {
+      console.warn("Buyer storage error", e);
+    }
+  },
+
+  renderBuyersDropdown() {
+    const sel = document.getElementById('buyerSelectDropdown');
+    document.getElementById('savedBuyerCount').innerText = `${this.buyers.length} Saved`;
+    sel.innerHTML = `<option value="">-- Choose from Saved Directory (${this.buyers.length}) --</option>` +
+      this.buyers.map(b => `<option value="${b.id}">${b.company}</option>`).join('');
+  },
+
+  loadBuyerFromSelect(buyerId) {
+    if (!buyerId) return;
+    const b = this.buyers.find(x => x.id === buyerId);
+    if (!b) return;
+
+    this.quote.client.company = b.company;
+    this.quote.client.address = b.address;
+    this.quote.client.gst = b.gst;
+    this.quote.client.state = b.state || "Maharashtra (Code: 27)";
+    this.quote.client.name = b.name || "";
+
+    document.getElementById('clientCompany').value = b.company;
+    document.getElementById('clientAddress').value = b.address;
+    document.getElementById('clientGst').value = b.gst;
+    document.getElementById('clientState').value = b.state || "Maharashtra (Code: 27)";
+    document.getElementById('clientName').value = b.name || "";
+
+    this.renderPreview();
+  },
+
+  saveCurrentBuyerToDirectory() {
+    const comp = document.getElementById('clientCompany').value.trim();
+    if (!comp) {
+      alert("Kripya Buyer Company Name enter karein!");
+      return;
+    }
+
+    const addr = document.getElementById('clientAddress').value.trim();
+    const gst = document.getElementById('clientGst').value.trim();
+    const state = document.getElementById('clientState').value.trim() || "Maharashtra (Code: 27)";
+    const name = document.getElementById('clientName').value.trim();
+
+    // Check if company already exists to update
+    const existingIdx = this.buyers.findIndex(x => x.company.toLowerCase() === comp.toLowerCase());
+    if (existingIdx >= 0) {
+      this.buyers[existingIdx] = { id: this.buyers[existingIdx].id, company: comp, address: addr, gst, state, name };
+    } else {
+      this.buyers.unshift({ id: "buyer_" + Date.now(), company: comp, address: addr, gst, state, name });
+    }
+
+    this.saveBuyers();
+    this.renderBuyersDropdown();
+    document.getElementById('buyerSelectDropdown').value = this.buyers.find(x => x.company === comp)?.id || "";
+    alert(`✓ "${comp}" Customer Directory me permanently save ho gaya hai! Agli baar sirf dropdown se select karein.`);
+  },
+
+  deleteSelectedBuyer() {
+    const selVal = document.getElementById('buyerSelectDropdown').value;
+    if (!selVal) {
+      alert("Kripya pehle dropdown se wo company select karein jise delete karna hai.");
+      return;
+    }
+    const b = this.buyers.find(x => x.id === selVal);
+    if (!b) return;
+
+    if (confirm(`Kya aap "${b.company}" ko directory se delete karna chahte hain?`)) {
+      this.buyers = this.buyers.filter(x => x.id !== selVal);
+      this.saveBuyers();
+      this.renderBuyersDropdown();
+      alert("Customer directory se remove ho gaya.");
+    }
+  },
+
+  /* Product Catalog Logic */
+  loadCatalog() {
+    try {
+      const saved = localStorage.getItem('PASS_MASTER_CATALOG');
+      if (saved) {
+        this.catalog = JSON.parse(saved);
+      } else {
+        this.catalog = [...DEFAULT_CATALOG];
+        this.saveCatalog();
+      }
+    } catch (e) {
+      this.catalog = [...DEFAULT_CATALOG];
+    }
+    this.renderCatalog(this.catalog);
+  },
+
+  saveCatalog() {
+    try {
+      localStorage.setItem('PASS_MASTER_CATALOG', JSON.stringify(this.catalog));
+    } catch (e) {
+      console.warn("Storage quota exceeded or error", e);
+    }
+  },
+
+  // Auto calculate Valid Upto = Current Date + 15 Days
+  calculate15DaysValidity(baseDateStr) {
+    const d = baseDateStr ? new Date(baseDateStr) : new Date();
+    const dateFormatted = formatDateLong(d);
+    
+    const validD = new Date(d);
+    validD.setDate(validD.getDate() + 15);
+    const validFormatted = formatDateLong(validD);
+
+    return { dateFormatted, validFormatted };
+  },
+
+  onDateChange(newDateVal) {
+    this.quote.meta.rawDate = newDateVal;
+    const { dateFormatted, validFormatted } = this.calculate15DaysValidity(newDateVal);
+    this.quote.meta.date = dateFormatted;
+    this.quote.meta.valid = validFormatted;
+    document.getElementById('quoteValid').value = validFormatted;
+    this.renderPreview();
+  },
+
+  loadSampleQuote() {
+    const today = new Date();
+    const isoDate = today.toISOString().split('T')[0];
+    const { dateFormatted, validFormatted } = this.calculate15DaysValidity(isoDate);
+
+    this.quote.meta = {
+      no: "PC/25-26/00078",
+      rawDate: isoDate,
+      date: dateFormatted,
+      valid: validFormatted,
+      payment: "As Agreed",
+      delivery: "Ex-Works / Pune",
+      gst: "EXTRA"
+    };
+    this.quote.client = {
+      company: "M/s. ABC Industries Pvt. Ltd.",
+      address: "Plot No. 45, MIDC Bhosari, Pune - 411026",
+      gst: "27AAACA0000A1Z5",
+      state: "Maharashtra (Code: 27)",
+      name: "Mr. Rajesh Sharma (Purchase Head)"
+    };
+    this.quote.inquiry = {
+      ref: "RFQ/2026/08/042",
+      date: dateFormatted,
+      dept: "Safety & EHS Dept",
+      project: "Annual Safety Supply / Bhosari"
+    };
+    this.quote.items = [
+      {
+        leadTime: "1-2 Days",
+        image: "https://passcorp.in/assets/products/head/ultravent_7000.png",
+        title: "Safety Helmet",
+        specs: "Safety Helmet\nUdyogi Ultravent 7000\nISI Certified, Ratchet, Yellow",
+        brand: "UDYOGI",
+        brandLogo: "https://passcorp.in/assets/brands/udyogi.png",
+        hsn: "6506",
+        unit: "Nos.",
+        qty: 1,
+        price: 245.00,
+        gst: 18
+      },
+      {
+        leadTime: "1-2 Days",
+        image: "https://passcorp.in/assets/products/head/karam_pn521.png",
+        title: "Safety Helmet",
+        specs: "Safety Helmet\nKaram PN 501\nISI Certified, Manual, Yellow",
+        brand: "KARAM",
+        brandLogo: "https://passcorp.in/assets/brands/karam.png",
+        hsn: "6506",
+        unit: "Nos.",
+        qty: 1,
+        price: 190.00,
+        gst: 18
+      }
+    ];
+
+    this.populateInputs();
+    this.renderAll();
+  },
+
+  createNewQuote() {
+    const today = new Date();
+    const isoDate = today.toISOString().split('T')[0];
+    const { dateFormatted, validFormatted } = this.calculate15DaysValidity(isoDate);
+    const randomNum = String(Math.floor(10000 + Math.random() * 90000)).substring(1);
+    
+    this.quote.meta = {
+      no: `PC/25-26/000${randomNum}`,
+      rawDate: isoDate,
+      date: dateFormatted,
+      valid: validFormatted,
+      payment: "As Agreed",
+      delivery: "Ex-Works / Pune",
+      gst: "EXTRA"
+    };
+    this.quote.client = {
+      company: "",
+      address: "",
+      gst: "",
+      state: "Maharashtra (Code: 27)",
+      name: ""
+    };
+    this.quote.inquiry = {
+      ref: "",
+      date: dateFormatted,
+      dept: "Safety Dept",
+      project: ""
+    };
+    this.quote.items = [];
+
+    this.populateInputs();
+    this.renderAll();
+  },
+
+  populateInputs() {
+    document.getElementById('quoteNo').value = this.quote.meta.no;
+    document.getElementById('quoteDateInput').value = this.quote.meta.rawDate;
+    document.getElementById('quoteValid').value = this.quote.meta.valid;
+    document.getElementById('quotePayment').value = this.quote.meta.payment;
+    document.getElementById('quoteDelivery').value = this.quote.meta.delivery;
+    document.getElementById('quoteGst').value = this.quote.meta.gst;
+
+    document.getElementById('clientCompany').value = this.quote.client.company;
+    document.getElementById('clientAddress').value = this.quote.client.address;
+    document.getElementById('clientGst').value = this.quote.client.gst;
+    document.getElementById('clientState').value = this.quote.client.state || "Maharashtra (Code: 27)";
+    document.getElementById('clientName').value = this.quote.client.name;
+
+    document.getElementById('inqRef').value = this.quote.inquiry.ref || "";
+    document.getElementById('inqDate').value = this.quote.inquiry.date || this.quote.meta.date;
+    document.getElementById('inqDept').value = this.quote.inquiry.dept || "";
+    document.getElementById('inqProject').value = this.quote.inquiry.project || "";
+  },
+
+  updateMeta() {
+    this.quote.meta.no = document.getElementById('quoteNo').value;
+    this.quote.meta.valid = document.getElementById('quoteValid').value;
+    this.quote.meta.payment = document.getElementById('quotePayment').value;
+    this.quote.meta.delivery = document.getElementById('quoteDelivery').value;
+    this.quote.meta.gst = document.getElementById('quoteGst').value;
+    this.renderPreview();
+  },
+
+  updateClient() {
+    this.quote.client.company = document.getElementById('clientCompany').value;
+    this.quote.client.address = document.getElementById('clientAddress').value;
+    this.quote.client.gst = document.getElementById('clientGst').value;
+    this.quote.client.state = document.getElementById('clientState').value;
+    this.quote.client.name = document.getElementById('clientName').value;
+    this.renderPreview();
+  },
+
+  updateInquiry() {
+    this.quote.inquiry.ref = document.getElementById('inqRef').value;
+    this.quote.inquiry.date = document.getElementById('inqDate').value;
+    this.quote.inquiry.dept = document.getElementById('inqDept').value;
+    this.quote.inquiry.project = document.getElementById('inqProject').value;
+    this.renderPreview();
+  },
+
+  /* Catalog Logic */
+  renderCatalog(items) {
+    const list = document.getElementById('catalogList');
+    if (!items || items.length === 0) {
+      list.innerHTML = `<div style="padding:15px; text-align:center; color:#94a3b8; font-size:11px;">No matching items found. Click '+ Save New Item' above!</div>`;
+      return;
+    }
+
+    list.innerHTML = items.map(it => `
+      <div class="catalog-item-card" onclick="app.addItemFromCatalog('${it.id}')" title="Click to 1-Click add into active quotation">
+        <div class="catalog-item-info">
+          <img src="${it.image}" class="catalog-item-thumb" onerror="this.src='https://passcorp.in/assets/logo.png'" />
+          <div>
+            <div class="catalog-item-title">${it.name}</div>
+            <div class="catalog-item-meta">${it.brand} | HSN: ${it.hsn} | ${it.unit}</div>
+          </div>
+        </div>
+        <div class="catalog-item-price">₹${parseFloat(it.price || 0).toFixed(2)}</div>
+      </div>
+    `).join('');
+  },
+
+  filterCatalog(query) {
+    const q = (query || '').toLowerCase();
+    const filtered = this.catalog.filter(it => 
+      it.name.toLowerCase().includes(q) ||
+      it.brand.toLowerCase().includes(q) ||
+      it.specs.toLowerCase().includes(q) ||
+      (it.hsn && it.hsn.includes(q))
+    );
+    this.renderCatalog(filtered);
+  },
+
+  addItemFromCatalog(id) {
+    const p = this.catalog.find(x => x.id === id);
+    if (!p) return;
+
+    this.quote.items.push({
+      leadTime: p.leadTime || "1-2 Days",
+      image: p.image || "https://passcorp.in/assets/logo.png",
+      title: p.name,
+      specs: p.specs,
+      brand: p.brand,
+      brandLogo: p.brandLogo || "",
+      hsn: p.hsn,
+      unit: p.unit || "Nos.",
+      qty: 1,
+      price: parseFloat(p.price || 0),
+      gst: parseFloat(p.gst || 18)
+    });
+
+    this.renderAll();
+  },
+
+  /* Master Product Modal & Storage */
+  openNewProductModal() {
+    this.modalImgData = "https://passcorp.in/assets/logo.png";
+    document.getElementById('mProdName').value = "";
+    document.getElementById('mProdSpecs').value = "";
+    document.getElementById('mBrandName').value = "";
+    document.getElementById('mBrandSelect').value = "";
+    document.getElementById('mImgFile').value = "";
+    document.getElementById('mImgUrl').value = "";
+    document.getElementById('mImgPreview').src = this.modalImgData;
+    document.getElementById('mHsn').value = "6506";
+    document.getElementById('mUnit').value = "Nos.";
+    document.getElementById('mPrice').value = "";
+    document.getElementById('mGst').value = "18";
+    document.getElementById('mLeadTime').value = "1-2 Days";
+    
+    document.getElementById('productModal').classList.add('active');
+  },
+
+  closeNewProductModal() {
+    document.getElementById('productModal').classList.remove('active');
+  },
+
+  autoMatchBrandLogo(brandText) {
+    const key = (brandText || '').toLowerCase().trim();
+    if (BRAND_LOGOS_MAP[key]) {
+      document.getElementById('mBrandSelect').value = BRAND_LOGOS_MAP[key];
+    }
+  },
+
+  onBrandSelectChange(val) {
+    if (val) {
+      const selectElem = document.getElementById('mBrandSelect');
+      const text = selectElem.options[selectElem.selectedIndex].text;
+      if (!document.getElementById('mBrandName').value) {
+        document.getElementById('mBrandName').value = text;
+      }
+    }
+  },
+
+  handleImageFileUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      this.modalImgData = evt.target.result;
+      document.getElementById('mImgPreview').src = this.modalImgData;
+    };
+    reader.readAsDataURL(file);
+  },
+
+  onImgUrlInput(url) {
+    if (url && url.trim().length > 5) {
+      this.modalImgData = url.trim();
+      document.getElementById('mImgPreview').src = this.modalImgData;
+    }
+  },
+
+  saveNewProductToMaster() {
+    const name = document.getElementById('mProdName').value.trim();
+    const specs = document.getElementById('mProdSpecs').value.trim();
+    const brand = document.getElementById('mBrandName').value.trim() || "PASS";
+    const brandLogo = document.getElementById('mBrandSelect').value || BRAND_LOGOS_MAP[brand.toLowerCase()] || "";
+    const hsn = document.getElementById('mHsn').value.trim() || "6506";
+    const unit = document.getElementById('mUnit').value.trim() || "Nos.";
+    const price = parseFloat(document.getElementById('mPrice').value) || 0;
+    const gst = parseFloat(document.getElementById('mGst').value) || 18;
+    const leadTime = document.getElementById('mLeadTime').value.trim() || "1-2 Days";
+    const image = this.modalImgData || "https://passcorp.in/assets/logo.png";
+
+    if (!name) {
+      alert("Kripya Product Display Name zaroor enter karein!");
+      return;
+    }
+
+    const newProd = {
+      id: "prod_" + Date.now(),
+      name,
+      specs: specs || `${name}\nISI / EN Certified Standard Quality`,
+      brand,
+      brandLogo,
+      hsn,
+      unit,
+      price,
+      gst,
+      leadTime,
+      image
+    };
+
+    // Add to Master Catalog & Save
+    this.catalog.unshift(newProd);
+    this.saveCatalog();
+    this.renderCatalog(this.catalog);
+
+    // Also automatically add to current quotation
+    this.quote.items.push({
+      leadTime: newProd.leadTime,
+      image: newProd.image,
+      title: newProd.name,
+      specs: newProd.specs,
+      brand: newProd.brand,
+      brandLogo: newProd.brandLogo,
+      hsn: newProd.hsn,
+      unit: newProd.unit,
+      qty: 1,
+      price: newProd.price,
+      gst: newProd.gst
+    });
+
+    this.closeNewProductModal();
+    this.renderAll();
+    alert(`✓ "${name}" Master Library me permanently save ho gaya hai aur current quote me add ho gaya! Ab aage sirf click karke select kar sakte hain.`);
+  },
+
+  addCustomItem() {
+    this.quote.items.push({
+      leadTime: "1-2 Days",
+      image: "https://passcorp.in/assets/logo.png",
+      title: "Safety Equipment",
+      specs: "Safety Equipment\nSpecification / Model Details",
+      brand: "PASS",
+      brandLogo: "",
+      hsn: "6506",
+      unit: "Nos.",
+      qty: 1,
+      price: 100.00,
+      gst: 18
+    });
+    this.renderAll();
+  },
+
+  removeItem(idx) {
+    this.quote.items.splice(idx, 1);
+    this.renderAll();
+  },
+
+  updateItemProp(idx, field, value) {
+    if (field === 'qty' || field === 'price' || field === 'gst') {
+      this.quote.items[idx][field] = parseFloat(value) || 0;
+    } else {
+      this.quote.items[idx][field] = value;
+    }
+    this.renderPreview();
+  },
+
+  renderAll() {
+    this.renderItemEditors();
+    this.renderPreview();
+  },
+
+  renderItemEditors() {
+    document.getElementById('itemCount').innerText = this.quote.items.length;
+    const container = document.getElementById('itemsEditContainer');
+    
+    if (this.quote.items.length === 0) {
+      container.innerHTML = `<div style="text-align:center; padding:20px; color:#94a3b8; font-size:12px;">No items in quotation. Select from Master Catalog above!</div>`;
+      return;
+    }
+
+    container.innerHTML = this.quote.items.map((item, idx) => `
+      <div class="item-edit-card">
+        <div class="item-edit-card-header">
+          <span class="item-badge">Item #${idx + 1}</span>
+          <button class="btn-remove-item" onclick="app.removeItem(${idx})" title="Delete Item">×</button>
+        </div>
+        
+        <div class="form-group">
+          <label>Product Description & Specs</label>
+          <textarea class="form-control" rows="2" oninput="app.updateItemProp(${idx}, 'specs', this.value)">${item.specs}</textarea>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Brand</label>
+            <input type="text" class="form-control" value="${item.brand}" oninput="app.updateItemProp(${idx}, 'brand', this.value)" />
+          </div>
+          <div class="form-group">
+            <label>Lead Time</label>
+            <input type="text" class="form-control" value="${item.leadTime}" oninput="app.updateItemProp(${idx}, 'leadTime', this.value)" />
+          </div>
+          <div class="form-group">
+            <label>Qty</label>
+            <input type="number" step="1" class="form-control" value="${item.qty}" oninput="app.updateItemProp(${idx}, 'qty', this.value)" />
+          </div>
+          <div class="form-group">
+            <label>Unit Price (₹)</label>
+            <input type="number" step="0.01" class="form-control" value="${item.price}" oninput="app.updateItemProp(${idx}, 'price', this.value)" />
+          </div>
+          <div class="form-group">
+            <label>HSN</label>
+            <input type="text" class="form-control" value="${item.hsn}" oninput="app.updateItemProp(${idx}, 'hsn', this.value)" />
+          </div>
+          <div class="form-group">
+            <label>Unit</label>
+            <input type="text" class="form-control" value="${item.unit}" oninput="app.updateItemProp(${idx}, 'unit', this.value)" />
+          </div>
+        </div>
+      </div>
+    `).join('');
+  },
+
+  renderPreview() {
+    // Meta updates
+    document.getElementById('viewQuoteNo').innerText = this.quote.meta.no || '-';
+    document.getElementById('viewQuoteDate').innerText = this.quote.meta.date || '-';
+    document.getElementById('viewQuoteValid').innerText = this.quote.meta.valid || '-';
+    document.getElementById('viewQuotePayment').innerText = this.quote.meta.payment || '-';
+    document.getElementById('viewQuoteDelivery').innerText = this.quote.meta.delivery || '-';
+    document.getElementById('viewQuoteGst').innerText = this.quote.meta.gst || 'EXTRA';
+
+    // Buyer updates
+    document.getElementById('viewClientCompany').innerText = this.quote.client.company || '-';
+    document.getElementById('viewClientAddress').innerText = this.quote.client.address || '-';
+    document.getElementById('viewClientGst').innerText = this.quote.client.gst || '-';
+    document.getElementById('viewClientState').innerText = this.quote.client.state || 'Maharashtra (Code: 27)';
+    document.getElementById('viewClientName').innerText = this.quote.client.name || '-';
+
+    // Client Inquiry updates (Option 1)
+    document.getElementById('viewInqRef').innerText = this.quote.inquiry.ref || '-';
+    document.getElementById('viewInqDate').innerText = this.quote.inquiry.date || this.quote.meta.date;
+    document.getElementById('viewInqDept').innerText = this.quote.inquiry.dept || '-';
+    document.getElementById('viewInqProject').innerText = this.quote.inquiry.project || '-';
+
+    // Table rows
+    const tbody = document.getElementById('tableBody');
+    let grandTotal = 0;
+
+    let rowsHtml = this.quote.items.map((item, idx) => {
+      const lineAmt = item.qty * item.price;
+      grandTotal += lineAmt;
+
+      const formattedSpecs = (item.specs || '').replace(/\n/g, '<br>');
+
+      return `
+        <tr class="item-row">
+          <td class="td-center">${idx + 1}</td>
+          <td class="td-center">${item.leadTime || '1-2 Days'}</td>
+          <td class="product-thumb-cell">
+            <img src="${item.image}" alt="" onerror="this.style.display='none'" />
+          </td>
+          <td class="product-desc-cell">
+            <div class="product-specs-text">${formattedSpecs}</div>
+          </td>
+          <td class="brand-badge-cell td-center">
+            ${item.brandLogo ? `<img src="${item.brandLogo}" alt="${item.brand}" onerror="this.outerHTML='<strong>${item.brand}</strong>'" />` : `<strong>${item.brand}</strong>`}
+          </td>
+          <td class="td-center">${item.hsn || '-'}</td>
+          <td class="td-center">${item.unit || 'Nos.'}</td>
+          <td class="td-center">${item.qty}</td>
+          <td class="td-right">₹${item.price.toFixed(2)}</td>
+          <td class="td-center">${item.gst}%</td>
+          <td class="td-right">₹${lineAmt.toFixed(2)}</td>
+        </tr>
+      `;
+    }).join('');
+
+    // Fill blank rows to maintain professional format height
+    const minRows = 4;
+    const extraRows = Math.max(0, minRows - this.quote.items.length);
+    for (let i = 0; i < extraRows; i++) {
+      rowsHtml += `
+        <tr class="empty-fill-row">
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        </tr>
+      `;
+    }
+
+    tbody.innerHTML = rowsHtml;
+
+    // Totals
+    document.getElementById('viewTotalAmount').innerText = `₹${grandTotal.toFixed(2)}`;
+    document.getElementById('viewAmountWords').innerText = numberToIndianWords(grandTotal);
+  },
+
+  shareWhatsApp() {
+    const clientMob = (this.quote.client.mob || '').replace(/[^0-9]/g, '');
+    let text = `*PASS CORP. — ENTERPRISE QUOTATION*\n`;
+    text += `*Quotation No:* ${this.quote.meta.no}\n`;
+    text += `*Date:* ${this.quote.meta.date}\n`;
+    text += `*Valid Upto:* ${this.quote.meta.valid}\n\n`;
+    text += `*To:* ${this.quote.client.company || 'Valued Customer'}\n`;
+    if (this.quote.inquiry.ref) text += `*Inquiry / RFQ Ref:* ${this.quote.inquiry.ref}\n`;
+    if (this.quote.client.name) text += `*Attn:* ${this.quote.client.name}\n\n`;
+    text += `*Items Summary:*\n`;
+    
+    let grandTotal = 0;
+    this.quote.items.forEach((it, idx) => {
+      const amt = it.qty * it.price;
+      grandTotal += amt;
+      text += `${idx + 1}. ${it.specs.split('\n')[0]} — ${it.qty} ${it.unit} @ ₹${it.price} = ₹${amt.toFixed(2)}\n`;
+    });
+
+    text += `\n*Total Amount:* ₹${grandTotal.toFixed(2)} (GST ${this.quote.meta.gst})\n`;
+    text += `*Delivery Terms:* ${this.quote.meta.delivery}\n\n`;
+    text += `*PASS CORP.* | Chikhali, Pune\n`;
+    text += `Mob: +91 97676 72497 | Email: sales@passcorp.in\n`;
+    text += `Web: https://passcorp.in`;
+
+    const encoded = encodeURIComponent(text);
+    const url = clientMob.length >= 10 
+      ? `https://wa.me/${clientMob.startsWith('91') ? clientMob : '91' + clientMob}?text=${encoded}`
+      : `https://wa.me/?text=${encoded}`;
+
+    window.open(url, '_blank');
+  }
+};
+
+// Initialize on DOM Ready
+document.addEventListener('DOMContentLoaded', () => {
+  app.init();
+});
+</script>
+
+</body>
+</html>
