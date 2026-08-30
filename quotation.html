@@ -2187,6 +2187,7 @@ ISI Certified, Manual, Yellow", brand: "KARAM", brandLogo: "https://passcorp.in/
   },
 
   createNewQuote() {
+    this.editingHistoryId = null;
     const today = new Date();
     const isoDate = today.toISOString().split('T')[0];
     const { dateFormatted, validFormatted } = this.calculate15DaysValidity(isoDate);
@@ -2448,7 +2449,7 @@ Specification / Model Details", brand: "PASS", brandLogo: "", hsn: "6506", unit:
     document.getElementById('topHistoryCount').innerText = `${this.history.length}`;
   },
 
-  saveCurrentQuoteToHistory() {
+  saveCurrentQuoteToHistory(silent = false) {
     const qNo = this.quote.meta.no || "PC/25-26/0001";
     const comp = this.quote.client.company || "Valued Customer";
     
@@ -2459,7 +2460,7 @@ Specification / Model Details", brand: "PASS", brandLogo: "", hsn: "6506", unit:
     const grandTotal = Math.max(0, subtotal - discountAmt) + (p.freight || 0) + (p.pkg || 0);
 
     const record = {
-      id: "quote_" + Date.now(),
+      id: this.editingHistoryId || ("quote_" + Date.now()),
       savedAt: new Date().toISOString(),
       quoteData: JSON.parse(JSON.stringify(this.quote)),
       quoteNo: qNo,
@@ -2471,15 +2472,32 @@ Specification / Model Details", brand: "PASS", brandLogo: "", hsn: "6506", unit:
       total: grandTotal
     };
 
-    const existingIdx = this.history.findIndex(x => x.quoteNo === qNo);
+    const existingIdx = this.history.findIndex(x => (this.editingHistoryId && x.id === this.editingHistoryId) || x.quoteNo === qNo);
     if (existingIdx >= 0) {
       this.history[existingIdx] = record;
     } else {
       this.history.unshift(record);
     }
 
+    this.editingHistoryId = record.id;
     this.saveHistory();
-    alert(`✓ ${this.quote.docType} "${qNo}" (${comp}) successfully saved to Record History!`);
+    if (!silent) {
+      alert(`✓ ${this.quote.docType} "${qNo}" (${comp}) successfully saved to Record History!`);
+    }
+  },
+
+  updateStatusInHistory(id, newStatus) {
+    const rec = this.history.find(x => x.id === id);
+    if (!rec) return;
+    rec.status = newStatus;
+    if (rec.quoteData) rec.quoteData.status = newStatus;
+    if (this.editingHistoryId === id) {
+      this.quote.status = newStatus;
+      document.getElementById('quoteStatus').value = newStatus;
+      this.renderStatusBadge();
+    }
+    this.saveHistory();
+    this.filterHistory(document.getElementById('historySearchInput')?.value || "");
   },
 
   openHistoryModal() {
@@ -2520,10 +2538,16 @@ Specification / Model Details", brand: "PASS", brandLogo: "", hsn: "6506", unit:
       return `
         <div class="history-item">
           <div class="history-main-info">
-            <div style="display:flex; align-items:center; gap:8px;">
+            <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
               <span class="history-quote-no">${h.quoteNo}</span>
-              <span class="status-badge ${s.cls}">${s.lbl}</span>
-              <span style="font-size:10px; color:#64748b; font-weight:700; text-transform:uppercase;">${h.docType || 'QUOTE'}</span>
+              <select class="form-control" style="padding:1px 5px; font-size:9.5px; height:auto; width:auto; font-weight:700; border-color:#cbd5e1; background:#ffffff;" onchange="app.updateStatusInHistory('${h.id}', this.value)">
+                <option value="pending" ${h.status === 'pending' ? 'selected' : ''}>🟡 Sent</option>
+                <option value="won" ${h.status === 'won' ? 'selected' : ''}>🟢 Won / PO</option>
+                <option value="discussion" ${h.status === 'discussion' ? 'selected' : ''}>🔵 In Discuss</option>
+                <option value="revised" ${h.status === 'revised' ? 'selected' : ''}>🔴 Revised</option>
+                <option value="closed" ${h.status === 'closed' ? 'selected' : ''}>⚫ Closed</option>
+              </select>
+              <span style="font-size:9.5px; color:#64748b; font-weight:700; text-transform:uppercase;">${h.docType || 'QUOTE'}</span>
             </div>
             <div class="history-company">${h.company}</div>
             <div class="history-date">📅 ${h.date} &nbsp;•&nbsp; 🛒 ${h.itemsCount} Items</div>
@@ -2531,7 +2555,7 @@ Specification / Model Details", brand: "PASS", brandLogo: "", hsn: "6506", unit:
           <div style="text-align:right;">
             <div class="history-amount">₹${(h.total || 0).toFixed(2)}</div>
             <div class="history-actions" style="margin-top:4px;">
-              <button class="btn btn-primary btn-sm" onclick="app.loadQuoteFromHistory('${h.id}')" title="Load Quote">👁️ Load</button>
+              <button class="btn btn-primary btn-sm" onclick="app.loadQuoteFromHistory('${h.id}')" title="Edit & Load Quote">✏️ Edit</button>
               <button class="btn btn-outline btn-sm" onclick="app.duplicateQuoteFromHistory('${h.id}')" title="Duplicate Quote" style="color:#1e40af; border-color:#93c5fd;">📋 Duplicate</button>
               <button class="btn btn-outline btn-sm" onclick="app.deleteQuoteFromHistory('${h.id}')" title="Delete" style="color:#dc2626; border-color:#fca5a5;">🗑️</button>
             </div>
@@ -2544,6 +2568,7 @@ Specification / Model Details", brand: "PASS", brandLogo: "", hsn: "6506", unit:
   loadQuoteFromHistory(id) {
     const rec = this.history.find(x => x.id === id);
     if (!rec || !rec.quoteData) return;
+    this.editingHistoryId = id;
     this.quote = JSON.parse(JSON.stringify(rec.quoteData));
     this.populateInputs();
     this.setDocType(this.quote.docType || "QUOTATION");
@@ -2725,6 +2750,7 @@ Specification / Model Details", brand: "PASS", brandLogo: "", hsn: "6506", unit:
   },
 
   printPdf() {
+    this.saveCurrentQuoteToHistory(true);
     const filename = this.getPdfFileName();
     const originalTitle = document.title;
     document.title = filename;
@@ -2735,6 +2761,7 @@ Specification / Model Details", brand: "PASS", brandLogo: "", hsn: "6506", unit:
   },
 
   shareWhatsApp() {
+    this.saveCurrentQuoteToHistory(true);
     const clientMob = (this.quote.client.mob || '').replace(/[^0-9]/g, '');
     let text = `*PASS CORP. — ${this.quote.docType || 'ENTERPRISE QUOTATION'}*
 `;
@@ -2779,10 +2806,11 @@ Specification / Model Details", brand: "PASS", brandLogo: "", hsn: "6506", unit:
   }
 };
 
-// Automatic PDF Filename for Keyboard Shortcuts (Cmd+P / Ctrl+P)
+// Automatic PDF Filename & Auto-Save for Keyboard Shortcuts (Cmd+P / Ctrl+P)
 window.addEventListener('beforeprint', () => {
-  if (typeof app !== 'undefined' && app.getPdfFileName) {
-    document.title = app.getPdfFileName();
+  if (typeof app !== 'undefined') {
+    if (app.saveCurrentQuoteToHistory) app.saveCurrentQuoteToHistory(true);
+    if (app.getPdfFileName) document.title = app.getPdfFileName();
   }
 });
 
