@@ -1729,12 +1729,104 @@ const app = {
     document.getElementById('productModal').classList.add('active');
   },
 
+  syncProductToWebsite(p, isDelete = false) {
+    if (!p || typeof loadContent !== 'function' || typeof saveContent !== 'function') return;
+    try {
+      if (!CONTENT || !CONTENT.products) {
+        loadContent();
+      }
+      if (!CONTENT || !Array.isArray(CONTENT.products)) return;
+
+      if (isDelete) {
+        CONTENT.products = CONTENT.products.filter(x => x.id !== p.id && x.name.toLowerCase() !== p.name.toLowerCase());
+        saveContent();
+        return;
+      }
+
+      // Infer category from product name / specs / HSN
+      let cat = "misc";
+      const txt = (p.name + " " + (p.specs || "")).toLowerCase();
+      if (txt.includes("shoe") || txt.includes("boot") || p.hsn === "6403") cat = "shoes";
+      else if (txt.includes("glove") || txt.includes("hand") || p.hsn === "6116") cat = "gloves";
+      else if (txt.includes("spectacle") || txt.includes("goggle") || txt.includes("eye") || txt.includes("faceshield") || txt.includes("shield") || p.hsn === "9004") cat = "eye";
+      else if (txt.includes("mask") || txt.includes("respirat") || txt.includes("cartridge") || txt.includes("n95") || p.hsn === "6307") cat = "resp";
+      else if (txt.includes("helmet") || txt.includes("hard hat") || txt.includes("head") || txt.includes("cap") || p.hsn === "6506") cat = "head";
+      else if (txt.includes("ear") || txt.includes("hearing") || txt.includes("plug") || txt.includes("muff")) cat = "hear";
+      else if (txt.includes("harness") || txt.includes("fall") || txt.includes("lanyard") || txt.includes("carabiner") || txt.includes("rope")) cat = "fall";
+      else if (txt.includes("jacket") || txt.includes("vest") || txt.includes("coverall") || txt.includes("suit") || txt.includes("workwear")) cat = "wear";
+      else if (txt.includes("electr") || txt.includes("voltage") || txt.includes("mat")) cat = "elec";
+      else if (txt.includes("spill") || txt.includes("absorbent")) cat = "spill";
+      else if (txt.includes("tripod") || txt.includes("winch") || txt.includes("confined")) cat = "confined";
+
+      // Convert specs string to key-value pairs
+      const specsLines = (p.specs || '').split('\n').filter(Boolean);
+      let specsPairs = [];
+      specsLines.forEach(line => {
+        if (line.includes(':')) {
+          const parts = line.split(':');
+          specsPairs.push([parts[0].trim(), parts.slice(1).join(':').trim()]);
+        } else {
+          specsPairs.push(["Feature / Spec", line.trim()]);
+        }
+      });
+      if (specsPairs.length === 0) {
+        specsPairs = [
+          ["Product Name", p.name],
+          ["Brand / Manufacturer", p.brand || "PASS"],
+          ["HSN Code", p.hsn || "6506"],
+          ["Unit", p.unit || "Nos."],
+          ["GST Rate", (p.gst || 18) + "%"]
+        ];
+      }
+
+      let existingIdx = CONTENT.products.findIndex(x => x.id === p.id);
+      if (existingIdx === -1) {
+        existingIdx = CONTENT.products.findIndex(x => x.name.toLowerCase().trim() === p.name.toLowerCase().trim());
+      }
+
+      const websiteItem = {
+        id: p.id,
+        category: cat,
+        name: p.name,
+        brand: p.brand || "PASS",
+        img: p.image || "assets/logo.png",
+        cert: "IS / EN Certified",
+        price: parseFloat(p.price || 0),
+        rating: 4.8,
+        reviews: 15,
+        bestseller: false,
+        stock: p.leadTime && p.leadTime.toLowerCase().includes("ready") ? "in" : "low",
+        desc: p.specs ? p.specs.split('\n')[0] : p.name,
+        specs: specsPairs
+      };
+
+      if (existingIdx >= 0) {
+        CONTENT.products[existingIdx] = {
+          ...CONTENT.products[existingIdx],
+          name: p.name,
+          brand: p.brand || CONTENT.products[existingIdx].brand,
+          img: p.image || CONTENT.products[existingIdx].img,
+          price: parseFloat(p.price || 0),
+          desc: p.specs ? p.specs.split('\n')[0] : p.name,
+          specs: specsPairs
+        };
+      } else {
+        CONTENT.products.unshift(websiteItem);
+      }
+
+      saveContent();
+    } catch(e) {
+      console.warn("Could not sync product to website storage:", e);
+    }
+  },
+
   deleteCatalogProduct(id) {
     const p = this.catalog.find(x => x.id === id);
     if (!p) return;
-    if (confirm(`Master Library se "${p.name}" ko permanently delete karein?`)) {
+    if (confirm(`Master Library aur Website se "${p.name}" ko permanently delete karein?`)) {
       this.catalog = this.catalog.filter(x => x.id !== id);
       this.saveCatalog();
+      this.syncProductToWebsite(p, true);
       this.renderCatalog(this.catalog);
     }
   },
@@ -1792,19 +1884,25 @@ const app = {
 
     if (!name) { alert("Enter Product Display Name"); return; }
 
+    let targetProd = null;
     if (this.editingProductId) {
       const idx = this.catalog.findIndex(x => x.id === this.editingProductId);
       if (idx >= 0) {
         this.catalog[idx] = { id: this.editingProductId, name, specs: specs || `${name}\nISI / EN Certified Standard Quality`, brand, brandLogo, hsn, unit, price, gst, leadTime, image };
+        targetProd = this.catalog[idx];
       }
       this.editingProductId = null;
     } else {
       const newProd = { id: "prod_" + Date.now(), name, specs: specs || `${name}\nISI / EN Certified Standard Quality`, brand, brandLogo, hsn, unit, price, gst, leadTime, image };
       this.catalog.unshift(newProd);
+      targetProd = newProd;
       this.quote.items.push({ leadTime: newProd.leadTime, image: newProd.image, title: newProd.name, specs: newProd.specs, brand: newProd.brand, brandLogo: newProd.brandLogo, hsn: newProd.hsn, unit: newProd.unit, qty: 1, price: newProd.price, gst: newProd.gst });
     }
 
     this.saveCatalog();
+    if (targetProd) {
+      this.syncProductToWebsite(targetProd, false);
+    }
     this.renderCatalog(this.catalog);
     this.closeNewProductModal();
     this.renderAll();
