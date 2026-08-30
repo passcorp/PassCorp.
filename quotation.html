@@ -70,23 +70,27 @@ body {
 .auth-card {
   background: #ffffff;
   border: 2px solid #0c2340;
-  border-radius: 12px;
-  width: 420px;
-  max-width: 100%;
-  padding: 32px 24px;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+  border-radius: 14px;
+  width: 400px;
+  max-width: 95%;
+  padding: 28px 24px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
   text-align: center;
 }
 
+.auth-logo-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
 .auth-logo {
-  width: 150px;
-  height: auto;
-  margin-bottom: 12px;
-  background: #ffffff;
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px solid #e2e8f0;
-  display: inline-block;
+  height: 52px;
+  width: auto;
+  max-width: 200px;
+  object-fit: contain;
+  display: block;
 }
 
 .auth-title {
@@ -1017,20 +1021,25 @@ body {
 <!-- PASSWORD AUTHENTICATION SCREEN -->
 <div class="auth-overlay" id="authOverlay">
   <div class="auth-card">
-    <img src="https://passcorp.in/assets/logo.png" alt="PASS CORP." class="auth-logo" onerror="this.src='https://passcorp.in/assets/pass_logo.png'" />
+    <div class="auth-logo-wrap">
+      <img src="assets/logo.png" alt="PASS CORP." class="auth-logo" onerror="this.src='assets/pass_watermark.jpg'" />
+    </div>
     <div class="auth-title">PASS CORP. Security Lock</div>
-    <div class="auth-subtitle">Authorized Access Only — Enter Security Password</div>
+    <div class="auth-subtitle">Authorized Access Only — Enter Security Passcode</div>
     
     <div class="auth-error" id="authErrorMsg">
-      ❌ Invalid Password. Access Denied.
+      ❌ Invalid Passcode. Access Denied.
     </div>
 
     <form onsubmit="event.preventDefault(); app.verifyPassword();">
       <div class="auth-input-group">
-        <label>Enter Passcode</label>
-        <input type="password" id="authPassInput" class="auth-input" placeholder="••••••••••••" autofocus autocomplete="current-password" />
+        <label>Security Passcode</label>
+        <div style="position:relative;">
+          <input type="password" id="authPassInput" class="auth-input" placeholder="Enter passcode..." autofocus autocomplete="current-password" name="password" style="padding-right:40px;" />
+          <button type="button" onclick="app.toggleAuthPasswordVisibility()" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:transparent; border:none; cursor:pointer; font-size:15px; color:#64748b;" title="Show/Hide Passcode">👁️</button>
+        </div>
       </div>
-      <button type="submit" class="auth-btn">
+      <button type="submit" class="auth-btn" style="margin-top:6px;">
         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
         Unlock Quotor
       </button>
@@ -1877,6 +1886,12 @@ var app = {
     if (wrapper) wrapper.style.display = 'none';
     var inp = document.getElementById('authPassInput');
     if (inp) { inp.value = ''; inp.focus(); }
+  },
+
+  toggleAuthPasswordVisibility: function() {
+    var inp = document.getElementById('authPassInput');
+    if (!inp) return;
+    inp.type = (inp.type === 'password') ? 'text' : 'password';
   },
 
   /* ---------------- BUYERS DIRECTORY ---------------- */
