@@ -205,6 +205,8 @@ body {
 .btn-primary:hover { background: #1d4ed8; }
 .btn-success { background: #10b981; color: white; }
 .btn-success:hover { background: #059669; }
+.btn-warning { background: #f59e0b; color: #78350f; font-weight: 700; }
+.btn-warning:hover { background: #d97706; color: white; }
 .btn-whatsapp { background: #25D366; color: #064e3b; font-weight: 700; }
 .btn-whatsapp:hover { background: #20ba5a; }
 .btn-outline { background: #ffffff; border: 1.5px solid #cbd5e1; color: #334155; }
@@ -434,7 +436,7 @@ body {
 .history-company { font-size: 11.5px; font-weight: 600; color: #1e293b; }
 .history-date { font-size: 9.5px; color: #64748b; }
 .history-amount { font-size: 13px; font-weight: 900; color: #047857; }
-.history-actions { display: flex; align-items: center; gap: 5px; }
+.history-actions { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
 
 /* Analytics Metric Grid */
 .analytics-grid {
@@ -999,6 +1001,7 @@ body {
     <div class="header-actions">
       <button class="btn btn-outline btn-sm" onclick="app.openHistoryModal()">📂 History (<span id="topHistoryCount">0</span>)</button>
       <button class="btn btn-success btn-sm" onclick="app.saveCurrentQuoteToHistory(false)">💾 Save Record</button>
+      <button class="btn btn-warning btn-sm" onclick="app.openFollowUpForActiveQuote()">🔔 Follow-Up</button>
       <button class="btn btn-outline btn-sm" onclick="app.openAnalyticsModal()">📊 Analytics</button>
       <button class="btn btn-outline btn-sm" onclick="app.loadSampleQuote()">Sample</button>
       <button class="btn btn-outline btn-sm" onclick="app.createNewQuote()">+ New Quote</button>
@@ -1172,7 +1175,10 @@ body {
       <div class="editor-section">
         <div class="section-heading">
           <span>🛒 Active Items (<span id="itemCount">0</span>)</span>
-          <button class="btn btn-primary btn-sm" onclick="app.addCustomItem()">+ Blank Row</button>
+          <div style="display:flex; gap:5px;">
+            <button class="btn btn-outline btn-sm" onclick="app.openRfqImportModal()" style="color:#1e40af; border-color:#93c5fd;">📥 Import Excel/BOM</button>
+            <button class="btn btn-primary btn-sm" onclick="app.addCustomItem()">+ Blank Row</button>
+          </div>
         </div>
         <div class="items-editor-container" id="itemsEditContainer"></div>
       </div>
@@ -1467,7 +1473,7 @@ body {
 
 <!-- MODAL: QUOTATION HISTORY & ARCHIVES -->
 <div class="modal-overlay" id="historyModal">
-  <div class="modal-box" style="width: 720px;">
+  <div class="modal-box" style="width: 760px;">
     <div class="modal-header">
       <div class="modal-title">📂 Quotation & Order History</div>
       <button class="btn btn-outline btn-sm" onclick="app.closeHistoryModal()">✕</button>
@@ -1547,6 +1553,87 @@ body {
     <div class="modal-footer">
       <button class="btn btn-outline" onclick="app.closeSignModal()">Cancel</button>
       <button class="btn btn-success" onclick="app.saveSignCanvas()">💾 Apply to Quotation</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 4: 📥 EXCEL / CSV / BOM RFQ BULK IMPORT -->
+<div class="modal-overlay" id="rfqModal">
+  <div class="modal-box" style="width: 680px;">
+    <div class="modal-header">
+      <div class="modal-title">📥 Bulk Import Items from Excel / CSV / RFQ BOM</div>
+      <button class="btn btn-outline btn-sm" onclick="app.closeRfqImportModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="font-size:11.5px; color:#475569;">
+        Upload a customer RFQ file (<strong>.csv</strong>, <strong>.txt</strong>) or paste rows directly copied from Excel:
+      </div>
+      
+      <div style="display:flex; gap:10px; align-items:center;">
+        <input type="file" id="rfqFileInput" accept=".csv,.txt,.tsv" class="form-control" onchange="app.handleRfqFileUpload(event)" style="flex:1;" />
+        <span style="font-size:11px; color:#94a3b8; font-weight:700;">OR</span>
+        <button class="btn btn-outline btn-sm" onclick="app.loadSampleRfqText()">Load Sample RFQ</button>
+      </div>
+
+      <div class="form-group">
+        <label>Paste Copied Excel Table / CSV Text (Columns: Description, Qty, Rate, Brand, Unit, HSN):</label>
+        <textarea id="rfqPasteArea" class="form-control" rows="5" placeholder="Safety Helmet Udyogi 7000&#9;50&#9;245.00&#9;UDYOGI&#9;Nos.&#10;Hillson Power Plus Shoe&#9;25&#9;780.00&#9;HILLSON&#9;Pairs&#10;Cut 5 HPPE Gloves&#9;100&#9;185.00&#9;UDYOGI&#9;Pairs" oninput="app.previewRfqItems()"></textarea>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div style="font-size:11.5px; font-weight:800; color:#0c2340;">📋 Parsed Items Preview (<span id="rfqParsedCount">0</span> Items):</div>
+        <label style="font-size:11px; display:flex; align-items:center; gap:5px; cursor:pointer; font-weight:600;">
+          <input type="checkbox" id="rfqReplaceCheckbox" /> Replace existing quote items
+        </label>
+      </div>
+
+      <div id="rfqPreviewList" style="max-height: 180px; overflow-y:auto; border:1.5px solid #e2e8f0; border-radius:6px; background:#f8fafc; padding:6px; font-size:11px;"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="app.closeRfqImportModal()">Cancel</button>
+      <button class="btn btn-success" onclick="app.importRfqItemsToQuote()">⚡ Add All Parsed Items to Quotation</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 5: 🔔 1-CLICK FOLLOW-UP GENERATOR -->
+<div class="modal-overlay" id="followUpModal">
+  <div class="modal-box" style="width: 580px;">
+    <div class="modal-header">
+      <div class="modal-title">🔔 1-Click Quotation Follow-Up Generator</div>
+      <button class="btn btn-outline btn-sm" onclick="app.closeFollowUpModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="background:#f0f9ff; border:1px solid #bae6fd; border-radius:6px; padding:8px 12px; font-size:11.5px; color:#0369a1;">
+        <strong id="fuQuoteHeader">Quote #PC/25-26/00078 &nbsp;•&nbsp; M/s. ABC Industries Pvt. Ltd. &nbsp;•&nbsp; ₹14,500.00</strong>
+      </div>
+
+      <div class="form-group">
+        <label>Select Follow-Up Strategy / Tone:</label>
+        <select id="fuToneSelect" class="form-control" onchange="app.generateFollowUpMessage()">
+          <option value="polite">1. 🤝 Standard Polite Check-in (Stock Ready & Allocated)</option>
+          <option value="urgent">2. ⏳ Quotation Validity & Price Lock Reminder</option>
+          <option value="dispatch">3. ⚡ Immediate Dispatch / PO Request</option>
+          <option value="discount">4. 🏷️ Special Bulk Quantity Discount Confirmation</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Buyer Contact Number (For WhatsApp Direct):</label>
+        <input type="text" id="fuBuyerPhone" class="form-control" placeholder="e.g. 9822012345 (Optional)" />
+      </div>
+
+      <div class="form-group">
+        <label>Generated Follow-Up Message (Editable):</label>
+        <textarea id="fuMessageText" class="form-control" rows="6"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer" style="justify-content:space-between;">
+      <button class="btn btn-outline btn-sm" onclick="app.copyFollowUpText()">📋 Copy Text</button>
+      <div style="display:flex; gap:6px;">
+        <button class="btn btn-outline btn-sm" onclick="app.openEmailClient()">✉️ Email Client</button>
+        <button class="btn btn-whatsapp" onclick="app.sendFollowUpWhatsApp()">📲 Send on WhatsApp</button>
+      </div>
     </div>
   </div>
 </div>
@@ -1653,6 +1740,8 @@ var app = {
   history: [],
   editingProductId: null,
   editingHistoryId: null,
+  activeFollowUpQuote: null,
+  parsedRfqItems: [],
   modalImgData: "https://passcorp.in/assets/logo.png",
   digitalSignData: null,
   
@@ -2530,6 +2619,7 @@ var app = {
         '<div style="text-align:right;">' +
           '<div class="history-amount">₹' + (h.total || 0).toFixed(2) + '</div>' +
           '<div class="history-actions" style="margin-top:4px;">' +
+            '<button class="btn btn-warning btn-sm" onclick="app.openFollowUpForHistoryQuote(\'' + h.id + '\')" title="Send Follow-Up">🔔 Follow-Up</button>' +
             '<button class="btn btn-primary btn-sm" onclick="app.loadQuoteFromHistory(\'' + h.id + '\')" title="Edit & Load Quote">✏️ Edit</button>' +
             '<button class="btn btn-outline btn-sm" onclick="app.duplicateQuoteFromHistory(\'' + h.id + '\')" title="Duplicate Quote" style="color:#1e40af; border-color:#93c5fd;">📋 Duplicate</button>' +
             '<button class="btn btn-outline btn-sm" onclick="app.deleteQuoteFromHistory(\'' + h.id + '\')" title="Delete" style="color:#dc2626; border-color:#fca5a5;">🗑️</button>' +
@@ -2697,6 +2787,255 @@ var app = {
     document.getElementById('signMode').value = 'digital';
     this.renderSignatoryStamp();
     this.closeSignModal();
+  },
+
+  /* ---------------- FEATURE 4: EXCEL / CSV / RFQ BOM IMPORT ---------------- */
+  openRfqImportModal: function() {
+    this.parsedRfqItems = [];
+    document.getElementById('rfqFileInput').value = "";
+    document.getElementById('rfqPasteArea').value = "";
+    document.getElementById('rfqParsedCount').innerText = "0";
+    document.getElementById('rfqPreviewList').innerHTML = '<div style="color:#94a3b8; padding:8px; text-align:center;">No items parsed yet. Paste Excel rows or choose a file above.</div>';
+    document.getElementById('rfqModal').classList.add('active');
+  },
+
+  closeRfqImportModal: function() {
+    document.getElementById('rfqModal').classList.remove('active');
+  },
+
+  loadSampleRfqText: function() {
+    var sample = "Safety Helmet Udyogi Ultravent 7000\t50\t245.00\tUDYOGI\tNos.\t6506\nHillson Power Plus Safety Shoe\t25\t780.00\tHILLSON\tPairs\t6403\nCut Level 5 HPPE Safety Gloves\t100\t185.00\tUDYOGI\tPairs\t6116\n3M 1110 Corded Ear Plugs\t200\t18.50\t3M\tPairs\t3926";
+    document.getElementById('rfqPasteArea').value = sample;
+    this.previewRfqItems();
+  },
+
+  handleRfqFileUpload: function(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    var self = this;
+    reader.onload = function(evt) {
+      document.getElementById('rfqPasteArea').value = evt.target.result;
+      self.previewRfqItems();
+    };
+    reader.readAsText(file);
+  },
+
+  previewRfqItems: function() {
+    var text = document.getElementById('rfqPasteArea').value.trim();
+    if (!text) {
+      this.parsedRfqItems = [];
+      document.getElementById('rfqParsedCount').innerText = "0";
+      document.getElementById('rfqPreviewList').innerHTML = '<div style="color:#94a3b8; padding:8px; text-align:center;">No items parsed yet. Paste Excel rows or choose a file above.</div>';
+      return;
+    }
+
+    var lines = text.split('\n').map(function(l) { return l.trim(); }).filter(Boolean);
+    var items = [];
+    var self = this;
+
+    lines.forEach(function(line, idx) {
+      // Split by tab or comma or semicolon
+      var sep = line.includes('\t') ? '\t' : (line.includes(',') ? ',' : ';');
+      var cols = line.split(sep).map(function(c) { return c.trim().replace(/^["']|["']$/g, ''); });
+      
+      // Skip header if line looks like "Description, Qty..."
+      if (idx === 0 && (cols[0].toLowerCase().includes('item') || cols[0].toLowerCase().includes('desc') || cols[0].toLowerCase().includes('sr'))) {
+        return;
+      }
+
+      var name = cols[0] || ("Item #" + (idx + 1));
+      var qty = parseFloat(cols[1]) || 1;
+      var price = parseFloat(cols[2]) || 0;
+      var brand = cols[3] || "PASS";
+      var unit = cols[4] || "Nos.";
+      var hsn = cols[5] || "6506";
+
+      // Try auto-matching with Master Catalog
+      var matchedCatalog = self.catalog.find(function(c) {
+        return c.name.toLowerCase().includes(name.toLowerCase()) || name.toLowerCase().includes(c.name.toLowerCase());
+      });
+
+      var brandLogo = BRAND_LOGOS_MAP[brand.toLowerCase()] || (matchedCatalog ? matchedCatalog.brandLogo : "");
+      var img = matchedCatalog ? matchedCatalog.image : "https://passcorp.in/assets/logo.png";
+      if (!price && matchedCatalog) price = matchedCatalog.price;
+      if (matchedCatalog && matchedCatalog.brand) brand = matchedCatalog.brand;
+
+      items.push({
+        title: name,
+        specs: name + "\nISI / EN Certified Standard Quality",
+        qty: qty,
+        price: price,
+        brand: brand,
+        brandLogo: brandLogo,
+        unit: unit,
+        hsn: hsn,
+        image: img,
+        leadTime: "1-2 Days",
+        gst: 18
+      });
+    });
+
+    this.parsedRfqItems = items;
+    document.getElementById('rfqParsedCount').innerText = String(items.length);
+
+    var container = document.getElementById('rfqPreviewList');
+    if (items.length === 0) {
+      container.innerHTML = '<div style="color:#ef4444; padding:8px; text-align:center;">Could not parse rows. Please check format.</div>';
+      return;
+    }
+
+    container.innerHTML = items.map(function(it, idx) {
+      return '<div style="display:flex; justify-content:space-between; align-items:center; padding:4px 8px; border-bottom:1px solid #e2e8f0;">' +
+        '<span><strong>#' + (idx + 1) + ' ' + it.title + '</strong> (' + it.brand + ')</span>' +
+        '<span style="color:#047857; font-weight:700;">' + it.qty + ' ' + it.unit + ' @ ₹' + it.price.toFixed(2) + '</span>' +
+      '</div>';
+    }).join('');
+  },
+
+  importRfqItemsToQuote: function() {
+    if (!this.parsedRfqItems || this.parsedRfqItems.length === 0) {
+      alert("No parsed items to import! Please paste or upload RFQ rows first.");
+      return;
+    }
+
+    var isReplace = document.getElementById('rfqReplaceCheckbox').checked;
+    if (isReplace) {
+      this.quote.items = this.parsedRfqItems.slice();
+    } else {
+      this.quote.items = this.quote.items.concat(this.parsedRfqItems);
+    }
+
+    this.renderAll();
+    this.closeRfqImportModal();
+    alert('✓ ' + this.parsedRfqItems.length + ' Items successfully added to Quotation!');
+  },
+
+  /* ---------------- FEATURE 5: 1-CLICK FOLLOW-UP GENERATOR ---------------- */
+  openFollowUpForActiveQuote: function() {
+    var subtotal = 0;
+    this.quote.items.forEach(function(it) { subtotal += it.qty * it.price; });
+    var p = this.quote.pricing || { discType: "none", discVal: 0, freight: 0, pkg: 0 };
+    var discountAmt = (p.discType === 'percent') ? (subtotal * p.discVal) / 100 : (p.discType === 'flat' ? p.discVal : 0);
+    var grandTotal = Math.max(0, subtotal - discountAmt) + (p.freight || 0) + (p.pkg || 0);
+
+    this.activeFollowUpQuote = {
+      quoteNo: this.quote.meta.no || "PC/25-26/0001",
+      company: this.quote.client.company || "Valued Customer",
+      contactName: this.quote.client.name || "Purchase Incharge",
+      date: this.quote.meta.date,
+      valid: this.quote.meta.valid,
+      total: grandTotal,
+      items: this.quote.items
+    };
+
+    this.showFollowUpModal();
+  },
+
+  openFollowUpForHistoryQuote: function(id) {
+    var rec = this.history.find(function(x) { return x.id === id; });
+    if (!rec) return;
+    this.activeFollowUpQuote = {
+      quoteNo: rec.quoteNo,
+      company: rec.company,
+      contactName: (rec.quoteData && rec.quoteData.client ? rec.quoteData.client.name : "") || "Purchase Incharge",
+      date: rec.date,
+      valid: (rec.quoteData && rec.quoteData.meta ? rec.quoteData.meta.valid : ""),
+      total: rec.total || 0,
+      items: rec.quoteData ? rec.quoteData.items : []
+    };
+
+    this.showFollowUpModal();
+  },
+
+  showFollowUpModal: function() {
+    if (!this.activeFollowUpQuote) return;
+    var q = this.activeFollowUpQuote;
+    document.getElementById('fuQuoteHeader').innerText = (q.quoteNo || '') + " • " + (q.company || '') + " • ₹" + parseFloat(q.total || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 });
+    document.getElementById('fuBuyerPhone').value = "";
+    document.getElementById('fuToneSelect').value = "polite";
+    this.generateFollowUpMessage();
+    document.getElementById('followUpModal').classList.add('active');
+  },
+
+  closeFollowUpModal: function() {
+    document.getElementById('followUpModal').classList.remove('active');
+  },
+
+  generateFollowUpMessage: function() {
+    if (!this.activeFollowUpQuote) return;
+    var q = this.activeFollowUpQuote;
+    var tone = document.getElementById('fuToneSelect').value;
+    var text = "";
+
+    var topItemsSummary = "";
+    if (q.items && q.items.length > 0) {
+      topItemsSummary = q.items.slice(0, 3).map(function(it) {
+        return "• " + it.specs.split('\n')[0] + " (" + it.qty + " " + it.unit + ")";
+      }).join('\n');
+      if (q.items.length > 3) topItemsSummary += "\n• + " + (q.items.length - 3) + " more items";
+    }
+
+    if (tone === 'polite') {
+      text = "Dear " + q.contactName + ",\n\n" +
+        "Greetings from PASS CORP., Pune!\n\n" +
+        "Following up on our Quotation *" + q.quoteNo + "* submitted on *" + q.date + "* for *" + q.company + "* (Total: *₹" + parseFloat(q.total || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 }) + "*).\n\n" +
+        "Quoted Safety Equipment:\n" + topItemsSummary + "\n\n" +
+        "The required stock is currently allocated in our PCMC Chikhali warehouse ready for immediate dispatch. Kindly let us know if you require any technical clarifications or when we can expect the Purchase Order (PO).\n\n" +
+        "Thank you!\n" +
+        "*PASS CORP.* | Industrial Safety & PPE Solutions\n" +
+        "📞 +91 97676 72497 | 🌐 www.passcorp.in";
+    } else if (tone === 'urgent') {
+      text = "Urgent: Quotation Validity & Price Lock Alert\n\n" +
+        "Dear " + q.contactName + ",\n\n" +
+        "Reference Quotation *" + q.quoteNo + "* for *" + q.company + "*.\n\n" +
+        "Please note that the validity of this quote is ending on *" + (q.valid || 'soon') + "*. Due to upcoming OEM raw material price revisions, we request you to release the Purchase Order today to lock in the special discounted rates of *₹" + parseFloat(q.total || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 }) + "*.\n\n" +
+        "Looking forward to your swift confirmation.\n\n" +
+        "Warm Regards,\n" +
+        "*PASS CORP.* | 📞 +91 97676 72497";
+    } else if (tone === 'dispatch') {
+      text = "Dispatch Ready: Purchase Order Request\n\n" +
+        "Dear " + q.contactName + ",\n\n" +
+        "Your requested safety items under Quote *" + q.quoteNo + "* are inspected and packed in our PCMC warehouse ready for site delivery.\n\n" +
+        "Items:\n" + topItemsSummary + "\n" +
+        "Total Order Value: *₹" + parseFloat(q.total || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 }) + "*\n\n" +
+        "Kindly email or WhatsApp the PO copy so our logistics team can dispatch your consignment today.\n\n" +
+        "Best Regards,\n" +
+        "*PASS CORP.* | 📞 +91 97676 72497";
+    } else if (tone === 'discount') {
+      text = "Dear " + q.contactName + ",\n\n" +
+        "Reference our quotation *" + q.quoteNo + "* for *" + q.company + "*.\n\n" +
+        "We are pleased to confirm special discounted pricing of *₹" + parseFloat(q.total || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 }) + "* for your order requirement with genuine OEM warranty and test certificates.\n\n" +
+        "Please confirm the PO at your earliest convenience to initiate delivery.\n\n" +
+        "Warm Regards,\n" +
+        "*PASS CORP.* | 📞 +91 97676 72497";
+    }
+
+    document.getElementById('fuMessageText').value = text;
+  },
+
+  copyFollowUpText: function() {
+    var txt = document.getElementById('fuMessageText').value;
+    if (!txt) return;
+    navigator.clipboard.writeText(txt).then(function() {
+      alert("✓ Follow-up message copied to clipboard!");
+    });
+  },
+
+  sendFollowUpWhatsApp: function() {
+    var txt = document.getElementById('fuMessageText').value;
+    var phone = document.getElementById('fuBuyerPhone').value.replace(/[^0-9]/g, '');
+    var url = phone ? ("https://wa.me/91" + phone + "?text=" + encodeURIComponent(txt)) : ("https://wa.me/?text=" + encodeURIComponent(txt));
+    window.open(url, '_blank');
+  },
+
+  openEmailClient: function() {
+    if (!this.activeFollowUpQuote) return;
+    var q = this.activeFollowUpQuote;
+    var txt = document.getElementById('fuMessageText').value;
+    var subject = "Follow-up: PASS CORP. Quotation " + q.quoteNo + " - " + q.company;
+    var url = "mailto:?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(txt);
+    window.open(url, '_blank');
   },
 
   /* ---------------- PDF PRINT & WHATSAPP ---------------- */
