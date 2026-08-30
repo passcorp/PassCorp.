@@ -11,6 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="data.js?v=quotor_2026_live"></script>
 
 <style>
 :root {
@@ -1176,11 +1177,11 @@ body {
   </div>
 </div>
 
-<!-- MODAL: ADD PRODUCT -->
+<!-- MODAL: ADD / EDIT PRODUCT -->
 <div class="modal-overlay" id="productModal">
   <div class="modal-box">
     <div class="modal-header">
-      <div class="modal-title">Save New Product to Master Library</div>
+      <div class="modal-title" id="modalTitle">Save New Product to Master Library</div>
       <button class="btn btn-outline btn-sm" onclick="app.closeNewProductModal()">✕</button>
     </div>
     <div class="modal-body">
@@ -1240,7 +1241,7 @@ body {
     </div>
     <div class="modal-footer">
       <button class="btn btn-outline" onclick="app.closeNewProductModal()">Cancel</button>
-      <button class="btn btn-success" onclick="app.saveNewProductToMaster()">💾 Save & Add</button>
+      <button class="btn btn-success" id="modalSaveBtn" onclick="app.saveNewProductToMaster()">💾 Save & Add</button>
     </div>
   </div>
 </div>
@@ -1433,10 +1434,41 @@ const app = {
   },
 
   loadCatalog() {
+    let siteProducts = [];
+    if (typeof DEFAULT_CONTENT !== 'undefined' && DEFAULT_CONTENT.products) {
+      siteProducts = DEFAULT_CONTENT.products.map(p => ({
+        id: p.id,
+        name: p.name,
+        specs: `${p.name}\n${p.brand || 'PASS'} | ${p.cert || 'IS / EN Certified'}\n${p.desc || ''}`.trim(),
+        brand: p.brand || 'PASS',
+        brandLogo: BRAND_LOGOS_MAP[(p.brand || '').toLowerCase()] || '',
+        hsn: p.hsn || (p.category === 'shoes' ? '6403' : p.category === 'gloves' ? '6116' : '6506'),
+        unit: p.unit || (p.category === 'shoes' || p.category === 'gloves' ? 'Pairs' : 'Nos.'),
+        price: parseFloat(p.price || 150),
+        gst: 18,
+        leadTime: p.stock === 'ready' ? 'Ready Stock' : '1-2 Days',
+        image: p.img && p.img.startsWith('assets') ? ('https://passcorp.in/' + p.img) : (p.img || 'https://passcorp.in/assets/logo.png')
+      }));
+    }
+
     try {
       const saved = localStorage.getItem('PASS_MASTER_CATALOG');
-      this.catalog = saved ? JSON.parse(saved) : [...DEFAULT_CATALOG];
-    } catch(e) { this.catalog = [...DEFAULT_CATALOG]; }
+      if (saved) {
+        this.catalog = JSON.parse(saved);
+        if (this.catalog.length <= 4 && siteProducts.length > 0) {
+          const existingIds = new Set(this.catalog.map(x => x.id));
+          siteProducts.forEach(sp => {
+            if (!existingIds.has(sp.id)) this.catalog.push(sp);
+          });
+          this.saveCatalog();
+        }
+      } else {
+        this.catalog = [...DEFAULT_CATALOG, ...siteProducts];
+        this.saveCatalog();
+      }
+    } catch(e) {
+      this.catalog = [...DEFAULT_CATALOG, ...siteProducts];
+    }
     this.renderCatalog(this.catalog);
   },
 
@@ -1545,7 +1577,7 @@ const app = {
       return;
     }
     list.innerHTML = items.map(it => `
-      <div class="catalog-item-card" onclick="app.addItemFromCatalog('${it.id}')">
+      <div class="catalog-item-card" onclick="app.addItemFromCatalog('${it.id}')" title="Click to add to quote">
         <div class="catalog-item-info">
           <img src="${it.image}" class="catalog-item-thumb" onerror="this.src='https://passcorp.in/assets/logo.png'" />
           <div>
@@ -1553,7 +1585,11 @@ const app = {
             <div class="catalog-item-meta">${it.brand} | HSN: ${it.hsn} | ${it.unit}</div>
           </div>
         </div>
-        <div class="catalog-item-price">₹${parseFloat(it.price || 0).toFixed(2)}</div>
+        <div style="display:flex; align-items:center; gap:6px;">
+          <div class="catalog-item-price">₹${parseFloat(it.price || 0).toFixed(2)}</div>
+          <button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); app.editCatalogProduct('${it.id}')" title="Edit Product in Master Library" style="padding:2px 6px; font-size:10px; border-color:#cbd5e1; color:#2563eb; background:#ffffff;">✏️</button>
+          <button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); app.deleteCatalogProduct('${it.id}')" title="Delete Product" style="padding:2px 6px; font-size:10px; border-color:#fca5a5; color:#dc2626; background:#ffffff;">🗑️</button>
+        </div>
       </div>
     `).join('');
   },
@@ -1572,6 +1608,7 @@ const app = {
   },
 
   openNewProductModal() {
+    this.editingProductId = null;
     this.modalImgData = "https://passcorp.in/assets/logo.png";
     document.getElementById('mProdName').value = "";
     document.getElementById('mProdSpecs').value = "";
@@ -1585,7 +1622,42 @@ const app = {
     document.getElementById('mPrice').value = "";
     document.getElementById('mGst').value = "18";
     document.getElementById('mLeadTime').value = "1-2 Days";
+    document.getElementById('modalTitle').innerText = "Save New Product to Master Library";
+    document.getElementById('modalSaveBtn').innerText = "💾 Save & Add";
     document.getElementById('productModal').classList.add('active');
+  },
+
+  editCatalogProduct(id) {
+    const p = this.catalog.find(x => x.id === id);
+    if (!p) return;
+    this.editingProductId = id;
+    this.modalImgData = p.image || "https://passcorp.in/assets/logo.png";
+    document.getElementById('mProdName').value = p.name || "";
+    document.getElementById('mProdSpecs').value = p.specs || "";
+    document.getElementById('mBrandName').value = p.brand || "";
+    document.getElementById('mBrandSelect').value = p.brandLogo || "";
+    document.getElementById('mImgFile').value = "";
+    document.getElementById('mImgUrl').value = (p.image && p.image.startsWith('http')) ? p.image : "";
+    document.getElementById('mImgPreview').src = this.modalImgData;
+    document.getElementById('mHsn').value = p.hsn || "6506";
+    document.getElementById('mUnit').value = p.unit || "Nos.";
+    document.getElementById('mPrice').value = p.price || "";
+    document.getElementById('mGst').value = p.gst || "18";
+    document.getElementById('mLeadTime').value = p.leadTime || "1-2 Days";
+    
+    document.getElementById('modalTitle').innerText = "✏️ Edit Product in Master Library";
+    document.getElementById('modalSaveBtn').innerText = "💾 Save Changes";
+    document.getElementById('productModal').classList.add('active');
+  },
+
+  deleteCatalogProduct(id) {
+    const p = this.catalog.find(x => x.id === id);
+    if (!p) return;
+    if (confirm(`Master Library se "${p.name}" ko permanently delete karein?`)) {
+      this.catalog = this.catalog.filter(x => x.id !== id);
+      this.saveCatalog();
+      this.renderCatalog(this.catalog);
+    }
   },
 
   closeNewProductModal() {
@@ -1641,12 +1713,20 @@ const app = {
 
     if (!name) { alert("Enter Product Display Name"); return; }
 
-    const newProd = { id: "prod_" + Date.now(), name, specs: specs || `${name}\nISI / EN Certified Standard Quality`, brand, brandLogo, hsn, unit, price, gst, leadTime, image };
-    this.catalog.unshift(newProd);
+    if (this.editingProductId) {
+      const idx = this.catalog.findIndex(x => x.id === this.editingProductId);
+      if (idx >= 0) {
+        this.catalog[idx] = { id: this.editingProductId, name, specs: specs || `${name}\nISI / EN Certified Standard Quality`, brand, brandLogo, hsn, unit, price, gst, leadTime, image };
+      }
+      this.editingProductId = null;
+    } else {
+      const newProd = { id: "prod_" + Date.now(), name, specs: specs || `${name}\nISI / EN Certified Standard Quality`, brand, brandLogo, hsn, unit, price, gst, leadTime, image };
+      this.catalog.unshift(newProd);
+      this.quote.items.push({ leadTime: newProd.leadTime, image: newProd.image, title: newProd.name, specs: newProd.specs, brand: newProd.brand, brandLogo: newProd.brandLogo, hsn: newProd.hsn, unit: newProd.unit, qty: 1, price: newProd.price, gst: newProd.gst });
+    }
+
     this.saveCatalog();
     this.renderCatalog(this.catalog);
-
-    this.quote.items.push({ leadTime: newProd.leadTime, image: newProd.image, title: newProd.name, specs: newProd.specs, brand: newProd.brand, brandLogo: newProd.brandLogo, hsn: newProd.hsn, unit: newProd.unit, qty: 1, price: newProd.price, gst: newProd.gst });
     this.closeNewProductModal();
     this.renderAll();
   },
