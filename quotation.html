@@ -1201,16 +1201,39 @@ body {
         <div class="form-group">
           <label>Preset Brand Logo</label>
           <select id="mBrandSelect" class="form-control" onchange="app.onBrandSelectChange(this.value)">
-            <option value="">-- Select or Type Custom --</option>
-            <option value="https://passcorp.in/assets/brands/karam.png">KARAM</option>
+            <option value="">-- Select Brand Preset (All 32 Brands) --</option>
+            <option value="https://passcorp.in/assets/brands/wildbull.jpg">WILD BULL / PASS CORP.</option>
             <option value="https://passcorp.in/assets/brands/udyogi.png">UDYOGI</option>
+            <option value="https://passcorp.in/assets/brands/karam.png">KARAM</option>
+            <option value="https://passcorp.in/assets/brands/3m.png">3M SAFETY</option>
             <option value="https://passcorp.in/assets/brands/hillson.png">HILLSON</option>
-            <option value="https://passcorp.in/assets/brands/3m.png">3M</option>
+            <option value="https://passcorp.in/assets/brands/ansell.webp">ANSELL</option>
             <option value="https://passcorp.in/assets/brands/honeywell.png">HONEYWELL</option>
-            <option value="https://passcorp.in/assets/brands/dpl.png">DPL</option>
-            <option value="https://passcorp.in/assets/brands/perf.png">PERF</option>
+            <option value="https://passcorp.in/assets/brands/allencooper.png">ALLEN COOPER</option>
+            <option value="https://passcorp.in/assets/brands/alkoplus.png">ALKO PLUS</option>
+            <option value="https://passcorp.in/assets/brands/atg.png">ATG GLOVES</option>
+            <option value="https://passcorp.in/assets/brands/dpl.png">DPL GLOVES</option>
+            <option value="https://passcorp.in/assets/brands/dupont.png">DUPONT (KEVLAR / TYVEK)</option>
+            <option value="https://passcorp.in/assets/brands/fuel.png">FUEL SAFETY</option>
+            <option value="https://passcorp.in/assets/brands/glovex.png">GLOVEX</option>
+            <option value="https://passcorp.in/assets/brands/hicare.png">HICARE</option>
+            <option value="https://passcorp.in/assets/brands/jayco.png">JAYCO</option>
+            <option value="https://passcorp.in/assets/brands/lancer.png">LANCER FOOTWEAR</option>
+            <option value="https://passcorp.in/assets/brands/leslico.png">LESLICO</option>
+            <option value="https://passcorp.in/assets/brands/magnum.png">MAGNUM</option>
+            <option value="https://passcorp.in/assets/brands/mallcom.jpg">MALLCOM</option>
+            <option value="https://passcorp.in/assets/brands/neosafe.jpg">NEOSAFE</option>
+            <option value="https://passcorp.in/assets/brands/newpig.png">NEW PIG (SPILL KITS)</option>
+            <option value="https://passcorp.in/assets/brands/perf.png">PERF SAFETY</option>
+            <option value="https://passcorp.in/assets/brands/powerlift.png">POWERLIFT</option>
             <option value="https://passcorp.in/assets/brands/reflectosafe.png">REFLECTOSAFE</option>
-            <option value="https://passcorp.in/assets/brands/wildbull.jpg">WILDBULL / PASS</option>
+            <option value="https://passcorp.in/assets/brands/safepro.png">SAFEPRO</option>
+            <option value="https://passcorp.in/assets/brands/solfir.png">SOLFIR</option>
+            <option value="https://passcorp.in/assets/brands/ufs.png">UFS / OBERON</option>
+            <option value="https://passcorp.in/assets/brands/unicare.png">UNICARE (EYEWASH & SHOWERS)</option>
+            <option value="https://passcorp.in/assets/brands/utex.jpg">UTEX</option>
+            <option value="https://passcorp.in/assets/brands/venus.jpg">VENUS MASKS</option>
+            <option value="https://passcorp.in/assets/brands/adsspl.jpg">ADSSPL</option>
           </select>
         </div>
         <div class="form-group form-grid-full">
@@ -1264,15 +1287,49 @@ const DEFAULT_BUYERS = [
 ];
 
 const BRAND_LOGOS_MAP = {
-  "karam": "https://passcorp.in/assets/brands/karam.png",
-  "udyogi": "https://passcorp.in/assets/brands/udyogi.png",
-  "hillson": "https://passcorp.in/assets/brands/hillson.png",
   "3m": "https://passcorp.in/assets/brands/3m.png",
-  "honeywell": "https://passcorp.in/assets/brands/honeywell.png",
+  "adsspl": "https://passcorp.in/assets/brands/adsspl.jpg",
+  "alko plus": "https://passcorp.in/assets/brands/alkoplus.png",
+  "alkoplus": "https://passcorp.in/assets/brands/alkoplus.png",
+  "allen cooper": "https://passcorp.in/assets/brands/allencooper.png",
+  "allencooper": "https://passcorp.in/assets/brands/allencooper.png",
+  "ansell": "https://passcorp.in/assets/brands/ansell.webp",
+  "atg": "https://passcorp.in/assets/brands/atg.png",
+  "bw technologies": "https://passcorp.in/assets/brands/honeywell.png",
+  "delta plus": "https://passcorp.in/assets/brands/udyogi.png",
   "dpl": "https://passcorp.in/assets/brands/dpl.png",
-  "perf": "https://passcorp.in/assets/brands/perf.png",
-  "reflectosafe": "https://passcorp.in/assets/brands/reflectosafe.png",
+  "dupont": "https://passcorp.in/assets/brands/dupont.png",
+  "fuel": "https://passcorp.in/assets/brands/fuel.png",
+  "glovex": "https://passcorp.in/assets/brands/glovex.png",
+  "hicare": "https://passcorp.in/assets/brands/hicare.png",
+  "hillson": "https://passcorp.in/assets/brands/hillson.png",
+  "honeywell": "https://passcorp.in/assets/brands/honeywell.png",
+  "jayco": "https://passcorp.in/assets/brands/jayco.png",
+  "jcb": "https://passcorp.in/assets/brands/hillson.png",
+  "karam": "https://passcorp.in/assets/brands/karam.png",
+  "lancer": "https://passcorp.in/assets/brands/lancer.png",
+  "leslico": "https://passcorp.in/assets/brands/leslico.png",
+  "magnum": "https://passcorp.in/assets/brands/magnum.png",
+  "mallcom": "https://passcorp.in/assets/brands/mallcom.jpg",
+  "neosafe": "https://passcorp.in/assets/brands/neosafe.jpg",
+  "new pig": "https://passcorp.in/assets/brands/newpig.png",
+  "newpig": "https://passcorp.in/assets/brands/newpig.png",
   "pass": "https://passcorp.in/assets/brands/wildbull.jpg",
+  "pass corp": "https://passcorp.in/assets/brands/wildbull.jpg",
+  "pass safe": "https://passcorp.in/assets/brands/wildbull.jpg",
+  "perf": "https://passcorp.in/assets/brands/perf.png",
+  "powerlift": "https://passcorp.in/assets/brands/powerlift.png",
+  "reflectosafe": "https://passcorp.in/assets/brands/reflectosafe.png",
+  "safepro": "https://passcorp.in/assets/brands/safepro.png",
+  "solfir": "https://passcorp.in/assets/brands/solfir.png",
+  "udyogi": "https://passcorp.in/assets/brands/udyogi.png",
+  "ufs": "https://passcorp.in/assets/brands/ufs.png",
+  "oberon": "https://passcorp.in/assets/brands/ufs.png",
+  "unicare": "https://passcorp.in/assets/brands/unicare.png",
+  "utex": "https://passcorp.in/assets/brands/utex.jpg",
+  "uvex": "https://passcorp.in/assets/brands/3m.png",
+  "venus": "https://passcorp.in/assets/brands/venus.jpg",
+  "wild bull": "https://passcorp.in/assets/brands/wildbull.jpg",
   "wildbull": "https://passcorp.in/assets/brands/wildbull.jpg"
 };
 
