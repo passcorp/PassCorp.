@@ -517,9 +517,32 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
+  overflow: hidden;
   font-family: Arial, Helvetica, sans-serif;
   -webkit-print-color-adjust: exact !important;
   print-color-adjust: exact !important;
+}
+
+.watermark-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 145mm;
+  height: 145mm;
+  opacity: 0.055;
+  pointer-events: none;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.watermark-overlay img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 .top-industrial-accent {
@@ -901,7 +924,7 @@ body {
 @media print {
   @page {
     size: A4 portrait;
-    margin: 4mm 4mm 4mm 4mm;
+    margin: 5mm 5mm 5mm 5mm;
   }
   
   html, body {
@@ -937,23 +960,52 @@ body {
     min-height: auto !important;
     height: auto !important;
     margin: 0 !important;
+    overflow: visible !important;
+  }
+
+  .watermark-overlay {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 145mm !important;
+    height: 145mm !important;
+    opacity: 0.055 !important;
+    z-index: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
   .quotation-box {
     border: 1.5px solid #000000 !important;
+    position: relative !important;
+    z-index: 1 !important;
   }
 
   .quote-header-grid,
   .client-enterprise-row,
-  .tagline-strip,
-  .total-summary-row,
-  .quote-footer-grid,
-  .bottom-safety-strip {
+  .tagline-strip {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
   }
 
+  .quote-products-table {
+    page-break-inside: auto !important;
+    break-inside: auto !important;
+  }
+
+  .quote-products-table thead {
+    display: table-header-group !important;
+  }
+
   .quote-products-table tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .total-summary-row,
+  .quote-footer-grid,
+  .bottom-safety-strip {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
   }
@@ -1244,6 +1296,9 @@ body {
 
       <!-- A4 Sheet -->
       <div class="a4-sheet" id="printSheet">
+        <div class="watermark-overlay">
+          <img src="assets/pass_watermark.jpg" alt="PASS CORP." onerror="this.src='https://passcorp.in/assets/pass_watermark.jpg'" />
+        </div>
         <div class="top-industrial-accent"></div>
         <div class="quotation-box">
           
