@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
 <title>PASS CORP. | Enterprise Quotation Portal</title>
 
 <!-- Favicon -->
@@ -54,6 +57,12 @@ body {
   overflow-x: hidden;
 }
 
+/* Hard Lock Body */
+body.app-locked .app-header,
+body.app-locked .app-container {
+  display: none !important;
+}
+
 /* ============================================================
    PASSWORD SECURITY LOGIN SCREEN
    ============================================================ */
@@ -64,7 +73,7 @@ body {
   width: 100vw;
   height: 100vh;
   background: radial-gradient(circle at center, #0e2a5a 0%, #061530 100%);
-  z-index: 99999;
+  z-index: 999999;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1176,7 +1185,7 @@ body {
 }
 </style>
 </head>
-<body>
+<body class="app-locked">
 
 <!-- PASSWORD AUTHENTICATION SCREEN -->
 <div class="auth-overlay" id="authOverlay">
@@ -2058,12 +2067,14 @@ const app = {
 
   /* Security Authentication */
   checkAuth() {
-    const isAuth = sessionStorage.getItem('PASS_AUTH_TOKEN');
+    const isAuth = sessionStorage.getItem('PASS_AUTH_TOKEN_V2');
     const overlay = document.getElementById('authOverlay');
     if (isAuth === 'AUTHORIZED') {
       overlay.classList.add('hidden');
+      document.body.classList.remove('app-locked');
     } else {
       overlay.classList.remove('hidden');
+      document.body.classList.add('app-locked');
       setTimeout(() => {
         const inp = document.getElementById('authPassInput');
         if (inp) inp.focus();
@@ -2077,8 +2088,9 @@ const app = {
     const val = (inp.value || '').trim();
 
     if (val === SECRET_PASSCODE) {
-      sessionStorage.setItem('PASS_AUTH_TOKEN', 'AUTHORIZED');
+      sessionStorage.setItem('PASS_AUTH_TOKEN_V2', 'AUTHORIZED');
       document.getElementById('authOverlay').classList.add('hidden');
+      document.body.classList.remove('app-locked');
       errMsg.style.display = 'none';
       inp.value = '';
     } else {
@@ -2089,8 +2101,9 @@ const app = {
   },
 
   lockApp() {
-    sessionStorage.removeItem('PASS_AUTH_TOKEN');
+    sessionStorage.removeItem('PASS_AUTH_TOKEN_V2');
     document.getElementById('authOverlay').classList.remove('hidden');
+    document.body.classList.add('app-locked');
     const inp = document.getElementById('authPassInput');
     if (inp) {
       inp.value = '';
