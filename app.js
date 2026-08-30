@@ -265,9 +265,9 @@ function renderFooter(){
         </div>
         <div>
           <h3>Contact</h3>
-          <div class="footer-contact">${icon("mapPin",15)}<span>${esc(CONTENT.company.address)}</span></div>
-          <div class="footer-contact">${icon("phone",15)}<span>${esc(CONTENT.company.phone)}</span></div>
-          <div class="footer-contact">${icon("mail",15)}<span>${esc(CONTENT.company.email)}</span></div>
+          <div class="footer-contact">${icon("mapPin",14)}<span>${esc(CONTENT.company.address)}</span></div>
+          <div class="footer-contact">${icon("phone",14)}<a href="tel:${esc(CONTENT.company.phone.replace(/[^0-9+]/g,''))}">${esc(CONTENT.company.phone)}</a></div>
+          <div class="footer-contact">${icon("mail",14)}<a href="mailto:${esc(CONTENT.company.email)}">${esc(CONTENT.company.email)}</a></div>
         </div>
       </div>
       <div class="footer-bottom">
