@@ -56,20 +56,26 @@ body {
 
 /* AUTHENTICATION OVERLAY WITH VIBRANT BLUE & SAFETY DOODLES */
 .auth-overlay {
-  position: fixed;
-  inset: 0;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
   background-color: #082247;
   background-image: 
-    radial-gradient(circle at 50% 40%, rgba(13, 59, 122, 0.95) 0%, rgba(8, 33, 70, 0.98) 70%, #04142b 100%),
+    radial-gradient(circle at 50% 50%, rgba(13, 59, 122, 0.95) 0%, rgba(8, 33, 70, 0.98) 70%, #04142b 100%),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%2338bdf8' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round' opacity='0.22'%3E%3C!-- Helmet --%3E%3Cpath d='M15 35 A 16 16 0 0 1 45 35 Z M10 35 L50 35' /%3E%3C!-- Shield --%3E%3Cpath d='M75 15 L95 15 L95 28 C95 38 85 45 85 45 C85 45 75 38 75 28 Z' /%3E%3C!-- Goggles --%3E%3Ccircle cx='25' cy='85' r='8' /%3E%3Ccircle cx='45' cy='85' r='8' /%3E%3Cline x1='33' y1='85' x2='37' y2='85' /%3E%3C!-- Glove --%3E%3Cpath d='M80 75 L80 95 L100 95 L100 82 L96 82 L96 75 Z' /%3E%3C!-- Extinguisher / Cone --%3E%3Cpath d='M85 75 L75 105 L95 105 Z' /%3E%3C!-- Hazard / Bolt --%3E%3Cpolygon points='25,10 20,22 27,22 22,34 33,20 26,20' /%3E%3C/g%3E%3C/svg%3E");
   background-size: cover, 140px 140px;
-  z-index: 999999;
+  z-index: 9999999;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
-  position: relative;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .auth-doodle-float {
