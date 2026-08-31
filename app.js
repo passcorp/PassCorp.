@@ -800,3 +800,9 @@ window.addEventListener("storage", (e) => {
 
 CONTENT = loadContent();
 render();
+
+if (typeof PassCloudDB !== 'undefined') {
+  PassCloudDB.pull(function(){
+    render();
+  });
+}

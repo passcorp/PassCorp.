@@ -147,6 +147,27 @@ const Actions = {
     };
     reader.readAsText(file);
     fileInput.value = "";
+  },
+  syncFromCloud(){
+    showToast("Syncing with Central Cloud DB...");
+    if (typeof PassCloudDB !== 'undefined') {
+      PassCloudDB.pull(function(){
+        render();
+        showToast("✓ Cloud Database Synced!");
+      }, function(e){
+        showToast("Cloud sync failed or offline");
+      });
+    }
+  },
+  forcePushCloud(){
+    showToast("Pushing to Central Cloud DB...");
+    if (typeof PassCloudDB !== 'undefined') {
+      PassCloudDB.push(function(){
+        showToast("✓ Cloud Database updated successfully!");
+      }, function(e){
+        showToast("Cloud push error");
+      });
+    }
   }
 };
 window.A = Actions;
@@ -181,6 +202,9 @@ function adminNav(){
         📄 Quotor ↗
       </a>
       ${tabs.map(t => '<button class="'+(STATE.adminTab===t[0]?"active":"")+'" onclick="A.setAdminTab(\''+t[0]+'\')">'+icon(t[1],16)+' '+t[2]+'</button>').join("")}
+      <div style="height:1px;background:var(--line);margin:10px 0"></div>
+      <button onclick="A.syncFromCloud()" style="color:#047857;font-weight:700;">☁️ Sync Cloud DB</button>
+      <button onclick="A.forcePushCloud()" style="color:#0369a1;">☁️ Push to Cloud</button>
       <div style="height:1px;background:var(--line);margin:10px 0"></div>
       <button onclick="A.exportContent()">${icon("download",16)} Export JSON</button>
       <button onclick="document.getElementById('importFile').click()">${icon("upload",16)} Import JSON</button>
@@ -418,3 +442,9 @@ window.addEventListener("storage", (e) => {
 
 CONTENT = loadContent();
 render();
+
+if (typeof PassCloudDB !== 'undefined') {
+  PassCloudDB.pull(function(){
+    render();
+  });
+}

@@ -2800,6 +2800,13 @@ var app = {
         }
         var cloudDb = JSON.parse(rawJson);
 
+        // Merge catalog content
+        if (cloudDb.catalogContent && Array.isArray(cloudDb.catalogContent.products) && cloudDb.catalogContent.products.length > 0) {
+          if (typeof CONTENT !== 'undefined') CONTENT = cloudDb.catalogContent;
+          try { localStorage.setItem('passCorpContent_v8', JSON.stringify(cloudDb.catalogContent)); } catch(e){}
+          self.loadCatalog();
+        }
+
         // Merge buyers
         if (Array.isArray(cloudDb.buyers) && cloudDb.buyers.length > 0) {
           var buyerMap = {};
@@ -2846,7 +2853,7 @@ var app = {
         }
 
         if (!silent) {
-          alert('✓ Cloud Database Synced! (' + self.history.length + ' Quotes, ' + self.buyers.length + ' Clients up-to-date)');
+          alert('✓ 3-Way Cloud Database Synced! (' + self.history.length + ' Quotes, ' + self.buyers.length + ' Clients, ' + self.catalog.length + ' Products up-to-date)');
         }
       }
     })
@@ -2855,6 +2862,11 @@ var app = {
       fetch('data/cloud_records.json?v=' + Date.now())
         .then(function(r){ return r.json(); })
         .then(function(cloudDb){
+          if (cloudDb.catalogContent && Array.isArray(cloudDb.catalogContent.products)) {
+            if (typeof CONTENT !== 'undefined') CONTENT = cloudDb.catalogContent;
+            try { localStorage.setItem('passCorpContent_v8', JSON.stringify(cloudDb.catalogContent)); } catch(e){}
+            self.loadCatalog();
+          }
           if (Array.isArray(cloudDb.buyers)) {
             cloudDb.buyers.forEach(function(cb){
               if (!self.buyers.some(function(b){ return b.company.toLowerCase() === cb.company.toLowerCase(); })) self.buyers.push(cb);
@@ -2894,10 +2906,18 @@ var app = {
     self.cloudConfig.isSyncing = true;
     self.updateCloudBadge('syncing');
 
+    var currentContent = null;
+    if (typeof CONTENT !== 'undefined' && CONTENT && CONTENT.products) {
+      currentContent = CONTENT;
+    } else if (typeof DEFAULT_CONTENT !== 'undefined') {
+      currentContent = DEFAULT_CONTENT;
+    }
+
     var payload = {
       version: "2026.1",
       lastUpdated: new Date().toISOString(),
-      updatedBy: "PASS CORP. App",
+      updatedBy: "PASS CORP. Unified 3-Way Cloud",
+      catalogContent: currentContent,
       buyers: self.buyers,
       history: self.history,
       signature: self.digitalSignData || null

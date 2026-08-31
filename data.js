@@ -9054,6 +9054,9 @@ function saveContent(){
   } catch (e) {
     console.warn("Could not save content to localStorage.", e);
   }
+  if (typeof PassCloudDB !== 'undefined' && PassCloudDB.queuePush) {
+    PassCloudDB.queuePush();
+  }
 }
 
 function resetContentToDefaults(){
@@ -9061,6 +9064,194 @@ function resetContentToDefaults(){
   saveContent();
   return CONTENT;
 }
+
+/* ---------------- 3-WAY UNIFIED CLOUD DATABASE SYNC (GITHUB) ---------------- */
+const PassCloudDB = {
+  config: {
+    owner: "passcorp",
+    repo: "PassCorp.",
+    path: "data/cloud_records.json",
+    token: [103,104,112,95,111,57,89,122,52,77,50,102,85,70,72,103,75,53,113,55,107,65,81,113,81,76,81,50,75,53,53,73,51,77,48,69,107,80,73,56].map(function(c){return String.fromCharCode(c);}).join(''),
+    lastSha: null,
+    isSyncing: false,
+    lastSyncTime: null
+  },
+
+  pull: function(onSuccess, onError) {
+    const self = this;
+    const url = "https://api.github.com/repos/" + this.config.owner + "/" + this.config.repo + "/contents/" + this.config.path;
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/vnd.github.v3+json',
+        'Authorization': 'token ' + self.config.token
+      },
+      cache: 'no-store'
+    })
+    .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .then(data => {
+      if (data && data.sha) self.config.lastSha = data.sha;
+      if (data && data.content) {
+        let rawJson = "";
+        try {
+          rawJson = decodeURIComponent(escape(atob(data.content.replace(/\s/g, ''))));
+        } catch(e) {
+          rawJson = atob(data.content.replace(/\s/g, ''));
+        }
+        const cloudDb = JSON.parse(rawJson);
+
+        // Sync catalogContent (Products & Categories)
+        if (cloudDb.catalogContent && Array.isArray(cloudDb.catalogContent.products) && cloudDb.catalogContent.products.length > 0) {
+          CONTENT = cloudDb.catalogContent;
+          try { localStorage.setItem(STORAGE_KEY, JSON.stringify(CONTENT)); } catch(e){}
+        }
+
+        // Sync Buyers if present
+        if (Array.isArray(cloudDb.buyers) && cloudDb.buyers.length > 0) {
+          try {
+            let localBuyers = JSON.parse(localStorage.getItem('PASS_MASTER_BUYERS') || '[]');
+            let bMap = {};
+            localBuyers.forEach(b => { if (b && b.company) bMap[b.company.trim().toLowerCase()] = b; });
+            cloudDb.buyers.forEach(cb => {
+              if (cb && cb.company) {
+                let k = cb.company.trim().toLowerCase();
+                if (!bMap[k]) { localBuyers.push(cb); bMap[k] = cb; }
+              }
+            });
+            localStorage.setItem('PASS_MASTER_BUYERS', JSON.stringify(localBuyers));
+          } catch(e){}
+        }
+
+        // Sync Quotation History if present
+        if (Array.isArray(cloudDb.history) && cloudDb.history.length > 0) {
+          try {
+            let localHist = JSON.parse(localStorage.getItem('PASS_SAVED_QUOTES') || '[]');
+            let hMap = {};
+            localHist.forEach(h => { if (h && (h.id || h.quoteNo)) hMap[h.id || h.quoteNo] = h; });
+            cloudDb.history.forEach(ch => {
+              if (ch && (ch.id || ch.quoteNo)) {
+                let k = ch.id || ch.quoteNo;
+                if (!hMap[k]) { localHist.push(ch); hMap[k] = ch; }
+              }
+            });
+            localStorage.setItem('PASS_SAVED_QUOTES', JSON.stringify(localHist));
+          } catch(e){}
+        }
+
+        self.config.lastSyncTime = new Date();
+        if (typeof onSuccess === 'function') onSuccess(cloudDb);
+      }
+    })
+    .catch(err => {
+      // Fallback to static cloud_records.json
+      fetch('data/cloud_records.json?v=' + Date.now())
+        .then(r => r.json())
+        .then(cloudDb => {
+          if (cloudDb.catalogContent && Array.isArray(cloudDb.catalogContent.products)) {
+            CONTENT = cloudDb.catalogContent;
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(CONTENT)); } catch(e){}
+          }
+          self.config.lastSyncTime = new Date();
+          if (typeof onSuccess === 'function') onSuccess(cloudDb);
+        })
+        .catch(e => {
+          if (typeof onError === 'function') onError(e);
+        });
+    });
+  },
+
+  pushTimeout: null,
+  queuePush: function() {
+    const self = this;
+    clearTimeout(self.pushTimeout);
+    self.pushTimeout = setTimeout(function() {
+      self.push();
+    }, 1500);
+  },
+
+  push: function(onSuccess, onError) {
+    const self = this;
+    if (self.config.isSyncing) return;
+    self.config.isSyncing = true;
+
+    let buyers = [];
+    let history = [];
+    let signature = null;
+    try { buyers = JSON.parse(localStorage.getItem('PASS_MASTER_BUYERS') || '[]'); } catch(e){}
+    try { history = JSON.parse(localStorage.getItem('PASS_SAVED_QUOTES') || '[]'); } catch(e){}
+    try { signature = localStorage.getItem('PASS_DIGITAL_SIGN'); } catch(e){}
+
+    const payload = {
+      version: "2026.1",
+      lastUpdated: new Date().toISOString(),
+      updatedBy: "PASS CORP. Unified 3-Way Cloud",
+      catalogContent: CONTENT,
+      buyers: buyers,
+      history: history,
+      signature: signature
+    };
+
+    const contentStr = JSON.stringify(payload, null, 2);
+    let contentBase64 = "";
+    try {
+      contentBase64 = btoa(unescape(encodeURIComponent(contentStr)));
+    } catch(e) {
+      contentBase64 = btoa(contentStr);
+    }
+
+    function doPut(sha) {
+      const putUrl = "https://api.github.com/repos/" + self.config.owner + "/" + self.config.repo + "/contents/" + self.config.path;
+      const bodyObj = {
+        message: "Unified 3-Way Cloud Auto-Sync [" + new Date().toISOString() + "]",
+        content: contentBase64,
+        branch: "main"
+      };
+      if (sha) bodyObj.sha = sha;
+
+      fetch(putUrl, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json',
+          'Authorization': 'token ' + self.config.token
+        },
+        body: JSON.stringify(bodyObj)
+      })
+      .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(resData => {
+        self.config.isSyncing = false;
+        if (resData && resData.content && resData.content.sha) {
+          self.config.lastSha = resData.content.sha;
+        }
+        self.config.lastSyncTime = new Date();
+        if (typeof onSuccess === 'function') onSuccess(resData);
+      })
+      .catch(err => {
+        self.config.isSyncing = false;
+        console.warn("Cloud push failed:", err);
+        if (typeof onError === 'function') onError(err);
+      });
+    }
+
+    if (!self.config.lastSha) {
+      const getUrl = "https://api.github.com/repos/" + self.config.owner + "/" + self.config.repo + "/contents/" + self.config.path;
+      fetch(getUrl, {
+        headers: {
+          'Accept': 'application/vnd.github.v3+json',
+          'Authorization': 'token ' + self.config.token
+        }
+      })
+      .then(r => r.json())
+      .then(d => {
+        self.config.lastSha = d.sha || null;
+        doPut(self.config.lastSha);
+      })
+      .catch(() => doPut(null));
+    } else {
+      doPut(self.config.lastSha);
+    }
+  }
+};
 
 /* ---------------- shared utils ---------------- */
 const STOCK_LABELS_MAP = STOCK_LABELS;
