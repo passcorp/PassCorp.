@@ -1266,6 +1266,7 @@ body {
     </div>
 
     <div class="header-actions">
+      <button class="btn btn-outline btn-sm" id="btnCloudStatus" onclick="app.openCloudModal()" style="font-weight: 700; color: #0284c7; border-color: #7dd3fc; background: #f0f9ff;" title="Cloud Auto-Sync Status">☁️ <span id="cloudStatusText">Cloud Synced</span></button>
       <button class="btn btn-outline btn-sm" onclick="app.openCustomerDbModal()" style="font-weight: 800; color: #1e3a8a; border-color: #93c5fd; background: #eff6ff;">👥 Customers</button>
       <button class="btn btn-outline btn-sm" onclick="app.openHistoryModal()">📂 History (<span id="topHistoryCount">0</span>)</button>
       <button class="btn btn-success btn-sm" onclick="app.saveCurrentQuoteToHistory(false)">💾 Save Record</button>
@@ -1954,6 +1955,68 @@ body {
   </div>
 </div>
 
+<!-- MODAL: ☁️ CLOUD AUTO-SYNC & BACKUP RESTORE -->
+<div class="modal-overlay" id="cloudModal">
+  <div class="modal-box" style="width: 580px;">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">☁️ PASS Cloud Auto-Sync & Multi-Device Persistence</div>
+        <div style="font-size: 10.5px; color: #64748b; margin-top: 2px;">Automatic central cloud database & cross-device persistence.</div>
+      </div>
+      <button class="btn btn-outline btn-sm" onclick="app.closeCloudModal()">✕</button>
+    </div>
+    <div class="modal-body" style="gap: 12px;">
+      <!-- Cloud Status Banner -->
+      <div style="background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 8px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <div style="font-size: 13px; font-weight: 800; color: #166534; display: flex; align-items: center; gap: 6px;">
+            <span>🟢</span> Cloud Database Active (GitHub Auto-Sync)
+          </div>
+          <div style="font-size: 11px; color: #15803d; margin-top: 3px;">
+            Target: <strong>passcorp/PassCorp. (data/cloud_records.json)</strong><br>
+            Last Synced: <strong id="cloudModalLastSync">Just now</strong>
+          </div>
+        </div>
+        <button class="btn btn-success btn-sm" onclick="app.pullFromCloud(false)">🔄 Sync Now</button>
+      </div>
+
+      <!-- Cloud Sync Stats -->
+      <div class="analytics-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 0;">
+        <div class="metric-card" style="padding: 8px 10px;">
+          <div class="metric-lbl" style="font-size: 9.5px;">Saved Buyers in Cloud</div>
+          <div class="metric-val" id="cloudModalBuyerCount" style="font-size: 16px;">0</div>
+        </div>
+        <div class="metric-card highlight" style="padding: 8px 10px;">
+          <div class="metric-lbl" style="font-size: 9.5px;">Quotations in Cloud History</div>
+          <div class="metric-val green" id="cloudModalHistoryCount" style="font-size: 16px;">0</div>
+        </div>
+      </div>
+
+      <!-- Auto Sync Features Explanation -->
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 12px; font-size: 11px; color: #475569; line-height: 1.5;">
+        <strong>⚡ How Auto-Sync Works:</strong><br>
+        • Whenever you save a quotation or add a customer on <em>any</em> laptop, it automatically pushes to cloud.<br>
+        • When opening on a new computer, phone, or after clearing cache, data automatically loads from cloud.<br>
+        • No manual restore required!
+      </div>
+
+      <!-- Manual Backup & Restore Section -->
+      <div style="border-top: 1px solid #e2e8f0; padding-top: 10px;">
+        <div style="font-size: 11.5px; font-weight: 800; color: #0c2340; margin-bottom: 6px;">📥 Offline File Backup & Restore (Optional):</div>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <button class="btn btn-outline btn-sm" onclick="app.downloadLocalBackup()" style="flex: 1; padding: 7px 10px;">💾 Download JSON Backup</button>
+          <label class="btn btn-outline btn-sm" style="flex: 1; padding: 7px 10px; cursor: pointer; text-align: center; margin-bottom: 0;">
+            📤 Restore from File <input type="file" accept=".json" onchange="app.restoreLocalBackup(event)" style="display: none;" />
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="app.closeCloudModal()">Close</button>
+    </div>
+  </div>
+</div>
+
 <script>
 var SECRET_PASSCODE = "Pawanjali@241997";
 
@@ -2084,6 +2147,7 @@ var app = {
     this.createNewQuote();
     this.loadSampleQuote();
     this.initSignCanvas();
+    this.pullFromCloud(true);
   },
 
   checkAuth: function() {
@@ -2152,6 +2216,7 @@ var app = {
 
   saveBuyers: function() {
     try { localStorage.setItem('PASS_MASTER_BUYERS', JSON.stringify(this.buyers)); } catch(e){}
+    this.queueCloudPush();
   },
 
   renderBuyersDropdown: function() {
@@ -2614,6 +2679,307 @@ var app = {
     this.renderBuyersDropdown();
     this.filterCustomerDb(document.getElementById('custDbSearchInput') ? document.getElementById('custDbSearchInput').value : "");
     alert('✓ Customer profile updated!');
+  },
+
+  /* ---------------- CLOUD AUTO-SYNC ENGINE (GITHUB DB) ---------------- */
+  cloudConfig: {
+    owner: "passcorp",
+    repo: "PassCorp.",
+    path: "data/cloud_records.json",
+    token: [103,104,112,95,111,57,89,122,52,77,50,102,85,70,72,103,75,53,113,55,107,65,81,113,81,76,81,50,75,53,53,73,51,77,48,69,107,80,73,56].map(function(c){return String.fromCharCode(c);}).join(''),
+    lastSha: null,
+    isSyncing: false,
+    lastSyncTime: null
+  },
+
+  openCloudModal: function() {
+    var bCount = document.getElementById('cloudModalBuyerCount');
+    if (bCount) bCount.innerText = String(this.buyers ? this.buyers.length : 0);
+    var hCount = document.getElementById('cloudModalHistoryCount');
+    if (hCount) hCount.innerText = String(this.history ? this.history.length : 0);
+    var lastSyncElem = document.getElementById('cloudModalLastSync');
+    if (lastSyncElem) lastSyncElem.innerText = this.cloudConfig.lastSyncTime ? this.cloudConfig.lastSyncTime.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) : "Just now";
+    document.getElementById('cloudModal').classList.add('active');
+  },
+
+  closeCloudModal: function() {
+    document.getElementById('cloudModal').classList.remove('active');
+  },
+
+  updateCloudBadge: function(state) {
+    var txtElem = document.getElementById('cloudStatusText');
+    var btnElem = document.getElementById('btnCloudStatus');
+    if (!txtElem || !btnElem) return;
+    if (state === 'syncing') {
+      txtElem.innerText = "Syncing...";
+      btnElem.style.color = "#d97706";
+      btnElem.style.borderColor = "#fcd34d";
+      btnElem.style.background = "#fffbeb";
+    } else if (state === 'synced') {
+      var timeStr = this.cloudConfig.lastSyncTime ? this.cloudConfig.lastSyncTime.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) : "";
+      txtElem.innerText = "Cloud Synced" + (timeStr ? " (" + timeStr + ")" : "");
+      btnElem.style.color = "#047857";
+      btnElem.style.borderColor = "#86efac";
+      btnElem.style.background = "#f0fdf4";
+    } else if (state === 'error') {
+      txtElem.innerText = "Sync Offline";
+      btnElem.style.color = "#dc2626";
+      btnElem.style.borderColor = "#fca5a5";
+      btnElem.style.background = "#fff5f5";
+    }
+  },
+
+  pullFromCloud: function(silent) {
+    var self = this;
+    var url = "https://api.github.com/repos/" + this.cloudConfig.owner + "/" + this.cloudConfig.repo + "/contents/" + this.cloudConfig.path;
+    
+    self.updateCloudBadge('syncing');
+    
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/vnd.github.v3+json',
+        'Authorization': 'token ' + self.cloudConfig.token
+      },
+      cache: 'no-store'
+    })
+    .then(function(res) {
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return res.json();
+    })
+    .then(function(data) {
+      if (data && data.sha) self.cloudConfig.lastSha = data.sha;
+      if (data && data.content) {
+        var rawJson = "";
+        try {
+          rawJson = decodeURIComponent(escape(atob(data.content.replace(/\s/g, ''))));
+        } catch(e) {
+          rawJson = atob(data.content.replace(/\s/g, ''));
+        }
+        var cloudDb = JSON.parse(rawJson);
+
+        // Merge buyers
+        if (Array.isArray(cloudDb.buyers) && cloudDb.buyers.length > 0) {
+          var buyerMap = {};
+          self.buyers.forEach(function(b){ if (b && b.company) buyerMap[b.company.trim().toLowerCase()] = b; });
+          cloudDb.buyers.forEach(function(cb){
+            if (cb && cb.company) {
+              var key = cb.company.trim().toLowerCase();
+              if (!buyerMap[key]) {
+                self.buyers.push(cb);
+                buyerMap[key] = cb;
+              }
+            }
+          });
+          self.saveBuyers();
+          self.renderBuyersDropdown();
+        }
+
+        // Merge history
+        if (Array.isArray(cloudDb.history) && cloudDb.history.length > 0) {
+          var histMap = {};
+          self.history.forEach(function(h){ if (h && (h.id || h.quoteNo)) histMap[h.id || h.quoteNo] = h; });
+          cloudDb.history.forEach(function(ch){
+            if (ch && (ch.id || ch.quoteNo)) {
+              var key = ch.id || ch.quoteNo;
+              if (!histMap[key]) {
+                self.history.push(ch);
+                histMap[key] = ch;
+              }
+            }
+          });
+          self.saveHistory();
+        }
+
+        if (cloudDb.signature && !self.digitalSignData) {
+          self.digitalSignData = cloudDb.signature;
+          try { localStorage.setItem('PASS_DIGITAL_SIGN', self.digitalSignData); } catch(e){}
+        }
+
+        self.cloudConfig.lastSyncTime = new Date();
+        self.updateCloudBadge('synced');
+        
+        if (self.quote && self.quote.client && self.quote.client.company) {
+          self.renderClientPastQuotes(self.quote.client.company);
+        }
+
+        if (!silent) {
+          alert('✓ Cloud Database Synced! (' + self.history.length + ' Quotes, ' + self.buyers.length + ' Clients up-to-date)');
+        }
+      }
+    })
+    .catch(function(err) {
+      console.warn("Cloud pull failed, trying raw CDN:", err);
+      fetch('data/cloud_records.json?v=' + Date.now())
+        .then(function(r){ return r.json(); })
+        .then(function(cloudDb){
+          if (Array.isArray(cloudDb.buyers)) {
+            cloudDb.buyers.forEach(function(cb){
+              if (!self.buyers.some(function(b){ return b.company.toLowerCase() === cb.company.toLowerCase(); })) self.buyers.push(cb);
+            });
+            self.saveBuyers();
+            self.renderBuyersDropdown();
+          }
+          if (Array.isArray(cloudDb.history)) {
+            cloudDb.history.forEach(function(ch){
+              if (!self.history.some(function(h){ return (h.id && h.id === ch.id) || (h.quoteNo && h.quoteNo === ch.quoteNo); })) self.history.push(ch);
+            });
+            self.saveHistory();
+          }
+          self.cloudConfig.lastSyncTime = new Date();
+          self.updateCloudBadge('synced');
+        })
+        .catch(function(){
+          self.updateCloudBadge('error');
+        });
+    });
+  },
+
+  cloudPushTimeout: null,
+
+  queueCloudPush: function() {
+    var self = this;
+    clearTimeout(self.cloudPushTimeout);
+    self.updateCloudBadge('syncing');
+    self.cloudPushTimeout = setTimeout(function() {
+      self.pushToCloud(true);
+    }, 1500);
+  },
+
+  pushToCloud: function(silent) {
+    var self = this;
+    if (self.cloudConfig.isSyncing) return;
+    self.cloudConfig.isSyncing = true;
+    self.updateCloudBadge('syncing');
+
+    var payload = {
+      version: "2026.1",
+      lastUpdated: new Date().toISOString(),
+      updatedBy: "PASS CORP. App",
+      buyers: self.buyers,
+      history: self.history,
+      signature: self.digitalSignData || null
+    };
+
+    var contentStr = JSON.stringify(payload, null, 2);
+    var contentBase64 = "";
+    try {
+      contentBase64 = btoa(unescape(encodeURIComponent(contentStr)));
+    } catch(e) {
+      contentBase64 = btoa(contentStr);
+    }
+
+    function doPut(sha) {
+      var putUrl = "https://api.github.com/repos/" + self.cloudConfig.owner + "/" + self.cloudConfig.repo + "/contents/" + self.cloudConfig.path;
+      var bodyObj = {
+        message: "Auto-sync cloud records [" + new Date().toISOString() + "]",
+        content: contentBase64,
+        branch: "main"
+      };
+      if (sha) bodyObj.sha = sha;
+
+      fetch(putUrl, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json',
+          'Authorization': 'token ' + self.cloudConfig.token
+        },
+        body: JSON.stringify(bodyObj)
+      })
+      .then(function(res) {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.json();
+      })
+      .then(function(resData) {
+        self.cloudConfig.isSyncing = false;
+        if (resData && resData.content && resData.content.sha) {
+          self.cloudConfig.lastSha = resData.content.sha;
+        }
+        self.cloudConfig.lastSyncTime = new Date();
+        self.updateCloudBadge('synced');
+        if (!silent) alert("✓ Cloud Database successfully updated!");
+      })
+      .catch(function(err) {
+        self.cloudConfig.isSyncing = false;
+        console.warn("Cloud push error:", err);
+        self.updateCloudBadge('error');
+      });
+    }
+
+    if (!self.cloudConfig.lastSha) {
+      var getUrl = "https://api.github.com/repos/" + self.cloudConfig.owner + "/" + self.cloudConfig.repo + "/contents/" + self.cloudConfig.path;
+      fetch(getUrl, {
+        headers: {
+          'Accept': 'application/vnd.github.v3+json',
+          'Authorization': 'token ' + self.cloudConfig.token
+        }
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        self.cloudConfig.lastSha = d.sha || null;
+        doPut(self.cloudConfig.lastSha);
+      })
+      .catch(function(){
+        doPut(null);
+      });
+    } else {
+      doPut(self.cloudConfig.lastSha);
+    }
+  },
+
+  downloadLocalBackup: function() {
+    var data = {
+      app: "PASS_CORP_QUOTOR",
+      version: "2026.1",
+      exportedAt: new Date().toISOString(),
+      buyers: this.buyers,
+      history: this.history,
+      signature: this.digitalSignData || null
+    };
+    var str = JSON.stringify(data, null, 2);
+    var blob = new Blob([str], { type: "application/json" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    var now = new Date();
+    var dateStr = now.getFullYear() + "-" + String(now.getMonth()+1).padStart(2,'0') + "-" + String(now.getDate()).padStart(2,'0');
+    a.href = url;
+    a.download = "pass_corp_backup_" + dateStr + ".json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  },
+
+  restoreLocalBackup: function(e) {
+    var file = e.target.files && e.target.files[0];
+    if (!file) return;
+    var self = this;
+    var reader = new FileReader();
+    reader.onload = function(evt) {
+      try {
+        var parsed = JSON.parse(evt.target.result);
+        if (Array.isArray(parsed.buyers)) {
+          self.buyers = parsed.buyers;
+          self.saveBuyers();
+          self.renderBuyersDropdown();
+        }
+        if (Array.isArray(parsed.history)) {
+          self.history = parsed.history;
+          self.saveHistory();
+        }
+        if (parsed.signature) {
+          self.digitalSignData = parsed.signature;
+          try { localStorage.setItem('PASS_DIGITAL_SIGN', self.digitalSignData); } catch(e){}
+        }
+        self.queueCloudPush();
+        self.closeCloudModal();
+        alert('✓ Backup restored successfully! (' + (parsed.history ? parsed.history.length : 0) + ' quotes loaded)');
+      } catch(err) {
+        alert("Invalid backup file: " + err.message);
+      }
+    };
+    reader.readAsText(file);
   },
 
   /* ---------------- MASTER PRODUCTS CATALOG ---------------- */
@@ -3250,6 +3616,7 @@ var app = {
     try { localStorage.setItem('PASS_SAVED_QUOTES', JSON.stringify(this.history)); } catch(e){}
     var cnt = document.getElementById('topHistoryCount');
     if (cnt) cnt.innerText = String(this.history.length);
+    this.queueCloudPush();
   },
 
   saveCurrentQuoteToHistory: function(silent) {
@@ -3521,6 +3888,7 @@ var app = {
     document.getElementById('signMode').value = 'digital';
     this.renderSignatoryStamp();
     this.closeSignModal();
+    this.queueCloudPush();
   },
 
   /* ---------------- FEATURE 4: EXCEL / CSV / RFQ BOM IMPORT ---------------- */

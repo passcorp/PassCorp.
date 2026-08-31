@@ -1,0 +1,40 @@
+{
+  "version": "2026.1",
+  "lastUpdated": "2026-08-31T06:45:00.000Z",
+  "updatedBy": "PASS CORP. Admin",
+  "buyers": [
+    {
+      "id": "buyer_1",
+      "company": "M/s. ABC Industries Pvt. Ltd.",
+      "address": "Plot No. 45, MIDC Bhosari, Pune - 411026",
+      "gst": "27AAACA0000A1Z5",
+      "state": "Maharashtra (Code: 27)",
+      "name": "Mr. Rajesh Sharma (Purchase Head)"
+    },
+    {
+      "id": "buyer_2",
+      "company": "M/s. Tata Motors Limited",
+      "address": "Pimpri Works, Sector 10, MIDC Pimpri, Pune - 411018",
+      "gst": "27AAACT2727Q1ZW",
+      "state": "Maharashtra (Code: 27)",
+      "name": "Mr. Suresh Kulkarni (EHS Officer)"
+    },
+    {
+      "id": "buyer_3",
+      "company": "M/s. Bajaj Auto Limited",
+      "address": "A-1, Mahalunge Village, Chakan MIDC Phase 2, Pune - 410501",
+      "gst": "27AAACB0000K1Z9",
+      "state": "Maharashtra (Code: 27)",
+      "name": "Mr. Pravin Deshmukh (Safety Dept)"
+    },
+    {
+      "id": "buyer_4",
+      "company": "M/s. Bharat Forge Limited",
+      "address": "Mundhwa Industrial Area, Pune - 411036",
+      "gst": "27AAACB1234D1ZP",
+      "state": "Maharashtra (Code: 27)",
+      "name": "Mr. Amit Jadhav (Plant Incharge)"
+    }
+  ],
+  "history": []
+}
