@@ -1,7 +1,7 @@
 {
   "version": "2026.1",
-  "lastUpdated": "2026-08-31T06:45:00.000Z",
-  "updatedBy": "PASS CORP. Admin",
+  "lastUpdated": "2026-08-31T07:32:42.229Z",
+  "updatedBy": "PASS CORP. App",
   "buyers": [
     {
       "id": "buyer_1",
@@ -36,5 +36,6 @@
       "name": "Mr. Amit Jadhav (Plant Incharge)"
     }
   ],
-  "history": []
+  "history": [],
+  "signature": null
 }
