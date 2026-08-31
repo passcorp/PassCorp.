@@ -505,6 +505,173 @@ body {
   display: block;
 }
 
+/* Customer Database & Past Quotation Hub Styles */
+.client-past-quotes-card {
+  background: #f0f9ff;
+  border: 1.5px solid #bae6fd;
+  border-radius: 8px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.client-past-quotes-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.client-quotes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-height: 190px;
+  overflow-y: auto;
+}
+
+.client-quote-chip {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.client-quote-chip:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 1px 4px rgba(59,130,246,0.12);
+}
+
+.client-quote-chip.active-current-quote {
+  border-left: 3.5px solid #059669;
+  background: #f0fdf4;
+}
+
+.doc-badge-micro {
+  font-size: 8.5px;
+  font-weight: 800;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: #e2e8f0;
+  color: #334155;
+}
+
+/* Full Customer Hub Modal Grid */
+.customer-db-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 14px;
+  min-height: 440px;
+  max-height: 520px;
+}
+
+.customer-list-panel {
+  border-right: 1px solid #e2e8f0;
+  padding-right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+  max-height: 480px;
+}
+
+.customer-card-item {
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.customer-card-item:hover {
+  background: #eff6ff;
+  border-color: #93c5fd;
+}
+
+.customer-card-item.active {
+  background: #eff6ff;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 1.5px #2563eb;
+}
+
+.customer-card-title {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #0c2340;
+}
+
+.customer-card-meta {
+  font-size: 9.5px;
+  color: #64748b;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.customer-card-badges {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+  flex-wrap: wrap;
+}
+
+.badge-pill-micro {
+  font-size: 8.5px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 10px;
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.badge-pill-green {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.customer-detail-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  padding-left: 2px;
+  max-height: 480px;
+}
+
+.customer-profile-banner {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.customer-profile-name {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #0c2340;
+}
+
+.customer-profile-info {
+  font-size: 11px;
+  color: #475569;
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
 /* Right Viewport */
 .preview-viewport {
   flex: 1;
@@ -1099,6 +1266,7 @@ body {
     </div>
 
     <div class="header-actions">
+      <button class="btn btn-outline btn-sm" onclick="app.openCustomerDbModal()" style="font-weight: 800; color: #1e3a8a; border-color: #93c5fd; background: #eff6ff;">👥 Customers</button>
       <button class="btn btn-outline btn-sm" onclick="app.openHistoryModal()">📂 History (<span id="topHistoryCount">0</span>)</button>
       <button class="btn btn-success btn-sm" onclick="app.saveCurrentQuoteToHistory(false)">💾 Save Record</button>
       <button class="btn btn-warning btn-sm" onclick="app.openFollowUpForActiveQuote()">🔔 Follow-Up</button>
@@ -1152,44 +1320,33 @@ body {
           </div>
           <div class="form-group">
             <label>Payment Terms</label>
-            <select id="quotePayment" class="form-control" onchange="app.updateMeta()">
-              <option value="As Agreed">As Agreed</option>
-              <option value="100% Advance Against PI">100% Advance Against PI</option>
-              <option value="50% Advance & 50% Against Delivery">50% Advance & 50% Against Delivery</option>
-              <option value="Against Delivery (COD)">Against Delivery (COD)</option>
-              <option value="Immediate on Receipt of Invoice">Immediate on Receipt of Invoice</option>
-              <option value="15 Days Credit">15 Days Credit</option>
-              <option value="30 Days Credit">30 Days Credit</option>
-              <option value="45 Days Credit">45 Days Credit</option>
-              <option value="60 Days Credit">60 Days Credit</option>
-            </select>
+            <input type="text" id="quotePayment" class="form-control" value="100% Against PI / As Agreed" oninput="app.updateMeta()" />
           </div>
           <div class="form-group">
             <label>Delivery Terms</label>
             <select id="quoteDelivery" class="form-control" onchange="app.updateMeta()">
-              <option value="Ex-Works / Pune">Ex-Works / Pune</option>
-              <option value="Ex-Works / Chikhali">Ex-Works / Chikhali</option>
-              <option value="F.O.R. Destination (Site Delivery)">F.O.R. Destination (Site)</option>
-              <option value="Ready Stock / Immediate Dispatch">Ready Stock / Immediate Dispatch</option>
-              <option value="Within 1-2 Days from PO">Within 1-2 Days from PO</option>
-              <option value="Within 2-3 Days from PO">Within 2-3 Days from PO</option>
-              <option value="Within 5-7 Days from PO">Within 5-7 Days from PO</option>
+              <option value="Ready Stock / Ex-Works Pune" selected>Ready Stock / Ex-Works Pune</option>
+              <option value="1-2 Days from PO Date">1-2 Days from PO Date</option>
+              <option value="2-3 Days from PO Date">2-3 Days from PO Date</option>
+              <option value="3-5 Days from PO Date">3-5 Days from PO Date</option>
+              <option value="5-7 Days from PO Date">5-7 Days from PO Date</option>
+              <option value="7-10 Days from PO Date">7-10 Days from PO Date</option>
+              <option value="10-15 Days from PO Date">10-15 Days from PO Date</option>
               <option value="1-2 Weeks">1-2 Weeks</option>
               <option value="2-3 Weeks">2-3 Weeks</option>
               <option value="3-4 Weeks">3-4 Weeks</option>
               <option value="4-5 Weeks">4-5 Weeks</option>
               <option value="5-6 Weeks">5-6 Weeks</option>
-              <option value="To Pay (Freight by Buyer)">To Pay (Freight by Buyer)</option>
+              <option value="Against Official Purchase Order">Against Official Purchase Order</option>
+              <option value="Door Delivery within PCMC / Pune">Door Delivery within PCMC / Pune</option>
+              <option value="To Pay Basis (Freight Extra)">To Pay Basis (Freight Extra)</option>
             </select>
           </div>
           <div class="form-group form-grid-full">
             <label>GST Terms</label>
             <select id="quoteGst" class="form-control" onchange="app.updateMeta()">
-              <option value="EXTRA" selected>EXTRA (As Applicable)</option>
-              <option value="INCLUDED">INCLUDED in Rates</option>
-              <option value="18% EXTRA">18% EXTRA</option>
-              <option value="12% EXTRA">12% EXTRA</option>
-              <option value="NIL / EXEMPTED">NIL / EXEMPTED</option>
+              <option value="EXTRA" selected>EXTRA as applicable</option>
+              <option value="INCLUDED">INCLUDED in quoted price</option>
             </select>
           </div>
         </div>
@@ -1199,7 +1356,10 @@ body {
       <div class="editor-section">
         <div class="section-heading">
           <span>👤 Buyer (TO) Details</span>
-          <button class="btn btn-success btn-sm" onclick="app.saveCurrentBuyerToDirectory()">💾 Save Client</button>
+          <div style="display: flex; gap: 4px;">
+            <button class="btn btn-outline btn-sm" onclick="app.openCustomerDbModal()" style="font-size: 10px; padding: 2px 6px;">👥 CRM Hub</button>
+            <button class="btn btn-success btn-sm" onclick="app.saveCurrentBuyerToDirectory()" style="font-size: 10px; padding: 2px 6px;">💾 Save</button>
+          </div>
         </div>
 
         <div class="buyer-directory-card">
@@ -1232,6 +1392,9 @@ body {
             <input type="text" id="clientState" class="form-control" value="Maharashtra (Code: 27)" oninput="app.updateClient()" />
           </div>
         </div>
+
+        <!-- Dynamic Past Quotations for Selected Client -->
+        <div id="clientPastQuotesBox" style="margin-top: 10px; display: none;"></div>
       </div>
 
       <!-- Inquiry Ref -->
@@ -1746,6 +1909,51 @@ body {
   </div>
 </div>
 
+<!-- MODAL: 👥 CUSTOMER DATABASE & CRM HUB -->
+<div class="modal-overlay" id="customerDbModal">
+  <div class="modal-box" style="width: 880px; max-width: 96vw;">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">👥 PASS Customer Database & Quotation CRM Hub</div>
+        <div style="font-size: 10.5px; color: #64748b; margin-top: 2px;">Select any customer/company to view all past quotations, order stats, and 1-click re-quote.</div>
+      </div>
+      <button class="btn btn-outline btn-sm" onclick="app.closeCustomerDbModal()">✕</button>
+    </div>
+    <div class="modal-body" style="gap: 8px;">
+      <!-- Search and Toolbar -->
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <input type="text" id="custDbSearchInput" class="form-control" placeholder="🔍 Search company name, GSTIN, city, contact person..." oninput="app.filterCustomerDb(this.value)" style="flex: 1;" />
+        <select id="custDbSortSelect" class="form-control" style="width: 190px;" onchange="app.filterCustomerDb(document.getElementById('custDbSearchInput').value)">
+          <option value="quotes_desc">Sort: Most Quotations</option>
+          <option value="val_desc">Sort: Highest Quoted Value</option>
+          <option value="name_asc">Sort: Company Name (A-Z)</option>
+          <option value="recent">Sort: Most Recent Quote</option>
+        </select>
+        <button class="btn btn-success btn-sm" onclick="app.addNewCustomerPrompt()">+ Add Client</button>
+      </div>
+
+      <!-- Main CRM 2-Column Layout -->
+      <div class="customer-db-layout">
+        <!-- Left: Customer List -->
+        <div class="customer-list-panel" id="custDbListContainer">
+          <!-- Populated dynamically -->
+        </div>
+
+        <!-- Right: Selected Customer Profile & Quotation Timeline -->
+        <div class="customer-detail-panel" id="custDbDetailContainer">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer" style="justify-content: space-between;">
+      <div style="font-size: 11px; color: #64748b;">
+        Total Clients: <strong id="custDbTotalCount" style="color: #0c2340;">0</strong> &nbsp;•&nbsp; Total Historical Quotes: <strong id="custDbTotalQuotesCount" style="color: #047857;">0</strong>
+      </div>
+      <button class="btn btn-outline" onclick="app.closeCustomerDbModal()">Close</button>
+    </div>
+  </div>
+</div>
+
 <script>
 var SECRET_PASSCODE = "Pawanjali@241997";
 
@@ -1967,6 +2175,7 @@ var app = {
     document.getElementById('clientState').value = b.state || "Maharashtra (Code: 27)";
     document.getElementById('clientName').value = b.name || "";
     this.renderPreview();
+    this.renderClientPastQuotes(b.company);
   },
 
   saveCurrentBuyerToDirectory: function() {
@@ -1987,6 +2196,7 @@ var app = {
     this.renderBuyersDropdown();
     var found = this.buyers.find(function(x) { return x.company === comp; });
     if (found) document.getElementById('buyerSelectDropdown').value = found.id;
+    this.renderClientPastQuotes(comp);
     alert('✓ "' + comp + '" Customer Directory me permanently save ho gaya!');
   },
 
@@ -2000,6 +2210,410 @@ var app = {
       this.saveBuyers();
       this.renderBuyersDropdown();
     }
+  },
+
+  /* ---------------- CUSTOMER DATABASE & CRM HUB ---------------- */
+  getQuotesForCompany: function(companyName) {
+    if (!companyName || typeof companyName !== 'string') return [];
+    var qClean = companyName.trim().toLowerCase();
+    if (!qClean) return [];
+
+    return (this.history || []).filter(function(h) {
+      var hComp = (h.company || (h.quoteData && h.quoteData.client && h.quoteData.client.company) || "").trim().toLowerCase();
+      if (!hComp) return false;
+      return hComp === qClean || hComp.indexOf(qClean) !== -1 || qClean.indexOf(hComp) !== -1;
+    });
+  },
+
+  renderClientPastQuotes: function(companyName) {
+    var box = document.getElementById('clientPastQuotesBox');
+    if (!box) return;
+    if (!companyName || !companyName.trim()) {
+      box.style.display = 'none';
+      box.innerHTML = '';
+      return;
+    }
+
+    var quotes = this.getQuotesForCompany(companyName);
+    if (quotes.length === 0) {
+      box.style.display = 'block';
+      box.innerHTML = '<div style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; padding: 6px 10px; font-size: 10.5px; color: #64748b; display: flex; align-items: center; justify-content: space-between;">' +
+        '<span>📜 No past quotes recorded for this client yet.</span>' +
+        '<button class="btn btn-outline btn-sm" onclick="app.openCustomerDbModal()" style="font-size: 9.5px; padding: 1px 6px;">👥 CRM</button>' +
+        '</div>';
+      return;
+    }
+
+    box.style.display = 'block';
+    var self = this;
+    var listHtml = quotes.map(function(q) {
+      var statusClass = "status-" + (q.status || "pending");
+      var statusLabel = (q.status === 'won') ? 'PO Won' : ((q.status === 'discussion') ? 'Discussion' : ((q.status === 'revised') ? 'Revised' : 'Sent'));
+      var isCurrent = (self.editingHistoryId && self.editingHistoryId === q.id) || (self.quote.meta && self.quote.meta.no === q.quoteNo);
+      return '<div class="client-quote-chip ' + (isCurrent ? 'active-current-quote' : '') + '">' +
+        '<div class="chip-main-info" style="min-width:0; flex:1;">' +
+          '<div style="display:flex; align-items:center; gap:5px; flex-wrap:wrap;">' +
+            '<strong style="color: #0c2340; font-size: 11px;">' + (q.quoteNo || 'N/A') + '</strong>' +
+            '<span class="doc-badge-micro">' + (q.docType || 'QUOTE') + '</span>' +
+            '<span class="status-badge ' + statusClass + '" style="font-size: 8px; padding: 1px 4px;">' + statusLabel + '</span>' +
+            (isCurrent ? '<span style="font-size: 8.5px; font-weight: 800; color: #047857;">(Active)</span>' : '') +
+          '</div>' +
+          '<div style="font-size: 9.5px; color: #64748b; margin-top: 2px;">' +
+            '📅 ' + (q.date || '-') + ' &nbsp;•&nbsp; 📦 ' + (q.itemsCount || 0) + ' items &nbsp;•&nbsp; <strong style="color: #047857;">₹' + Number(q.total || 0).toLocaleString('en-IN', {minimumFractionDigits: 2}) + '</strong>' +
+          '</div>' +
+        '</div>' +
+        '<div class="chip-actions" style="display:flex; gap:3px; flex-shrink:0;">' +
+          (!isCurrent ? '<button class="btn btn-outline btn-sm" onclick="app.loadQuoteFromHistory(\'' + q.id + '\')" title="Load this quote into editor" style="font-size: 9.5px; padding: 2px 6px; background: #ffffff;">📂 Load</button>' : '') +
+          '<button class="btn btn-outline btn-sm" onclick="app.duplicateQuoteFromHistory(\'' + q.id + '\')" title="Clone & Re-quote for repeat order" style="font-size: 9.5px; padding: 2px 6px; color: #1e3a8a; border-color: #93c5fd; background: #f0fdf4;">⚡ Re-Quote</button>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+
+    box.innerHTML = '<div class="client-past-quotes-card">' +
+      '<div class="client-past-quotes-head">' +
+        '<div style="display:flex; align-items:center; gap:5px;">' +
+          '<span style="font-size: 11px; font-weight: 800; color: #0c2340;">📜 Past Quotations (' + quotes.length + '):</span>' +
+        '</div>' +
+        '<button class="btn btn-outline btn-sm" onclick="app.openCustomerDbModal()" style="font-size: 9.5px; padding: 2px 6px; background: #ffffff; color: #1e3a8a; border-color: #3b82f6;">👥 Open CRM Hub</button>' +
+      '</div>' +
+      '<div class="client-quotes-list">' + listHtml + '</div>' +
+    '</div>';
+  },
+
+  getAllCustomers: function() {
+    var map = {};
+    var self = this;
+
+    // 1. Add from saved directory
+    (this.buyers || []).forEach(function(b) {
+      if (!b || !b.company) return;
+      var key = b.company.trim().toLowerCase();
+      map[key] = {
+        id: b.id,
+        company: b.company.trim(),
+        address: b.address || "",
+        gst: b.gst || "",
+        state: b.state || "Maharashtra (Code: 27)",
+        name: b.name || "",
+        quotes: []
+      };
+    });
+
+    // 2. Add / augment from history records
+    (this.history || []).forEach(function(h) {
+      var compName = (h.company || (h.quoteData && h.quoteData.client && h.quoteData.client.company) || "").trim();
+      if (!compName) return;
+      var key = compName.toLowerCase();
+      if (!map[key]) {
+        var clientData = (h.quoteData && h.quoteData.client) ? h.quoteData.client : {};
+        map[key] = {
+          id: "hist_cust_" + key.replace(/[^a-z0-9]/g, '_'),
+          company: compName,
+          address: clientData.address || "",
+          gst: clientData.gst || "",
+          state: clientData.state || "Maharashtra (Code: 27)",
+          name: clientData.name || "",
+          quotes: []
+        };
+      }
+      map[key].quotes.push(h);
+    });
+
+    var result = Object.keys(map).map(function(k) {
+      var c = map[k];
+      var totalVal = 0;
+      var wonVal = 0;
+      var latestDate = "";
+      var latestNo = "";
+
+      c.quotes.forEach(function(q) {
+        var amt = Number(q.total || 0);
+        totalVal += amt;
+        if (q.status === 'won') wonVal += amt;
+      });
+
+      if (c.quotes.length > 0) {
+        latestDate = c.quotes[0].date || "";
+        latestNo = c.quotes[0].quoteNo || "";
+      }
+
+      return {
+        id: c.id,
+        company: c.company,
+        address: c.address,
+        gst: c.gst,
+        state: c.state,
+        name: c.name,
+        quotes: c.quotes,
+        totalQuotes: c.quotes.length,
+        totalValue: totalVal,
+        wonValue: wonVal,
+        lastQuoteDate: latestDate,
+        lastQuoteNo: latestNo
+      };
+    });
+
+    return result;
+  },
+
+  selectedCustDbId: null,
+
+  openCustomerDbModal: function() {
+    var searchInput = document.getElementById('custDbSearchInput');
+    if (searchInput) searchInput.value = "";
+    
+    // Auto-select current active client if possible
+    var currentComp = (this.quote && this.quote.client && this.quote.client.company) ? this.quote.client.company.trim().toLowerCase() : "";
+    var all = this.getAllCustomers();
+    if (currentComp) {
+      var found = all.find(function(c) { return c.company.toLowerCase() === currentComp || c.company.toLowerCase().indexOf(currentComp) !== -1; });
+      if (found) this.selectedCustDbId = found.id;
+      else if (all.length > 0) this.selectedCustDbId = all[0].id;
+    } else if (all.length > 0 && !this.selectedCustDbId) {
+      this.selectedCustDbId = all[0].id;
+    }
+
+    this.filterCustomerDb("");
+    document.getElementById('customerDbModal').classList.add('active');
+  },
+
+  closeCustomerDbModal: function() {
+    document.getElementById('customerDbModal').classList.remove('active');
+  },
+
+  filterCustomerDb: function(query) {
+    var q = (query || "").trim().toLowerCase();
+    var sortMode = document.getElementById('custDbSortSelect') ? document.getElementById('custDbSortSelect').value : "quotes_desc";
+    var customers = this.getAllCustomers();
+
+    if (q) {
+      customers = customers.filter(function(c) {
+        return c.company.toLowerCase().indexOf(q) !== -1 ||
+          c.gst.toLowerCase().indexOf(q) !== -1 ||
+          c.address.toLowerCase().indexOf(q) !== -1 ||
+          c.name.toLowerCase().indexOf(q) !== -1 ||
+          c.state.toLowerCase().indexOf(q) !== -1;
+      });
+    }
+
+    // Sort
+    if (sortMode === 'quotes_desc') {
+      customers.sort(function(a, b) { return b.totalQuotes - a.totalQuotes || b.totalValue - a.totalValue; });
+    } else if (sortMode === 'val_desc') {
+      customers.sort(function(a, b) { return b.totalValue - a.totalValue; });
+    } else if (sortMode === 'name_asc') {
+      customers.sort(function(a, b) { return a.company.localeCompare(b.company); });
+    } else if (sortMode === 'recent') {
+      customers.sort(function(a, b) { return (b.quotes[0] ? b.quotes[0].savedAt || "" : "").localeCompare(a.quotes[0] ? a.quotes[0].savedAt || "" : ""); });
+    }
+
+    var totalCustomersCountElem = document.getElementById('custDbTotalCount');
+    if (totalCustomersCountElem) totalCustomersCountElem.innerText = String(customers.length);
+    var totalQuotesCountElem = document.getElementById('custDbTotalQuotesCount');
+    if (totalQuotesCountElem) totalQuotesCountElem.innerText = String(this.history.length);
+
+    var self = this;
+    if (customers.length > 0) {
+      if (!this.selectedCustDbId || !customers.find(function(c){ return c.id === self.selectedCustDbId; })) {
+        this.selectedCustDbId = customers[0].id;
+      }
+    } else {
+      this.selectedCustDbId = null;
+    }
+
+    var listContainer = document.getElementById('custDbListContainer');
+    if (customers.length === 0) {
+      listContainer.innerHTML = '<div style="padding:20px 10px; text-align:center; color:#64748b; font-size:11.5px;">No matching customers found. Click "+ Add Client" to create one.</div>';
+      document.getElementById('custDbDetailContainer').innerHTML = '<div style="padding:30px; text-align:center; color:#94a3b8; font-size:12px;">No customer selected.</div>';
+      return;
+    }
+
+    listContainer.innerHTML = customers.map(function(c) {
+      var isSel = (c.id === self.selectedCustDbId);
+      return '<div class="customer-card-item ' + (isSel ? 'active' : '') + '" onclick="app.selectCustomerInDb(\'' + c.id + '\')">' +
+        '<div class="customer-card-title">' + c.company + '</div>' +
+        '<div class="customer-card-meta">' +
+          '<span>' + (c.name ? '👤 ' + c.name : '📍 ' + (c.address || c.state)) + '</span>' +
+          (c.gst ? '<span>GSTIN: ' + c.gst + '</span>' : '') +
+        '</div>' +
+        '<div class="customer-card-badges">' +
+          '<span class="badge-pill-micro">' + c.totalQuotes + ' Quotes</span>' +
+          '<span class="badge-pill-micro badge-pill-green">₹' + Number(c.totalValue || 0).toLocaleString('en-IN', {maximumFractionDigits: 0}) + '</span>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+
+    this.renderCustomerDbDetail(customers);
+  },
+
+  selectCustomerInDb: function(customerId) {
+    this.selectedCustDbId = customerId;
+    this.filterCustomerDb(document.getElementById('custDbSearchInput') ? document.getElementById('custDbSearchInput').value : "");
+  },
+
+  renderCustomerDbDetail: function(customerList) {
+    var container = document.getElementById('custDbDetailContainer');
+    if (!container) return;
+    var self = this;
+    var cust = (customerList || this.getAllCustomers()).find(function(c) { return c.id === self.selectedCustDbId; });
+
+    if (!cust) {
+      container.innerHTML = '<div style="padding:30px; text-align:center; color:#94a3b8; font-size:12px;">Select a customer from the left list to view details & quotations.</div>';
+      return;
+    }
+
+    var timelineHtml = "";
+    if (cust.quotes.length === 0) {
+      timelineHtml = '<div style="padding: 20px; text-align:center; background:#f8fafc; border-radius:8px; border:1px dashed #cbd5e1; color:#64748b; font-size:11.5px;">' +
+        'No quotation history found for <strong>' + cust.company + '</strong> yet.<br>' +
+        '<button class="btn btn-primary btn-sm" onclick="app.startNewQuoteForCustomer(\'' + cust.id + '\')" style="margin-top:10px;">⚡ Create First Quotation</button>' +
+        '</div>';
+    } else {
+      timelineHtml = cust.quotes.map(function(q) {
+        var statusClass = "status-" + (q.status || "pending");
+        var statusLabel = (q.status === 'won') ? 'PO Won' : ((q.status === 'discussion') ? 'Discussion' : ((q.status === 'revised') ? 'Revised' : 'Sent'));
+        var isCurrent = (self.editingHistoryId && self.editingHistoryId === q.id) || (self.quote.meta && self.quote.meta.no === q.quoteNo);
+
+        var itemsSnippet = "";
+        if (q.quoteData && Array.isArray(q.quoteData.items)) {
+          itemsSnippet = q.quoteData.items.slice(0, 3).map(function(it){ return it.brand + ' ' + (it.specs || '').split('\n')[0]; }).join(', ');
+          if (q.quoteData.items.length > 3) itemsSnippet += ' (+' + (q.quoteData.items.length - 3) + ' more)';
+        }
+
+        return '<div class="history-item" style="padding:8px 10px; background:' + (isCurrent ? '#f0fdf4;' : '#ffffff;') + '">' +
+          '<div class="history-main-info">' +
+            '<div style="display:flex; align-items:center; gap:6px;">' +
+              '<span class="history-quote-no">' + q.quoteNo + '</span>' +
+              '<span class="doc-badge-micro">' + (q.docType || 'QUOTATION') + '</span>' +
+              '<span class="status-badge ' + statusClass + '">' + statusLabel + '</span>' +
+              (isCurrent ? '<span style="font-size:9.5px; font-weight:800; color:#047857;">(Currently Active)</span>' : '') +
+            '</div>' +
+            '<div class="history-date">📅 ' + (q.date || '-') + ' &nbsp;•&nbsp; 📦 ' + (q.itemsCount || 0) + ' items ' + (itemsSnippet ? ' &nbsp;•&nbsp; <em>' + itemsSnippet + '</em>' : '') + '</div>' +
+            '<div class="history-amount">₹' + Number(q.total || 0).toLocaleString('en-IN', {minimumFractionDigits: 2}) + '</div>' +
+          '</div>' +
+          '<div class="history-actions">' +
+            (!isCurrent ? '<button class="btn btn-primary btn-sm" onclick="app.loadQuoteFromHistory(\'' + q.id + '\'); app.closeCustomerDbModal();" title="Load into Editor">📂 Load</button>' : '') +
+            '<button class="btn btn-outline btn-sm" onclick="app.duplicateQuoteFromHistory(\'' + q.id + '\'); app.closeCustomerDbModal();" title="Clone as new quote" style="color: #1e3a8a; border-color:#93c5fd; background:#eff6ff;">⚡ Re-Quote</button>' +
+            '<button class="btn btn-outline btn-sm" onclick="app.deleteQuoteFromHistory(\'' + q.id + '\')" title="Delete record" style="color:#ef4444;">🗑️</button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    container.innerHTML = '<div class="customer-profile-banner">' +
+      '<div style="flex:1;">' +
+        '<div class="customer-profile-name">' + cust.company + '</div>' +
+        '<div class="customer-profile-info">' +
+          '📍 <strong>Address:</strong> ' + (cust.address || 'Not specified') + '<br>' +
+          '🏛️ <strong>GSTIN:</strong> ' + (cust.gst || 'Unregistered / N/A') + ' &nbsp;|&nbsp; 🌐 <strong>State:</strong> ' + (cust.state || 'Maharashtra (Code: 27)') + '<br>' +
+          '👤 <strong>Contact:</strong> ' + (cust.name || 'N/A') +
+        '</div>' +
+      '</div>' +
+      '<div style="display:flex; flex-direction:column; gap:5px; align-items:flex-end; flex-shrink:0;">' +
+        '<button class="btn btn-success btn-sm" onclick="app.startNewQuoteForCustomer(\'' + cust.id + '\')">⚡ + New Quote for Client</button>' +
+        '<button class="btn btn-outline btn-sm" onclick="app.editCustomerPrompt(\'' + cust.id + '\')" style="font-size:10px; padding:2px 6px;">✏️ Edit Profile</button>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="analytics-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 4px;">' +
+      '<div class="metric-card" style="padding:8px 10px;">' +
+        '<div class="metric-lbl" style="font-size:9.5px;">Total Quotations</div>' +
+        '<div class="metric-val" style="font-size:16px;">' + cust.totalQuotes + '</div>' +
+      '</div>' +
+      '<div class="metric-card" style="padding:8px 10px;">' +
+        '<div class="metric-lbl" style="font-size:9.5px;">Total Quoted Value</div>' +
+        '<div class="metric-val" style="font-size:16px;">₹' + Number(cust.totalValue || 0).toLocaleString('en-IN', {maximumFractionDigits: 0}) + '</div>' +
+      '</div>' +
+      '<div class="metric-card highlight" style="padding:8px 10px;">' +
+        '<div class="metric-lbl" style="font-size:9.5px;">PO Won Value</div>' +
+        '<div class="metric-val green" style="font-size:16px;">₹' + Number(cust.wonValue || 0).toLocaleString('en-IN', {maximumFractionDigits: 0}) + '</div>' +
+      '</div>' +
+    '</div>' +
+
+    '<div style="font-size:11.5px; font-weight:800; color:#0c2340; display:flex; align-items:center; justify-content:space-between; margin-top:2px;">' +
+      '<span>📜 Quotation Order History (' + cust.quotes.length + '):</span>' +
+    '</div>' +
+
+    '<div style="display:flex; flex-direction:column; gap:6px; max-height:260px; overflow-y:auto;">' +
+      timelineHtml +
+    '</div>';
+  },
+
+  startNewQuoteForCustomer: function(customerId) {
+    var cust = this.getAllCustomers().find(function(c) { return c.id === customerId; });
+    if (!cust) return;
+
+    this.createNewQuote();
+    this.quote.client = {
+      company: cust.company,
+      address: cust.address,
+      gst: cust.gst,
+      state: cust.state || "Maharashtra (Code: 27)",
+      name: cust.name
+    };
+    this.populateInputs();
+    this.renderPreview();
+    this.renderClientPastQuotes(cust.company);
+    this.closeCustomerDbModal();
+    alert('✓ Fresh quotation started for "' + cust.company + '"!');
+  },
+
+  addNewCustomerPrompt: function() {
+    var comp = prompt("Enter Customer / Company Name (e.g. M/s. Mahindra & Mahindra Ltd):");
+    if (!comp || !comp.trim()) return;
+    comp = comp.trim();
+    var addr = prompt("Enter Billing Address (e.g. Chakan MIDC, Pune):", "") || "";
+    var gst = prompt("Enter GSTIN Number (e.g. 27AAACA0000A1Z5):", "") || "";
+    var name = prompt("Enter Contact Person / Kind Attn (e.g. Mr. Sharma - Purchase):", "") || "";
+
+    var newCust = {
+      id: "buyer_" + Date.now(),
+      company: comp,
+      address: addr.trim(),
+      gst: gst.trim(),
+      state: "Maharashtra (Code: 27)",
+      name: name.trim()
+    };
+
+    this.buyers.unshift(newCust);
+    this.saveBuyers();
+    this.renderBuyersDropdown();
+    this.selectedCustDbId = newCust.id;
+    this.filterCustomerDb("");
+    alert('✓ "' + comp + '" successfully added to Customer Database!');
+  },
+
+  editCustomerPrompt: function(customerId) {
+    var cust = this.buyers.find(function(b) { return b.id === customerId; });
+    if (!cust) {
+      var fullCust = this.getAllCustomers().find(function(c){ return c.id === customerId; });
+      if (!fullCust) return;
+      cust = {
+        id: "buyer_" + Date.now(),
+        company: fullCust.company,
+        address: fullCust.address,
+        gst: fullCust.gst,
+        state: fullCust.state,
+        name: fullCust.name
+      };
+      this.buyers.push(cust);
+    }
+
+    var newComp = prompt("Edit Company Name:", cust.company);
+    if (!newComp || !newComp.trim()) return;
+    var newAddr = prompt("Edit Billing Address:", cust.address || "") || "";
+    var newGst = prompt("Edit GSTIN:", cust.gst || "") || "";
+    var newName = prompt("Edit Contact Person:", cust.name || "") || "";
+
+    cust.company = newComp.trim();
+    cust.address = newAddr.trim();
+    cust.gst = newGst.trim();
+    cust.name = newName.trim();
+
+    this.saveBuyers();
+    this.renderBuyersDropdown();
+    this.filterCustomerDb(document.getElementById('custDbSearchInput') ? document.getElementById('custDbSearchInput').value : "");
+    alert('✓ Customer profile updated!');
   },
 
   /* ---------------- MASTER PRODUCTS CATALOG ---------------- */
@@ -2381,6 +2995,7 @@ var app = {
     this.setDocType("QUOTATION");
     this.renderStatusBadge();
     this.renderAll();
+    this.renderClientPastQuotes(this.quote.client.company);
   },
 
   createNewQuote: function() {
@@ -2402,6 +3017,7 @@ var app = {
     this.setDocType("QUOTATION");
     this.renderStatusBadge();
     this.renderAll();
+    this.renderClientPastQuotes("");
   },
 
   populateInputs: function() {
@@ -2448,6 +3064,7 @@ var app = {
     this.quote.client.state = document.getElementById('clientState').value;
     this.quote.client.name = document.getElementById('clientName').value;
     this.renderPreview();
+    this.renderClientPastQuotes(this.quote.client.company);
   },
 
   updateInquiry: function() {
@@ -2668,6 +3285,7 @@ var app = {
 
     this.editingHistoryId = record.id;
     this.saveHistory();
+    this.renderClientPastQuotes(comp);
     if (!silent) {
       alert('✓ ' + this.quote.docType + ' "' + qNo + '" (' + comp + ') successfully saved to Record History!');
     }
@@ -2685,6 +3303,7 @@ var app = {
     }
     this.saveHistory();
     this.filterHistory(document.getElementById('historySearchInput') ? document.getElementById('historySearchInput').value : "");
+    if (this.quote && this.quote.client) this.renderClientPastQuotes(this.quote.client.company);
   },
 
   openHistoryModal: function() {
@@ -2752,6 +3371,7 @@ var app = {
     this.setDocType(this.quote.docType || "QUOTATION");
     this.renderStatusBadge();
     this.renderAll();
+    this.renderClientPastQuotes(this.quote.client.company);
     this.closeHistoryModal();
   },
 
