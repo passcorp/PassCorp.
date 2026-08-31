@@ -1479,6 +1479,48 @@ body {
         </div>
       </div>
 
+      <!-- Admin Internal Costing & Profit Margin Estimator -->
+      <div class="editor-section" id="adminMarginSection" style="background: #f8fafc; border: 1.5px solid #cbd5e1;">
+        <div class="section-heading" style="margin-bottom: 6px;">
+          <span style="display:flex; align-items:center; gap:5px; color:#0c2340; font-weight:800; font-size: 11.5px;">
+            <span>💰 Internal Margin & Profit (Admin)</span>
+          </span>
+          <button class="btn btn-outline btn-sm" id="btnToggleMargin" onclick="app.toggleMarginVisibility()" style="font-size:10px; padding:2px 6px; background:#ffffff;">👁️ Hide</button>
+        </div>
+
+        <div id="marginMetricsBox" style="display: flex; flex-direction: column; gap: 6px;">
+          <!-- Metrics Grid -->
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px;">
+            <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:6px 8px;">
+              <div style="font-size:9px; color:#64748b; font-weight:700; text-transform:uppercase;">Quoted Revenue</div>
+              <div id="marginQuotedRevenue" style="font-size:13.5px; font-weight:900; color:#0c2340;">₹0.00</div>
+            </div>
+            <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:6px 8px;">
+              <div style="font-size:9px; color:#64748b; font-weight:700; text-transform:uppercase;">Total Buy Cost</div>
+              <div id="marginTotalCost" style="font-size:13.5px; font-weight:900; color:#475569;">₹0.00</div>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+            <div id="marginProfitCard" style="background:#f0fdf4; border:1px solid #86efac; border-radius:6px; padding:6px 8px;">
+              <div style="font-size:9px; color:#166534; font-weight:700; text-transform:uppercase;">Gross Profit (₹)</div>
+              <div id="marginNetProfit" style="font-size:14.5px; font-weight:900; color:#15803d;">₹0.00</div>
+            </div>
+            <div id="marginPercentCard" style="background:#f0fdf4; border:1px solid #86efac; border-radius:6px; padding:6px 8px; display:flex; flex-direction:column; justify-content:center;">
+              <div style="font-size:9px; color:#166534; font-weight:700; text-transform:uppercase;">Gross Margin %</div>
+              <div style="display:flex; align-items:center; gap:5px;">
+                <span id="marginPercentText" style="font-size:14.5px; font-weight:900; color:#15803d;">0.0%</span>
+                <span id="marginHealthPill" class="badge-pill-micro badge-pill-green">Healthy</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="font-size: 9.5px; color: #64748b; display:flex; justify-content:space-between; align-items:center; margin-top:2px;">
+            <span>🔒 <em>Admin view only — Never printed on PDF</em></span>
+          </div>
+        </div>
+      </div>
+
       <!-- Digital Signature & Stamp -->
       <div class="editor-section">
         <div class="section-heading">
@@ -3067,7 +3109,8 @@ var app = {
   addItemFromCatalog: function(id) {
     var p = this.catalog.find(function(x) { return x.id === id; });
     if (!p) return;
-    this.quote.items.push({ leadTime: p.leadTime || "1-2 Days", image: p.image || "https://passcorp.in/assets/logo.png", title: p.name, specs: p.specs, brand: p.brand, brandLogo: p.brandLogo || "", hsn: p.hsn, unit: p.unit || "Nos.", qty: 1, price: parseFloat(p.price || 0), gst: parseFloat(p.gst || 18) });
+    var costP = (p.costPrice !== undefined && p.costPrice !== null && !isNaN(p.costPrice)) ? parseFloat(p.costPrice) : (parseFloat(p.price || 0) * 0.75);
+    this.quote.items.push({ leadTime: p.leadTime || "1-2 Days", image: p.image || "https://passcorp.in/assets/logo.png", title: p.name, specs: p.specs, brand: p.brand, brandLogo: p.brandLogo || "", hsn: p.hsn, unit: p.unit || "Nos.", qty: 1, price: parseFloat(p.price || 0), costPrice: costP, gst: parseFloat(p.gst || 18) });
     this.renderAll();
   },
 
@@ -3354,8 +3397,8 @@ var app = {
     this.quote.pricing = { discType: "none", discVal: 0, freight: 0, pkg: 0 };
     this.quote.signMode = "stamp";
     this.quote.items = [
-      { leadTime: "1-2 Days", image: "https://passcorp.in/assets/products/head/ultravent_7000.png", title: "Safety Helmet", specs: "Safety Helmet\nUdyogi Ultravent 7000\nISI Certified, Ratchet, Yellow", brand: "UDYOGI", brandLogo: "https://passcorp.in/assets/brands/udyogi.png", hsn: "6506", unit: "Nos.", price: 245.00, gst: 18 },
-      { leadTime: "1-2 Days", image: "https://passcorp.in/assets/products/head/karam_pn521.png", title: "Safety Helmet", specs: "Safety Helmet\nKaram PN 501\nISI Certified, Manual, Yellow", brand: "KARAM", brandLogo: "https://passcorp.in/assets/brands/karam.png", hsn: "6506", unit: "Nos.", price: 190.00, gst: 18 }
+      { leadTime: "1-2 Days", image: "https://passcorp.in/assets/products/head/ultravent_7000.png", title: "Safety Helmet", specs: "Safety Helmet\nUdyogi Ultravent 7000\nISI Certified, Ratchet, Yellow", brand: "UDYOGI", brandLogo: "https://passcorp.in/assets/brands/udyogi.png", hsn: "6506", unit: "Nos.", price: 245.00, costPrice: 180.00, gst: 18 },
+      { leadTime: "1-2 Days", image: "https://passcorp.in/assets/products/head/karam_pn521.png", title: "Safety Helmet", specs: "Safety Helmet\nKaram PN 501\nISI Certified, Manual, Yellow", brand: "KARAM", brandLogo: "https://passcorp.in/assets/brands/karam.png", hsn: "6506", unit: "Nos.", price: 190.00, costPrice: 140.00, gst: 18 }
     ];
     this.populateInputs();
     this.setDocType("QUOTATION");
@@ -3467,7 +3510,7 @@ var app = {
   },
 
   addCustomItem: function() {
-    this.quote.items.push({ leadTime: "1-2 Days", image: "https://passcorp.in/assets/logo.png", title: "Safety Equipment", specs: "Safety Equipment\nSpecification / Model Details", brand: "PASS", brandLogo: "", hsn: "6506", unit: "Nos.", qty: 1, price: 100.00, gst: 18 });
+    this.quote.items.push({ leadTime: "1-2 Days", image: "https://passcorp.in/assets/logo.png", title: "Safety Equipment", specs: "Safety Equipment\nSpecification / Model Details", brand: "PASS", brandLogo: "", hsn: "6506", unit: "Nos.", qty: 1, price: 100.00, costPrice: 75.00, gst: 18 });
     this.renderAll();
   },
 
@@ -3477,10 +3520,23 @@ var app = {
   },
 
   updateItemProp: function(idx, field, value) {
-    if (field === 'qty' || field === 'price' || field === 'gst') {
+    if (field === 'qty' || field === 'price' || field === 'gst' || field === 'costPrice') {
       this.quote.items[idx][field] = parseFloat(value) || 0;
     } else {
       this.quote.items[idx][field] = value;
+    }
+    // Update live profit pill in item header if price/costPrice/qty changed
+    if (field === 'qty' || field === 'price' || field === 'costPrice') {
+      var it = this.quote.items[idx];
+      var cp = (it.costPrice !== undefined && it.costPrice !== null && !isNaN(it.costPrice)) ? parseFloat(it.costPrice) : (it.price ? Math.round(it.price * 0.75 * 100) / 100 : 0);
+      var profitPerUnit = (it.price || 0) - cp;
+      var profitPct = it.price > 0 ? ((profitPerUnit / it.price) * 100).toFixed(1) : "0.0";
+      var profitTotal = profitPerUnit * (it.qty || 1);
+      var badgeElem = document.getElementById('itemProfitBadge_' + idx);
+      if (badgeElem) {
+        badgeElem.innerText = 'Profit: ₹' + profitTotal.toFixed(0) + ' (' + profitPct + '%)';
+        badgeElem.className = 'badge-pill-micro ' + (profitPerUnit >= 0 ? 'badge-pill-green' : 'badge-pill-red');
+      }
     }
     this.renderPreview();
   },
@@ -3501,9 +3557,18 @@ var app = {
     }
 
     container.innerHTML = this.quote.items.map(function(item, idx) {
+      var costP = (item.costPrice !== undefined && item.costPrice !== null && !isNaN(item.costPrice)) ? parseFloat(item.costPrice) : (item.price ? Math.round(item.price * 0.75 * 100) / 100 : 0);
+      var profitPerUnit = (item.price || 0) - costP;
+      var profitPct = (item.price || 0) > 0 ? ((profitPerUnit / item.price) * 100).toFixed(1) : "0.0";
+      var profitTotal = profitPerUnit * (item.qty || 1);
+      var profitPillClass = profitPerUnit >= 0 ? 'badge-pill-green' : 'badge-pill-red';
+
       return '<div class="item-edit-card">' +
         '<div class="item-edit-card-header">' +
-          '<span class="item-badge">Item #' + (idx + 1) + ' — ' + (item.brand || 'PASS') + '</span>' +
+          '<div style="display:flex; align-items:center; gap:6px;">' +
+            '<span class="item-badge">Item #' + (idx + 1) + ' — ' + (item.brand || 'PASS') + '</span>' +
+            '<span id="itemProfitBadge_' + idx + '" class="badge-pill-micro ' + profitPillClass + '" style="font-size:9px;" title="Estimated internal profit for this item">Profit: ₹' + profitTotal.toFixed(0) + ' (' + profitPct + '%)</span>' +
+          '</div>' +
           '<button class="btn-remove-item" onclick="app.removeItem(' + idx + ')" title="Remove Item">✕</button>' +
         '</div>' +
         '<div class="form-grid">' +
@@ -3511,13 +3576,109 @@ var app = {
           '<div class="form-group"><label>Brand Name</label><input type="text" class="form-control" value="' + (item.brand || '') + '" oninput="app.updateItemProp(' + idx + ', \'brand\', this.value)" /></div>' +
           '<div class="form-group"><label>Lead Time</label><input type="text" class="form-control" value="' + (item.leadTime || '1-2 Days') + '" oninput="app.updateItemProp(' + idx + ', \'leadTime\', this.value)" /></div>' +
           '<div class="form-group"><label>Qty</label><input type="number" class="form-control" value="' + item.qty + '" oninput="app.updateItemProp(' + idx + ', \'qty\', this.value)" /></div>' +
-          '<div class="form-group"><label>Rate / Price (₹)</label><input type="number" step="0.01" class="form-control" value="' + item.price + '" oninput="app.updateItemProp(' + idx + ', \'price\', this.value)" /></div>' +
+          '<div class="form-group"><label>Selling Rate (₹)</label><input type="number" step="0.01" class="form-control" value="' + item.price + '" oninput="app.updateItemProp(' + idx + ', \'price\', this.value)" /></div>' +
+          '<div class="form-group"><label>Buy / Dealer Cost (₹)</label><input type="number" step="0.01" class="form-control" value="' + costP + '" oninput="app.updateItemProp(' + idx + ', \'costPrice\', this.value)" style="border-color:#94a3b8; background:#f8fafc;" title="Internal Dealer Buy Cost" /></div>' +
           '<div class="form-group"><label>GST %</label><input type="number" class="form-control" value="' + item.gst + '" oninput="app.updateItemProp(' + idx + ', \'gst\', this.value)" /></div>' +
           '<div class="form-group"><label>HSN</label><input type="text" class="form-control" value="' + (item.hsn || '') + '" oninput="app.updateItemProp(' + idx + ', \'hsn\', this.value)" /></div>' +
           '<div class="form-group form-grid-full"><label>Unit</label><input type="text" class="form-control" value="' + (item.unit || 'Nos.') + '" oninput="app.updateItemProp(' + idx + ', \'unit\', this.value)" /></div>' +
         '</div>' +
       '</div>';
     }).join('');
+  },
+
+  /* ---------------- INTERNAL MARGIN & PROFIT ESTIMATOR ---------------- */
+  marginVisible: true,
+
+  toggleMarginVisibility: function() {
+    this.marginVisible = !this.marginVisible;
+    var box = document.getElementById('marginMetricsBox');
+    var btn = document.getElementById('btnToggleMargin');
+    if (!box || !btn) return;
+    if (this.marginVisible) {
+      box.style.display = 'flex';
+      btn.innerText = "👁️ Hide";
+    } else {
+      box.style.display = 'none';
+      btn.innerText = "👁️ Show";
+    }
+  },
+
+  calculateQuotationMargin: function() {
+    var totalRevenue = 0;
+    var totalCost = 0;
+
+    (this.quote.items || []).forEach(function(item) {
+      var qty = parseFloat(item.qty) || 0;
+      var price = parseFloat(item.price) || 0;
+      var cost = (item.costPrice !== undefined && item.costPrice !== null && !isNaN(item.costPrice)) ? parseFloat(item.costPrice) : (price * 0.75);
+      
+      totalRevenue += qty * price;
+      totalCost += qty * cost;
+    });
+
+    var p = this.quote.pricing || { discType: "none", discVal: 0, freight: 0, pkg: 0 };
+    var discountAmt = 0;
+    if (p.discType === 'percent' && p.discVal > 0) {
+      discountAmt = (totalRevenue * p.discVal) / 100;
+    } else if (p.discType === 'flat' && p.discVal > 0) {
+      discountAmt = p.discVal;
+    }
+    discountAmt = Math.min(discountAmt, totalRevenue);
+
+    var netRevenue = Math.max(0, totalRevenue - discountAmt);
+    var grossProfit = netRevenue - totalCost;
+    var marginPercent = netRevenue > 0 ? ((grossProfit / netRevenue) * 100) : 0;
+
+    return {
+      revenue: netRevenue,
+      cost: totalCost,
+      profit: grossProfit,
+      marginPercent: marginPercent
+    };
+  },
+
+  renderMarginDashboard: function() {
+    var res = this.calculateQuotationMargin();
+    var revElem = document.getElementById('marginQuotedRevenue');
+    var costElem = document.getElementById('marginTotalCost');
+    var profitElem = document.getElementById('marginNetProfit');
+    var pctElem = document.getElementById('marginPercentText');
+    var pillElem = document.getElementById('marginHealthPill');
+    var profitCard = document.getElementById('marginProfitCard');
+    var percentCard = document.getElementById('marginPercentCard');
+
+    if (revElem) revElem.innerText = '₹' + res.revenue.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (costElem) costElem.innerText = '₹' + res.cost.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (profitElem) {
+      profitElem.innerText = (res.profit >= 0 ? '+' : '') + '₹' + res.profit.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      profitElem.style.color = res.profit >= 0 ? '#15803d' : '#b91c1c';
+    }
+    if (pctElem) {
+      pctElem.innerText = res.marginPercent.toFixed(1) + '%';
+      pctElem.style.color = res.marginPercent >= 20 ? '#15803d' : (res.marginPercent >= 10 ? '#b45309' : '#b91c1c');
+    }
+    if (pillElem) {
+      if (res.marginPercent >= 20) {
+        pillElem.innerText = "Healthy (20%+)";
+        pillElem.className = "badge-pill-micro badge-pill-green";
+        if (profitCard) { profitCard.style.background = '#f0fdf4'; profitCard.style.borderColor = '#86efac'; }
+        if (percentCard) { percentCard.style.background = '#f0fdf4'; percentCard.style.borderColor = '#86efac'; }
+      } else if (res.marginPercent >= 10) {
+        pillElem.innerText = "Moderate (10-20%)";
+        pillElem.className = "badge-pill-micro";
+        pillElem.style.background = '#fef3c7';
+        pillElem.style.color = '#92400e';
+        if (profitCard) { profitCard.style.background = '#fffbeb'; profitCard.style.borderColor = '#fde68a'; }
+        if (percentCard) { percentCard.style.background = '#fffbeb'; percentCard.style.borderColor = '#fde68a'; }
+      } else {
+        pillElem.innerText = res.profit < 0 ? "Loss Alert" : "Low Margin (<10%)";
+        pillElem.className = "badge-pill-micro";
+        pillElem.style.background = '#fee2e2';
+        pillElem.style.color = '#991b1b';
+        if (profitCard) { profitCard.style.background = '#fff1f2'; profitCard.style.borderColor = '#fecdd3'; }
+        if (percentCard) { percentCard.style.background = '#fff1f2'; percentCard.style.borderColor = '#fecdd3'; }
+      }
+    }
   },
 
   renderPreview: function() {
@@ -3600,6 +3761,7 @@ var app = {
 
     document.getElementById('viewAmountWords').innerText = numberToIndianWords(grandTotal);
     this.renderSignatoryStamp();
+    this.renderMarginDashboard();
   },
 
   /* ---------------- HISTORY & ARCHIVES ---------------- */
@@ -3968,6 +4130,7 @@ var app = {
         specs: name + "\nISI / EN Certified Standard Quality",
         qty: qty,
         price: price,
+        costPrice: matchedCatalog && matchedCatalog.costPrice ? matchedCatalog.costPrice : (price ? Math.round(price * 0.75 * 100) / 100 : 0),
         brand: brand,
         brandLogo: brandLogo,
         unit: unit,
