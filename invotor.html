@@ -917,16 +917,16 @@ body {
               <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
                 <div class="form-group" style="grid-column: span 2;">
                   <label>Company Name * (Auto-Saved)</label>
-                  <input type="text" id="billCustomerName" list="savedBuyersList" class="form-control" placeholder="e.g. M/s. ABC Industries Pvt. Ltd." oninput="erp.handleBuyerInputChange()" />
+                  <input type="text" id="billCustomerName" list="savedBuyersList" class="form-control" placeholder="Search or Enter Buyer / Company Name" oninput="erp.handleBuyerInputChange()" />
                   <datalist id="savedBuyersList"></datalist>
                 </div>
                 <div class="form-group" style="grid-column: span 2;">
                   <label>Buyer Name (Contact Person / Rep)</label>
-                  <input type="text" id="billCustomerPerson" class="form-control" placeholder="e.g. Mr. Rajesh Sharma" oninput="erp.handleBuyerFieldChange()" />
+                  <input type="text" id="billCustomerPerson" class="form-control" placeholder="Contact Person Name (Optional)" oninput="erp.handleBuyerFieldChange()" />
                 </div>
                 <div class="form-group" style="grid-column: span 2;">
                   <label>Address *</label>
-                  <input type="text" id="billCustomerAddress" class="form-control" placeholder="Plot No, MIDC Bhosari, Pune - 411026" oninput="erp.handleBuyerFieldChange()" />
+                  <input type="text" id="billCustomerAddress" class="form-control" placeholder="Company Delivery / Billing Address" oninput="erp.handleBuyerFieldChange()" />
                 </div>
                 <div class="form-group">
                   <label>GST / GSTIN</label>
@@ -1219,7 +1219,7 @@ body {
       <div class="card-body">
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; border-bottom: 2px solid var(--pass-navy); padding-bottom: 10px;">
           <div>
-            <h3 style="font-size: 16px; font-weight: 800; color: var(--pass-navy);" id="ledgerPartyTitle">M/s. ABC Industries Pvt. Ltd.</h3>
+            <h3 style="font-size: 16px; font-weight: 800; color: var(--pass-navy);" id="ledgerPartyTitle">Select a Party Ledger</h3>
             <p style="font-size: 12px; color: var(--ink-muted);" id="ledgerPartyGroup">Group: Sundry Debtors (Customers)</p>
           </div>
           <div style="text-align: right;">
@@ -1722,11 +1722,11 @@ body {
       <div class="form-grid">
         <div class="form-group" style="grid-column: span 2;">
           <label>Company Name *</label>
-          <input type="text" id="ebCompany" class="form-control" placeholder="e.g. M/s. ABC Industries Pvt. Ltd." />
+          <input type="text" id="ebCompany" class="form-control" placeholder="Company / Entity Name" />
         </div>
         <div class="form-group" style="grid-column: span 2;">
           <label>Buyer Name (Contact Person)</label>
-          <input type="text" id="ebPerson" class="form-control" placeholder="e.g. Mr. Rajesh Sharma" />
+          <input type="text" id="ebPerson" class="form-control" placeholder="Contact Person Name (Optional)" />
         </div>
         <div class="form-group" style="grid-column: span 2;">
           <label>Address *</label>
@@ -1804,14 +1804,7 @@ body {
 </div>
 
 <script>
-const INITIAL_SAFETY_CATALOG = [
-  { id: "helm_udyogi_7000", name: "Safety Helmet Udyogi Ultravent 7000 (Ratchet, Yellow)", brand: "UDYOGI", cat: "Industrial Safety", hsn: "6506", unit: "Nos.", cost: 180.00, price: 245.00, stock: 120, minAlert: 20 },
-  { id: "helm_karam_pn501", name: "Safety Helmet Karam PN 501 (ISI Certified, Manual)", brand: "KARAM", cat: "Industrial Safety", hsn: "6506", unit: "Nos.", cost: 135.00, price: 190.00, stock: 150, minAlert: 30 },
-  { id: "shoe_hillson_power", name: "Safety Shoe Hillson Power Plus High Ankle (Steel Toe 200J)", brand: "HILLSON", cat: "Industrial Safety", hsn: "6403", unit: "Pairs", cost: 580.00, price: 780.00, stock: 65, minAlert: 15 },
-  { id: "shoe_apollo_plus", name: "Safety Shoe Apollo Plus Low Ankle (Double Density PU)", brand: "HILLSON", cat: "Industrial Safety", hsn: "6403", unit: "Pairs", cost: 480.00, price: 650.00, stock: 90, minAlert: 20 },
-  { id: "glove_cut5_fortuner", name: "Cut Level 5 HPPE Safety Gloves Fortuner CPU5", brand: "UDYOGI", cat: "Industrial Safety", hsn: "6116", unit: "Pairs", cost: 110.00, price: 165.00, stock: 300, minAlert: 50 },
-  { id: "harness_karam_pn11", name: "Full Body Safety Harness Karam PN 11 with Lanyard", brand: "KARAM", cat: "Industrial Safety", hsn: "6307", unit: "Sets", cost: 850.00, price: 1150.00, stock: 40, minAlert: 10 }
-];
+const INITIAL_SAFETY_CATALOG = [];
 
 class PassInvotorERP {
   constructor() {
@@ -1881,12 +1874,23 @@ class PassInvotorERP {
     this.data.stock = currentStock;
     this.saveCatalog();
 
-    // 3. Persistent Buyers
+    // 3. Persistent Buyers (Clean & Real)
     const rawBuyers = localStorage.getItem(this.buyersKey);
     if (rawBuyers) {
-      try { this.savedBuyers = JSON.parse(rawBuyers); } catch (e) { this.savedBuyers = this.getDefaultBuyers(); }
+      try { this.savedBuyers = JSON.parse(rawBuyers); } catch (e) { this.savedBuyers = []; }
     } else {
-      this.savedBuyers = this.getDefaultBuyers();
+      this.savedBuyers = [];
+      this.saveBuyers();
+    }
+
+    // Clean out demo buyers if they were cached previously
+    if (this.savedBuyers && Array.isArray(this.savedBuyers)) {
+      this.savedBuyers = this.savedBuyers.filter(b => 
+        b && b.company && 
+        !b.company.includes("ABC Industries") && 
+        !b.company.includes("Tata Motors Vendor Unit") && 
+        !b.company.includes("Kirloskar Oil Engines Partner")
+      );
       this.saveBuyers();
     }
   }
@@ -2170,11 +2174,7 @@ class PassInvotorERP {
   }
 
   getDefaultBuyers() {
-    return [
-      { company: "M/s. ABC Industries Pvt. Ltd.", person: "Mr. Rajesh Sharma", name: "M/s. ABC Industries Pvt. Ltd.", address: "Plot No. 45, MIDC Bhosari, Pune - 411026", phone: "+91 98220 12345", gst: "27AAACA0000A1Z5" },
-      { company: "Tata Motors Vendor Unit - Bhosari", person: "Mr. Amit Patil", name: "Tata Motors Vendor Unit - Bhosari", address: "G-Block, MIDC Pimpri, Pune - 411018", phone: "+91 98901 56789", gst: "27BBBCA1111B1Z2" },
-      { company: "Kirloskar Oil Engines Partner - Chakan", person: "Mr. Vikram Joshi", name: "Kirloskar Oil Engines Partner - Chakan", address: "Phase II, MIDC Chakan, Pune - 410501", phone: "+91 97676 00000", gst: "Unregistered" }
-    ];
+    return [];
   }
 
   getDefaultState() {
@@ -2187,15 +2187,17 @@ class PassInvotorERP {
         email: "sales@passcorp.in / passcorpsafety@gmail.com",
         gstMode: "unregistered",
         gstin: "Unregistered (Non-GST Bill of Supply)",
-        pan: "AABCP1234F",
-        bankName: "HDFC Bank",
-        accountNo: "50200012345678",
+        pan: "AALFP8680C",
+        bankName: "HDFC Bank Ltd.",
+        accountNo: "50200085432190",
         ifsc: "HDFC0001234",
-        branch: "Chikhali, Pune",
+        branch: "Chikhali Branch, Pune",
         gstPrefix: "PC/2026-27/",
         nextGstNo: 1,
         nonGstPrefix: "PC",
         nextNonGstNo: 1,
+        dcPrefix: "DC/2026-27/",
+        nextDcNo: 1,
         invoicePrefix: "PC01",
         nextInvoiceNo: 1,
         capital: 500000,
@@ -2203,14 +2205,11 @@ class PassInvotorERP {
         bankBalance: 350000,
         cashBalance: 0
       },
-      stock: JSON.parse(JSON.stringify(INITIAL_SAFETY_CATALOG)),
+      stock: [],
       invoices: [],
       purchases: [],
       vouchers: [],
-      vendors: [
-        { name: "Hillson Footwear Ltd.", city: "Pune Depot", phone: "+91 98111 22233" },
-        { name: "Karam Safety Gear Pvt. Ltd.", city: "Pune Depot", phone: "+91 98222 33344" }
-      ]
+      vendors: []
     };
   }
 
@@ -2729,23 +2728,20 @@ class PassInvotorERP {
       copyOption: 'original_duplicate',
       paymentTerms: terms,
       customer: {
-        company: 'M/s. ABC Industries Pvt. Ltd.',
-        person: 'Mr. Rajesh Sharma',
-        name: 'M/s. ABC Industries Pvt. Ltd.',
-        address: 'Plot No. 45, MIDC Bhosari, Pune - 411026',
-        phone: '+91 98220 12345',
+        company: '',
+        person: '',
+        name: '',
+        address: '',
+        phone: '',
         gst: 'Unregistered'
       },
-      poRef: 'PO/2026/089',
+      poRef: '',
       poDate: today,
       transport: 'Direct Delivery / Surface',
       vehicleNo: '',
       ewayBillNo: '',
       placeOfSupply: 'Maharashtra (Code: 27)',
-      items: [
-        { id: 'helm_udyogi_7000', name: 'Safety Helmet Udyogi Ultravent 7000 (Ratchet)', desc: 'ISI Marked IS:2925, High Impact Polymer, Yellow Colour', brand: 'UDYOGI', hsn: '6506', unit: 'Nos.', qty: 10, rate: 245.00, taxable: 2450.00, gstRate: 0, taxAmt: 0, total: 2450.00 },
-        { id: 'shoe_hillson_power', name: 'Safety Shoe Hillson Power Plus High Ankle', desc: 'Steel Toe Cap 200J, Oil & Acid Resistant PU Sole, Size: 8', brand: 'HILLSON', hsn: '6403', unit: 'Pairs', qty: 5, rate: 780.00, taxable: 3900.00, gstRate: 0, taxAmt: 0, total: 3900.00 }
-      ],
+      items: [],
       discount: 0,
       freight: 0,
       advancePaid: 0,
@@ -2873,6 +2869,23 @@ class PassInvotorERP {
       `;
     });
 
+    if (!p.items || p.items.length === 0) {
+      itemsRowsHtml = `
+        <tr class="inv-tally-item-row">
+          <td class="text-center">-</td>
+          <td class="text-left" style="color: #94a3b8; font-style: italic; padding: 12px 6px;">[ No items added to invoice ]</td>
+          <td class="text-center">-</td>
+          <td class="text-right">0</td>
+          <td class="text-center">-</td>
+          <td class="text-right">0.00</td>
+          <td class="text-right">0.00</td>
+          <td class="text-center">0%</td>
+          <td class="text-right">0.00</td>
+          <td class="text-right">0.00</td>
+        </tr>
+      `;
+    }
+
     itemsRowsHtml += `
       <tr class="inv-tally-filler-row">
         <td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
@@ -2977,14 +2990,14 @@ class PassInvotorERP {
           </tr>
           <tr>
             <td colspan="5" style="padding: 4px 6px; vertical-align: top; font-size: 9.5px; line-height: 1.4;">
-              <div><span class="inv-bold">Company Name:</span> <strong style="font-size: 11px; color: #0c2340; text-transform: uppercase;">${p.custCompany || 'M/s. ABC Industries Pvt. Ltd.'}</strong></div>
+              <div><span class="inv-bold">Company Name:</span> <strong style="font-size: 11px; color: #0c2340; text-transform: uppercase;">${p.custCompany || '-'}</strong></div>
               <div><span class="inv-bold">Address:</span> ${p.custAddr || '-'}</div>
               <div><span class="inv-bold">GST:</span> ${p.custGst || 'Unregistered'}</div>
               <div><span class="inv-bold">Buyer name:</span> ${p.custPerson || p.custCompany || '-'}</div>
               <div><span class="inv-bold">Buyer Phone no:</span> <span style="font-family: monospace; font-weight: bold;">${p.custPhone || '-'}</span></div>
             </td>
             <td colspan="5" style="padding: 4px 6px; vertical-align: top; font-size: 9.5px; line-height: 1.4;">
-              <div><span class="inv-bold">Company Name:</span> <strong style="font-size: 11px; color: #0c2340; text-transform: uppercase;">${p.custCompany || 'M/s. ABC Industries Pvt. Ltd.'}</strong></div>
+              <div><span class="inv-bold">Company Name:</span> <strong style="font-size: 11px; color: #0c2340; text-transform: uppercase;">${p.custCompany || '-'}</strong></div>
               <div><span class="inv-bold">Address:</span> ${p.custAddr || '-'}</div>
               <div><span class="inv-bold">GST:</span> ${p.custGst || 'Unregistered'}</div>
               <div><span class="inv-bold">Buyer name:</span> ${p.custPerson || p.custCompany || '-'}</div>
@@ -3144,6 +3157,22 @@ class PassInvotorERP {
     const tbody = document.getElementById('billItemsTableBody');
     if (!tbody) return;
     tbody.innerHTML = '';
+
+    if (!this.currentInvoice.items || this.currentInvoice.items.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="9" style="text-align: center; padding: 30px 14px; background: #f8fafc; color: #64748b;">
+            <div style="font-size: 14px; font-weight: 700; color: #0c2340; margin-bottom: 4px;">📋 No Products Added Yet</div>
+            <div style="font-size: 12px; margin-bottom: 12px;">Type any product in the Quick Search Bar above, or click below to pick from master safety catalog.</div>
+            <div style="display: flex; justify-content: center; gap: 8px;">
+              <button type="button" class="btn btn-blue btn-sm" onclick="erp.openProductPickerModal()" style="font-weight: 700; padding: 6px 14px;">📦 Browse Master Catalog (186+ Products)</button>
+              <button type="button" class="btn btn-outline btn-sm" onclick="erp.addCustomBillItem()" style="font-weight: 700; padding: 6px 14px;">➕ Add Blank Item Row</button>
+            </div>
+          </td>
+        </tr>
+      `;
+      return;
+    }
 
     this.currentInvoice.items.forEach((item, index) => {
       const tr = document.createElement('tr');
