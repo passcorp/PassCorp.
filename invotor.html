@@ -1,0 +1,3033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>INVOTOR | Pass Corp. Enterprise Billing & ERP</title>
+<link rel="icon" type="image/png" href="https://passcorp.in/assets/favicon-96x96.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pass-navy: #0c2340;
+  --pass-navy-dark: #071526;
+  --pass-navy-light: #163670;
+  --pass-red: #d92525;
+  --tally-yellow: #f59e0b;
+  --tally-amber: #d97706;
+  --tally-gold-bg: #fffbeb;
+  --tally-bar: #0a1f44;
+  --tally-subbar: #1e3a8a;
+  --bg-main: #f1f5f9;
+  --bg-card: #ffffff;
+  --border-color: #cbd5e1;
+  --border-dark: #334155;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --success: #059669;
+  --danger: #dc2626;
+  --info: #0284c7;
+  --warning: #d97706;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* TOP SUITE BAR */
+.suite-topbar {
+  background: #061530;
+  color: #94a3b8;
+  padding: 6px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  border-bottom: 1px solid #1e293b;
+}
+.suite-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.suite-btn {
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 11.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s;
+}
+.suite-btn.inactive {
+  background: #1e293b;
+  color: #94a3b8;
+}
+.suite-btn.inactive:hover {
+  background: #334155;
+  color: #ffffff;
+}
+.suite-btn.active {
+  background: #f59e0b;
+  color: #0c2340;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+}
+.suite-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11px;
+}
+.gst-badge {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 10.5px;
+  border: 1px solid #fca5a5;
+}
+.gst-badge.registered {
+  background: #dcfce7;
+  color: #166534;
+  border-color: #86efac;
+}
+
+/* ERP MAIN HEADER (TALLY PRIME STYLE RIBBON) */
+.tally-header {
+  background: var(--pass-navy);
+  color: #ffffff;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 3px solid var(--tally-yellow);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.brand-zone {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.brand-zone img {
+  height: 42px;
+  width: auto;
+  border-radius: 4px;
+  background: #fff;
+  padding: 2px;
+}
+.brand-text h1 {
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.brand-text h1 span.app-tag {
+  background: var(--tally-yellow);
+  color: #0c2340;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+.brand-text p {
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.tally-shortcuts-bar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.key-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #f1f5f9;
+  padding: 5px 9px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s;
+}
+.key-btn kbd {
+  background: #f59e0b;
+  color: #0c2340;
+  padding: 1px 4px;
+  border-radius: 2px;
+  font-weight: 800;
+  font-size: 10px;
+  font-family: 'Roboto Mono', monospace;
+}
+.key-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #f59e0b;
+  transform: translateY(-1px);
+}
+
+/* APP NAVIGATION BAR */
+.app-nav {
+  background: #1e293b;
+  display: flex;
+  overflow-x: auto;
+  padding: 0 16px;
+  border-bottom: 1px solid #334155;
+}
+.nav-tab {
+  padding: 11px 16px;
+  color: #cbd5e1;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.nav-tab:hover {
+  color: #ffffff;
+  background: rgba(255,255,255,0.04);
+}
+.nav-tab.active {
+  color: #f59e0b;
+  border-bottom-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.08);
+}
+
+/* MAIN CONTENT LAYOUT */
+.main-wrapper {
+  flex: 1;
+  padding: 18px;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ERP VIEW SECTIONS */
+.erp-view {
+  display: none;
+}
+.erp-view.active {
+  display: block;
+  animation: fadeIn 0.15s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* TALLY GATEWAY DASHBOARD */
+.gateway-grid {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 20px;
+}
+@media (max-width: 992px) {
+  .gateway-grid { grid-template-columns: 1fr; }
+}
+
+/* TALLY GATEWAY MENU CARD */
+.tally-menu-card {
+  background: #0f172a;
+  color: #f8fafc;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  border: 1px solid #334155;
+}
+.tally-menu-header {
+  background: #0c2340;
+  padding: 12px 16px;
+  border-bottom: 2px solid #f59e0b;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.tally-menu-section {
+  padding: 12px 16px;
+  border-bottom: 1px solid #1e293b;
+}
+.tally-menu-title {
+  color: #f59e0b;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 8px;
+}
+.tally-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px;
+  border-radius: 4px;
+  color: #e2e8f0;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+.tally-menu-item:hover {
+  background: #1e293b;
+  color: #f59e0b;
+  transform: translateX(4px);
+}
+.tally-menu-item .hotkey {
+  color: #f59e0b;
+  font-weight: 800;
+  text-decoration: underline;
+}
+
+/* KPI CARDS GRID */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.kpi-card {
+  background: var(--bg-card);
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  position: relative;
+  overflow: hidden;
+}
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--pass-navy);
+}
+.kpi-card.kpi-sales::before { background: #059669; }
+.kpi-card.kpi-stock::before { background: #2563eb; }
+.kpi-card.kpi-recv::before { background: #d97706; }
+.kpi-card.kpi-pay::before { background: #dc2626; }
+.kpi-card.kpi-profit::before { background: #7c3aed; }
+
+.kpi-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.kpi-value {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--text-main);
+  font-family: 'Roboto Mono', monospace;
+}
+.kpi-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* CARD CONTAINER */
+.card {
+  background: var(--bg-card);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.card-header {
+  padding: 14px 18px;
+  background: #f8fafc;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 800;
+  font-size: 14px;
+}
+.card-body {
+  padding: 18px;
+}
+
+/* FORM ELEMENTS */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.form-group label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.form-control {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  background: #ffffff;
+  transition: border-color 0.15s;
+}
+.form-control:focus {
+  border-color: var(--pass-navy);
+  box-shadow: 0 0 0 3px rgba(12, 35, 64, 0.1);
+}
+
+/* BUTTONS */
+.btn {
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s;
+}
+.btn-primary { background: var(--pass-navy); color: #fff; }
+.btn-primary:hover { background: var(--pass-navy-light); }
+.btn-tally { background: var(--tally-yellow); color: #0c2340; border-color: var(--tally-amber); }
+.btn-tally:hover { background: #d97706; color: #fff; }
+.btn-success { background: #059669; color: #fff; }
+.btn-success:hover { background: #047857; }
+.btn-danger { background: #dc2626; color: #fff; }
+.btn-danger:hover { background: #b91c1c; }
+.btn-outline { background: #fff; border-color: var(--border-color); color: var(--text-main); }
+.btn-outline:hover { background: #f8fafc; border-color: #94a3b8; }
+.btn-sm { padding: 4px 9px; font-size: 11px; }
+
+/* DATA TABLES */
+.table-responsive {
+  overflow-x: auto;
+}
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+.data-table th {
+  background: #0c2340;
+  color: #ffffff;
+  padding: 9px 12px;
+  font-weight: 700;
+  text-align: left;
+  border: 1px solid #1e3a8a;
+  white-space: nowrap;
+}
+.data-table td {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  background: #ffffff;
+}
+.data-table tr:hover td {
+  background: #f8fafc;
+}
+.data-table .num {
+  text-align: right;
+  font-family: 'Roboto Mono', monospace;
+}
+.data-table .center {
+  text-align: center;
+}
+
+/* BADGES */
+.tag {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 10.5px;
+  font-weight: 700;
+}
+.tag-paid { background: #dcfce7; color: #166534; }
+.tag-partial { background: #fef3c7; color: #92400e; }
+.tag-unpaid { background: #fee2e2; color: #991b1b; }
+.tag-blue { background: #e0f2fe; color: #075985; }
+
+/* BILLING / INVOICE EDITOR STYLES */
+.billing-split {
+  display: grid;
+  grid-template-columns: 1fr 480px;
+  gap: 20px;
+}
+@media (max-width: 1200px) {
+  .billing-split { grid-template-columns: 1fr; }
+}
+
+/* A4 PRINT & PREVIEW SHEET */
+.a4-preview-card {
+  background: #525659;
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+  max-height: 85vh;
+}
+.a4-sheet {
+  width: 210mm;
+  min-height: 297mm;
+  background: #ffffff;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  padding: 14mm 14mm;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  color: #000000;
+  font-size: 11.5px;
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+}
+
+.a4-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.05;
+  width: 70%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.inv-header-box {
+  display: flex;
+  border-bottom: 2px solid #0c2340;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 2;
+}
+.inv-logo-col {
+  width: 85px;
+  margin-right: 12px;
+}
+.inv-logo-col img {
+  width: 80px;
+  height: auto;
+}
+.inv-company-col {
+  flex: 1;
+}
+.inv-comp-name {
+  font-size: 20px;
+  font-weight: 900;
+  color: #0c2340;
+  letter-spacing: 0.5px;
+}
+.inv-comp-sub {
+  font-size: 9.5px;
+  font-weight: 800;
+  color: #d92525;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+.inv-comp-details {
+  font-size: 9.5px;
+  color: #334155;
+  line-height: 1.35;
+}
+.inv-title-col {
+  text-align: right;
+  min-width: 170px;
+}
+.inv-badge-title {
+  background: #0c2340;
+  color: #ffffff;
+  padding: 4px 10px;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+.inv-meta-tbl {
+  width: 100%;
+  font-size: 9.5px;
+  border-collapse: collapse;
+}
+.inv-meta-tbl td {
+  padding: 2px 4px;
+  border: 1px solid #cbd5e1;
+}
+.inv-meta-tbl .lbl {
+  background: #f1f5f9;
+  font-weight: 700;
+  color: #334155;
+}
+
+.inv-parties-box {
+  display: flex;
+  border: 1px solid #000000;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 2;
+}
+.inv-party-col {
+  flex: 1;
+  padding: 8px 10px;
+}
+.inv-party-col:first-child {
+  border-right: 1px solid #000000;
+}
+.party-title {
+  font-size: 10px;
+  font-weight: 800;
+  color: #0c2340;
+  border-bottom: 1px solid #cbd5e1;
+  padding-bottom: 2px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.inv-items-tbl {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 12px;
+  font-size: 10px;
+  position: relative;
+  z-index: 2;
+}
+.inv-items-tbl th {
+  background: #0c2340;
+  color: #ffffff;
+  padding: 5px 6px;
+  border: 1px solid #000000;
+  font-size: 9.5px;
+}
+.inv-items-tbl td {
+  padding: 5px 6px;
+  border: 1px solid #000000;
+  vertical-align: top;
+}
+
+.inv-totals-box {
+  display: flex;
+  border: 1px solid #000000;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 2;
+}
+.inv-words-col {
+  flex: 1;
+  padding: 8px 10px;
+  border-right: 1px solid #000000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.inv-calc-col {
+  width: 220px;
+}
+.calc-tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10px;
+}
+.calc-tbl td {
+  padding: 4px 8px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.calc-tbl tr.grand-row td {
+  background: #fffbeb;
+  font-size: 12px;
+  font-weight: 900;
+  border-top: 2px solid #000000;
+  border-bottom: none;
+  color: #0c2340;
+}
+
+.inv-footer-box {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  border: 1px solid #000000;
+  margin-top: auto;
+  position: relative;
+  z-index: 2;
+}
+.inv-foot-col {
+  padding: 8px 10px;
+  border-right: 1px solid #000000;
+  font-size: 9px;
+}
+.inv-foot-col:last-child {
+  border-right: none;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.foot-stamp-img {
+  max-height: 65px;
+  margin: 4px 0;
+}
+
+/* FINANCIAL REPORTS (P&L, BALANCE SHEET, LEDGER) */
+.report-frame {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 24px;
+}
+.report-header {
+  text-align: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #0c2340;
+  padding-bottom: 12px;
+}
+.report-header h2 {
+  font-size: 20px;
+  font-weight: 900;
+  color: #0c2340;
+}
+.report-header p {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.t-account-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 2px solid #0c2340;
+}
+.t-account-col {
+  padding: 0;
+}
+.t-account-col:first-child {
+  border-right: 2px solid #0c2340;
+}
+.t-account-col-hdr {
+  background: #0c2340;
+  color: #ffffff;
+  padding: 8px 12px;
+  font-weight: 800;
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+}
+.t-account-list {
+  list-style: none;
+}
+.t-account-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 12px;
+  font-size: 12px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.t-account-row.subhead {
+  background: #f8fafc;
+  font-weight: 700;
+  color: #1e3a8a;
+}
+.t-account-row.total-row {
+  background: #fffbeb;
+  font-weight: 900;
+  font-size: 13px;
+  border-top: 2px solid #0c2340;
+  border-bottom: none;
+}
+
+/* MODAL STYLES */
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(2px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.modal-backdrop.open { display: flex; }
+.modal-box {
+  background: #ffffff;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 650px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  border: 1px solid #cbd5e1;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+.modal-header {
+  background: #0c2340;
+  color: #ffffff;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 800;
+  font-size: 14px;
+}
+.modal-body {
+  padding: 18px;
+  overflow-y: auto;
+}
+.modal-footer {
+  padding: 12px 18px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* PRINT MEDIA */
+@media print {
+  body { background: #fff !important; }
+  .suite-topbar, .tally-header, .app-nav, .no-print, .billing-split aside, #gatewayView, #purchasesView, #stockView, #ledgersView, #recvPayView, #plView, #bsView, #daybookView, #settingsView {
+    display: none !important;
+  }
+  .main-wrapper { padding: 0 !important; max-width: 100% !important; }
+  #billingView { display: block !important; }
+  .billing-split { display: block !important; }
+  .a4-preview-card { background: transparent !important; padding: 0 !important; max-height: none !important; }
+  .a4-sheet { box-shadow: none !important; width: 100% !important; min-height: auto !important; padding: 0 !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- SUITE TOPBAR (QUOTOR <-> INVOTOR) -->
+  <div class="suite-links">
+    <span style="font-weight: 800; color: #fff; margin-right: 6px;">PASS CORP. SUITE:</span>
+    <a href="invotor.html" class="suite-btn active" title="Current App: Invotor Enterprise ERP">
+      <span>📦</span> Invotor (Billing & ERP)
+    </a>
+    <a href="quotation.html?secure=1" class="suite-btn inactive" title="Go to Quotor Enterprise Quotation Generator">
+      <span>⚡</span> Quotor (Quotation)
+    </a>
+    <a href="admin.html" class="suite-btn inactive" title="Go to Manage Content CMS">
+      <span>⚙️</span> Manage content
+    </a>
+    <a href="index.html" class="suite-btn inactive" title="Back to Main Website">
+      <span>🌐</span> Website
+    </a>
+  </div>
+  <div class="suite-info">
+    <span id="topGstBadge" class="gst-badge">GST: Non-GST (Unregistered)</span>
+    <span>📍 Chikhali, Pune</span>
+    <span id="liveClock">2026-09-01</span>
+  </div>
+</div>
+
+<!-- TALLY PRIME STYLE HEADER -->
+<header class="tally-header no-print">
+  <div class="brand-zone">
+    <img src="https://passcorp.in/assets/logo.png" alt="PASS CORP." onerror="this.src='stamp.png'" />
+    <div class="brand-text">
+      <h1>PASS CORP. <span class="app-tag">INVOTOR PRIME</span></h1>
+      <p>Industrial Safety Equipment & ERP Billing System</p>
+    </div>
+  </div>
+
+  <div class="tally-shortcuts-bar">
+    <button class="key-btn" onclick="erp.switchTab('billing')"><kbd>F8</kbd> Sales / Bill</button>
+    <button class="key-btn" onclick="erp.switchTab('purchases')"><kbd>F9</kbd> Purchase</button>
+    <button class="key-btn" onclick="erp.openVoucherModal('RECEIPT')"><kbd>F6</kbd> Receipt</button>
+    <button class="key-btn" onclick="erp.openVoucherModal('PAYMENT')"><kbd>F5</kbd> Payment</button>
+    <button class="key-btn" onclick="erp.switchTab('stock')"><kbd>F3</kbd> Stock</button>
+    <button class="key-btn" onclick="erp.switchTab('ledgers')"><kbd>Alt+L</kbd> Ledgers</button>
+    <button class="key-btn" onclick="erp.switchTab('pl')"><kbd>Alt+P</kbd> P&L</button>
+    <button class="key-btn" onclick="erp.switchTab('bs')"><kbd>Alt+B</kbd> Balance Sheet</button>
+    <button class="key-btn" onclick="erp.openQuickSearch()"><kbd>Alt+G</kbd> Go To</button>
+  </div>
+</header>
+
+<!-- NAVIGATION TABS -->
+<nav class="app-nav no-print">
+  <div class="nav-tab active" onclick="erp.switchTab('gateway')" id="tab-gateway">
+    <span>🏠</span> Gateway of Invotor
+  </div>
+  <div class="nav-tab" onclick="erp.switchTab('billing')" id="tab-billing">
+    <span>🧾</span> Sales / Invoicing (F8)
+  </div>
+  <div class="nav-tab" onclick="erp.switchTab('purchases')" id="tab-purchases">
+    <span>🛒</span> Purchases (F9)
+  </div>
+  <div class="nav-tab" onclick="erp.switchTab('stock')" id="tab-stock">
+    <span>📦</span> Stock & Inventory
+  </div>
+  <div class="nav-tab" onclick="erp.switchTab('ledgers')" id="tab-ledgers">
+    <span>📖</span> Ledgers & Accounts
+  </div>
+  <div class="nav-tab" onclick="erp.switchTab('recvpay')" id="tab-recvpay">
+    <span>💰</span> Receivables & Payables
+  </div>
+  <div class="nav-tab" onclick="erp.switchTab('pl')" id="tab-pl">
+    <span>📊</span> Profit & Loss (P&L)
+  </div>
+  <div class="nav-tab" onclick="erp.switchTab('bs')" id="tab-bs">
+    <span>⚖️</span> Balance Sheet
+  </div>
+  <div class="nav-tab" onclick="erp.switchTab('daybook')" id="tab-daybook">
+    <span>📅</span> Day Book
+  </div>
+  <div class="nav-tab" onclick="erp.switchTab('settings')" id="tab-settings">
+    <span>⚙️</span> Company & GST Setup
+  </div>
+</nav>
+
+<!-- MAIN APP BODY -->
+<main class="main-wrapper">
+
+  <!-- 1. GATEWAY OF INVOTOR (TALLY PRIME DASHBOARD) -->
+  <section id="gatewayView" class="erp-view active">
+    
+    <!-- KPI SUMMARY -->
+    <div class="kpi-grid">
+      <div class="kpi-card kpi-sales">
+        <div class="kpi-title"><span>Total Sales (Billed)</span><span>📈</span></div>
+        <div class="kpi-value" id="kpiTotalSales">₹0.00</div>
+        <div class="kpi-sub" id="kpiSalesCount">0 Sales Invoices</div>
+      </div>
+      <div class="kpi-card kpi-stock">
+        <div class="kpi-title"><span>Closing Stock Value</span><span>📦</span></div>
+        <div class="kpi-value" id="kpiStockVal">₹0.00</div>
+        <div class="kpi-sub" id="kpiStockItems">0 Safety Gear Items</div>
+      </div>
+      <div class="kpi-card kpi-recv">
+        <div class="kpi-title"><span>Receivables (Debtors)</span><span>📥</span></div>
+        <div class="kpi-value" id="kpiReceivables">₹0.00</div>
+        <div class="kpi-sub" id="kpiOverdueText">Pending Customer Payments</div>
+      </div>
+      <div class="kpi-card kpi-pay">
+        <div class="kpi-title"><span>Payables (Creditors)</span><span>📤</span></div>
+        <div class="kpi-value" id="kpiPayables">₹0.00</div>
+        <div class="kpi-sub">Vendor Bills to be Paid</div>
+      </div>
+      <div class="kpi-card kpi-profit">
+        <div class="kpi-title"><span>Net Profit / Margin</span><span>💎</span></div>
+        <div class="kpi-value" id="kpiNetProfit">₹0.00</div>
+        <div class="kpi-sub" id="kpiMarginPercent">Margin: 0%</div>
+      </div>
+    </div>
+
+    <!-- TALLY GATEWAY MENU & QUICK ACTIONS -->
+    <div class="gateway-grid">
+      <div class="tally-menu-card">
+        <div class="tally-menu-header">
+          <span>GATEWAY OF INVOTOR</span>
+          <span style="font-size: 11px; color: #f59e0b;">PASS CORP.</span>
+        </div>
+
+        <div class="tally-menu-section">
+          <div class="tally-menu-title">Masters</div>
+          <div class="tally-menu-item" onclick="erp.switchTab('ledgers')">
+            <span><span class="hotkey">A</span>ccounts Info (Ledgers)</span>
+            <span>➡️</span>
+          </div>
+          <div class="tally-menu-item" onclick="erp.switchTab('stock')">
+            <span><span class="hotkey">I</span>nventory Info (Stock Items)</span>
+            <span>➡️</span>
+          </div>
+        </div>
+
+        <div class="tally-menu-section">
+          <div class="tally-menu-title">Transactions / Vouchers</div>
+          <div class="tally-menu-item" onclick="erp.switchTab('billing')">
+            <span><span class="hotkey">S</span>ales / Billing Invoice (F8)</span>
+            <span>🧾</span>
+          </div>
+          <div class="tally-menu-item" onclick="erp.switchTab('purchases')">
+            <span><span class="hotkey">P</span>urchase Vouchers (F9)</span>
+            <span>🛒</span>
+          </div>
+          <div class="tally-menu-item" onclick="erp.openVoucherModal('RECEIPT')">
+            <span><span class="hotkey">R</span>eceipt Vouchers (F6)</span>
+            <span>💵</span>
+          </div>
+          <div class="tally-menu-item" onclick="erp.openVoucherModal('PAYMENT')">
+            <span>Pay<span class="hotkey">m</span>ent Vouchers (F5)</span>
+            <span>💳</span>
+          </div>
+          <div class="tally-menu-item" onclick="erp.openVoucherModal('CONTRA')">
+            <span><span class="hotkey">C</span>ontra / Bank Transfer (F4)</span>
+            <span>🔄</span>
+          </div>
+        </div>
+
+        <div class="tally-menu-section">
+          <div class="tally-menu-title">Reports & Statements</div>
+          <div class="tally-menu-item" onclick="erp.switchTab('bs')">
+            <span><span class="hotkey">B</span>alance Sheet</span>
+            <span>⚖️</span>
+          </div>
+          <div class="tally-menu-item" onclick="erp.switchTab('pl')">
+            <span><span class="hotkey">P</span>rofit & Loss A/c</span>
+            <span>📊</span>
+          </div>
+          <div class="tally-menu-item" onclick="erp.switchTab('stock')">
+            <span>Stoc<span class="hotkey">k</span> Summary</span>
+            <span>📦</span>
+          </div>
+          <div class="tally-menu-item" onclick="erp.switchTab('recvpay')">
+            <span><span class="hotkey">O</span>utstanding (Receivable/Payable)</span>
+            <span>💰</span>
+          </div>
+          <div class="tally-menu-item" onclick="erp.switchTab('daybook')">
+            <span><span class="hotkey">D</span>ay Book / Register</span>
+            <span>📅</span>
+          </div>
+        </div>
+
+        <div class="tally-menu-section" style="border-bottom: none;">
+          <div class="tally-menu-title">Utilities & Setup</div>
+          <div class="tally-menu-item" onclick="erp.switchTab('settings')">
+            <span><span class="hotkey">G</span>ST & Company Settings</span>
+            <span>⚙️</span>
+          </div>
+          <div class="tally-menu-item" onclick="window.location.href='quotation.html?secure=1'">
+            <span><span class="hotkey">Q</span>uotor (Quotations & PI)</span>
+            <span>⚡</span>
+          </div>
+          <div class="tally-menu-item" onclick="window.location.href='admin.html'">
+            <span><span class="hotkey">M</span>anage Content CMS</span>
+            <span>⚙️</span>
+          </div>
+          <div class="tally-menu-item" onclick="window.location.href='index.html'">
+            <span><span class="hotkey">W</span>ebsite Storefront</span>
+            <span>🌐</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RECENT VOUCHERS & ACTIVITY -->
+      <div>
+        <div class="card">
+          <div class="card-header">
+            <span>Recent Invoices & Transactions</span>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-primary btn-sm" onclick="erp.switchTab('billing')">+ New Sales Bill</button>
+              <button class="btn btn-outline btn-sm" onclick="erp.switchTab('purchases')">+ New Purchase</button>
+            </div>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Voucher / Ref No.</th>
+                    <th>Party Name</th>
+                    <th class="num">Amount (₹)</th>
+                    <th>Status</th>
+                    <th class="center">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="recentVouchersBody">
+                  <!-- Injected via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- LOW STOCK ALERT PANEL -->
+        <div class="card">
+          <div class="card-header" style="background: #fffbeb;">
+            <span style="color: #92400e;">⚠️ Inventory Alerts & Low Stock Notice</span>
+            <button class="btn btn-outline btn-sm" onclick="erp.switchTab('stock')">Manage Stock</button>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Item Name</th>
+                    <th>Brand</th>
+                    <th>Category</th>
+                    <th class="num">Current Stock</th>
+                    <th class="num">Min Alert Level</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="lowStockBody">
+                  <!-- Injected via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. BILLING / SALES INVOICE GENERATOR (F8) -->
+  <section id="billingView" class="erp-view">
+    <div class="billing-split">
+      
+      <!-- INVOICE BUILDER CONTROLS -->
+      <aside class="no-print">
+        <div class="card">
+          <div class="card-header" style="background: #0c2340; color: #fff;">
+            <span>🧾 Sales Invoice / Bill of Supply</span>
+            <div style="display: flex; gap: 6px;">
+              <button class="btn btn-tally btn-sm" onclick="erp.newInvoice()">+ Reset / New</button>
+              <button class="btn btn-success btn-sm" onclick="erp.saveInvoice()">💾 Save Bill</button>
+            </div>
+          </div>
+          <div class="card-body">
+            
+            <div class="form-grid" style="margin-bottom: 12px;">
+              <div class="form-group">
+                <label>Invoice Type</label>
+                <select id="billDocType" class="form-control" onchange="erp.renderLiveInvoicePreview()">
+                  <option value="BILL OF SUPPLY">Bill of Supply (Non-GST)</option>
+                  <option value="COMMERCIAL INVOICE">Commercial Invoice</option>
+                  <option value="TAX INVOICE">Tax Invoice (GST Registered)</option>
+                  <option value="RETAIL CASH BILL">Retail Cash Bill</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Invoice No.</label>
+                <input type="text" id="billInvoiceNo" class="form-control" oninput="erp.renderLiveInvoicePreview()" />
+              </div>
+              <div class="form-group">
+                <label>Invoice Date</label>
+                <input type="date" id="billDate" class="form-control" onchange="erp.renderLiveInvoicePreview()" />
+              </div>
+              <div class="form-group">
+                <label>Payment Terms</label>
+                <input type="text" id="billPaymentTerms" class="form-control" value="Immediate / As Agreed" oninput="erp.renderLiveInvoicePreview()" />
+              </div>
+            </div>
+
+            <!-- BUYER DETAILS -->
+            <div style="border-top: 1px solid var(--border-color); padding-top: 12px; margin-bottom: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <label style="font-size: 11.5px; font-weight: 800; color: var(--pass-navy);">👤 BUYER / CUSTOMER DETAILS</label>
+              </div>
+              <div class="form-grid">
+                <div class="form-group" style="grid-column: span 2;">
+                  <label>Company / Customer Name</label>
+                  <input type="text" id="billCustomerName" class="form-control" placeholder="e.g. M/s. ABC Industries Pvt. Ltd." oninput="erp.renderLiveInvoicePreview()" />
+                </div>
+                <div class="form-group" style="grid-column: span 2;">
+                  <label>Billing Address</label>
+                  <input type="text" id="billCustomerAddress" class="form-control" placeholder="Plot No, MIDC, Pune - 411026" oninput="erp.renderLiveInvoicePreview()" />
+                </div>
+                <div class="form-group">
+                  <label>Phone / Mobile</label>
+                  <input type="text" id="billCustomerPhone" class="form-control" placeholder="+91 98XXXXXXXX" oninput="erp.renderLiveInvoicePreview()" />
+                </div>
+                <div class="form-group">
+                  <label>Buyer GSTIN (Optional)</label>
+                  <input type="text" id="billCustomerGst" class="form-control" placeholder="Unregistered / 27XXXX" oninput="erp.renderLiveInvoicePreview()" />
+                </div>
+                <div class="form-group">
+                  <label>Client PO Ref No.</label>
+                  <input type="text" id="billPoRef" class="form-control" placeholder="PO/2026/089" oninput="erp.renderLiveInvoicePreview()" />
+                </div>
+                <div class="form-group">
+                  <label>Place of Supply</label>
+                  <input type="text" id="billPlaceOfSupply" class="form-control" value="Maharashtra (Code: 27)" oninput="erp.renderLiveInvoicePreview()" />
+                </div>
+              </div>
+            </div>
+
+            <!-- LINE ITEMS SELECTOR -->
+            <div style="border-top: 1px solid var(--border-color); padding-top: 12px; margin-bottom: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <label style="font-size: 11.5px; font-weight: 800; color: var(--pass-navy);">📦 BILL ITEMS</label>
+                <button class="btn btn-tally btn-sm" onclick="erp.openProductPickerModal()">+ Pick Safety Product</button>
+              </div>
+
+              <div id="billItemsContainer"></div>
+              <button class="btn btn-outline btn-sm" style="width: 100%; margin-top: 8px;" onclick="erp.addCustomBillItem()">+ Add Custom Item Line</button>
+            </div>
+
+            <!-- ADDITIONAL CHARGES & DISCOUNT -->
+            <div style="border-top: 1px solid var(--border-color); padding-top: 12px;">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Discount (₹)</label>
+                  <input type="number" id="billDiscount" class="form-control" value="0" min="0" oninput="erp.renderLiveInvoicePreview()" />
+                </div>
+                <div class="form-group">
+                  <label>Freight / Transport (₹)</label>
+                  <input type="number" id="billFreight" class="form-control" value="0" min="0" oninput="erp.renderLiveInvoicePreview()" />
+                </div>
+                <div class="form-group">
+                  <label>Payment Received (Advance)</label>
+                  <input type="number" id="billAdvancePaid" class="form-control" value="0" min="0" oninput="erp.renderLiveInvoicePreview()" />
+                </div>
+                <div class="form-group">
+                  <label>Payment Mode</label>
+                  <select id="billPaymentMode" class="form-control">
+                    <option value="Credit / Due">Unpaid / Credit Due</option>
+                    <option value="Cash">Cash</option>
+                    <option value="Bank NEFT/RTGS">HDFC Bank (NEFT/RTGS)</option>
+                    <option value="UPI / GPay">UPI / GPay</option>
+                    <option value="Cheque">Cheque</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- PRINT & ACTION BUTTONS -->
+            <div style="margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap;">
+              <button class="btn btn-primary" style="flex: 1;" onclick="window.print()">🖨️ Print / Save PDF</button>
+              <button class="btn btn-success" style="flex: 1;" onclick="erp.shareWhatsAppBill()">📲 WhatsApp Bill</button>
+            </div>
+
+          </div>
+        </div>
+      </aside>
+
+      <!-- LIVE A4 SHEET PREVIEW -->
+      <div class="a4-preview-card">
+        <div class="a4-sheet" id="printSheet">
+          
+          <!-- WATERMARK -->
+          <img src="assets/pass_watermark.jpg" alt="PASS CORP." class="a4-watermark" onerror="this.style.display='none'" />
+
+          <!-- INVOICE HEADER -->
+          <div class="inv-header-box">
+            <div class="inv-logo-col">
+              <img src="https://passcorp.in/assets/logo.png" alt="PASS CORP." onerror="this.src='stamp.png'" />
+            </div>
+            <div class="inv-company-col">
+              <div class="inv-comp-name" id="viewCompName">PASS CORP.</div>
+              <div class="inv-comp-sub">INDUSTRIAL SAFETY EQUIPMENT & WORKPLACE PROTECTION</div>
+              <div class="inv-comp-details">
+                📍 Dehu Alandi Road, Chikhali, Pune - 411062, Maharashtra, India<br>
+                📞 <strong>Mob:</strong> +91 97676 72497 &nbsp;|&nbsp; ✉️ <strong>Email:</strong> sales@passcorp.in / passcorpsafety@gmail.com<br>
+                🌐 <strong>Web:</strong> www.passcorp.in &nbsp;|&nbsp; <strong id="viewGstBanner">GSTIN: Unregistered (Non-GST Bill of Supply)</strong>
+              </div>
+            </div>
+            <div class="inv-title-col">
+              <div class="inv-badge-title" id="viewBillTitle">BILL OF SUPPLY</div>
+              <table class="inv-meta-tbl">
+                <tr><td class="lbl">Bill No.:</td><td style="font-weight: 800;" id="viewInvoiceNo">PC/BILL/26-27/0001</td></tr>
+                <tr><td class="lbl">Date:</td><td id="viewInvoiceDate">01 Sep 2026</td></tr>
+                <tr><td class="lbl">Place of Supply:</td><td id="viewInvoicePos">Maharashtra (27)</td></tr>
+                <tr><td class="lbl">Payment:</td><td id="viewInvoicePayment">As Agreed</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- PARTIES BOX -->
+          <div class="inv-parties-box">
+            <div class="inv-party-col">
+              <div class="party-title">BUYER / BILLED TO:</div>
+              <div style="font-size: 11px; font-weight: 800; color: #0c2340;" id="viewCustName">M/s. ABC Industries Pvt. Ltd.</div>
+              <div style="font-size: 10px; color: #334155; margin-top: 2px;" id="viewCustAddress">Plot No. 45, MIDC Bhosari, Pune - 411026</div>
+              <div style="font-size: 9.5px; margin-top: 3px;">
+                <strong>GSTIN:</strong> <span id="viewCustGst">Unregistered</span> | <strong>Phone:</strong> <span id="viewCustPhone">+91 98XXXXXXXX</span>
+              </div>
+            </div>
+            <div class="inv-party-col">
+              <div class="party-title">ORDER & DISPATCH DETAILS:</div>
+              <div style="font-size: 9.5px; line-height: 1.5;">
+                <strong>PO Reference:</strong> <span id="viewPoRef">PO/2026/089</span><br>
+                <strong>Dispatch Through:</strong> Surface / Hand Delivery<br>
+                <strong>Delivery Location:</strong> Bhosari Site, Pune
+              </div>
+            </div>
+          </div>
+
+          <!-- ITEMS TABLE -->
+          <table class="inv-items-tbl">
+            <thead>
+              <tr>
+                <th style="width: 5%;">Sr.</th>
+                <th style="width: 45%;">Description of Goods / Safety Equipment</th>
+                <th style="width: 12%;">HSN/SAC</th>
+                <th style="width: 10%;" class="num">Qty</th>
+                <th style="width: 10%;">Unit</th>
+                <th style="width: 18%;" class="num">Rate (₹)</th>
+                <th style="width: 18%;" class="num">Amount (₹)</th>
+              </tr>
+            </thead>
+            <tbody id="viewBillItemsBody"></tbody>
+          </table>
+
+          <!-- TOTALS & WORDS -->
+          <div class="inv-totals-box">
+            <div class="inv-words-col">
+              <div>
+                <strong style="font-size: 10px; color: #0c2340;">Amount in Words:</strong><br>
+                <span id="viewWordsText" style="font-style: italic; font-weight: 700; color: #1e293b;">INR Zero Only</span>
+              </div>
+              <div style="font-size: 9px; color: #64748b; margin-top: 6px;">
+                * This is a Non-GST Bill of Supply / Commercial Invoice. No tax collected under GST law.
+              </div>
+            </div>
+            <div class="inv-calc-col">
+              <table class="calc-tbl">
+                <tr><td>Item Subtotal:</td><td class="num" id="viewSubtotal">₹0.00</td></tr>
+                <tr id="rowDiscount" style="display:none;"><td>Discount:</td><td class="num" id="viewDiscount">-₹0.00</td></tr>
+                <tr id="rowFreight" style="display:none;"><td>Freight / Shipping:</td><td class="num" id="viewFreight">+₹0.00</td></tr>
+                <tr class="grand-row"><td>Grand Total:</td><td class="num" id="viewGrandTotal">₹0.00</td></tr>
+                <tr><td>Paid Amount:</td><td class="num" id="viewPaid">₹0.00</td></tr>
+                <tr style="font-weight: 800; color: #b91c1c;"><td>Balance Due:</td><td class="num" id="viewBalanceDue">₹0.00</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- FOOTER DETAILS (BANK & SIGNATURE) -->
+          <div class="inv-footer-box">
+            <div class="inv-foot-col">
+              <strong style="color: #0c2340;">TERMS & CONDITIONS</strong>
+              <ol style="padding-left: 12px; margin-top: 3px; line-height: 1.35;">
+                <li>Goods once sold will not be taken back.</li>
+                <li>Manufacturer's standard warranty applies.</li>
+                <li>Interest @ 18% p.a. charged on overdue bills.</li>
+                <li>Subject to Pune Jurisdiction only.</li>
+              </ol>
+            </div>
+            <div class="inv-foot-col">
+              <strong style="color: #0c2340;">BANK DETAILS</strong>
+              <div style="margin-top: 3px; line-height: 1.35;">
+                <strong>Bank:</strong> HDFC Bank<br>
+                <strong>A/c Name:</strong> PASS CORP.<br>
+                <strong>A/c No:</strong> 50200012345678<br>
+                <strong>IFSC:</strong> HDFC0001234<br>
+                <strong>Branch:</strong> Chikhali, Pune
+              </div>
+            </div>
+            <div class="inv-foot-col">
+              <strong style="color: #0c2340;">For PASS CORP.</strong>
+              <img src="stamp.png" alt="Stamp" class="foot-stamp-img" onerror="this.src='https://passcorp.in/assets/logo.png'" />
+              <div style="font-weight: 700; font-size: 8.5px;">Authorized Signatory</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 3. PURCHASES (F9) -->
+  <section id="purchasesView" class="erp-view">
+    <div class="card">
+      <div class="card-header" style="background: #0c2340; color: #fff;">
+        <span>🛒 Purchase Management (Vendor Bills & Stock Inwards)</span>
+        <button class="btn btn-tally btn-sm" onclick="erp.openNewPurchaseModal()">+ Record New Purchase (F9)</button>
+      </div>
+      <div class="card-body" style="padding: 0;">
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Purchase Ref No.</th>
+                <th>Supplier / Vendor</th>
+                <th>Items Purchased</th>
+                <th class="num">Qty</th>
+                <th class="num">Total Cost (₹)</th>
+                <th>Payment Mode</th>
+                <th>Status</th>
+                <th class="center">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="purchasesTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. STOCK & INVENTORY MANAGEMENT (F3) -->
+  <section id="stockView" class="erp-view">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <div>
+        <h2 style="font-size: 18px; font-weight: 900; color: var(--pass-navy);">📦 Stock & Inventory Summary</h2>
+        <p style="font-size: 12px; color: var(--text-muted);">Real-time stock valuation and inventory movements for Industrial Safety Gear</p>
+      </div>
+      <button class="btn btn-primary" onclick="erp.openNewStockItemModal()">+ Add New Stock Item</button>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span>Stock Register & Valuations</span>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="stockSearchInput" class="form-control" style="width: 220px; padding: 4px 8px; font-size: 12px;" placeholder="Search item, brand, SKU..." oninput="erp.renderStockTable()" />
+        </div>
+      </div>
+      <div class="card-body" style="padding: 0;">
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>SKU / Code</th>
+                <th>Item Description</th>
+                <th>Brand</th>
+                <th>Category</th>
+                <th>Unit</th>
+                <th class="num">In Stock</th>
+                <th class="num">Purchase Cost (₹)</th>
+                <th class="num">Selling Price (₹)</th>
+                <th class="num">Total Value (₹)</th>
+                <th class="center">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="stockTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. LEDGERS & ACCOUNTS (ALT+L) -->
+  <section id="ledgersView" class="erp-view">
+    <div class="card">
+      <div class="card-header" style="background: #0c2340; color: #fff;">
+        <span>📖 Ledgers & Account Books</span>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <label style="font-size: 12px; font-weight: 700; color: #f59e0b;">Select Account / Party:</label>
+          <select id="ledgerSelect" class="form-control" style="width: 250px; padding: 4px 8px; font-size: 12px;" onchange="erp.renderLedgerStatement()"></select>
+          <button class="btn btn-tally btn-sm" onclick="erp.printLedger()">🖨️ Print Statement</button>
+        </div>
+      </div>
+      <div class="card-body">
+        
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; border-bottom: 2px solid var(--pass-navy); padding-bottom: 10px;">
+          <div>
+            <h3 style="font-size: 16px; font-weight: 900; color: var(--pass-navy);" id="ledgerPartyTitle">M/s. ABC Industries Pvt. Ltd.</h3>
+            <p style="font-size: 12px; color: var(--text-muted);" id="ledgerPartyGroup">Group: Sundry Debtors (Customers)</p>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 12px; font-weight: 700; color: var(--text-muted);">Closing Balance:</div>
+            <div style="font-size: 20px; font-weight: 900; font-family: 'Roboto Mono', monospace;" id="ledgerClosingBal">₹0.00 Dr</div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Voucher Type</th>
+                <th>Voucher / Ref No.</th>
+                <th>Particulars / Narration</th>
+                <th class="num">Debit (₹)</th>
+                <th class="num">Credit (₹)</th>
+                <th class="num">Balance (₹)</th>
+              </tr>
+            </thead>
+            <tbody id="ledgerStatementBody"></tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. RECEIVABLES & PAYABLES (OUTSTANDING) -->
+  <section id="recvPayView" class="erp-view">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      
+      <!-- RECEIVABLES -->
+      <div class="card">
+        <div class="card-header" style="background: #fffbeb; color: #92400e; border-bottom: 2px solid #f59e0b;">
+          <span>📥 Accounts Receivable (Pending Customer Bills)</span>
+          <span style="font-weight: 900;" id="totalRecvHeader">₹0.00</span>
+        </div>
+        <div class="card-body" style="padding: 0;">
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Bill No.</th>
+                  <th>Customer</th>
+                  <th>Date</th>
+                  <th class="num">Pending (₹)</th>
+                  <th class="center">Action</th>
+                </tr>
+              </thead>
+              <tbody id="receivablesTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAYABLES -->
+      <div class="card">
+        <div class="card-header" style="background: #fef2f2; color: #991b1b; border-bottom: 2px solid #ef4444;">
+          <span>📤 Accounts Payable (Pending Supplier Bills)</span>
+          <span style="font-weight: 900;" id="totalPayHeader">₹0.00</span>
+        </div>
+        <div class="card-body" style="padding: 0;">
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Purchase Ref</th>
+                  <th>Supplier / Vendor</th>
+                  <th>Date</th>
+                  <th class="num">Pending (₹)</th>
+                  <th class="center">Action</th>
+                </tr>
+              </thead>
+              <tbody id="payablesTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 7. PROFIT & LOSS STATEMENT (ALT+P) -->
+  <section id="plView" class="erp-view">
+    <div class="report-frame">
+      <div class="report-header">
+        <h2>PASS CORP.</h2>
+        <p style="font-weight: 800; font-size: 14px; color: var(--pass-navy); margin-top: 4px;">PROFIT & LOSS ACCOUNT</p>
+        <p>For the Financial Year 2026 - 2027 (Figures in Indian Rupees)</p>
+      </div>
+
+      <div class="t-account-grid">
+        <div class="t-account-col">
+          <div class="t-account-col-hdr">
+            <span>PARTICULARS (EXPENSES / DEBIT)</span>
+            <span>AMOUNT (₹)</span>
+          </div>
+          <ul class="t-account-list">
+            <li class="t-account-row subhead"><span>To Opening Stock</span><span id="plOpeningStock">₹0.00</span></li>
+            <li class="t-account-row"><span>To Purchases (Stock Inwards)</span><span id="plPurchases">₹0.00</span></li>
+            <li class="t-account-row"><span>To Direct Freight / Transport Inwards</span><span id="plFreightIn">₹0.00</span></li>
+            <li class="t-account-row subhead" style="color: #059669;"><span>To Gross Profit c/d</span><span id="plGrossProfit">₹0.00</span></li>
+            <li class="t-account-row total-row"><span>Trading Total</span><span id="plTradingTotalLeft">₹0.00</span></li>
+            
+            <li class="t-account-row subhead" style="margin-top: 14px;"><span>Indirect / Operating Expenses:</span><span></span></li>
+            <li class="t-account-row"><span>To Office & Godown Rent</span><span id="plExpRent">₹0.00</span></li>
+            <li class="t-account-row"><span>To Staff Salaries & Wages</span><span id="plExpSalaries">₹0.00</span></li>
+            <li class="t-account-row"><span>To Electricity & Utilities</span><span id="plExpUtilities">₹0.00</span></li>
+            <li class="t-account-row"><span>To Printing, Packaging & Misc</span><span id="plExpMisc">₹0.00</span></li>
+            <li class="t-account-row subhead" style="color: #2563eb;"><span>To Net Profit (Transferred to Capital)</span><span id="plNetProfit">₹0.00</span></li>
+            <li class="t-account-row total-row"><span>Grand Total</span><span id="plFinalTotalLeft">₹0.00</span></li>
+          </ul>
+        </div>
+
+        <div class="t-account-col">
+          <div class="t-account-col-hdr">
+            <span>PARTICULARS (INCOME / CREDIT)</span>
+            <span>AMOUNT (₹)</span>
+          </div>
+          <ul class="t-account-list">
+            <li class="t-account-row subhead"><span>By Sales Revenue (Billed)</span><span id="plSales">₹0.00</span></li>
+            <li class="t-account-row"><span>By Closing Stock in Hand</span><span id="plClosingStock">₹0.00</span></li>
+            <li class="t-account-row"><span style="color: transparent;">-</span><span></span></li>
+            <li class="t-account-row"><span style="color: transparent;">-</span><span></span></li>
+            <li class="t-account-row total-row"><span>Trading Total</span><span id="plTradingTotalRight">₹0.00</span></li>
+
+            <li class="t-account-row subhead" style="margin-top: 14px;"><span>Income & Operating Gains:</span><span></span></li>
+            <li class="t-account-row"><span>By Gross Profit b/d</span><span id="plGrossProfitBd">₹0.00</span></li>
+            <li class="t-account-row"><span>By Other Receipts / Discounts</span><span id="plOtherIncome">₹0.00</span></li>
+            <li class="t-account-row"><span style="color: transparent;">-</span><span></span></li>
+            <li class="t-account-row"><span style="color: transparent;">-</span><span></span></li>
+            <li class="t-account-row"><span style="color: transparent;">-</span><span></span></li>
+            <li class="t-account-row total-row"><span>Grand Total</span><span id="plFinalTotalRight">₹0.00</span></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 8. BALANCE SHEET (ALT+B) -->
+  <section id="bsView" class="erp-view">
+    <div class="report-frame">
+      <div class="report-header">
+        <h2>PASS CORP.</h2>
+        <p style="font-weight: 800; font-size: 14px; color: var(--pass-navy); margin-top: 4px;">BALANCE SHEET</p>
+        <p>As on 31 March 2027 / Real-Time (Figures in Indian Rupees)</p>
+      </div>
+
+      <div class="t-account-grid">
+        <div class="t-account-col">
+          <div class="t-account-col-hdr">
+            <span>CAPITAL & LIABILITIES</span>
+            <span>AMOUNT (₹)</span>
+          </div>
+          <ul class="t-account-list">
+            <li class="t-account-row subhead"><span>Owner's Capital Account</span><span id="bsCapital">₹5,00,000.00</span></li>
+            <li class="t-account-row"><span>Add: Net Profit from P&L</span><span id="bsNetProfit">₹0.00</span></li>
+            <li class="t-account-row subhead" style="margin-top: 12px;"><span>Current Liabilities:</span><span></span></li>
+            <li class="t-account-row"><span>Sundry Creditors (Vendor Payables)</span><span id="bsCreditors">₹0.00</span></li>
+            <li class="t-account-row"><span>Advance Received from Customers</span><span id="bsCustomerAdvances">₹0.00</span></li>
+            <li class="t-account-row"><span>Duties & Taxes Payable</span><span id="bsTaxesPayable">₹0.00</span></li>
+            <li class="t-account-row total-row" style="margin-top: 40px;"><span>Total Liabilities</span><span id="bsTotalLiabilities">₹0.00</span></li>
+          </ul>
+        </div>
+
+        <div class="t-account-col">
+          <div class="t-account-col-hdr">
+            <span>ASSETS / PROPERTIES</span>
+            <span>AMOUNT (₹)</span>
+          </div>
+          <ul class="t-account-list">
+            <li class="t-account-row subhead"><span>Fixed Assets:</span><span></span></li>
+            <li class="t-account-row"><span>Office & Warehouse Equipment</span><span id="bsFixedAssets">₹1,50,000.00</span></li>
+            <li class="t-account-row subhead" style="margin-top: 12px;"><span>Current Assets:</span><span></span></li>
+            <li class="t-account-row"><span>Closing Stock in Hand</span><span id="bsStockInHand">₹0.00</span></li>
+            <li class="t-account-row"><span>Sundry Debtors (Receivables)</span><span id="bsDebtors">₹0.00</span></li>
+            <li class="t-account-row"><span>Bank Balance (HDFC Bank)</span><span id="bsBankBalance">₹3,50,000.00</span></li>
+            <li class="t-account-row"><span>Cash in Hand</span><span id="bsCashInHand">₹0.00</span></li>
+            <li class="t-account-row total-row" style="margin-top: 40px;"><span>Total Assets</span><span id="bsTotalAssets">₹0.00</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin-top: 14px; text-align: center; font-weight: 800; font-size: 13px; color: #059669;" id="bsStatusBadge">
+        ✅ Balance Sheet Balanced (Assets = Liabilities + Capital)
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. DAY BOOK / VOUCHER AUDIT REGISTER -->
+  <section id="daybookView" class="erp-view">
+    <div class="card">
+      <div class="card-header" style="background: #0c2340; color: #fff;">
+        <span>📅 Day Book / All Voucher Register</span>
+        <div style="display: flex; gap: 8px;">
+          <input type="date" id="daybookDate" class="form-control" style="width: 160px; padding: 3px 8px; font-size: 12px;" onchange="erp.renderDayBook()" />
+          <button class="btn btn-tally btn-sm" onclick="window.print()">🖨️ Print Day Book</button>
+        </div>
+      </div>
+      <div class="card-body" style="padding: 0;">
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Voucher Type</th>
+                <th>Voucher No.</th>
+                <th>Particulars</th>
+                <th class="num">Debit Amount (₹)</th>
+                <th class="num">Credit Amount (₹)</th>
+              </tr>
+            </thead>
+            <tbody id="daybookTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. SETTINGS & GST CONFIGURATION -->
+  <section id="settingsView" class="erp-view">
+    <div class="card" style="max-width: 800px; margin: 0 auto;">
+      <div class="card-header" style="background: #0c2340; color: #fff;">
+        <span>⚙️ PASS CORP. Enterprise Configuration & GST Mode</span>
+      </div>
+      <div class="card-body">
+        
+        <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 14px; margin-bottom: 20px;">
+          <h4 style="color: #1e3a8a; font-size: 14px; margin-bottom: 4px;">📌 GST Mode Switcher</h4>
+          <p style="font-size: 12px; color: #334155; margin-bottom: 10px;">Currently configured for <strong>Non-GST / Bill of Supply</strong>. Whenever you get your GST Number from the tax department, toggle this on and enter your 15-digit GSTIN.</p>
+          <div style="display: flex; gap: 14px; align-items: center;">
+            <label style="display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 13px;">
+              <input type="radio" name="gstMode" value="unregistered" checked onchange="erp.toggleGstMode(this.value)">
+              Non-GST / Unregistered (Bill of Supply)
+            </label>
+            <label style="display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 13px;">
+              <input type="radio" name="gstMode" value="registered" onchange="erp.toggleGstMode(this.value)">
+              GST Registered (Tax Invoice with CGST/SGST/IGST)
+            </label>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group" style="grid-column: span 2;">
+            <label>Company Legal Name</label>
+            <input type="text" id="cfgCompName" class="form-control" value="PASS CORP." />
+          </div>
+          <div class="form-group" style="grid-column: span 2;">
+            <label>Company Tagline / Subtitle</label>
+            <input type="text" id="cfgCompTagline" class="form-control" value="INDUSTRIAL SAFETY EQUIPMENT & WORKPLACE PROTECTION SOLUTIONS" />
+          </div>
+          <div class="form-group" style="grid-column: span 2;">
+            <label>Office & Warehouse Address</label>
+            <input type="text" id="cfgAddress" class="form-control" value="Dehu Alandi Road, Chikhali, Pune - 411062, Maharashtra, India" />
+          </div>
+          <div class="form-group">
+            <label>Mobile Number</label>
+            <input type="text" id="cfgMobile" class="form-control" value="+91 97676 72497" />
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="text" id="cfgEmail" class="form-control" value="sales@passcorp.in / passcorpsafety@gmail.com" />
+          </div>
+          <div class="form-group">
+            <label>Invoice Number Prefix</label>
+            <input type="text" id="cfgPrefix" class="form-control" value="PC/BILL/26-27/" />
+          </div>
+          <div class="form-group">
+            <label>Starting Next Invoice No.</label>
+            <input type="number" id="cfgNextNo" class="form-control" value="1" />
+          </div>
+        </div>
+
+        <div style="margin-top: 20px; display: flex; justify-content: space-between;">
+          <button class="btn btn-danger btn-sm" onclick="erp.resetAllData()">⚠️ Reset / Clear ERP Data</button>
+          <button class="btn btn-success" onclick="erp.saveSettings()">💾 Save Configurations</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- MODALS -->
+
+<!-- 1. VOUCHER MODAL -->
+<div class="modal-backdrop" id="voucherModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span id="voucherModalTitle">Record Voucher Entry</span>
+      <button class="btn btn-danger btn-sm" onclick="erp.closeModal('voucherModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Voucher Type</label>
+          <input type="text" id="vType" class="form-control" readonly />
+        </div>
+        <div class="form-group">
+          <label>Voucher Date</label>
+          <input type="date" id="vDate" class="form-control" />
+        </div>
+        <div class="form-group" style="grid-column: span 2;">
+          <label id="vPartyLabel">Party / Account</label>
+          <select id="vPartySelect" class="form-control"></select>
+        </div>
+        <div class="form-group">
+          <label>Amount (₹)</label>
+          <input type="number" id="vAmount" class="form-control" min="1" />
+        </div>
+        <div class="form-group">
+          <label>Payment Mode / Source A/c</label>
+          <select id="vModeSelect" class="form-control">
+            <option value="HDFC Bank">HDFC Bank (A/c 50200012345678)</option>
+            <option value="Cash in Hand">Cash in Hand</option>
+            <option value="UPI / GPay">UPI / GPay (9767672497@hdfcbank)</option>
+            <option value="Cheque">Cheque</option>
+          </select>
+        </div>
+        <div class="form-group" style="grid-column: span 2;">
+          <label>Narration / Reference</label>
+          <input type="text" id="vNarration" class="form-control" placeholder="e.g. Received against Inv PC/BILL/26-27/0001" />
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="erp.closeModal('voucherModal')">Cancel</button>
+      <button class="btn btn-success" onclick="erp.saveVoucher()">💾 Save Voucher</button>
+    </div>
+  </div>
+</div>
+
+<!-- 2. PRODUCT PICKER MODAL -->
+<div class="modal-backdrop" id="productPickerModal">
+  <div class="modal-box" style="max-width: 750px;">
+    <div class="modal-header">
+      <span>Pick Safety Equipment from Catalog</span>
+      <button class="btn btn-danger btn-sm" onclick="erp.closeModal('productPickerModal')">✕</button>
+    </div>
+    <div class="modal-body" style="padding: 12px;">
+      <input type="text" id="catalogSearch" class="form-control" placeholder="Search safety helmets, shoes, gloves..." style="margin-bottom: 12px;" oninput="erp.filterCatalogPicker()" />
+      <div style="max-height: 400px; overflow-y: auto;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Item Name</th>
+              <th>Brand</th>
+              <th class="num">Stock</th>
+              <th class="num">Selling Price (₹)</th>
+              <th class="center">Action</th>
+            </tr>
+          </thead>
+          <tbody id="catalogPickerBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 3. NEW STOCK ITEM MODAL -->
+<div class="modal-backdrop" id="stockItemModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span id="stockModalTitle">Add New Stock Item</span>
+      <button class="btn btn-danger btn-sm" onclick="erp.closeModal('stockItemModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group" style="grid-column: span 2;">
+          <label>Product / Equipment Name</label>
+          <input type="text" id="newItemName" class="form-control" placeholder="e.g. Safety Helmet Karam PN 501" />
+        </div>
+        <div class="form-group">
+          <label>Brand</label>
+          <input type="text" id="newItemBrand" class="form-control" placeholder="KARAM / UDYOGI / HILLSON" />
+        </div>
+        <div class="form-group">
+          <label>Category</label>
+          <select id="newItemCat" class="form-control">
+            <option value="Head Protection">Head Protection (Helmets)</option>
+            <option value="Foot Protection">Foot Protection (Shoes)</option>
+            <option value="Hand Protection">Hand Protection (Gloves)</option>
+            <option value="Fall Protection">Fall Protection (Harness)</option>
+            <option value="Eye & Face">Eye & Face Protection</option>
+            <option value="Respiratory">Respiratory & Mask</option>
+            <option value="Fire Safety">Fire Safety Equipment</option>
+            <option value="General PPE">General Safety Gear</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>HSN Code</label>
+          <input type="text" id="newItemHsn" class="form-control" value="6506" />
+        </div>
+        <div class="form-group">
+          <label>Unit of Measure</label>
+          <select id="newItemUnit" class="form-control">
+            <option value="Nos.">Nos.</option>
+            <option value="Pairs">Pairs</option>
+            <option value="Sets">Sets</option>
+            <option value="Mtrs">Mtrs</option>
+            <option value="Kgs">Kgs</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Purchase Cost Rate (₹)</label>
+          <input type="number" id="newItemCost" class="form-control" value="150" />
+        </div>
+        <div class="form-group">
+          <label>Selling Price (₹)</label>
+          <input type="number" id="newItemPrice" class="form-control" value="220" />
+        </div>
+        <div class="form-group">
+          <label>Initial Opening Stock Qty</label>
+          <input type="number" id="newItemStock" class="form-control" value="50" />
+        </div>
+        <div class="form-group">
+          <label>Min Alert Stock Level</label>
+          <input type="number" id="newItemMinAlert" class="form-control" value="10" />
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="erp.closeModal('stockItemModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="erp.saveStockItem()">Save Item</button>
+    </div>
+  </div>
+</div>
+
+<!-- 4. NEW PURCHASE MODAL (F9) -->
+<div class="modal-backdrop" id="purchaseModal">
+  <div class="modal-box" style="max-width: 650px;">
+    <div class="modal-header">
+      <span>Record Purchase Bill (Vendor Inwards)</span>
+      <button class="btn btn-danger btn-sm" onclick="erp.closeModal('purchaseModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Purchase Date</label>
+          <input type="date" id="purDate" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label>Vendor Bill / Ref No.</label>
+          <input type="text" id="purRefNo" class="form-control" placeholder="e.g. HILL/2026/902" />
+        </div>
+        <div class="form-group" style="grid-column: span 2;">
+          <label>Supplier / Vendor Name</label>
+          <input type="text" id="purSupplierName" class="form-control" placeholder="e.g. Hillson Footwear Ltd. / Karam Safety" />
+        </div>
+        <div class="form-group" style="grid-column: span 2;">
+          <label>Select Stock Item to Inward</label>
+          <select id="purItemSelect" class="form-control"></select>
+        </div>
+        <div class="form-group">
+          <label>Quantity Inwarded</label>
+          <input type="number" id="purQty" class="form-control" value="20" min="1" />
+        </div>
+        <div class="form-group">
+          <label>Purchase Rate per Unit (₹)</label>
+          <input type="number" id="purRate" class="form-control" value="500" min="1" />
+        </div>
+        <div class="form-group">
+          <label>Payment Status</label>
+          <select id="purPayStatus" class="form-control">
+            <option value="Credit Due">Unpaid / Credit Due</option>
+            <option value="Paid via Bank">Paid via HDFC Bank</option>
+            <option value="Paid via Cash">Paid via Cash</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="erp.closeModal('purchaseModal')">Cancel</button>
+      <button class="btn btn-success" onclick="erp.savePurchase()">💾 Save Purchase & Update Stock</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   DEFAULT PASS CORP. MASTER CATALOG & ERP DATABASE
+   ============================================================ */
+const INITIAL_SAFETY_CATALOG = [
+  { id: "helm_udyogi_7000", name: "Safety Helmet Udyogi Ultravent 7000 (Ratchet, Yellow)", brand: "UDYOGI", cat: "Head Protection", hsn: "6506", unit: "Nos.", cost: 180.00, price: 245.00, stock: 120, minAlert: 20 },
+  { id: "helm_karam_pn501", name: "Safety Helmet Karam PN 501 (ISI Certified, Manual)", brand: "KARAM", cat: "Head Protection", hsn: "6506", unit: "Nos.", cost: 135.00, price: 190.00, stock: 150, minAlert: 30 },
+  { id: "helm_fusion_pro", name: "Safety Helmet Karam Fusion Pro (EN 397 Certified)", brand: "KARAM", cat: "Head Protection", hsn: "6506", unit: "Nos.", cost: 230.00, price: 320.00, stock: 80, minAlert: 15 },
+  { id: "shoe_hillson_power", name: "Safety Shoe Hillson Power Plus High Ankle (Steel Toe 200J)", brand: "HILLSON", cat: "Foot Protection", hsn: "6403", unit: "Pairs", cost: 580.00, price: 780.00, stock: 65, minAlert: 15 },
+  { id: "shoe_apollo_plus", name: "Safety Shoe Apollo Plus Low Ankle (Double Density PU)", brand: "HILLSON", cat: "Foot Protection", hsn: "6403", unit: "Pairs", cost: 480.00, price: 650.00, stock: 90, minAlert: 20 },
+  { id: "shoe_champion_pro", name: "Safety Shoe Perf Champion Pro (Lightweight Sporty)", brand: "PERF", cat: "Foot Protection", hsn: "6403", unit: "Pairs", cost: 690.00, price: 920.00, stock: 45, minAlert: 10 },
+  { id: "glove_cut5_fortuner", name: "Cut Level 5 HPPE Safety Gloves Fortuner CPU5", brand: "UDYOGI", cat: "Hand Protection", hsn: "6116", unit: "Pairs", cost: 110.00, price: 165.00, stock: 300, minAlert: 50 },
+  { id: "glove_leather_welding", name: "Split Leather Heavy Duty Welding Gloves 14-inch", brand: "PASS CORP", cat: "Hand Protection", hsn: "4203", unit: "Pairs", cost: 95.00, price: 140.00, stock: 200, minAlert: 40 },
+  { id: "glove_nitrile_green", name: "Chemical Resistant Nitrile Gloves 13-inch Solvex", brand: "ANSELL", cat: "Hand Protection", hsn: "3926", unit: "Pairs", cost: 120.00, price: 175.00, stock: 110, minAlert: 25 },
+  { id: "harness_karam_pn11", name: "Full Body Safety Harness Karam PN 11 with Lanyard", brand: "KARAM", cat: "Fall Protection", hsn: "6307", unit: "Sets", cost: 850.00, price: 1150.00, stock: 40, minAlert: 10 },
+  { id: "goggle_karam_es005", name: "Clear Chemical Splash & Impact Goggles Karam ES 005", brand: "KARAM", cat: "Eye & Face", hsn: "9004", unit: "Nos.", cost: 65.00, price: 95.00, stock: 250, minAlert: 40 },
+  { id: "ear_3m_1110", name: "Corded Foam Ear Plugs 3M 1110 (NRR 29dB)", brand: "3M", cat: "Hearing", hsn: "3926", unit: "Pairs", cost: 12.00, price: 18.00, stock: 800, minAlert: 100 }
+];
+
+const INITIAL_EXPENSES = [
+  { name: "Rent", amount: 25000 },
+  { name: "Salaries", amount: 45000 },
+  { name: "Utilities", amount: 6500 },
+  { name: "Misc", amount: 4000 }
+];
+
+class PassInvotorERP {
+  constructor() {
+    this.storageKey = "PASS_INVOTOR_ERP_V1";
+    this.loadState();
+    this.currentInvoice = this.createEmptyInvoice();
+    this.initUI();
+  }
+
+  loadState() {
+    const raw = localStorage.getItem(this.storageKey);
+    if (raw) {
+      try {
+        this.data = JSON.parse(raw);
+      } catch (e) {
+        this.data = this.getDefaultState();
+      }
+    } else {
+      this.data = this.getDefaultState();
+    }
+  }
+
+  saveState() {
+    localStorage.setItem(this.storageKey, JSON.stringify(this.data));
+  }
+
+  getDefaultState() {
+    return {
+      settings: {
+        compName: "PASS CORP.",
+        compTagline: "INDUSTRIAL SAFETY EQUIPMENT & WORKPLACE PROTECTION SOLUTIONS",
+        address: "Dehu Alandi Road, Chikhali, Pune - 411062, Maharashtra, India",
+        phone: "+91 97676 72497",
+        email: "sales@passcorp.in / passcorpsafety@gmail.com",
+        gstMode: "unregistered",
+        gstin: "Unregistered",
+        invoicePrefix: "PC/BILL/26-27/",
+        nextInvoiceNo: 1,
+        capital: 500000,
+        fixedAssets: 150000,
+        bankBalance: 350000,
+        cashBalance: 0
+      },
+      stock: JSON.parse(JSON.stringify(INITIAL_SAFETY_CATALOG)),
+      invoices: [],
+      purchases: [],
+      vouchers: [],
+      expenses: JSON.parse(JSON.stringify(INITIAL_EXPENSES)),
+      customers: [
+        { name: "M/s. ABC Industries Pvt. Ltd.", address: "Plot No. 45, MIDC Bhosari, Pune - 411026", phone: "+91 98220 12345", gst: "27AAACA0000A1Z5" },
+        { name: "Tata Motors Vendor Unit - Bhosari", address: "G-Block, MIDC Pimpri, Pune - 411018", phone: "+91 98901 56789", gst: "27BBBCA1111B1Z2" },
+        { name: "Kirloskar Oil Engines Partner - Chakan", address: "Phase II, MIDC Chakan, Pune - 410501", phone: "+91 97676 00000", gst: "Unregistered" }
+      ],
+      vendors: [
+        { name: "Hillson Footwear Ltd.", city: "Agra / Pune Depot", phone: "+91 98111 22233" },
+        { name: "Karam Safety Gear Pvt. Ltd.", city: "Lucknow / Pune Depot", phone: "+91 98222 33344" },
+        { name: "Udyogi Safety Appliances", city: "Kolkata / Mumbai", phone: "+91 98333 44455" }
+      ]
+    };
+  }
+
+  initUI() {
+    this.updateClock();
+    setInterval(() => this.updateClock(), 60000);
+    this.renderGateway();
+    this.renderLiveInvoicePreview();
+    this.populatePartyDropdowns();
+    this.setupKeyboardShortcuts();
+  }
+
+  updateClock() {
+    const d = new Date();
+    const str = d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+    const clockEl = document.getElementById('liveClock');
+    if (clockEl) clockEl.textContent = str;
+  }
+
+  setupKeyboardShortcuts() {
+    window.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
+        if (e.key === 'Escape') this.closeAllModals();
+        return;
+      }
+      if (e.key === 'F8') { e.preventDefault(); this.switchTab('billing'); }
+      if (e.key === 'F9') { e.preventDefault(); this.switchTab('purchases'); }
+      if (e.key === 'F6') { e.preventDefault(); this.openVoucherModal('RECEIPT'); }
+      if (e.key === 'F5') { e.preventDefault(); this.openVoucherModal('PAYMENT'); }
+      if (e.key === 'F3') { e.preventDefault(); this.switchTab('stock'); }
+      if (e.altKey && (e.key === 'l' || e.key === 'L')) { e.preventDefault(); this.switchTab('ledgers'); }
+      if (e.altKey && (e.key === 'p' || e.key === 'P')) { e.preventDefault(); this.switchTab('pl'); }
+      if (e.altKey && (e.key === 'b' || e.key === 'B')) { e.preventDefault(); this.switchTab('bs'); }
+      if (e.altKey && (e.key === 'g' || e.key === 'G')) { e.preventDefault(); this.openQuickSearch(); }
+    });
+  }
+
+  switchTab(tabId) {
+    document.querySelectorAll('.erp-view').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+    
+    const target = document.getElementById(tabId + 'View');
+    const tab = document.getElementById('tab-' + tabId);
+    if (target) target.classList.add('active');
+    if (tab) tab.classList.add('active');
+
+    if (tabId === 'gateway') this.renderGateway();
+    if (tabId === 'billing') this.renderLiveInvoicePreview();
+    if (tabId === 'purchases') this.renderPurchasesTable();
+    if (tabId === 'stock') this.renderStockTable();
+    if (tabId === 'ledgers') this.renderLedgerStatement();
+    if (tabId === 'recvpay') this.renderReceivablesPayables();
+    if (tabId === 'pl') this.renderProfitAndLoss();
+    if (tabId === 'bs') this.renderBalanceSheet();
+    if (tabId === 'daybook') this.renderDayBook();
+  }
+
+  createEmptyInvoice() {
+    const today = new Date().toISOString().split('T')[0];
+    const num = String(this.data.settings.nextInvoiceNo).padStart(4, '0');
+    return {
+      docType: this.data.settings.gstMode === 'registered' ? 'TAX INVOICE' : 'BILL OF SUPPLY',
+      invoiceNo: `${this.data.settings.invoicePrefix}${num}`,
+      date: today,
+      paymentTerms: 'As Agreed',
+      customer: {
+        name: 'M/s. ABC Industries Pvt. Ltd.',
+        address: 'Plot No. 45, MIDC Bhosari, Pune - 411026',
+        phone: '+91 98220 12345',
+        gst: 'Unregistered'
+      },
+      poRef: 'PO/2026/089',
+      placeOfSupply: 'Maharashtra (Code: 27)',
+      items: [
+        { id: 'helm_udyogi_7000', name: 'Safety Helmet Udyogi Ultravent 7000 (Ratchet)', brand: 'UDYOGI', hsn: '6506', unit: 'Nos.', qty: 10, rate: 245.00, amount: 2450.00 },
+        { id: 'shoe_hillson_power', name: 'Safety Shoe Hillson Power Plus High Ankle', brand: 'HILLSON', hsn: '6403', unit: 'Pairs', qty: 5, rate: 780.00, amount: 3900.00 }
+      ],
+      discount: 0,
+      freight: 0,
+      advancePaid: 0,
+      paymentMode: 'Credit / Due',
+      status: 'Unpaid'
+    };
+  }
+
+  newInvoice() {
+    this.currentInvoice = this.createEmptyInvoice();
+    this.renderLiveInvoicePreview();
+  }
+
+  renderLiveInvoicePreview() {
+    const docType = document.getElementById('billDocType') ? document.getElementById('billDocType').value : this.currentInvoice.docType;
+    const invNo = document.getElementById('billInvoiceNo') ? document.getElementById('billInvoiceNo').value : this.currentInvoice.invoiceNo;
+    const invDate = document.getElementById('billDate') ? document.getElementById('billDate').value : this.currentInvoice.date;
+    const custName = document.getElementById('billCustomerName') ? document.getElementById('billCustomerName').value : this.currentInvoice.customer.name;
+    const custAddr = document.getElementById('billCustomerAddress') ? document.getElementById('billCustomerAddress').value : this.currentInvoice.customer.address;
+    const custPhone = document.getElementById('billCustomerPhone') ? document.getElementById('billCustomerPhone').value : this.currentInvoice.customer.phone;
+    const custGst = document.getElementById('billCustomerGst') ? document.getElementById('billCustomerGst').value : this.currentInvoice.customer.gst;
+    const poRef = document.getElementById('billPoRef') ? document.getElementById('billPoRef').value : this.currentInvoice.poRef;
+    const pos = document.getElementById('billPlaceOfSupply') ? document.getElementById('billPlaceOfSupply').value : this.currentInvoice.placeOfSupply;
+    const discount = document.getElementById('billDiscount') ? parseFloat(document.getElementById('billDiscount').value) || 0 : this.currentInvoice.discount;
+    const freight = document.getElementById('billFreight') ? parseFloat(document.getElementById('billFreight').value) || 0 : this.currentInvoice.freight;
+    const advance = document.getElementById('billAdvancePaid') ? parseFloat(document.getElementById('billAdvancePaid').value) || 0 : this.currentInvoice.advancePaid;
+
+    if (document.getElementById('billDocType')) document.getElementById('billDocType').value = docType;
+    if (document.getElementById('billInvoiceNo')) document.getElementById('billInvoiceNo').value = invNo;
+    if (document.getElementById('billDate')) document.getElementById('billDate').value = invDate;
+    if (document.getElementById('billCustomerName')) document.getElementById('billCustomerName').value = custName;
+    if (document.getElementById('billCustomerAddress')) document.getElementById('billCustomerAddress').value = custAddr;
+    if (document.getElementById('billCustomerPhone')) document.getElementById('billCustomerPhone').value = custPhone;
+    if (document.getElementById('billCustomerGst')) document.getElementById('billCustomerGst').value = custGst;
+    if (document.getElementById('billPoRef')) document.getElementById('billPoRef').value = poRef;
+    if (document.getElementById('billPlaceOfSupply')) document.getElementById('billPlaceOfSupply').value = pos;
+
+    let subtotal = 0;
+    this.currentInvoice.items.forEach(it => {
+      it.amount = it.qty * it.rate;
+      subtotal += it.amount;
+    });
+    const grandTotal = Math.max(0, subtotal - discount + freight);
+    const balanceDue = Math.max(0, grandTotal - advance);
+
+    document.getElementById('viewBillTitle').textContent = docType;
+    document.getElementById('viewInvoiceNo').textContent = invNo;
+    document.getElementById('viewInvoiceDate').textContent = this.formatDate(invDate);
+    document.getElementById('viewInvoicePos').textContent = pos;
+    document.getElementById('viewCustName').textContent = custName || 'M/s. ABC Industries Pvt. Ltd.';
+    document.getElementById('viewCustAddress').textContent = custAddr || 'Chikhali, Pune';
+    document.getElementById('viewCustPhone').textContent = custPhone || '-';
+    document.getElementById('viewCustGst').textContent = custGst || 'Unregistered';
+    document.getElementById('viewPoRef').textContent = poRef || 'Direct Sale';
+
+    const itemsTbody = document.getElementById('viewBillItemsBody');
+    itemsTbody.innerHTML = '';
+    this.currentInvoice.items.forEach((item, idx) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="center">${idx + 1}</td>
+        <td><strong>${item.name}</strong> <span style="font-size: 8.5px; color: #64748b;">(${item.brand})</span></td>
+        <td class="center">${item.hsn || '6506'}</td>
+        <td class="num"><strong>${item.qty}</strong></td>
+        <td>${item.unit}</td>
+        <td class="num">₹${item.rate.toFixed(2)}</td>
+        <td class="num"><strong>₹${item.amount.toFixed(2)}</strong></td>
+      `;
+      itemsTbody.appendChild(tr);
+    });
+
+    for (let i = this.currentInvoice.items.length; i < 6; i++) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td class="center" style="color:#cbd5e1;">${i+1}</td><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td>`;
+      itemsTbody.appendChild(tr);
+    }
+
+    document.getElementById('viewSubtotal').textContent = `₹${subtotal.toFixed(2)}`;
+    if (discount > 0) {
+      document.getElementById('rowDiscount').style.display = 'table-row';
+      document.getElementById('viewDiscount').textContent = `-₹${discount.toFixed(2)}`;
+    } else {
+      document.getElementById('rowDiscount').style.display = 'none';
+    }
+    if (freight > 0) {
+      document.getElementById('rowFreight').style.display = 'table-row';
+      document.getElementById('viewFreight').textContent = `+₹${freight.toFixed(2)}`;
+    } else {
+      document.getElementById('rowFreight').style.display = 'none';
+    }
+    document.getElementById('viewGrandTotal').textContent = `₹${grandTotal.toFixed(2)}`;
+    document.getElementById('viewPaid').textContent = `₹${advance.toFixed(2)}`;
+    document.getElementById('viewBalanceDue').textContent = `₹${balanceDue.toFixed(2)}`;
+    document.getElementById('viewWordsText').textContent = `INR ${this.numberToWords(Math.round(grandTotal))} Only`;
+
+    this.renderEditorItems();
+  }
+
+  renderEditorItems() {
+    const container = document.getElementById('billItemsContainer');
+    if (!container) return;
+    container.innerHTML = '';
+
+    this.currentInvoice.items.forEach((item, index) => {
+      const row = document.createElement('div');
+      row.style.cssText = 'background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; padding: 8px; margin-bottom: 8px; font-size: 12px;';
+      row.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <strong style="color: var(--pass-navy);">${index + 1}. ${item.name}</strong>
+          <button class="btn btn-danger btn-sm" onclick="erp.removeBillItem(${index})" style="padding: 2px 6px;">✕</button>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px;">
+          <div>
+            <label style="font-size: 10px; color: var(--text-muted);">Qty (${item.unit})</label>
+            <input type="number" class="form-control" style="padding: 3px 6px; font-size: 12px;" value="${item.qty}" min="1" oninput="erp.updateItemRow(${index}, 'qty', this.value)" />
+          </div>
+          <div>
+            <label style="font-size: 10px; color: var(--text-muted);">Rate (₹)</label>
+            <input type="number" class="form-control" style="padding: 3px 6px; font-size: 12px;" value="${item.rate}" min="0" oninput="erp.updateItemRow(${index}, 'rate', this.value)" />
+          </div>
+          <div>
+            <label style="font-size: 10px; color: var(--text-muted);">Unit</label>
+            <input type="text" class="form-control" style="padding: 3px 6px; font-size: 12px;" value="${item.unit}" oninput="erp.updateItemRow(${index}, 'unit', this.value)" />
+          </div>
+          <div>
+            <label style="font-size: 10px; color: var(--text-muted);">Total (₹)</label>
+            <div style="font-weight: 800; padding: 4px 0; font-family: monospace;">₹${(item.qty * item.rate).toFixed(2)}</div>
+          </div>
+        </div>
+      `;
+      container.appendChild(row);
+    });
+  }
+
+  updateItemRow(index, field, value) {
+    if (field === 'qty') this.currentInvoice.items[index].qty = Math.max(1, parseFloat(value) || 1);
+    if (field === 'rate') this.currentInvoice.items[index].rate = Math.max(0, parseFloat(value) || 0);
+    if (field === 'unit') this.currentInvoice.items[index].unit = value;
+    this.renderLiveInvoicePreview();
+  }
+
+  removeBillItem(index) {
+    this.currentInvoice.items.splice(index, 1);
+    this.renderLiveInvoicePreview();
+  }
+
+  addCustomBillItem() {
+    this.currentInvoice.items.push({
+      id: 'custom_' + Date.now(),
+      name: 'Industrial Safety Equipment Item',
+      brand: 'PASS CORP',
+      hsn: '6506',
+      unit: 'Nos.',
+      qty: 1,
+      rate: 100.00,
+      amount: 100.00
+    });
+    this.renderLiveInvoicePreview();
+  }
+
+  openProductPickerModal() {
+    this.openModal('productPickerModal');
+    this.filterCatalogPicker();
+  }
+
+  filterCatalogPicker() {
+    const q = (document.getElementById('catalogSearch').value || '').toLowerCase();
+    const tbody = document.getElementById('catalogPickerBody');
+    tbody.innerHTML = '';
+    
+    this.data.stock.filter(it => it.name.toLowerCase().includes(q) || it.brand.toLowerCase().includes(q) || it.cat.toLowerCase().includes(q)).forEach(item => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>${item.name}</strong><br><span style="font-size: 10px; color: #64748b;">${item.cat} | HSN: ${item.hsn}</span></td>
+        <td>${item.brand}</td>
+        <td class="num"><strong>${item.stock}</strong> ${item.unit}</td>
+        <td class="num">₹${item.price.toFixed(2)}</td>
+        <td class="center">
+          <button class="btn btn-primary btn-sm" onclick="erp.addCatalogItemToBill('${item.id}')">+ Add</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  addCatalogItemToBill(itemId) {
+    const p = this.data.stock.find(s => s.id === itemId);
+    if (!p) return;
+    this.currentInvoice.items.push({
+      id: p.id,
+      name: p.name,
+      brand: p.brand,
+      hsn: p.hsn,
+      unit: p.unit,
+      qty: 1,
+      rate: p.price,
+      amount: p.price
+    });
+    this.closeModal('productPickerModal');
+    this.renderLiveInvoicePreview();
+  }
+
+  saveInvoice() {
+    const custName = document.getElementById('billCustomerName').value || 'Cash Customer';
+    const subtotal = this.currentInvoice.items.reduce((s, it) => s + (it.qty * it.rate), 0);
+    const discount = parseFloat(document.getElementById('billDiscount').value) || 0;
+    const freight = parseFloat(document.getElementById('billFreight').value) || 0;
+    const grandTotal = Math.max(0, subtotal - discount + freight);
+    const advance = parseFloat(document.getElementById('billAdvancePaid').value) || 0;
+    const balanceDue = Math.max(0, grandTotal - advance);
+
+    const inv = {
+      id: 'inv_' + Date.now(),
+      docType: document.getElementById('billDocType').value,
+      invoiceNo: document.getElementById('billInvoiceNo').value,
+      date: document.getElementById('billDate').value,
+      customer: {
+        name: custName,
+        address: document.getElementById('billCustomerAddress').value,
+        phone: document.getElementById('billCustomerPhone').value,
+        gst: document.getElementById('billCustomerGst').value
+      },
+      poRef: document.getElementById('billPoRef').value,
+      items: JSON.parse(JSON.stringify(this.currentInvoice.items)),
+      subtotal: subtotal,
+      discount: discount,
+      freight: freight,
+      grandTotal: grandTotal,
+      advancePaid: advance,
+      balanceDue: balanceDue,
+      status: balanceDue === 0 ? 'Paid' : (advance > 0 ? 'Partial' : 'Unpaid')
+    };
+
+    inv.items.forEach(it => {
+      const stockItem = this.data.stock.find(s => s.id === it.id);
+      if (stockItem) {
+        stockItem.stock = Math.max(0, stockItem.stock - it.qty);
+      }
+    });
+
+    this.data.settings.nextInvoiceNo += 1;
+
+    if (!this.data.customers.some(c => c.name.toLowerCase() === custName.toLowerCase())) {
+      this.data.customers.push(inv.customer);
+    }
+
+    this.data.invoices.unshift(inv);
+    this.saveState();
+    alert(`✅ Invoice ${inv.invoiceNo} saved successfully!\nStock inventory updated.`);
+    this.switchTab('gateway');
+  }
+
+  shareWhatsAppBill() {
+    const custName = document.getElementById('billCustomerName').value || 'Customer';
+    const invNo = document.getElementById('billInvoiceNo').value;
+    const total = document.getElementById('viewGrandTotal').textContent;
+    const bal = document.getElementById('viewBalanceDue').textContent;
+    
+    let msg = `*PASS CORP. — INVOICE BILLING*\n`;
+    msg += `📍 Dehu Alandi Road, Chikhali, Pune\n`;
+    msg += `📞 +91 97676 72497 | www.passcorp.in\n\n`;
+    msg += `*Bill No:* ${invNo}\n`;
+    msg += `*Customer:* ${custName}\n`;
+    msg += `*Total Amount:* ${total}\n`;
+    msg += `*Balance Due:* ${bal}\n\n`;
+    msg += `*Bank Details:*\nHDFC Bank | A/c: 50200012345678 | IFSC: HDFC0001234\n\n`;
+    msg += `_Thank you for choosing PASS CORP. Industrial Safety Solutions!_`;
+
+    const phone = (document.getElementById('billCustomerPhone').value || '').replace(/\D/g, '');
+    const url = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(msg)}` : `https://wa.me/?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+  }
+
+  /* PURCHASES */
+  renderPurchasesTable() {
+    const tbody = document.getElementById('purchasesTableBody');
+    tbody.innerHTML = '';
+    if (this.data.purchases.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="9" class="center" style="padding: 24px; color: #64748b;">No purchase vouchers recorded yet. Click <strong>+ Record New Purchase (F9)</strong> to add vendor stock inwards.</td></tr>`;
+      return;
+    }
+    this.data.purchases.forEach((p, idx) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${this.formatDate(p.date)}</td>
+        <td><strong>${p.refNo}</strong></td>
+        <td>${p.supplier}</td>
+        <td>${p.itemName}</td>
+        <td class="num">${p.qty}</td>
+        <td class="num"><strong>₹${p.totalAmount.toFixed(2)}</strong></td>
+        <td>${p.payStatus}</td>
+        <td><span class="tag ${p.payStatus.includes('Paid') ? 'tag-paid' : 'tag-unpaid'}">${p.payStatus.includes('Paid') ? 'Settled' : 'Payable Due'}</span></td>
+        <td class="center">
+          <button class="btn btn-outline btn-sm" onclick="erp.deletePurchase(${idx})">Delete</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  openNewPurchaseModal() {
+    this.populatePurchaseItemDropdown();
+    document.getElementById('purDate').value = new Date().toISOString().split('T')[0];
+    document.getElementById('purRefNo').value = 'PUR/' + Date.now().toString().slice(-4);
+    this.openModal('purchaseModal');
+  }
+
+  populatePurchaseItemDropdown() {
+    const sel = document.getElementById('purItemSelect');
+    sel.innerHTML = '';
+    this.data.stock.forEach(s => {
+      const opt = document.createElement('option');
+      opt.value = s.id;
+      opt.textContent = `${s.name} (${s.brand}) - Current Stock: ${s.stock}`;
+      sel.appendChild(opt);
+    });
+  }
+
+  savePurchase() {
+    const itemId = document.getElementById('purItemSelect').value;
+    const stockItem = this.data.stock.find(s => s.id === itemId);
+    const qty = parseFloat(document.getElementById('purQty').value) || 1;
+    const rate = parseFloat(document.getElementById('purRate').value) || 0;
+    const supplier = document.getElementById('purSupplierName').value || 'Vendor Supplier';
+    const totalAmount = qty * rate;
+
+    const pur = {
+      id: 'pur_' + Date.now(),
+      date: document.getElementById('purDate').value,
+      refNo: document.getElementById('purRefNo').value,
+      supplier: supplier,
+      itemId: itemId,
+      itemName: stockItem ? stockItem.name : 'Item',
+      qty: qty,
+      rate: rate,
+      totalAmount: totalAmount,
+      payStatus: document.getElementById('purPayStatus').value
+    };
+
+    if (stockItem) {
+      stockItem.stock += qty;
+      stockItem.cost = rate;
+    }
+
+    if (!this.data.vendors.some(v => v.name.toLowerCase() === supplier.toLowerCase())) {
+      this.data.vendors.push({ name: supplier, city: 'Pune', phone: '-' });
+    }
+
+    this.data.purchases.unshift(pur);
+    this.saveState();
+    this.closeModal('purchaseModal');
+    alert(`✅ Purchase ${pur.refNo} recorded!\nStock increased by +${qty} units.`);
+    this.renderPurchasesTable();
+    this.renderGateway();
+  }
+
+  deletePurchase(index) {
+    if (!confirm('Are you sure you want to delete this purchase entry?')) return;
+    this.data.purchases.splice(index, 1);
+    this.saveState();
+    this.renderPurchasesTable();
+    this.renderGateway();
+  }
+
+  /* STOCK */
+  renderStockTable() {
+    const q = (document.getElementById('stockSearchInput') ? document.getElementById('stockSearchInput').value : '').toLowerCase();
+    const tbody = document.getElementById('stockTableBody');
+    tbody.innerHTML = '';
+
+    let totalVal = 0;
+    this.data.stock.filter(it => it.name.toLowerCase().includes(q) || it.brand.toLowerCase().includes(q) || it.cat.toLowerCase().includes(q)).forEach((it, idx) => {
+      const val = it.stock * it.cost;
+      totalVal += val;
+      const isLow = it.stock <= it.minAlert;
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="font-family: monospace; font-size: 11px;">${it.id}</td>
+        <td>
+          <strong>${it.name}</strong>
+          ${isLow ? '<span class="tag tag-unpaid" style="margin-left: 6px;">Low Stock</span>' : ''}
+        </td>
+        <td>${it.brand}</td>
+        <td><span class="tag tag-blue">${it.cat}</span></td>
+        <td>${it.unit}</td>
+        <td class="num" style="font-weight: 800; color: ${isLow ? '#dc2626' : '#059669'};">${it.stock}</td>
+        <td class="num">₹${it.cost.toFixed(2)}</td>
+        <td class="num">₹${it.price.toFixed(2)}</td>
+        <td class="num"><strong>₹${val.toFixed(2)}</strong></td>
+        <td class="center">
+          <button class="btn btn-outline btn-sm" onclick="erp.adjustStockQty(${idx})">Adjust</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  openNewStockItemModal() {
+    this.openModal('stockItemModal');
+  }
+
+  saveStockItem() {
+    const name = document.getElementById('newItemName').value;
+    if (!name) return alert('Please enter item name');
+
+    const item = {
+      id: 'item_' + Date.now().toString().slice(-5),
+      name: name,
+      brand: document.getElementById('newItemBrand').value || 'PASS CORP',
+      cat: document.getElementById('newItemCat').value,
+      hsn: document.getElementById('newItemHsn').value || '6506',
+      unit: document.getElementById('newItemUnit').value,
+      cost: parseFloat(document.getElementById('newItemCost').value) || 0,
+      price: parseFloat(document.getElementById('newItemPrice').value) || 0,
+      stock: parseFloat(document.getElementById('newItemStock').value) || 0,
+      minAlert: parseFloat(document.getElementById('newItemMinAlert').value) || 10
+    };
+
+    this.data.stock.push(item);
+    this.saveState();
+    this.closeModal('stockItemModal');
+    this.renderStockTable();
+    this.renderGateway();
+  }
+
+  adjustStockQty(index) {
+    const current = this.data.stock[index].stock;
+    const val = prompt(`Enter updated physical stock quantity for "${this.data.stock[index].name}":`, current);
+    if (val !== null && !isNaN(parseFloat(val))) {
+      this.data.stock[index].stock = parseFloat(val);
+      this.saveState();
+      this.renderStockTable();
+      this.renderGateway();
+    }
+  }
+
+  /* LEDGERS */
+  populatePartyDropdowns() {
+    const sel = document.getElementById('ledgerSelect');
+    if (!sel) return;
+    sel.innerHTML = '';
+
+    const grpCust = document.createElement('optgroup');
+    grpCust.label = 'Sundry Debtors (Customers)';
+    this.data.customers.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = 'cust:' + c.name;
+      opt.textContent = c.name;
+      grpCust.appendChild(opt);
+    });
+    sel.appendChild(grpCust);
+
+    const grpVend = document.createElement('optgroup');
+    grpVend.label = 'Sundry Creditors (Vendors)';
+    this.data.vendors.forEach(v => {
+      const opt = document.createElement('option');
+      opt.value = 'vend:' + v.name;
+      opt.textContent = v.name;
+      grpVend.appendChild(opt);
+    });
+    sel.appendChild(grpVend);
+
+    const grpBank = document.createElement('optgroup');
+    grpBank.label = 'Bank & Cash Accounts';
+    grpBank.innerHTML = `
+      <option value="bank:HDFC Bank">HDFC Bank (A/c 50200012345678)</option>
+      <option value="cash:Cash in Hand">Cash in Hand</option>
+    `;
+    sel.appendChild(grpBank);
+  }
+
+  renderLedgerStatement() {
+    this.populatePartyDropdowns();
+    const selVal = document.getElementById('ledgerSelect').value || 'cust:M/s. ABC Industries Pvt. Ltd.';
+    const [type, partyName] = selVal.split(':');
+
+    document.getElementById('ledgerPartyTitle').textContent = partyName;
+    document.getElementById('ledgerPartyGroup').textContent = `Group: ${type === 'cust' ? 'Sundry Debtors (Customers)' : (type === 'vend' ? 'Sundry Creditors (Vendors)' : 'Cash / Bank Ledger')}`;
+
+    const tbody = document.getElementById('ledgerStatementBody');
+    tbody.innerHTML = '';
+
+    let runningBal = 0;
+    const txns = [];
+
+    if (type === 'cust') {
+      this.data.invoices.filter(inv => inv.customer.name.toLowerCase() === partyName.toLowerCase()).forEach(inv => {
+        txns.push({
+          date: inv.date,
+          type: 'Sales Invoice (F8)',
+          refNo: inv.invoiceNo,
+          narration: `Sales Bill for ${inv.items.length} safety items`,
+          debit: inv.grandTotal,
+          credit: 0
+        });
+        if (inv.advancePaid > 0) {
+          txns.push({
+            date: inv.date,
+            type: 'Receipt (Advance)',
+            refNo: 'REC-' + inv.invoiceNo,
+            narration: `Payment received against ${inv.invoiceNo}`,
+            debit: 0,
+            credit: inv.advancePaid
+          });
+        }
+      });
+    } else if (type === 'vend') {
+      this.data.purchases.filter(p => p.supplier.toLowerCase() === partyName.toLowerCase()).forEach(p => {
+        txns.push({
+          date: p.date,
+          type: 'Purchase (F9)',
+          refNo: p.refNo,
+          narration: `Purchased ${p.qty}x ${p.itemName}`,
+          debit: 0,
+          credit: p.totalAmount
+        });
+      });
+    }
+
+    this.data.vouchers.filter(v => v.party.toLowerCase() === partyName.toLowerCase()).forEach(v => {
+      if (v.type === 'RECEIPT') {
+        txns.push({ date: v.date, type: 'Receipt (F6)', refNo: v.refNo, narration: v.narration || 'Amount Received', debit: 0, credit: v.amount });
+      } else if (v.type === 'PAYMENT') {
+        txns.push({ date: v.date, type: 'Payment (F5)', refNo: v.refNo, narration: v.narration || 'Amount Paid', debit: v.amount, credit: 0 });
+      }
+    });
+
+    txns.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    if (txns.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="7" class="center" style="padding: 20px; color: #64748b;">No transactions recorded for ${partyName}.</td></tr>`;
+      document.getElementById('ledgerClosingBal').textContent = '₹0.00';
+      return;
+    }
+
+    txns.forEach(t => {
+      runningBal += (t.debit - t.credit);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${this.formatDate(t.date)}</td>
+        <td><span class="tag tag-blue">${t.type}</span></td>
+        <td><strong>${t.refNo}</strong></td>
+        <td>${t.narration}</td>
+        <td class="num">${t.debit > 0 ? '₹' + t.debit.toFixed(2) : '-'}</td>
+        <td class="num">${t.credit > 0 ? '₹' + t.credit.toFixed(2) : '-'}</td>
+        <td class="num" style="font-weight: 800; color: ${runningBal >= 0 ? '#059669' : '#dc2626'};">₹${Math.abs(runningBal).toFixed(2)} ${runningBal >= 0 ? 'Dr' : 'Cr'}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    document.getElementById('ledgerClosingBal').textContent = `₹${Math.abs(runningBal).toFixed(2)} ${runningBal >= 0 ? 'Dr' : 'Cr'}`;
+  }
+
+  printLedger() {
+    window.print();
+  }
+
+  /* VOUCHERS */
+  openVoucherModal(vType) {
+    document.getElementById('vType').value = vType;
+    document.getElementById('vDate').value = new Date().toISOString().split('T')[0];
+    document.getElementById('voucherModalTitle').textContent = `Record ${vType} Voucher (${vType === 'RECEIPT' ? 'F6' : (vType === 'PAYMENT' ? 'F5' : 'F4')})`;
+    document.getElementById('vPartyLabel').textContent = vType === 'RECEIPT' ? 'Received From (Customer / Debtors)' : 'Paid To (Vendor / Expense A/c)';
+
+    const sel = document.getElementById('vPartySelect');
+    sel.innerHTML = '';
+
+    if (vType === 'RECEIPT') {
+      this.data.customers.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.name;
+        opt.textContent = c.name;
+        sel.appendChild(opt);
+      });
+    } else {
+      this.data.vendors.forEach(v => {
+        const opt = document.createElement('option');
+        opt.value = v.name;
+        opt.textContent = v.name;
+        sel.appendChild(opt);
+      });
+      INITIAL_EXPENSES.forEach(e => {
+        const opt = document.createElement('option');
+        opt.value = e.name + ' Expense';
+        opt.textContent = e.name + ' Account (Expense)';
+        sel.appendChild(opt);
+      });
+    }
+
+    this.openModal('voucherModal');
+  }
+
+  saveVoucher() {
+    const vType = document.getElementById('vType').value;
+    const amount = parseFloat(document.getElementById('vAmount').value) || 0;
+    if (amount <= 0) return alert('Please enter a valid amount');
+
+    const v = {
+      id: 'v_' + Date.now(),
+      refNo: `${vType.slice(0,3)}/${Date.now().toString().slice(-4)}`,
+      type: vType,
+      date: document.getElementById('vDate').value,
+      party: document.getElementById('vPartySelect').value,
+      amount: amount,
+      mode: document.getElementById('vModeSelect').value,
+      narration: document.getElementById('vNarration').value
+    };
+
+    this.data.vouchers.unshift(v);
+    this.saveState();
+    this.closeModal('voucherModal');
+    alert(`✅ ${vType} voucher ${v.refNo} recorded successfully!`);
+    this.renderGateway();
+  }
+
+  /* RECEIVABLES & PAYABLES */
+  renderReceivablesPayables() {
+    const rTbody = document.getElementById('receivablesTableBody');
+    const pTbody = document.getElementById('payablesTableBody');
+    rTbody.innerHTML = '';
+    pTbody.innerHTML = '';
+
+    let totalRecv = 0;
+    this.data.invoices.filter(inv => inv.balanceDue > 0).forEach(inv => {
+      totalRecv += inv.balanceDue;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>${inv.invoiceNo}</strong></td>
+        <td>${inv.customer.name}</td>
+        <td>${this.formatDate(inv.date)}</td>
+        <td class="num" style="font-weight: 800; color: #dc2626;">₹${inv.balanceDue.toFixed(2)}</td>
+        <td class="center">
+          <button class="btn btn-tally btn-sm" onclick="erp.settleInvoiceReceipt('${inv.id}')">Receive (F6)</button>
+        </td>
+      `;
+      rTbody.appendChild(tr);
+    });
+
+    let totalPay = 0;
+    this.data.purchases.filter(p => !p.payStatus.includes('Paid')).forEach(p => {
+      totalPay += p.totalAmount;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>${p.refNo}</strong></td>
+        <td>${p.supplier}</td>
+        <td>${this.formatDate(p.date)}</td>
+        <td class="num" style="font-weight: 800; color: #dc2626;">₹${p.totalAmount.toFixed(2)}</td>
+        <td class="center">
+          <button class="btn btn-success btn-sm" onclick="erp.settlePurchasePayment('${p.id}')">Pay (F5)</button>
+        </td>
+      `;
+      pTbody.appendChild(tr);
+    });
+
+    document.getElementById('totalRecvHeader').textContent = `₹${totalRecv.toFixed(2)}`;
+    document.getElementById('totalPayHeader').textContent = `₹${totalPay.toFixed(2)}`;
+  }
+
+  settleInvoiceReceipt(invId) {
+    const inv = this.data.invoices.find(i => i.id === invId);
+    if (!inv) return;
+    this.openVoucherModal('RECEIPT');
+    document.getElementById('vPartySelect').value = inv.customer.name;
+    document.getElementById('vAmount').value = inv.balanceDue;
+    document.getElementById('vNarration').value = `Full settlement against Inv ${inv.invoiceNo}`;
+  }
+
+  settlePurchasePayment(purId) {
+    const p = this.data.purchases.find(x => x.id === purId);
+    if (!p) return;
+    this.openVoucherModal('PAYMENT');
+    document.getElementById('vPartySelect').value = p.supplier;
+    document.getElementById('vAmount').value = p.totalAmount;
+    document.getElementById('vNarration').value = `Settlement against Vendor Bill ${p.refNo}`;
+  }
+
+  /* P&L & BALANCE SHEET */
+  renderProfitAndLoss() {
+    const totalSales = this.data.invoices.reduce((s, i) => s + i.grandTotal, 0);
+    const totalPurchases = this.data.purchases.reduce((s, p) => s + p.totalAmount, 0);
+    const stockVal = this.data.stock.reduce((s, it) => s + (it.stock * it.cost), 0);
+    const openingStock = 50000;
+
+    const grossProfit = (totalSales + stockVal) - (openingStock + totalPurchases);
+    const tradingTotal = Math.max(openingStock + totalPurchases + Math.max(0, grossProfit), totalSales + stockVal);
+
+    const expRent = 25000;
+    const expSal = 45000;
+    const expUtil = 6500;
+    const expMisc = 4000;
+    const totalExp = expRent + expSal + expUtil + expMisc;
+    const netProfit = grossProfit - totalExp;
+
+    document.getElementById('plOpeningStock').textContent = `₹${openingStock.toFixed(2)}`;
+    document.getElementById('plPurchases').textContent = `₹${totalPurchases.toFixed(2)}`;
+    document.getElementById('plGrossProfit').textContent = `₹${grossProfit.toFixed(2)}`;
+    document.getElementById('plTradingTotalLeft').textContent = `₹${tradingTotal.toFixed(2)}`;
+
+    document.getElementById('plSales').textContent = `₹${totalSales.toFixed(2)}`;
+    document.getElementById('plClosingStock').textContent = `₹${stockVal.toFixed(2)}`;
+    document.getElementById('plTradingTotalRight').textContent = `₹${tradingTotal.toFixed(2)}`;
+
+    document.getElementById('plGrossProfitBd').textContent = `₹${grossProfit.toFixed(2)}`;
+    document.getElementById('plExpRent').textContent = `₹${expRent.toFixed(2)}`;
+    document.getElementById('plExpSalaries').textContent = `₹${expSal.toFixed(2)}`;
+    document.getElementById('plExpUtilities').textContent = `₹${expUtil.toFixed(2)}`;
+    document.getElementById('plExpMisc').textContent = `₹${expMisc.toFixed(2)}`;
+    document.getElementById('plNetProfit').textContent = `₹${netProfit.toFixed(2)}`;
+
+    const finalTotal = Math.max(grossProfit, totalExp + netProfit);
+    document.getElementById('plFinalTotalLeft').textContent = `₹${finalTotal.toFixed(2)}`;
+    document.getElementById('plFinalTotalRight').textContent = `₹${finalTotal.toFixed(2)}`;
+  }
+
+  renderBalanceSheet() {
+    const totalSales = this.data.invoices.reduce((s, i) => s + i.grandTotal, 0);
+    const totalPurchases = this.data.purchases.reduce((s, p) => s + p.totalAmount, 0);
+    const stockVal = this.data.stock.reduce((s, it) => s + (it.stock * it.cost), 0);
+    const openingStock = 50000;
+    const grossProfit = (totalSales + stockVal) - (openingStock + totalPurchases);
+    const netProfit = grossProfit - (25000 + 45000 + 6500 + 4000);
+
+    const capital = this.data.settings.capital;
+    const fixedAssets = this.data.settings.fixedAssets;
+    const receivables = this.data.invoices.reduce((s, i) => s + i.balanceDue, 0);
+    const payables = this.data.purchases.filter(p => !p.payStatus.includes('Paid')).reduce((s, p) => s + p.totalAmount, 0);
+    
+    const bankBal = this.data.settings.bankBalance;
+    const cashBal = this.data.settings.cashBalance;
+
+    const totalLiab = capital + netProfit + payables;
+    const totalAssets = fixedAssets + stockVal + receivables + bankBal + cashBal;
+
+    document.getElementById('bsCapital').textContent = `₹${capital.toFixed(2)}`;
+    document.getElementById('bsNetProfit').textContent = `₹${netProfit.toFixed(2)}`;
+    document.getElementById('bsCreditors').textContent = `₹${payables.toFixed(2)}`;
+    document.getElementById('bsTotalLiabilities').textContent = `₹${totalLiab.toFixed(2)}`;
+
+    document.getElementById('bsFixedAssets').textContent = `₹${fixedAssets.toFixed(2)}`;
+    document.getElementById('bsStockInHand').textContent = `₹${stockVal.toFixed(2)}`;
+    document.getElementById('bsDebtors').textContent = `₹${receivables.toFixed(2)}`;
+    document.getElementById('bsBankBalance').textContent = `₹${bankBal.toFixed(2)}`;
+    document.getElementById('bsCashInHand').textContent = `₹${cashBal.toFixed(2)}`;
+    document.getElementById('bsTotalAssets').textContent = `₹${totalAssets.toFixed(2)}`;
+  }
+
+  renderDayBook() {
+    const dt = document.getElementById('daybookDate').value || new Date().toISOString().split('T')[0];
+    document.getElementById('daybookDate').value = dt;
+    const tbody = document.getElementById('daybookTableBody');
+    tbody.innerHTML = '';
+
+    const txns = [];
+    this.data.invoices.forEach(inv => {
+      txns.push({ date: inv.date, type: 'Sales Bill (F8)', ref: inv.invoiceNo, party: inv.customer.name, debit: inv.grandTotal, credit: 0 });
+    });
+    this.data.purchases.forEach(p => {
+      txns.push({ date: p.date, type: 'Purchase (F9)', ref: p.refNo, party: p.supplier, debit: 0, credit: p.totalAmount });
+    });
+    this.data.vouchers.forEach(v => {
+      txns.push({ date: v.date, type: `${v.type} Voucher`, ref: v.refNo, party: v.party, debit: v.type === 'PAYMENT' ? v.amount : 0, credit: v.type === 'RECEIPT' ? v.amount : 0 });
+    });
+
+    if (txns.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="6" class="center" style="padding: 20px; color: #64748b;">No transactions in Day Book for selected date.</td></tr>`;
+      return;
+    }
+
+    txns.forEach(t => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${this.formatDate(t.date)}</td>
+        <td><span class="tag tag-blue">${t.type}</span></td>
+        <td><strong>${t.ref}</strong></td>
+        <td>${t.party}</td>
+        <td class="num">${t.debit > 0 ? '₹' + t.debit.toFixed(2) : '-'}</td>
+        <td class="num">${t.credit > 0 ? '₹' + t.credit.toFixed(2) : '-'}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  /* GATEWAY */
+  renderGateway() {
+    const totalSales = this.data.invoices.reduce((s, i) => s + i.grandTotal, 0);
+    const stockVal = this.data.stock.reduce((s, it) => s + (it.stock * it.cost), 0);
+    const receivables = this.data.invoices.reduce((s, i) => s + i.balanceDue, 0);
+    const payables = this.data.purchases.filter(p => !p.payStatus.includes('Paid')).reduce((s, p) => s + p.totalAmount, 0);
+    
+    const totalPurchases = this.data.purchases.reduce((s, p) => s + p.totalAmount, 0);
+    const grossProfit = (totalSales + stockVal) - (50000 + totalPurchases);
+    const netProfit = grossProfit - (25000 + 45000 + 6500 + 4000);
+    const margin = totalSales > 0 ? ((netProfit / totalSales) * 100).toFixed(1) : 0;
+
+    document.getElementById('kpiTotalSales').textContent = `₹${totalSales.toFixed(2)}`;
+    document.getElementById('kpiSalesCount').textContent = `${this.data.invoices.length} Invoices Generated`;
+    document.getElementById('kpiStockVal').textContent = `₹${stockVal.toFixed(2)}`;
+    document.getElementById('kpiStockItems').textContent = `${this.data.stock.length} Safety Gear Items in Catalog`;
+    document.getElementById('kpiReceivables').textContent = `₹${receivables.toFixed(2)}`;
+    document.getElementById('kpiPayables').textContent = `₹${payables.toFixed(2)}`;
+    document.getElementById('kpiNetProfit').textContent = `₹${netProfit.toFixed(2)}`;
+    document.getElementById('kpiMarginPercent').textContent = `Net Margin: ${margin}%`;
+
+    const recBody = document.getElementById('recentVouchersBody');
+    recBody.innerHTML = '';
+    const recent = this.data.invoices.slice(0, 5);
+    if (recent.length === 0) {
+      recBody.innerHTML = `<tr><td colspan="7" class="center" style="padding: 16px; color: #64748b;">No sales invoices generated yet. Click <strong>+ New Sales Bill</strong> to start.</td></tr>`;
+    } else {
+      recent.forEach(inv => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${this.formatDate(inv.date)}</td>
+          <td><span class="tag tag-blue">${inv.docType}</span></td>
+          <td><strong>${inv.invoiceNo}</strong></td>
+          <td>${inv.customer.name}</td>
+          <td class="num"><strong>₹${inv.grandTotal.toFixed(2)}</strong></td>
+          <td><span class="tag ${inv.status === 'Paid' ? 'tag-paid' : (inv.status === 'Partial' ? 'tag-partial' : 'tag-unpaid')}">${inv.status}</span></td>
+          <td class="center">
+            <button class="btn btn-outline btn-sm" onclick="erp.loadInvoiceForPrint('${inv.id}')">View / Print</button>
+          </td>
+        `;
+        recBody.appendChild(tr);
+      });
+    }
+
+    const lowBody = document.getElementById('lowStockBody');
+    lowBody.innerHTML = '';
+    const lowItems = this.data.stock.filter(s => s.stock <= s.minAlert);
+    if (lowItems.length === 0) {
+      lowBody.innerHTML = `<tr><td colspan="6" class="center" style="padding: 12px; color: #059669;">✅ All inventory items are above safe minimum stock levels.</td></tr>`;
+    } else {
+      lowItems.forEach(it => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${it.name}</strong></td>
+          <td>${it.brand}</td>
+          <td>${it.cat}</td>
+          <td class="num" style="color: #dc2626; font-weight: 800;">${it.stock} ${it.unit}</td>
+          <td class="num">${it.minAlert} ${it.unit}</td>
+          <td><span class="tag tag-unpaid">Reorder Alert</span></td>
+        `;
+        lowBody.appendChild(tr);
+      });
+    }
+  }
+
+  loadInvoiceForPrint(invId) {
+    const inv = this.data.invoices.find(i => i.id === invId);
+    if (!inv) return;
+    this.currentInvoice = JSON.parse(JSON.stringify(inv));
+    this.switchTab('billing');
+    this.renderLiveInvoicePreview();
+  }
+
+  /* SETTINGS */
+  toggleGstMode(mode) {
+    this.data.settings.gstMode = mode;
+    const badge = document.getElementById('topGstBadge');
+    if (mode === 'registered') {
+      badge.className = 'gst-badge registered';
+      badge.textContent = 'GST: Registered';
+      document.getElementById('viewGstBanner').textContent = 'GSTIN: 27AAACP1234F1Z0 | Regular';
+      document.getElementById('billDocType').value = 'TAX INVOICE';
+    } else {
+      badge.className = 'gst-badge';
+      badge.textContent = 'GST: Non-GST (Unregistered)';
+      document.getElementById('viewGstBanner').textContent = 'GSTIN: Unregistered (Non-GST Bill of Supply)';
+      document.getElementById('billDocType').value = 'BILL OF SUPPLY';
+    }
+    this.saveState();
+    this.renderLiveInvoicePreview();
+  }
+
+  saveSettings() {
+    this.data.settings.compName = document.getElementById('cfgCompName').value;
+    this.data.settings.compTagline = document.getElementById('cfgCompTagline').value;
+    this.data.settings.address = document.getElementById('cfgAddress').value;
+    this.data.settings.phone = document.getElementById('cfgMobile').value;
+    this.data.settings.email = document.getElementById('cfgEmail').value;
+    this.data.settings.invoicePrefix = document.getElementById('cfgPrefix').value;
+    this.data.settings.nextInvoiceNo = parseInt(document.getElementById('cfgNextNo').value) || 1;
+    this.saveState();
+    alert('✅ Configurations saved successfully!');
+    this.renderGateway();
+  }
+
+  resetAllData() {
+    if (confirm('⚠️ WARNING: Are you sure you want to reset all ERP data to factory defaults?')) {
+      localStorage.removeItem(this.storageKey);
+      this.data = this.getDefaultState();
+      this.saveState();
+      location.reload();
+    }
+  }
+
+  openModal(id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('open');
+  }
+
+  closeModal(id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('open');
+  }
+
+  closeAllModals() {
+    document.querySelectorAll('.modal-backdrop').forEach(el => el.classList.remove('open'));
+  }
+
+  openQuickSearch() {
+    const q = prompt("TallyPrime Go To / Quick Navigation:\nType: sales, purchase, stock, ledger, pl, bs, daybook, settings");
+    if (!q) return;
+    const lower = q.toLowerCase();
+    if (lower.includes('sale') || lower.includes('bill')) this.switchTab('billing');
+    else if (lower.includes('pur')) this.switchTab('purchases');
+    else if (lower.includes('stoc')) this.switchTab('stock');
+    else if (lower.includes('ledg')) this.switchTab('ledgers');
+    else if (lower.includes('p&l') || lower.includes('profit')) this.switchTab('pl');
+    else if (lower.includes('bs') || lower.includes('balance')) this.switchTab('bs');
+    else if (lower.includes('day')) this.switchTab('daybook');
+    else if (lower.includes('set') || lower.includes('gst')) this.switchTab('settings');
+  }
+
+  formatDate(isoStr) {
+    if (!isoStr) return '';
+    try {
+      const parts = isoStr.split('-');
+      if (parts.length === 3) {
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        return `${parts[2]} ${months[parseInt(parts[1])-1]} ${parts[0]}`;
+      }
+      return isoStr;
+    } catch(e) { return isoStr; }
+  }
+
+  numberToWords(n) {
+    if (n === 0) return 'Zero Rupees';
+    const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+    const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+
+    const inWords = (num) => {
+      if (num < 20) return a[num];
+      if (num < 100) return b[Math.floor(num / 10)] + (num % 10 !== 0 ? ' ' + a[num % 10] : '');
+      if (num < 1000) return a[Math.floor(num / 100)] + ' Hundred' + (num % 100 !== 0 ? ' and ' + inWords(num % 100) : '');
+      if (num < 100000) return inWords(Math.floor(num / 1000)) + ' Thousand' + (num % 1000 !== 0 ? ' ' + inWords(num % 1000) : '');
+      if (num < 10000000) return inWords(Math.floor(num / 100000)) + ' Lakh' + (num % 100000 !== 0 ? ' ' + inWords(num % 100000) : '');
+      return inWords(Math.floor(num / 10000000)) + ' Crore' + (num % 10000000 !== 0 ? ' ' + inWords(num % 10000000) : '');
+    };
+
+    return inWords(n) + ' Rupees';
+  }
+}
+
+const erp = new PassInvotorERP();
+</script>
+
+</body>
+</html>
