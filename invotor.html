@@ -1645,6 +1645,14 @@ class PassInvotorERP {
   initUI() {
     this.updateClock();
     this.renderBuyersDatalist();
+    if (document.getElementById('billCustomerName') && this.currentInvoice && this.currentInvoice.customer) {
+      document.getElementById('billCustomerName').value = this.currentInvoice.customer.name || '';
+      document.getElementById('billCustomerAddress').value = this.currentInvoice.customer.address || '';
+      document.getElementById('billCustomerPhone').value = this.currentInvoice.customer.phone || '';
+      document.getElementById('billCustomerGst').value = this.currentInvoice.customer.gst || 'Unregistered';
+      document.getElementById('billPlaceOfSupply').value = this.currentInvoice.placeOfSupply || 'Maharashtra (Code: 27)';
+      document.getElementById('billInvoiceNo').value = this.currentInvoice.invoiceNo || this.getNextInvoiceNumber();
+    }
     this.renderLiveInvoicePreview();
     this.populatePartyDropdowns();
     this.syncSettingsFields();
