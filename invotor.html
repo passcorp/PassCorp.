@@ -485,14 +485,16 @@ body {
 /* BILLING / INVOICE EDITOR STYLES */
 .billing-split {
   display: grid;
-  grid-template-columns: 1fr 480px;
+  grid-template-columns: 1fr 520px;
   gap: 20px;
 }
 @media (max-width: 1200px) {
   .billing-split { grid-template-columns: 1fr; }
 }
 
-/* A4 PRINT & PREVIEW SHEET */
+/* ==========================================================================
+   AUTHENTIC OSF TALLY PRIME A4 PRINT & PREVIEW SHEET STYLES
+   ========================================================================== */
 .a4-preview-card {
   background: #525659;
   padding: 20px;
@@ -500,205 +502,155 @@ body {
   display: flex;
   justify-content: center;
   overflow: auto;
-  max-height: 85vh;
+  max-height: 88vh;
 }
 .a4-sheet {
   width: 210mm;
+  max-width: 210mm;
   min-height: 297mm;
   background: #ffffff;
   box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-  padding: 14mm 14mm;
+  padding: 6mm 8mm;
   position: relative;
   display: flex;
   flex-direction: column;
   color: #000000;
-  font-size: 11.5px;
-  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  line-height: 1.25;
   box-sizing: border-box;
 }
 
-.a4-watermark {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0.05;
-  width: 70%;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.inv-header-box {
-  display: flex;
-  border-bottom: 2px solid #0c2340;
-  padding-bottom: 10px;
-  margin-bottom: 12px;
-  position: relative;
-  z-index: 2;
-}
-.inv-logo-col {
-  width: 85px;
-  margin-right: 12px;
-}
-.inv-logo-col img {
-  width: 80px;
-  height: auto;
-}
-.inv-company-col {
-  flex: 1;
-}
-.inv-comp-name {
-  font-size: 20px;
-  font-weight: 900;
-  color: #0c2340;
-  letter-spacing: 0.5px;
-}
-.inv-comp-sub {
-  font-size: 9.5px;
-  font-weight: 800;
-  color: #d92525;
-  letter-spacing: 0.5px;
-  margin-bottom: 4px;
-}
-.inv-comp-details {
-  font-size: 9.5px;
-  color: #334155;
-  line-height: 1.35;
-}
-.inv-title-col {
-  text-align: right;
-  min-width: 170px;
-}
-.inv-badge-title {
-  background: #0c2340;
-  color: #ffffff;
-  padding: 4px 10px;
-  font-size: 13px;
-  font-weight: 900;
-  letter-spacing: 1px;
-  display: inline-block;
-  margin-bottom: 6px;
-}
-.inv-meta-tbl {
+/* Master Outer Border Table */
+.inv-outer-table {
   width: 100%;
-  font-size: 9.5px;
+  border: 1.5px solid #000000;
   border-collapse: collapse;
-}
-.inv-meta-tbl td {
-  padding: 2px 4px;
-  border: 1px solid #cbd5e1;
-}
-.inv-meta-tbl .lbl {
-  background: #f1f5f9;
-  font-weight: 700;
-  color: #334155;
+  table-layout: fixed;
+  background: #ffffff;
 }
 
-.inv-parties-box {
-  display: flex;
+.inv-outer-table > tbody > tr > td, 
+.inv-outer-table > tr > td {
   border: 1px solid #000000;
-  margin-bottom: 12px;
-  position: relative;
-  z-index: 2;
+  padding: 3px 5px;
+  vertical-align: top;
+  background: #ffffff;
 }
-.inv-party-col {
-  flex: 1;
-  padding: 8px 10px;
-}
-.inv-party-col:first-child {
-  border-right: 1px solid #000000;
-}
-.party-title {
+
+/* Copy Type Header Banner */
+.inv-top-copy {
+  text-align: right;
   font-size: 10px;
-  font-weight: 800;
+  font-weight: 900;
+  color: #0f172a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.inv-top-badge {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+/* Company Branding Header (Balanced 3-Column Center) */
+.inv-company-name {
+  font-size: 19px;
+  font-weight: 900;
   color: #0c2340;
-  border-bottom: 1px solid #cbd5e1;
-  padding-bottom: 2px;
-  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+  text-align: center;
+}
+
+.inv-company-tagline {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #d92525;
+  margin-bottom: 2px;
+  text-align: center;
   text-transform: uppercase;
 }
 
-.inv-items-tbl {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 12px;
-  font-size: 10px;
-  position: relative;
-  z-index: 2;
-}
-.inv-items-tbl th {
-  background: #0c2340;
-  color: #ffffff;
-  padding: 5px 6px;
-  border: 1px solid #000000;
+.inv-company-details {
   font-size: 9.5px;
-}
-.inv-items-tbl td {
-  padding: 5px 6px;
-  border: 1px solid #000000;
-  vertical-align: top;
-}
-
-.inv-totals-box {
-  display: flex;
-  border: 1px solid #000000;
-  margin-bottom: 12px;
-  position: relative;
-  z-index: 2;
-}
-.inv-words-col {
-  flex: 1;
-  padding: 8px 10px;
-  border-right: 1px solid #000000;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.inv-calc-col {
-  width: 220px;
-}
-.calc-tbl {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 10px;
-}
-.calc-tbl td {
-  padding: 4px 8px;
-  border-bottom: 1px solid #e2e8f0;
-}
-.calc-tbl tr.grand-row td {
-  background: #fffbeb;
-  font-size: 12px;
-  font-weight: 900;
-  border-top: 2px solid #000000;
-  border-bottom: none;
-  color: #0c2340;
-}
-
-.inv-footer-box {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr;
-  border: 1px solid #000000;
-  margin-top: auto;
-  position: relative;
-  z-index: 2;
-}
-.inv-foot-col {
-  padding: 8px 10px;
-  border-right: 1px solid #000000;
-  font-size: 9px;
-}
-.inv-foot-col:last-child {
-  border-right: none;
+  line-height: 1.35;
+  color: #000000;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
 }
+
+.inv-logo-large {
+  max-height: 68px;
+  max-width: 130px;
+  object-fit: contain;
+  display: block;
+}
+
+.inv-bold {
+  font-weight: bold;
+}
+
+.inv-meta-label {
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+/* Tally Items Rows & Zero Inner Horizontal Lines */
+.inv-item-header-th {
+  background-color: #f2f2f2 !important;
+  font-size: 9.5px;
+  font-weight: bold;
+  text-align: center;
+  padding: 4px 2px;
+  border-top: 1px solid #000000 !important;
+  border-bottom: 1px solid #000000 !important;
+  border-left: 1px solid #000000 !important;
+  border-right: 1px solid #000000 !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.inv-tally-item-row td {
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: 1px solid #000000 !important;
+  border-right: 1px solid #000000 !important;
+  padding: 2.5px 4px !important;
+  font-size: 10px;
+  vertical-align: top;
+  background: #ffffff !important;
+}
+
+.inv-tally-filler-row td {
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: 1px solid #000000 !important;
+  border-right: 1px solid #000000 !important;
+  padding: 0 !important;
+  height: 65mm;
+  background: #ffffff !important;
+}
+
+.inv-items-total-row td {
+  border-top: 1px solid #000000 !important;
+  border-bottom: 1.5px solid #000000 !important;
+  font-size: 10px;
+  font-weight: bold;
+  background: #f8fafc !important;
+  padding: 4px 5px !important;
+}
+
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+
 .foot-stamp-img {
-  max-height: 65px;
-  margin: 4px 0;
+  max-height: 58px;
+  margin: 3px 0;
 }
 
 /* FINANCIAL REPORTS (P&L, BALANCE SHEET, LEDGER) */
@@ -829,7 +781,8 @@ body {
 </head>
 <body>
 
-<!-- SUITE TOPBAR (QUOTOR <-> INVOTOR) -->
+<!-- SUITE TOPBAR (INVOTOR <-> QUOTOR <-> MANAGE CONTENT <-> WEBSITE) -->
+<div class="suite-topbar no-print">
   <div class="suite-links">
     <span style="font-weight: 800; color: #fff; margin-right: 6px;">PASS CORP. SUITE:</span>
     <a href="invotor.html" class="suite-btn active" title="Current App: Invotor Enterprise ERP">
@@ -858,7 +811,7 @@ body {
     <img src="https://passcorp.in/assets/logo.png" alt="PASS CORP." onerror="this.src='stamp.png'" />
     <div class="brand-text">
       <h1>PASS CORP. <span class="app-tag">INVOTOR PRIME</span></h1>
-      <p>Industrial Safety Equipment & ERP Billing System</p>
+      <p>Industrial Safety Equipment & ERP Billing System (OSF Tally Format)</p>
     </div>
   </div>
 
@@ -1057,9 +1010,7 @@ body {
                     <th class="center">Action</th>
                   </tr>
                 </thead>
-                <tbody id="recentVouchersBody">
-                  <!-- Injected via JS -->
-                </tbody>
+                <tbody id="recentVouchersBody"></tbody>
               </table>
             </div>
           </div>
@@ -1084,9 +1035,7 @@ body {
                     <th>Status</th>
                   </tr>
                 </thead>
-                <tbody id="lowStockBody">
-                  <!-- Injected via JS -->
-                </tbody>
+                <tbody id="lowStockBody"></tbody>
               </table>
             </div>
           </div>
@@ -1095,7 +1044,7 @@ body {
     </div>
   </section>
 
-  <!-- 2. BILLING / SALES INVOICE GENERATOR (F8) -->
+  <!-- 2. BILLING / SALES INVOICE GENERATOR (F8 - OSF FORMAT) -->
   <section id="billingView" class="erp-view">
     <div class="billing-split">
       
@@ -1103,7 +1052,7 @@ body {
       <aside class="no-print">
         <div class="card">
           <div class="card-header" style="background: #0c2340; color: #fff;">
-            <span>🧾 Sales Invoice / Bill of Supply</span>
+            <span>🧾 Sales Invoice / Bill of Supply (OSF Master Format)</span>
             <div style="display: flex; gap: 6px;">
               <button class="btn btn-tally btn-sm" onclick="erp.newInvoice()">+ Reset / New</button>
               <button class="btn btn-success btn-sm" onclick="erp.saveInvoice()">💾 Save Bill</button>
@@ -1112,6 +1061,13 @@ body {
           <div class="card-body">
             
             <div class="form-grid" style="margin-bottom: 12px;">
+              <div class="form-group">
+                <label>Company Preset</label>
+                <select id="billCompanyPreset" class="form-control" onchange="erp.switchCompanyPreset(this.value)">
+                  <option value="pass_corp" selected>PASS CORP. (Safety Equipment)</option>
+                  <option value="osf">OM SHANIRAJESHWAR FABRICATION</option>
+                </select>
+              </div>
               <div class="form-group">
                 <label>Invoice Type</label>
                 <select id="billDocType" class="form-control" onchange="erp.renderLiveInvoicePreview()">
@@ -1130,19 +1086,27 @@ body {
                 <input type="date" id="billDate" class="form-control" onchange="erp.renderLiveInvoicePreview()" />
               </div>
               <div class="form-group">
+                <label>Bill Copy Label</label>
+                <select id="billCopyLabel" class="form-control" onchange="erp.renderLiveInvoicePreview()">
+                  <option value="Original for Recipient" selected>Original for Recipient</option>
+                  <option value="Duplicate for Transporter">Duplicate for Transporter</option>
+                  <option value="Triplicate for Supplier">Triplicate for Supplier</option>
+                </select>
+              </div>
+              <div class="form-group">
                 <label>Payment Terms</label>
                 <input type="text" id="billPaymentTerms" class="form-control" value="Immediate / As Agreed" oninput="erp.renderLiveInvoicePreview()" />
               </div>
             </div>
 
-            <!-- BUYER DETAILS -->
+            <!-- BUYER & DISPATCH DETAILS -->
             <div style="border-top: 1px solid var(--border-color); padding-top: 12px; margin-bottom: 12px;">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <label style="font-size: 11.5px; font-weight: 800; color: var(--pass-navy);">👤 BUYER / CUSTOMER DETAILS</label>
+                <label style="font-size: 11.5px; font-weight: 800; color: var(--pass-navy);">👤 BUYER & DISPATCH DETAILS</label>
               </div>
               <div class="form-grid">
                 <div class="form-group" style="grid-column: span 2;">
-                  <label>Company / Customer Name</label>
+                  <label>Buyer Company Name</label>
                   <input type="text" id="billCustomerName" class="form-control" placeholder="e.g. M/s. ABC Industries Pvt. Ltd." oninput="erp.renderLiveInvoicePreview()" />
                 </div>
                 <div class="form-group" style="grid-column: span 2;">
@@ -1150,20 +1114,24 @@ body {
                   <input type="text" id="billCustomerAddress" class="form-control" placeholder="Plot No, MIDC, Pune - 411026" oninput="erp.renderLiveInvoicePreview()" />
                 </div>
                 <div class="form-group">
-                  <label>Phone / Mobile</label>
-                  <input type="text" id="billCustomerPhone" class="form-control" placeholder="+91 98XXXXXXXX" oninput="erp.renderLiveInvoicePreview()" />
-                </div>
-                <div class="form-group">
-                  <label>Buyer GSTIN (Optional)</label>
+                  <label>Buyer GSTIN / UIN</label>
                   <input type="text" id="billCustomerGst" class="form-control" placeholder="Unregistered / 27XXXX" oninput="erp.renderLiveInvoicePreview()" />
-                </div>
-                <div class="form-group">
-                  <label>Client PO Ref No.</label>
-                  <input type="text" id="billPoRef" class="form-control" placeholder="PO/2026/089" oninput="erp.renderLiveInvoicePreview()" />
                 </div>
                 <div class="form-group">
                   <label>Place of Supply</label>
                   <input type="text" id="billPlaceOfSupply" class="form-control" value="Maharashtra (Code: 27)" oninput="erp.renderLiveInvoicePreview()" />
+                </div>
+                <div class="form-group">
+                  <label>Client PO / Ref No.</label>
+                  <input type="text" id="billPoRef" class="form-control" placeholder="PO/2026/089" oninput="erp.renderLiveInvoicePreview()" />
+                </div>
+                <div class="form-group">
+                  <label>PO / Ref Date</label>
+                  <input type="date" id="billPoDate" class="form-control" onchange="erp.renderLiveInvoicePreview()" />
+                </div>
+                <div class="form-group" style="grid-column: span 2;">
+                  <label>Transport / Vehicle No.</label>
+                  <input type="text" id="billTransport" class="form-control" value="Direct Delivery / Surface" oninput="erp.renderLiveInvoicePreview()" />
                 </div>
               </div>
             </div>
@@ -1171,8 +1139,8 @@ body {
             <!-- LINE ITEMS SELECTOR -->
             <div style="border-top: 1px solid var(--border-color); padding-top: 12px; margin-bottom: 12px;">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <label style="font-size: 11.5px; font-weight: 800; color: var(--pass-navy);">📦 BILL ITEMS</label>
-                <button class="btn btn-tally btn-sm" onclick="erp.openProductPickerModal()">+ Pick Safety Product</button>
+                <label style="font-size: 11.5px; font-weight: 800; color: var(--pass-navy);">📦 BILL ITEMS (TALLY PRIME FORMAT)</label>
+                <button class="btn btn-tally btn-sm" onclick="erp.openProductPickerModal()">+ Pick Catalog Item</button>
               </div>
 
               <div id="billItemsContainer"></div>
@@ -1217,124 +1185,219 @@ body {
         </div>
       </aside>
 
-      <!-- LIVE A4 SHEET PREVIEW -->
+      <!-- LIVE A4 SHEET PREVIEW (AUTHENTIC OSF TALLY MASTER LAYOUT) -->
       <div class="a4-preview-card">
         <div class="a4-sheet" id="printSheet">
           
-          <!-- WATERMARK -->
-          <img src="assets/pass_watermark.jpg" alt="PASS CORP." class="a4-watermark" onerror="this.style.display='none'" />
+          <table class="inv-outer-table">
+            <colgroup>
+              <col style="width: 28px;" />
+              <col style="width: auto;" />
+              <col style="width: 58px;" />
+              <col style="width: 48px;" />
+              <col style="width: 36px;" />
+              <col style="width: 58px;" />
+              <col style="width: 72px;" />
+              <col style="width: 42px;" />
+              <col style="width: 65px;" />
+              <col style="width: 75px;" />
+            </colgroup>
 
-          <!-- INVOICE HEADER -->
-          <div class="inv-header-box">
-            <div class="inv-logo-col">
-              <img src="https://passcorp.in/assets/logo.png" alt="PASS CORP." onerror="this.src='stamp.png'" />
-            </div>
-            <div class="inv-company-col">
-              <div class="inv-comp-name" id="viewCompName">PASS CORP.</div>
-              <div class="inv-comp-sub">INDUSTRIAL SAFETY EQUIPMENT & WORKPLACE PROTECTION</div>
-              <div class="inv-comp-details">
-                📍 Dehu Alandi Road, Chikhali, Pune - 411062, Maharashtra, India<br>
-                📞 <strong>Mob:</strong> +91 97676 72497 &nbsp;|&nbsp; ✉️ <strong>Email:</strong> sales@passcorp.in / passcorpsafety@gmail.com<br>
-                🌐 <strong>Web:</strong> www.passcorp.in &nbsp;|&nbsp; <strong id="viewGstBanner">GSTIN: Unregistered (Non-GST Bill of Supply)</strong>
-              </div>
-            </div>
-            <div class="inv-title-col">
-              <div class="inv-badge-title" id="viewBillTitle">BILL OF SUPPLY</div>
-              <table class="inv-meta-tbl">
-                <tr><td class="lbl">Bill No.:</td><td style="font-weight: 800;" id="viewInvoiceNo">PC/BILL/26-27/0001</td></tr>
-                <tr><td class="lbl">Date:</td><td id="viewInvoiceDate">01 Sep 2026</td></tr>
-                <tr><td class="lbl">Place of Supply:</td><td id="viewInvoicePos">Maharashtra (27)</td></tr>
-                <tr><td class="lbl">Payment:</td><td id="viewInvoicePayment">As Agreed</td></tr>
-              </table>
-            </div>
-          </div>
+            <!-- 1. TOP HEADER: Copy type & Title -->
+            <tr>
+              <td colspan="10" style="padding: 3px 6px; border-bottom: 1px solid #000;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <div style="font-size: 10.5px; font-weight: bold; color: #333;" id="osfDocTypeTitle">BILL OF SUPPLY / TAX INVOICE</div>
+                  <div class="inv-top-copy"><span class="inv-top-badge" id="osfCopyLabel">Original for Recipient</span></div>
+                </div>
+              </td>
+            </tr>
 
-          <!-- PARTIES BOX -->
-          <div class="inv-parties-box">
-            <div class="inv-party-col">
-              <div class="party-title">BUYER / BILLED TO:</div>
-              <div style="font-size: 11px; font-weight: 800; color: #0c2340;" id="viewCustName">M/s. ABC Industries Pvt. Ltd.</div>
-              <div style="font-size: 10px; color: #334155; margin-top: 2px;" id="viewCustAddress">Plot No. 45, MIDC Bhosari, Pune - 411026</div>
-              <div style="font-size: 9.5px; margin-top: 3px;">
-                <strong>GSTIN:</strong> <span id="viewCustGst">Unregistered</span> | <strong>Phone:</strong> <span id="viewCustPhone">+91 98XXXXXXXX</span>
-              </div>
-            </div>
-            <div class="inv-party-col">
-              <div class="party-title">ORDER & DISPATCH DETAILS:</div>
-              <div style="font-size: 9.5px; line-height: 1.5;">
-                <strong>PO Reference:</strong> <span id="viewPoRef">PO/2026/089</span><br>
-                <strong>Dispatch Through:</strong> Surface / Hand Delivery<br>
-                <strong>Delivery Location:</strong> Bhosari Site, Pune
-              </div>
-            </div>
-          </div>
+            <!-- 2. COMPANY BRANDING: 3-COLUMN CENTERED -->
+            <tr>
+              <td colspan="10" style="padding: 6px 8px; border-bottom: 1.5px solid #000;">
+                <table style="width: 100%; border: none; border-collapse: collapse;">
+                  <tr>
+                    <td style="width: 120px; vertical-align: middle; border: none; text-align: left; padding: 2px;">
+                      <img id="osfLogoImg" src="https://passcorp.in/assets/logo.png" class="inv-logo-large" alt="Logo" onerror="this.src='stamp.png'" />
+                    </td>
+                    <td style="vertical-align: middle; border: none; text-align: center;">
+                      <div class="inv-company-name" id="osfCompName">PASS CORP.</div>
+                      <div class="inv-company-tagline" id="osfCompTagline">INDUSTRIAL SAFETY EQUIPMENT & WORKPLACE PROTECTION SOLUTIONS</div>
+                      <div class="inv-company-details">
+                        <div id="osfCompAddress">📍 Dehu Alandi Road, Chikhali, Pune - 411062, Maharashtra, India</div>
+                        <div style="margin-top: 1px;"><span class="inv-bold">GSTIN:</span> <span id="osfCompGstin">Unregistered (Non-GST Bill of Supply)</span> &nbsp;|&nbsp; <span class="inv-bold">PAN:</span> <span id="osfCompPan">AABCP1234F</span></div>
+                        <div><span class="inv-bold">Phone:</span> <span id="osfCompPhone">+91 97676 72497</span> &nbsp;|&nbsp; <span class="inv-bold">Email:</span> <span id="osfCompEmail">sales@passcorp.in / passcorpsafety@gmail.com</span></div>
+                      </div>
+                    </td>
+                    <td style="width: 120px; border: none;"></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
 
-          <!-- ITEMS TABLE -->
-          <table class="inv-items-tbl">
-            <thead>
-              <tr>
-                <th style="width: 5%;">Sr.</th>
-                <th style="width: 45%;">Description of Goods / Safety Equipment</th>
-                <th style="width: 12%;">HSN/SAC</th>
-                <th style="width: 10%;" class="num">Qty</th>
-                <th style="width: 10%;">Unit</th>
-                <th style="width: 18%;" class="num">Rate (₹)</th>
-                <th style="width: 18%;" class="num">Amount (₹)</th>
-              </tr>
-            </thead>
-            <tbody id="viewBillItemsBody"></tbody>
+            <!-- 3. INVOICE META BAR -->
+            <tr>
+              <td colspan="5" style="vertical-align: top; padding: 4px 6px;">
+                <div class="inv-meta-label"><span class="inv-bold">Invoice No:</span> <span style="font-weight: bold; font-size: 11px;" id="osfInvoiceNo">PC/BILL/26-27/0001</span></div>
+                <div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">Invoice Date:</span> <span id="osfInvoiceDate">01 Sep 2026</span></div>
+                <div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">Place of Supply:</span> <span id="osfPos">Maharashtra (Code: 27)</span></div>
+              </td>
+              <td colspan="5" style="vertical-align: top; padding: 4px 6px;">
+                <div class="inv-meta-label"><span class="inv-bold">PO / Ref No:</span> <span style="font-weight: bold;" id="osfPoRef">PO/2026/089</span></div>
+                <div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">PO / Ref Date:</span> <span id="osfPoDate">01 Sep 2026</span></div>
+                <div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">Transport / Dispatch:</span> <span id="osfTransport">Direct Delivery / Surface</span></div>
+              </td>
+            </tr>
+
+            <!-- 4. BILLED TO & SHIPPED TO HEADERS -->
+            <tr style="background-color: #fafafa;">
+              <td colspan="5" style="font-weight: bold; font-size: 10px; padding: 3px 6px;">Billed To (Details of Receiver):</td>
+              <td colspan="5" style="font-weight: bold; font-size: 10px; padding: 3px 6px;">Shipped To (Consignee):</td>
+            </tr>
+            <tr>
+              <td colspan="5" style="padding: 4px 6px; vertical-align: top; height: 50px;">
+                <div style="font-size: 11px; font-weight: bold; color: #0c2340;" id="osfCustName">M/s. ABC Industries Pvt. Ltd.</div>
+                <div style="margin-top: 2px; line-height: 1.3; font-size: 9.5px;" id="osfCustAddress">Plot No. 45, MIDC Bhosari, Pune - 411026</div>
+                <div style="margin-top: 3px; font-size: 9px;"><span class="inv-bold">GSTIN/UIN:</span> <span id="osfCustGst">Unregistered</span></div>
+              </td>
+              <td colspan="5" style="padding: 4px 6px; vertical-align: top; height: 50px;">
+                <div style="font-size: 11px; font-weight: bold; color: #0c2340;" id="osfShipName">M/s. ABC Industries Pvt. Ltd.</div>
+                <div style="margin-top: 2px; line-height: 1.3; font-size: 9.5px;" id="osfShipAddress">Plot No. 45, MIDC Bhosari, Pune - 411026</div>
+                <div style="margin-top: 3px; font-size: 9px;"><span class="inv-bold">GSTIN/UIN:</span> <span id="osfShipGst">Unregistered</span></div>
+              </td>
+            </tr>
+
+            <!-- 5. ITEM HEADERS -->
+            <tr>
+              <th class="inv-item-header-th">Sr.</th>
+              <th class="inv-item-header-th">Description of Goods / Services</th>
+              <th class="inv-item-header-th">HSN/SAC</th>
+              <th class="inv-item-header-th">Qty</th>
+              <th class="inv-item-header-th">Unit</th>
+              <th class="inv-item-header-th">Rate (₹)</th>
+              <th class="inv-item-header-th">Taxable (₹)</th>
+              <th class="inv-item-header-th">GST %</th>
+              <th class="inv-item-header-th">Tax (₹)</th>
+              <th class="inv-item-header-th">Net Amt (₹)</th>
+            </tr>
+
+            <!-- 6. ITEMS ROWS (ZERO HORIZONTAL INNER LINES) -->
+            <tbody id="osfItemsTbody"></tbody>
+
+            <!-- 7. SUBTOTAL ROW -->
+            <tr class="inv-items-total-row">
+              <td colspan="3" class="text-right" style="padding: 4px 6px;">Total / Subtotal:</td>
+              <td class="text-right" id="osfTotalQty">0</td>
+              <td></td>
+              <td></td>
+              <td class="text-right" id="osfTotalTaxable">₹0.00</td>
+              <td></td>
+              <td class="text-right" id="osfTotalTax">₹0.00</td>
+              <td class="text-right" id="osfTotalNet">₹0.00</td>
+            </tr>
+
+            <!-- 8. FULL-WIDTH TALLY GST ANALYSIS -->
+            <tr>
+              <td colspan="10" style="padding: 4px 6px; background-color: #fafafa;">
+                <div style="font-weight: bold; font-size: 9px; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.3px;">Tax Amount (in words) / Tax Analysis:</div>
+                <table style="width: 100%; border: 1px solid #000; border-collapse: collapse; font-size: 9px; text-align: center; background: #ffffff;">
+                  <thead>
+                    <tr style="background-color: #f2f2f2; font-weight: bold;">
+                      <th rowspan="2" style="border: 1px solid #000; padding: 2px 4px; vertical-align: middle;">HSN/SAC</th>
+                      <th rowspan="2" style="border: 1px solid #000; padding: 2px 4px; vertical-align: middle;">Taxable Value (₹)</th>
+                      <th colspan="2" style="border: 1px solid #000; padding: 2px 4px;">Central Tax</th>
+                      <th colspan="2" style="border: 1px solid #000; padding: 2px 4px;">State Tax</th>
+                      <th rowspan="2" style="border: 1px solid #000; padding: 2px 4px; vertical-align: middle;">Total Tax (₹)</th>
+                    </tr>
+                    <tr style="background-color: #f2f2f2; font-weight: bold;">
+                      <th style="border: 1px solid #000; padding: 2px 4px;">Rate</th>
+                      <th style="border: 1px solid #000; padding: 2px 4px;">Amount (₹)</th>
+                      <th style="border: 1px solid #000; padding: 2px 4px;">Rate</th>
+                      <th style="border: 1px solid #000; padding: 2px 4px;">Amount (₹)</th>
+                    </tr>
+                  </thead>
+                  <tbody id="osfGstSummaryBody"></tbody>
+                </table>
+              </td>
+            </tr>
+
+            <!-- 9. BANK DETAILS & CALCULATION TOTAL SUMMARY -->
+            <tr>
+              <td colspan="5" style="vertical-align: top; padding: 6px 8px;">
+                <div class="inv-bank-section">
+                  <div style="font-weight: bold; text-decoration: underline; margin-bottom: 4px; font-size: 10px; color: #1e293b;">Bank Details for Payment (RTGS / NEFT / IMPS):</div>
+                  <div style="margin-top: 2px;"><span class="inv-bold">Bank Name:</span> <span id="osfBankName">HDFC Bank</span></div>
+                  <div style="margin-top: 2px;"><span class="inv-bold">Bank A/C No:</span> <span style="font-size: 11px; font-weight: bold; font-family: monospace;" id="osfAccountNo">50200012345678</span></div>
+                  <div style="margin-top: 2px;"><span class="inv-bold">RTGS/IFSC:</span> <span style="font-weight: bold; font-family: monospace;" id="osfIfsc">HDFC0001234</span></div>
+                  <div style="margin-top: 2px;"><span class="inv-bold">Branch:</span> <span id="osfBranch">Chikhali / Bhosari, Pune</span></div>
+                </div>
+              </td>
+              <td colspan="5" style="vertical-align: top; padding: 6px 8px; background-color: #fafafa;">
+                <table style="width: 100%; border: none; border-collapse: collapse; font-size: 10.5px;">
+                  <tr>
+                    <td style="border: none; padding: 2px 0;">Item Subtotal:</td>
+                    <td style="border: none; padding: 2px 0; text-align: right; font-weight: bold;" id="osfSubtotalVal">₹0.00</td>
+                  </tr>
+                  <tr id="osfRowDiscount" style="display:none;">
+                    <td style="border: none; padding: 2px 0;">Discount:</td>
+                    <td style="border: none; padding: 2px 0; text-align: right; color: #dc2626;" id="osfDiscountVal">-₹0.00</td>
+                  </tr>
+                  <tr id="osfRowFreight" style="display:none;">
+                    <td style="border: none; padding: 2px 0;">Freight / Transport:</td>
+                    <td style="border: none; padding: 2px 0; text-align: right;" id="osfFreightVal">+₹0.00</td>
+                  </tr>
+                  <tr>
+                    <td style="border: none; padding: 2px 0;">Round Off:</td>
+                    <td style="border: none; padding: 2px 0; text-align: right; font-weight: bold;" id="osfRoundOffVal">+0.00</td>
+                  </tr>
+                  <tr style="border-top: 1.5px solid #000;">
+                    <td style="border: none; padding: 4px 0; font-size: 12px; font-weight: 900; color: #0c2340;">Grand Total:</td>
+                    <td style="border: none; padding: 4px 0; font-size: 13.5px; font-weight: 900; text-align: right; color: #0c2340;" id="osfGrandTotalVal">₹0.00</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- 10. AMOUNTS IN WORDS -->
+            <tr>
+              <td colspan="10" style="padding: 4px 6px;">
+                <div><span class="inv-bold">Total GST in Words:</span> <span style="font-style: italic;" id="osfGstWords">INR Zero Only</span></div>
+                <div style="margin-top: 2px;"><span class="inv-bold">Bill Amount in Words:</span> <span style="font-size: 10.5px; font-weight: bold; color: #0c2340;" id="osfBillWords">INR Zero Only</span></div>
+              </td>
+            </tr>
+
+            <!-- 11. TERMS & CONDITIONS AND DUAL SIGNATURES -->
+            <tr>
+              <td colspan="5" style="vertical-align: top; padding: 4px 6px;">
+                <div class="inv-tc-section" style="font-size: 8.5px;">
+                  <div style="font-weight: bold; margin-bottom: 2px;">Terms & Conditions (E.& O.E.):</div>
+                  <ol style="padding-left: 12px; line-height: 1.35;" id="osfTermsList">
+                    <li>Goods once sold will not be taken back.</li>
+                    <li>Manufacturer's standard warranty applies.</li>
+                    <li>Interest @ 18% p.a. charged on overdue bills.</li>
+                    <li>Subject to Pune Jurisdiction only.</li>
+                  </ol>
+                  <div style="font-weight: bold; margin-top: 3px; color: #333;">Thank You for Your Business !!</div>
+                </div>
+              </td>
+              <td colspan="5" style="vertical-align: top; padding: 4px 6px;">
+                <table style="width: 100%; height: 80px; border: none; border-collapse: collapse;">
+                  <tr>
+                    <td style="width: 50%; border: none; vertical-align: bottom; text-align: center; padding-bottom: 2px;">
+                      <div style="border-top: 1px dashed #666; padding-top: 3px; font-size: 9px; font-weight: bold;">Receiver's Signature</div>
+                    </td>
+                    <td style="width: 50%; border: none; vertical-align: top; text-align: center; padding-top: 2px; padding-bottom: 2px;">
+                      <div style="font-size: 9.5px; font-weight: bold; margin-bottom: 2px;" id="osfForCompanyTitle">For PASS CORP.</div>
+                      <img src="stamp.png" class="foot-stamp-img" alt="Stamp" onerror="this.style.display='none'" />
+                      <div style="border-top: 1px solid #000; padding-top: 2px; font-size: 9px; font-weight: bold;">Authorised Signatory</div>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
           </table>
-
-          <!-- TOTALS & WORDS -->
-          <div class="inv-totals-box">
-            <div class="inv-words-col">
-              <div>
-                <strong style="font-size: 10px; color: #0c2340;">Amount in Words:</strong><br>
-                <span id="viewWordsText" style="font-style: italic; font-weight: 700; color: #1e293b;">INR Zero Only</span>
-              </div>
-              <div style="font-size: 9px; color: #64748b; margin-top: 6px;">
-                * This is a Non-GST Bill of Supply / Commercial Invoice. No tax collected under GST law.
-              </div>
-            </div>
-            <div class="inv-calc-col">
-              <table class="calc-tbl">
-                <tr><td>Item Subtotal:</td><td class="num" id="viewSubtotal">₹0.00</td></tr>
-                <tr id="rowDiscount" style="display:none;"><td>Discount:</td><td class="num" id="viewDiscount">-₹0.00</td></tr>
-                <tr id="rowFreight" style="display:none;"><td>Freight / Shipping:</td><td class="num" id="viewFreight">+₹0.00</td></tr>
-                <tr class="grand-row"><td>Grand Total:</td><td class="num" id="viewGrandTotal">₹0.00</td></tr>
-                <tr><td>Paid Amount:</td><td class="num" id="viewPaid">₹0.00</td></tr>
-                <tr style="font-weight: 800; color: #b91c1c;"><td>Balance Due:</td><td class="num" id="viewBalanceDue">₹0.00</td></tr>
-              </table>
-            </div>
-          </div>
-
-          <!-- FOOTER DETAILS (BANK & SIGNATURE) -->
-          <div class="inv-footer-box">
-            <div class="inv-foot-col">
-              <strong style="color: #0c2340;">TERMS & CONDITIONS</strong>
-              <ol style="padding-left: 12px; margin-top: 3px; line-height: 1.35;">
-                <li>Goods once sold will not be taken back.</li>
-                <li>Manufacturer's standard warranty applies.</li>
-                <li>Interest @ 18% p.a. charged on overdue bills.</li>
-                <li>Subject to Pune Jurisdiction only.</li>
-              </ol>
-            </div>
-            <div class="inv-foot-col">
-              <strong style="color: #0c2340;">BANK DETAILS</strong>
-              <div style="margin-top: 3px; line-height: 1.35;">
-                <strong>Bank:</strong> HDFC Bank<br>
-                <strong>A/c Name:</strong> PASS CORP.<br>
-                <strong>A/c No:</strong> 50200012345678<br>
-                <strong>IFSC:</strong> HDFC0001234<br>
-                <strong>Branch:</strong> Chikhali, Pune
-              </div>
-            </div>
-            <div class="inv-foot-col">
-              <strong style="color: #0c2340;">For PASS CORP.</strong>
-              <img src="stamp.png" alt="Stamp" class="foot-stamp-img" onerror="this.src='https://passcorp.in/assets/logo.png'" />
-              <div style="font-weight: 700; font-size: 8.5px;">Authorized Signatory</div>
-            </div>
-          </div>
 
         </div>
       </div>
@@ -1377,7 +1440,7 @@ body {
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
       <div>
         <h2 style="font-size: 18px; font-weight: 900; color: var(--pass-navy);">📦 Stock & Inventory Summary</h2>
-        <p style="font-size: 12px; color: var(--text-muted);">Real-time stock valuation and inventory movements for Industrial Safety Gear</p>
+        <p style="font-size: 12px; color: var(--text-muted);">Real-time stock valuation and inventory movements</p>
       </div>
       <button class="btn btn-primary" onclick="erp.openNewStockItemModal()">+ Add New Stock Item</button>
     </div>
@@ -1517,7 +1580,7 @@ body {
   <section id="plView" class="erp-view">
     <div class="report-frame">
       <div class="report-header">
-        <h2>PASS CORP.</h2>
+        <h2 id="plReportTitle">PASS CORP.</h2>
         <p style="font-weight: 800; font-size: 14px; color: var(--pass-navy); margin-top: 4px;">PROFIT & LOSS ACCOUNT</p>
         <p>For the Financial Year 2026 - 2027 (Figures in Indian Rupees)</p>
       </div>
@@ -1575,7 +1638,7 @@ body {
   <section id="bsView" class="erp-view">
     <div class="report-frame">
       <div class="report-header">
-        <h2>PASS CORP.</h2>
+        <h2 id="bsReportTitle">PASS CORP.</h2>
         <p style="font-weight: 800; font-size: 14px; color: var(--pass-navy); margin-top: 4px;">BALANCE SHEET</p>
         <p>As on 31 March 2027 / Real-Time (Figures in Indian Rupees)</p>
       </div>
@@ -1608,7 +1671,7 @@ body {
             <li class="t-account-row subhead" style="margin-top: 12px;"><span>Current Assets:</span><span></span></li>
             <li class="t-account-row"><span>Closing Stock in Hand</span><span id="bsStockInHand">₹0.00</span></li>
             <li class="t-account-row"><span>Sundry Debtors (Receivables)</span><span id="bsDebtors">₹0.00</span></li>
-            <li class="t-account-row"><span>Bank Balance (HDFC Bank)</span><span id="bsBankBalance">₹3,50,000.00</span></li>
+            <li class="t-account-row"><span>Bank Balance</span><span id="bsBankBalance">₹3,50,000.00</span></li>
             <li class="t-account-row"><span>Cash in Hand</span><span id="bsCashInHand">₹0.00</span></li>
             <li class="t-account-row total-row" style="margin-top: 40px;"><span>Total Assets</span><span id="bsTotalAssets">₹0.00</span></li>
           </ul>
@@ -1655,22 +1718,16 @@ body {
   <section id="settingsView" class="erp-view">
     <div class="card" style="max-width: 800px; margin: 0 auto;">
       <div class="card-header" style="background: #0c2340; color: #fff;">
-        <span>⚙️ PASS CORP. Enterprise Configuration & GST Mode</span>
+        <span>⚙️ Enterprise Configuration & Company Setup</span>
       </div>
       <div class="card-body">
         
         <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 14px; margin-bottom: 20px;">
-          <h4 style="color: #1e3a8a; font-size: 14px; margin-bottom: 4px;">📌 GST Mode Switcher</h4>
-          <p style="font-size: 12px; color: #334155; margin-bottom: 10px;">Currently configured for <strong>Non-GST / Bill of Supply</strong>. Whenever you get your GST Number from the tax department, toggle this on and enter your 15-digit GSTIN.</p>
-          <div style="display: flex; gap: 14px; align-items: center;">
-            <label style="display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 13px;">
-              <input type="radio" name="gstMode" value="unregistered" checked onchange="erp.toggleGstMode(this.value)">
-              Non-GST / Unregistered (Bill of Supply)
-            </label>
-            <label style="display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 13px;">
-              <input type="radio" name="gstMode" value="registered" onchange="erp.toggleGstMode(this.value)">
-              GST Registered (Tax Invoice with CGST/SGST/IGST)
-            </label>
+          <h4 style="color: #1e3a8a; font-size: 14px; margin-bottom: 4px;">📌 Quick Company Preset Switcher</h4>
+          <p style="font-size: 12px; color: #334155; margin-bottom: 10px;">Select preset to load company profile & banking info instantly:</p>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn btn-primary btn-sm" onclick="erp.applyCompanyProfile('pass_corp')">PASS CORP. (Safety Equipment)</button>
+            <button class="btn btn-tally btn-sm" onclick="erp.applyCompanyProfile('osf')">OM SHANIRAJESHWAR FABRICATION</button>
           </div>
         </div>
 
@@ -1694,6 +1751,30 @@ body {
           <div class="form-group">
             <label>Email Address</label>
             <input type="text" id="cfgEmail" class="form-control" value="sales@passcorp.in / passcorpsafety@gmail.com" />
+          </div>
+          <div class="form-group">
+            <label>GSTIN / Tax Registration</label>
+            <input type="text" id="cfgGstin" class="form-control" value="Unregistered" />
+          </div>
+          <div class="form-group">
+            <label>PAN Number</label>
+            <input type="text" id="cfgPan" class="form-control" value="AABCP1234F" />
+          </div>
+          <div class="form-group">
+            <label>Bank Name</label>
+            <input type="text" id="cfgBankName" class="form-control" value="HDFC Bank" />
+          </div>
+          <div class="form-group">
+            <label>Bank Account Number</label>
+            <input type="text" id="cfgAccountNo" class="form-control" value="50200012345678" />
+          </div>
+          <div class="form-group">
+            <label>IFSC Code</label>
+            <input type="text" id="cfgIfsc" class="form-control" value="HDFC0001234" />
+          </div>
+          <div class="form-group">
+            <label>Branch</label>
+            <input type="text" id="cfgBranch" class="form-control" value="Chikhali / Bhosari, Pune" />
           </div>
           <div class="form-group">
             <label>Invoice Number Prefix</label>
@@ -1746,9 +1827,9 @@ body {
         <div class="form-group">
           <label>Payment Mode / Source A/c</label>
           <select id="vModeSelect" class="form-control">
-            <option value="HDFC Bank">HDFC Bank (A/c 50200012345678)</option>
+            <option value="HDFC Bank">Bank Transfer (NEFT/RTGS/IMPS)</option>
             <option value="Cash in Hand">Cash in Hand</option>
-            <option value="UPI / GPay">UPI / GPay (9767672497@hdfcbank)</option>
+            <option value="UPI / GPay">UPI / GPay</option>
             <option value="Cheque">Cheque</option>
           </select>
         </div>
@@ -1769,19 +1850,19 @@ body {
 <div class="modal-backdrop" id="productPickerModal">
   <div class="modal-box" style="max-width: 750px;">
     <div class="modal-header">
-      <span>Pick Safety Equipment from Catalog</span>
+      <span>Pick Item from Master Catalog</span>
       <button class="btn btn-danger btn-sm" onclick="erp.closeModal('productPickerModal')">✕</button>
     </div>
     <div class="modal-body" style="padding: 12px;">
-      <input type="text" id="catalogSearch" class="form-control" placeholder="Search safety helmets, shoes, gloves..." style="margin-bottom: 12px;" oninput="erp.filterCatalogPicker()" />
+      <input type="text" id="catalogSearch" class="form-control" placeholder="Search safety equipment or fabrication works..." style="margin-bottom: 12px;" oninput="erp.filterCatalogPicker()" />
       <div style="max-height: 400px; overflow-y: auto;">
         <table class="data-table">
           <thead>
             <tr>
-              <th>Item Name</th>
-              <th>Brand</th>
+              <th>Item Description</th>
+              <th>Brand / Unit</th>
               <th class="num">Stock</th>
-              <th class="num">Selling Price (₹)</th>
+              <th class="num">Selling Rate (₹)</th>
               <th class="center">Action</th>
             </tr>
           </thead>
@@ -1796,60 +1877,62 @@ body {
 <div class="modal-backdrop" id="stockItemModal">
   <div class="modal-box">
     <div class="modal-header">
-      <span id="stockModalTitle">Add New Stock Item</span>
+      <span id="stockModalTitle">Add New Stock / Service Item</span>
       <button class="btn btn-danger btn-sm" onclick="erp.closeModal('stockItemModal')">✕</button>
     </div>
     <div class="modal-body">
       <div class="form-grid">
         <div class="form-group" style="grid-column: span 2;">
-          <label>Product / Equipment Name</label>
-          <input type="text" id="newItemName" class="form-control" placeholder="e.g. Safety Helmet Karam PN 501" />
+          <label>Product / Description of Goods</label>
+          <input type="text" id="newItemName" class="form-control" placeholder="e.g. MS Heavy Structural Fabrication / Safety Helmet" />
         </div>
         <div class="form-group">
-          <label>Brand</label>
-          <input type="text" id="newItemBrand" class="form-control" placeholder="KARAM / UDYOGI / HILLSON" />
+          <label>Brand / Origin</label>
+          <input type="text" id="newItemBrand" class="form-control" placeholder="PASS CORP / OSF / KARAM" />
         </div>
         <div class="form-group">
           <label>Category</label>
           <select id="newItemCat" class="form-control">
-            <option value="Head Protection">Head Protection (Helmets)</option>
-            <option value="Foot Protection">Foot Protection (Shoes)</option>
-            <option value="Hand Protection">Hand Protection (Gloves)</option>
-            <option value="Fall Protection">Fall Protection (Harness)</option>
-            <option value="Eye & Face">Eye & Face Protection</option>
-            <option value="Respiratory">Respiratory & Mask</option>
-            <option value="Fire Safety">Fire Safety Equipment</option>
-            <option value="General PPE">General Safety Gear</option>
+            <option value="Industrial Safety">Industrial Safety Equipment</option>
+            <option value="Fabrication Works">Structural Fabrication & Shed Works</option>
+            <option value="Labour Charges">Labour & Installation Charges</option>
+            <option value="Head Protection">Head Protection</option>
+            <option value="Foot Protection">Foot Protection</option>
+            <option value="Hand Protection">Hand Protection</option>
+            <option value="Fall Protection">Fall Protection</option>
           </select>
         </div>
         <div class="form-group">
-          <label>HSN Code</label>
-          <input type="text" id="newItemHsn" class="form-control" value="6506" />
+          <label>HSN / SAC Code</label>
+          <input type="text" id="newItemHsn" class="form-control" value="995413" />
         </div>
         <div class="form-group">
           <label>Unit of Measure</label>
           <select id="newItemUnit" class="form-control">
             <option value="Nos.">Nos.</option>
+            <option value="Kg">Kg</option>
+            <option value="MT">MT</option>
+            <option value="Sq.Ft">Sq.Ft</option>
+            <option value="R.Ft">R.Ft</option>
             <option value="Pairs">Pairs</option>
             <option value="Sets">Sets</option>
-            <option value="Mtrs">Mtrs</option>
-            <option value="Kgs">Kgs</option>
+            <option value="Lot">Lot</option>
           </select>
         </div>
         <div class="form-group">
-          <label>Purchase Cost Rate (₹)</label>
-          <input type="number" id="newItemCost" class="form-control" value="150" />
+          <label>Purchase / Cost Rate (₹)</label>
+          <input type="number" id="newItemCost" class="form-control" value="180" />
         </div>
         <div class="form-group">
-          <label>Selling Price (₹)</label>
-          <input type="number" id="newItemPrice" class="form-control" value="220" />
+          <label>Selling Rate (₹)</label>
+          <input type="number" id="newItemPrice" class="form-control" value="250" />
         </div>
         <div class="form-group">
-          <label>Initial Opening Stock Qty</label>
+          <label>Opening Stock Qty</label>
           <input type="number" id="newItemStock" class="form-control" value="50" />
         </div>
         <div class="form-group">
-          <label>Min Alert Stock Level</label>
+          <label>Min Alert Level</label>
           <input type="number" id="newItemMinAlert" class="form-control" value="10" />
         </div>
       </div>
@@ -1876,14 +1959,14 @@ body {
         </div>
         <div class="form-group">
           <label>Vendor Bill / Ref No.</label>
-          <input type="text" id="purRefNo" class="form-control" placeholder="e.g. HILL/2026/902" />
+          <input type="text" id="purRefNo" class="form-control" placeholder="e.g. VEND/2026/902" />
         </div>
         <div class="form-group" style="grid-column: span 2;">
           <label>Supplier / Vendor Name</label>
-          <input type="text" id="purSupplierName" class="form-control" placeholder="e.g. Hillson Footwear Ltd. / Karam Safety" />
+          <input type="text" id="purSupplierName" class="form-control" placeholder="e.g. Hillson Footwear Ltd. / Karam Safety / Steel Vendor" />
         </div>
         <div class="form-group" style="grid-column: span 2;">
-          <label>Select Stock Item to Inward</label>
+          <label>Select Item to Inward</label>
           <select id="purItemSelect" class="form-control"></select>
         </div>
         <div class="form-group">
@@ -1898,7 +1981,7 @@ body {
           <label>Payment Status</label>
           <select id="purPayStatus" class="form-control">
             <option value="Credit Due">Unpaid / Credit Due</option>
-            <option value="Paid via Bank">Paid via HDFC Bank</option>
+            <option value="Paid via Bank">Paid via Bank (RTGS/NEFT)</option>
             <option value="Paid via Cash">Paid via Cash</option>
           </select>
         </div>
@@ -1913,21 +1996,50 @@ body {
 
 <script>
 /* ============================================================
-   DEFAULT PASS CORP. MASTER CATALOG & ERP DATABASE
+   DEFAULT MASTER CATALOG & ERP DATABASE (OSF + PASS CORP)
    ============================================================ */
+const COMPANY_PRESETS = {
+  pass_corp: {
+    compName: "PASS CORP.",
+    compTagline: "INDUSTRIAL SAFETY EQUIPMENT & WORKPLACE PROTECTION SOLUTIONS",
+    address: "Dehu Alandi Road, Chikhali, Pune - 411062, Maharashtra, India",
+    phone: "+91 97676 72497",
+    email: "sales@passcorp.in / passcorpsafety@gmail.com",
+    gstin: "Unregistered (Non-GST Bill of Supply)",
+    pan: "AABCP1234F",
+    bankName: "HDFC Bank",
+    accountNo: "50200012345678",
+    ifsc: "HDFC0001234",
+    branch: "Chikhali / Bhosari, Pune",
+    invoicePrefix: "PC/BILL/26-27/",
+    logo: "https://passcorp.in/assets/logo.png"
+  },
+  osf: {
+    compName: "OM SHANIRAJESHWAR FABRICATION",
+    compTagline: "INDUSTRIAL & HEAVY STRUCTURAL FABRICATION, SHED & ENGINEERING WORKS",
+    address: "S.No. 66/2/2, Near HP Petrol Pump, Sambhaji Nagar, Thermax Chowk, PCMC, Pune - 411019",
+    phone: "+91 98224 81920 / +91 97676 72497",
+    email: "omshanirajeshwar@gmail.com / sales@passcorp.in",
+    gstin: "27AAJFO9821L1ZM",
+    pan: "AAJFO9821L",
+    bankName: "State Bank of India (SBI)",
+    accountNo: "38920194819",
+    ifsc: "SBIN0001234",
+    branch: "Chinchwad Branch, Pune",
+    invoicePrefix: "OSF/26-27/",
+    logo: "https://passcorp.in/assets/logo.png"
+  }
+};
+
 const INITIAL_SAFETY_CATALOG = [
-  { id: "helm_udyogi_7000", name: "Safety Helmet Udyogi Ultravent 7000 (Ratchet, Yellow)", brand: "UDYOGI", cat: "Head Protection", hsn: "6506", unit: "Nos.", cost: 180.00, price: 245.00, stock: 120, minAlert: 20 },
-  { id: "helm_karam_pn501", name: "Safety Helmet Karam PN 501 (ISI Certified, Manual)", brand: "KARAM", cat: "Head Protection", hsn: "6506", unit: "Nos.", cost: 135.00, price: 190.00, stock: 150, minAlert: 30 },
-  { id: "helm_fusion_pro", name: "Safety Helmet Karam Fusion Pro (EN 397 Certified)", brand: "KARAM", cat: "Head Protection", hsn: "6506", unit: "Nos.", cost: 230.00, price: 320.00, stock: 80, minAlert: 15 },
-  { id: "shoe_hillson_power", name: "Safety Shoe Hillson Power Plus High Ankle (Steel Toe 200J)", brand: "HILLSON", cat: "Foot Protection", hsn: "6403", unit: "Pairs", cost: 580.00, price: 780.00, stock: 65, minAlert: 15 },
-  { id: "shoe_apollo_plus", name: "Safety Shoe Apollo Plus Low Ankle (Double Density PU)", brand: "HILLSON", cat: "Foot Protection", hsn: "6403", unit: "Pairs", cost: 480.00, price: 650.00, stock: 90, minAlert: 20 },
-  { id: "shoe_champion_pro", name: "Safety Shoe Perf Champion Pro (Lightweight Sporty)", brand: "PERF", cat: "Foot Protection", hsn: "6403", unit: "Pairs", cost: 690.00, price: 920.00, stock: 45, minAlert: 10 },
-  { id: "glove_cut5_fortuner", name: "Cut Level 5 HPPE Safety Gloves Fortuner CPU5", brand: "UDYOGI", cat: "Hand Protection", hsn: "6116", unit: "Pairs", cost: 110.00, price: 165.00, stock: 300, minAlert: 50 },
-  { id: "glove_leather_welding", name: "Split Leather Heavy Duty Welding Gloves 14-inch", brand: "PASS CORP", cat: "Hand Protection", hsn: "4203", unit: "Pairs", cost: 95.00, price: 140.00, stock: 200, minAlert: 40 },
-  { id: "glove_nitrile_green", name: "Chemical Resistant Nitrile Gloves 13-inch Solvex", brand: "ANSELL", cat: "Hand Protection", hsn: "3926", unit: "Pairs", cost: 120.00, price: 175.00, stock: 110, minAlert: 25 },
-  { id: "harness_karam_pn11", name: "Full Body Safety Harness Karam PN 11 with Lanyard", brand: "KARAM", cat: "Fall Protection", hsn: "6307", unit: "Sets", cost: 850.00, price: 1150.00, stock: 40, minAlert: 10 },
-  { id: "goggle_karam_es005", name: "Clear Chemical Splash & Impact Goggles Karam ES 005", brand: "KARAM", cat: "Eye & Face", hsn: "9004", unit: "Nos.", cost: 65.00, price: 95.00, stock: 250, minAlert: 40 },
-  { id: "ear_3m_1110", name: "Corded Foam Ear Plugs 3M 1110 (NRR 29dB)", brand: "3M", cat: "Hearing", hsn: "3926", unit: "Pairs", cost: 12.00, price: 18.00, stock: 800, minAlert: 100 }
+  { id: "helm_udyogi_7000", name: "Safety Helmet Udyogi Ultravent 7000 (Ratchet, Yellow)", brand: "UDYOGI", cat: "Industrial Safety", hsn: "6506", unit: "Nos.", cost: 180.00, price: 245.00, stock: 120, minAlert: 20 },
+  { id: "helm_karam_pn501", name: "Safety Helmet Karam PN 501 (ISI Certified, Manual)", brand: "KARAM", cat: "Industrial Safety", hsn: "6506", unit: "Nos.", cost: 135.00, price: 190.00, stock: 150, minAlert: 30 },
+  { id: "shoe_hillson_power", name: "Safety Shoe Hillson Power Plus High Ankle (Steel Toe 200J)", brand: "HILLSON", cat: "Industrial Safety", hsn: "6403", unit: "Pairs", cost: 580.00, price: 780.00, stock: 65, minAlert: 15 },
+  { id: "shoe_apollo_plus", name: "Safety Shoe Apollo Plus Low Ankle (Double Density PU)", brand: "HILLSON", cat: "Industrial Safety", hsn: "6403", unit: "Pairs", cost: 480.00, price: 650.00, stock: 90, minAlert: 20 },
+  { id: "glove_cut5_fortuner", name: "Cut Level 5 HPPE Safety Gloves Fortuner CPU5", brand: "UDYOGI", cat: "Industrial Safety", hsn: "6116", unit: "Pairs", cost: 110.00, price: 165.00, stock: 300, minAlert: 50 },
+  { id: "harness_karam_pn11", name: "Full Body Safety Harness Karam PN 11 with Lanyard", brand: "KARAM", cat: "Industrial Safety", hsn: "6307", unit: "Sets", cost: 850.00, price: 1150.00, stock: 40, minAlert: 10 },
+  { id: "osf_fab_structural", name: "Heavy MS Structural Industrial Fabrication & Welding Work", brand: "OSF", cat: "Fabrication Works", hsn: "995413", unit: "Kg", cost: 68.00, price: 92.00, stock: 5000, minAlert: 500 },
+  { id: "osf_shed_erection", name: "Industrial PEB Factory Shed Fabrication & Roof Sheet Installation", brand: "OSF", cat: "Fabrication Works", hsn: "995413", unit: "Sq.Ft", cost: 140.00, price: 210.00, stock: 1200, minAlert: 100 }
 ];
 
 const INITIAL_EXPENSES = [
@@ -1963,16 +2075,22 @@ class PassInvotorERP {
   }
 
   getDefaultState() {
+    const p = COMPANY_PRESETS.pass_corp;
     return {
       settings: {
-        compName: "PASS CORP.",
-        compTagline: "INDUSTRIAL SAFETY EQUIPMENT & WORKPLACE PROTECTION SOLUTIONS",
-        address: "Dehu Alandi Road, Chikhali, Pune - 411062, Maharashtra, India",
-        phone: "+91 97676 72497",
-        email: "sales@passcorp.in / passcorpsafety@gmail.com",
+        compName: p.compName,
+        compTagline: p.compTagline,
+        address: p.address,
+        phone: p.phone,
+        email: p.email,
         gstMode: "unregistered",
-        gstin: "Unregistered",
-        invoicePrefix: "PC/BILL/26-27/",
+        gstin: p.gstin,
+        pan: p.pan,
+        bankName: p.bankName,
+        accountNo: p.accountNo,
+        ifsc: p.ifsc,
+        branch: p.branch,
+        invoicePrefix: p.invoicePrefix,
         nextInvoiceNo: 1,
         capital: 500000,
         fixedAssets: 150000,
@@ -2051,6 +2169,45 @@ class PassInvotorERP {
     if (tabId === 'daybook') this.renderDayBook();
   }
 
+  switchCompanyPreset(presetKey) {
+    this.applyCompanyProfile(presetKey);
+  }
+
+  applyCompanyProfile(presetKey) {
+    const p = COMPANY_PRESETS[presetKey];
+    if (!p) return;
+    this.data.settings.compName = p.compName;
+    this.data.settings.compTagline = p.compTagline;
+    this.data.settings.address = p.address;
+    this.data.settings.phone = p.phone;
+    this.data.settings.email = p.email;
+    this.data.settings.gstin = p.gstin;
+    this.data.settings.pan = p.pan;
+    this.data.settings.bankName = p.bankName;
+    this.data.settings.accountNo = p.accountNo;
+    this.data.settings.ifsc = p.ifsc;
+    this.data.settings.branch = p.branch;
+    this.data.settings.invoicePrefix = p.invoicePrefix;
+
+    // Sync settings fields
+    if (document.getElementById('cfgCompName')) document.getElementById('cfgCompName').value = p.compName;
+    if (document.getElementById('cfgCompTagline')) document.getElementById('cfgCompTagline').value = p.compTagline;
+    if (document.getElementById('cfgAddress')) document.getElementById('cfgAddress').value = p.address;
+    if (document.getElementById('cfgMobile')) document.getElementById('cfgMobile').value = p.phone;
+    if (document.getElementById('cfgEmail')) document.getElementById('cfgEmail').value = p.email;
+    if (document.getElementById('cfgGstin')) document.getElementById('cfgGstin').value = p.gstin;
+    if (document.getElementById('cfgPan')) document.getElementById('cfgPan').value = p.pan;
+    if (document.getElementById('cfgBankName')) document.getElementById('cfgBankName').value = p.bankName;
+    if (document.getElementById('cfgAccountNo')) document.getElementById('cfgAccountNo').value = p.accountNo;
+    if (document.getElementById('cfgIfsc')) document.getElementById('cfgIfsc').value = p.ifsc;
+    if (document.getElementById('cfgBranch')) document.getElementById('cfgBranch').value = p.branch;
+    if (document.getElementById('cfgPrefix')) document.getElementById('cfgPrefix').value = p.invoicePrefix;
+
+    this.saveState();
+    this.renderLiveInvoicePreview();
+    alert(`✅ Loaded preset profile: ${p.compName}`);
+  }
+
   createEmptyInvoice() {
     const today = new Date().toISOString().split('T')[0];
     const num = String(this.data.settings.nextInvoiceNo).padStart(4, '0');
@@ -2058,6 +2215,7 @@ class PassInvotorERP {
       docType: this.data.settings.gstMode === 'registered' ? 'TAX INVOICE' : 'BILL OF SUPPLY',
       invoiceNo: `${this.data.settings.invoicePrefix}${num}`,
       date: today,
+      copyLabel: 'Original for Recipient',
       paymentTerms: 'As Agreed',
       customer: {
         name: 'M/s. ABC Industries Pvt. Ltd.',
@@ -2066,10 +2224,12 @@ class PassInvotorERP {
         gst: 'Unregistered'
       },
       poRef: 'PO/2026/089',
+      poDate: today,
+      transport: 'Direct Delivery / Surface',
       placeOfSupply: 'Maharashtra (Code: 27)',
       items: [
-        { id: 'helm_udyogi_7000', name: 'Safety Helmet Udyogi Ultravent 7000 (Ratchet)', brand: 'UDYOGI', hsn: '6506', unit: 'Nos.', qty: 10, rate: 245.00, amount: 2450.00 },
-        { id: 'shoe_hillson_power', name: 'Safety Shoe Hillson Power Plus High Ankle', brand: 'HILLSON', hsn: '6403', unit: 'Pairs', qty: 5, rate: 780.00, amount: 3900.00 }
+        { id: 'helm_udyogi_7000', name: 'Safety Helmet Udyogi Ultravent 7000 (Ratchet)', brand: 'UDYOGI', hsn: '6506', unit: 'Nos.', qty: 10, rate: 245.00, taxable: 2450.00, gstRate: 0, taxAmt: 0, total: 2450.00 },
+        { id: 'shoe_hillson_power', name: 'Safety Shoe Hillson Power Plus High Ankle', brand: 'HILLSON', hsn: '6403', unit: 'Pairs', qty: 5, rate: 780.00, taxable: 3900.00, gstRate: 0, taxAmt: 0, total: 3900.00 }
       ],
       discount: 0,
       freight: 0,
@@ -2084,15 +2244,21 @@ class PassInvotorERP {
     this.renderLiveInvoicePreview();
   }
 
+  /* ============================================================
+     AUTHENTIC OSF TALLY PRIME INVOICE RENDERER
+     ============================================================ */
   renderLiveInvoicePreview() {
+    const s = this.data.settings;
     const docType = document.getElementById('billDocType') ? document.getElementById('billDocType').value : this.currentInvoice.docType;
     const invNo = document.getElementById('billInvoiceNo') ? document.getElementById('billInvoiceNo').value : this.currentInvoice.invoiceNo;
     const invDate = document.getElementById('billDate') ? document.getElementById('billDate').value : this.currentInvoice.date;
+    const copyLabel = document.getElementById('billCopyLabel') ? document.getElementById('billCopyLabel').value : this.currentInvoice.copyLabel;
     const custName = document.getElementById('billCustomerName') ? document.getElementById('billCustomerName').value : this.currentInvoice.customer.name;
     const custAddr = document.getElementById('billCustomerAddress') ? document.getElementById('billCustomerAddress').value : this.currentInvoice.customer.address;
-    const custPhone = document.getElementById('billCustomerPhone') ? document.getElementById('billCustomerPhone').value : this.currentInvoice.customer.phone;
     const custGst = document.getElementById('billCustomerGst') ? document.getElementById('billCustomerGst').value : this.currentInvoice.customer.gst;
     const poRef = document.getElementById('billPoRef') ? document.getElementById('billPoRef').value : this.currentInvoice.poRef;
+    const poDate = document.getElementById('billPoDate') ? document.getElementById('billPoDate').value : this.currentInvoice.poDate;
+    const transport = document.getElementById('billTransport') ? document.getElementById('billTransport').value : this.currentInvoice.transport;
     const pos = document.getElementById('billPlaceOfSupply') ? document.getElementById('billPlaceOfSupply').value : this.currentInvoice.placeOfSupply;
     const discount = document.getElementById('billDiscount') ? parseFloat(document.getElementById('billDiscount').value) || 0 : this.currentInvoice.discount;
     const freight = document.getElementById('billFreight') ? parseFloat(document.getElementById('billFreight').value) || 0 : this.currentInvoice.freight;
@@ -2103,68 +2269,170 @@ class PassInvotorERP {
     if (document.getElementById('billDate')) document.getElementById('billDate').value = invDate;
     if (document.getElementById('billCustomerName')) document.getElementById('billCustomerName').value = custName;
     if (document.getElementById('billCustomerAddress')) document.getElementById('billCustomerAddress').value = custAddr;
-    if (document.getElementById('billCustomerPhone')) document.getElementById('billCustomerPhone').value = custPhone;
     if (document.getElementById('billCustomerGst')) document.getElementById('billCustomerGst').value = custGst;
     if (document.getElementById('billPoRef')) document.getElementById('billPoRef').value = poRef;
+    if (document.getElementById('billPoDate')) document.getElementById('billPoDate').value = poDate;
+    if (document.getElementById('billTransport')) document.getElementById('billTransport').value = transport;
     if (document.getElementById('billPlaceOfSupply')) document.getElementById('billPlaceOfSupply').value = pos;
 
-    let subtotal = 0;
-    this.currentInvoice.items.forEach(it => {
-      it.amount = it.qty * it.rate;
-      subtotal += it.amount;
-    });
-    const grandTotal = Math.max(0, subtotal - discount + freight);
-    const balanceDue = Math.max(0, grandTotal - advance);
+    // Header & Meta elements
+    document.getElementById('osfDocTypeTitle').textContent = docType;
+    document.getElementById('osfCopyLabel').textContent = copyLabel;
+    document.getElementById('osfCompName').textContent = s.compName;
+    document.getElementById('osfCompTagline').textContent = s.compTagline;
+    document.getElementById('osfCompAddress').textContent = s.address;
+    document.getElementById('osfCompGstin').textContent = s.gstin;
+    document.getElementById('osfCompPan').textContent = s.pan;
+    document.getElementById('osfCompPhone').textContent = s.phone;
+    document.getElementById('osfCompEmail').textContent = s.email;
 
-    document.getElementById('viewBillTitle').textContent = docType;
-    document.getElementById('viewInvoiceNo').textContent = invNo;
-    document.getElementById('viewInvoiceDate').textContent = this.formatDate(invDate);
-    document.getElementById('viewInvoicePos').textContent = pos;
-    document.getElementById('viewCustName').textContent = custName || 'M/s. ABC Industries Pvt. Ltd.';
-    document.getElementById('viewCustAddress').textContent = custAddr || 'Chikhali, Pune';
-    document.getElementById('viewCustPhone').textContent = custPhone || '-';
-    document.getElementById('viewCustGst').textContent = custGst || 'Unregistered';
-    document.getElementById('viewPoRef').textContent = poRef || 'Direct Sale';
+    document.getElementById('osfInvoiceNo').textContent = invNo;
+    document.getElementById('osfInvoiceDate').textContent = this.formatDate(invDate);
+    document.getElementById('osfPos').textContent = pos;
+    document.getElementById('osfPoRef').textContent = poRef || 'NA';
+    document.getElementById('osfPoDate').textContent = this.formatDate(poDate) || 'NA';
+    document.getElementById('osfTransport').textContent = transport || 'Direct';
 
-    const itemsTbody = document.getElementById('viewBillItemsBody');
+    document.getElementById('osfCustName').textContent = custName || 'M/s. ABC Industries Pvt. Ltd.';
+    document.getElementById('osfCustAddress').textContent = custAddr || 'Chikhali, Pune';
+    document.getElementById('osfCustGst').textContent = custGst || 'Unregistered';
+
+    document.getElementById('osfShipName').textContent = custName || 'M/s. ABC Industries Pvt. Ltd.';
+    document.getElementById('osfShipAddress').textContent = custAddr || 'Chikhali, Pune';
+    document.getElementById('osfShipGst').textContent = custGst || 'Unregistered';
+
+    // Calculate Items & GST Analysis
+    let totalQty = 0;
+    let totalTaxable = 0;
+    let totalTax = 0;
+    let totalNet = 0;
+
+    const itemsTbody = document.getElementById('osfItemsTbody');
     itemsTbody.innerHTML = '';
+
+    // First Row Category Banner (OSF Pure Tally Style)
+    const catTr = document.createElement('tr');
+    catTr.className = 'inv-tally-item-row';
+    catTr.innerHTML = `
+      <td class="text-center" style="font-weight: bold;">*</td>
+      <td class="text-left" style="font-weight: bold; font-size: 10px;">* Industrial Safety Equipment & Technical PPE Gear</td>
+      <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+    `;
+    itemsTbody.appendChild(catTr);
+
+    const hsnMap = {};
+
     this.currentInvoice.items.forEach((item, idx) => {
+      const taxable = item.qty * item.rate;
+      const gstRate = s.gstMode === 'registered' ? (item.gstRate || 18) : 0;
+      const taxAmt = (taxable * gstRate) / 100;
+      const net = taxable + taxAmt;
+
+      totalQty += item.qty;
+      totalTaxable += taxable;
+      totalTax += taxAmt;
+      totalNet += net;
+
+      const hsnKey = item.hsn || '6506';
+      if (!hsnMap[hsnKey]) {
+        hsnMap[hsnKey] = { hsn: hsnKey, taxable: 0, gstRate: gstRate, taxAmt: 0 };
+      }
+      hsnMap[hsnKey].taxable += taxable;
+      hsnMap[hsnKey].taxAmt += taxAmt;
+
       const tr = document.createElement('tr');
+      tr.className = 'inv-tally-item-row';
       tr.innerHTML = `
-        <td class="center">${idx + 1}</td>
-        <td><strong>${item.name}</strong> <span style="font-size: 8.5px; color: #64748b;">(${item.brand})</span></td>
-        <td class="center">${item.hsn || '6506'}</td>
-        <td class="num"><strong>${item.qty}</strong></td>
-        <td>${item.unit}</td>
-        <td class="num">₹${item.rate.toFixed(2)}</td>
-        <td class="num"><strong>₹${item.amount.toFixed(2)}</strong></td>
+        <td class="text-center">${idx + 1}</td>
+        <td class="text-left" style="font-weight: 600;">${item.name}</td>
+        <td class="text-center">${item.hsn || '6506'}</td>
+        <td class="text-right" style="font-weight: bold;">${item.qty}</td>
+        <td class="text-center">${item.unit}</td>
+        <td class="text-right">${item.rate.toFixed(2)}</td>
+        <td class="text-right" style="font-weight: 600;">${taxable.toFixed(2)}</td>
+        <td class="text-center">${gstRate > 0 ? gstRate + '%' : '0%'}</td>
+        <td class="text-right">${taxAmt > 0 ? taxAmt.toFixed(2) : '0.00'}</td>
+        <td class="text-right" style="font-weight: bold;">${net.toFixed(2)}</td>
       `;
       itemsTbody.appendChild(tr);
     });
 
-    for (let i = this.currentInvoice.items.length; i < 6; i++) {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `<td class="center" style="color:#cbd5e1;">${i+1}</td><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td>`;
-      itemsTbody.appendChild(tr);
-    }
+    // Proportional Tally Filler Row (Ensures Clean A4 Page Balance)
+    const fillerTr = document.createElement('tr');
+    fillerTr.className = 'inv-tally-filler-row';
+    fillerTr.innerHTML = `<td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>`;
+    itemsTbody.appendChild(fillerTr);
 
-    document.getElementById('viewSubtotal').textContent = `₹${subtotal.toFixed(2)}`;
+    // Subtotal Row
+    document.getElementById('osfTotalQty').textContent = totalQty;
+    document.getElementById('osfTotalTaxable').textContent = `₹${totalTaxable.toFixed(2)}`;
+    document.getElementById('osfTotalTax').textContent = `₹${totalTax.toFixed(2)}`;
+    document.getElementById('osfTotalNet').textContent = `₹${totalNet.toFixed(2)}`;
+
+    // GST Tax Analysis Table
+    const gstTbody = document.getElementById('osfGstSummaryBody');
+    gstTbody.innerHTML = '';
+    Object.keys(hsnMap).forEach(hsn => {
+      const g = hsnMap[hsn];
+      const halfRate = (g.gstRate / 2).toFixed(1).replace('.0', '');
+      const halfAmt = (g.taxAmt / 2);
+      const gTr = document.createElement('tr');
+      gTr.innerHTML = `
+        <td style="border: 1px solid #000; padding: 2px 4px; font-weight: bold;">${g.hsn}</td>
+        <td style="border: 1px solid #000; padding: 2px 4px; text-align: right;">₹${g.taxable.toFixed(2)}</td>
+        <td style="border: 1px solid #000; padding: 2px 4px; text-align: center;">${halfRate}%</td>
+        <td style="border: 1px solid #000; padding: 2px 4px; text-align: right;">₹${halfAmt.toFixed(2)}</td>
+        <td style="border: 1px solid #000; padding: 2px 4px; text-align: center;">${halfRate}%</td>
+        <td style="border: 1px solid #000; padding: 2px 4px; text-align: right;">₹${halfAmt.toFixed(2)}</td>
+        <td style="border: 1px solid #000; padding: 2px 4px; text-align: right; font-weight: bold;">₹${g.taxAmt.toFixed(2)}</td>
+      `;
+      gstTbody.appendChild(gTr);
+    });
+
+    const gTotTr = document.createElement('tr');
+    gTotTr.style.cssText = 'font-weight: bold; background-color: #fafafa; border-top: 1.5px solid #000;';
+    gTotTr.innerHTML = `
+      <td style="border: 1px solid #000; padding: 2px 4px; text-align: left; padding-left: 8px;">Total:</td>
+      <td style="border: 1px solid #000; padding: 2px 4px; text-align: right;">₹${totalTaxable.toFixed(2)}</td>
+      <td style="border: 1px solid #000;"></td>
+      <td style="border: 1px solid #000; padding: 2px 4px; text-align: right;">₹${(totalTax/2).toFixed(2)}</td>
+      <td style="border: 1px solid #000;"></td>
+      <td style="border: 1px solid #000; padding: 2px 4px; text-align: right;">₹${(totalTax/2).toFixed(2)}</td>
+      <td style="border: 1px solid #000; padding: 2px 4px; text-align: right;">₹${totalTax.toFixed(2)}</td>
+    `;
+    gstTbody.appendChild(gTotTr);
+
+    // Bank Details & Summary
+    document.getElementById('osfBankName').textContent = s.bankName;
+    document.getElementById('osfAccountNo').textContent = s.accountNo;
+    document.getElementById('osfIfsc').textContent = s.ifsc;
+    document.getElementById('osfBranch').textContent = s.branch;
+
+    const rawGrandTotal = Math.max(0, totalTaxable + totalTax - discount + freight);
+    const grandTotal = Math.round(rawGrandTotal);
+    const roundOff = (grandTotal - rawGrandTotal).toFixed(2);
+
+    document.getElementById('osfSubtotalVal').textContent = `₹${totalTaxable.toFixed(2)}`;
     if (discount > 0) {
-      document.getElementById('rowDiscount').style.display = 'table-row';
-      document.getElementById('viewDiscount').textContent = `-₹${discount.toFixed(2)}`;
+      document.getElementById('osfRowDiscount').style.display = 'table-row';
+      document.getElementById('osfDiscountVal').textContent = `-₹${discount.toFixed(2)}`;
     } else {
-      document.getElementById('rowDiscount').style.display = 'none';
+      document.getElementById('osfRowDiscount').style.display = 'none';
     }
     if (freight > 0) {
-      document.getElementById('rowFreight').style.display = 'table-row';
-      document.getElementById('viewFreight').textContent = `+₹${freight.toFixed(2)}`;
+      document.getElementById('osfRowFreight').style.display = 'table-row';
+      document.getElementById('osfFreightVal').textContent = `+₹${freight.toFixed(2)}`;
     } else {
-      document.getElementById('rowFreight').style.display = 'none';
+      document.getElementById('osfRowFreight').style.display = 'none';
     }
-    document.getElementById('viewGrandTotal').textContent = `₹${grandTotal.toFixed(2)}`;
-    document.getElementById('viewPaid').textContent = `₹${advance.toFixed(2)}`;
-    document.getElementById('viewBalanceDue').textContent = `₹${balanceDue.toFixed(2)}`;
-    document.getElementById('viewWordsText').textContent = `INR ${this.numberToWords(Math.round(grandTotal))} Only`;
+    document.getElementById('osfRoundOffVal').textContent = `${roundOff >= 0 ? '+' : ''}${roundOff}`;
+    document.getElementById('osfGrandTotalVal').textContent = `₹${grandTotal.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+
+    // Words Conversion
+    document.getElementById('osfGstWords').textContent = totalTax > 0 ? `INR ${this.numberToWords(Math.round(totalTax))} Only` : 'INR Zero Only (Non-GST)';
+    document.getElementById('osfBillWords').textContent = `INR ${this.numberToWords(grandTotal)} Only`;
+
+    document.getElementById('osfForCompanyTitle').textContent = `For ${s.compName}`;
 
     this.renderEditorItems();
   }
@@ -2220,13 +2488,16 @@ class PassInvotorERP {
   addCustomBillItem() {
     this.currentInvoice.items.push({
       id: 'custom_' + Date.now(),
-      name: 'Industrial Safety Equipment Item',
+      name: 'Industrial Safety Equipment & Engineering Works',
       brand: 'PASS CORP',
-      hsn: '6506',
+      hsn: '995413',
       unit: 'Nos.',
       qty: 1,
       rate: 100.00,
-      amount: 100.00
+      taxable: 100.00,
+      gstRate: 0,
+      taxAmt: 0,
+      total: 100.00
     });
     this.renderLiveInvoicePreview();
   }
@@ -2245,8 +2516,8 @@ class PassInvotorERP {
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td><strong>${item.name}</strong><br><span style="font-size: 10px; color: #64748b;">${item.cat} | HSN: ${item.hsn}</span></td>
-        <td>${item.brand}</td>
-        <td class="num"><strong>${item.stock}</strong> ${item.unit}</td>
+        <td>${item.brand} / ${item.unit}</td>
+        <td class="num"><strong>${item.stock}</strong></td>
         <td class="num">₹${item.price.toFixed(2)}</td>
         <td class="center">
           <button class="btn btn-primary btn-sm" onclick="erp.addCatalogItemToBill('${item.id}')">+ Add</button>
@@ -2267,7 +2538,10 @@ class PassInvotorERP {
       unit: p.unit,
       qty: 1,
       rate: p.price,
-      amount: p.price
+      taxable: p.price,
+      gstRate: 0,
+      taxAmt: 0,
+      total: p.price
     });
     this.closeModal('productPickerModal');
     this.renderLiveInvoicePreview();
@@ -2319,25 +2593,24 @@ class PassInvotorERP {
 
     this.data.invoices.unshift(inv);
     this.saveState();
-    alert(`✅ Invoice ${inv.invoiceNo} saved successfully!\nStock inventory updated.`);
+    alert(`✅ Invoice ${inv.invoiceNo} saved successfully in OSF Tally format!\nStock inventory updated.`);
     this.switchTab('gateway');
   }
 
   shareWhatsAppBill() {
     const custName = document.getElementById('billCustomerName').value || 'Customer';
     const invNo = document.getElementById('billInvoiceNo').value;
-    const total = document.getElementById('viewGrandTotal').textContent;
-    const bal = document.getElementById('viewBalanceDue').textContent;
+    const total = document.getElementById('osfGrandTotalVal').textContent;
+    const s = this.data.settings;
     
-    let msg = `*PASS CORP. — INVOICE BILLING*\n`;
-    msg += `📍 Dehu Alandi Road, Chikhali, Pune\n`;
-    msg += `📞 +91 97676 72497 | www.passcorp.in\n\n`;
+    let msg = `*${s.compName} — INVOICE BILL*\n`;
+    msg += `📍 ${s.address}\n`;
+    msg += `📞 ${s.phone}\n\n`;
     msg += `*Bill No:* ${invNo}\n`;
     msg += `*Customer:* ${custName}\n`;
-    msg += `*Total Amount:* ${total}\n`;
-    msg += `*Balance Due:* ${bal}\n\n`;
-    msg += `*Bank Details:*\nHDFC Bank | A/c: 50200012345678 | IFSC: HDFC0001234\n\n`;
-    msg += `_Thank you for choosing PASS CORP. Industrial Safety Solutions!_`;
+    msg += `*Total Amount:* ${total}\n\n`;
+    msg += `*Bank Details:*\n${s.bankName} | A/c: ${s.accountNo} | IFSC: ${s.ifsc}\n\n`;
+    msg += `_Thank you for choosing ${s.compName}!_`;
 
     const phone = (document.getElementById('billCustomerPhone').value || '').replace(/\D/g, '');
     const url = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(msg)}` : `https://wa.me/?text=${encodeURIComponent(msg)}`;
@@ -2475,14 +2748,14 @@ class PassInvotorERP {
 
   saveStockItem() {
     const name = document.getElementById('newItemName').value;
-    if (!name) return alert('Please enter item name');
+    if (!name) return alert('Please enter item description');
 
     const item = {
       id: 'item_' + Date.now().toString().slice(-5),
       name: name,
       brand: document.getElementById('newItemBrand').value || 'PASS CORP',
       cat: document.getElementById('newItemCat').value,
-      hsn: document.getElementById('newItemHsn').value || '6506',
+      hsn: document.getElementById('newItemHsn').value || '995413',
       unit: document.getElementById('newItemUnit').value,
       cost: parseFloat(document.getElementById('newItemCost').value) || 0,
       price: parseFloat(document.getElementById('newItemPrice').value) || 0,
@@ -2537,7 +2810,7 @@ class PassInvotorERP {
     const grpBank = document.createElement('optgroup');
     grpBank.label = 'Bank & Cash Accounts';
     grpBank.innerHTML = `
-      <option value="bank:HDFC Bank">HDFC Bank (A/c 50200012345678)</option>
+      <option value="bank:Bank Account">Bank Account (${this.data.settings.bankName})</option>
       <option value="cash:Cash in Hand">Cash in Hand</option>
     `;
     sel.appendChild(grpBank);
@@ -2563,7 +2836,7 @@ class PassInvotorERP {
           date: inv.date,
           type: 'Sales Invoice (F8)',
           refNo: inv.invoiceNo,
-          narration: `Sales Bill for ${inv.items.length} safety items`,
+          narration: `Sales Bill for ${inv.items.length} items`,
           debit: inv.grandTotal,
           credit: 0
         });
@@ -2750,9 +3023,11 @@ class PassInvotorERP {
 
   /* P&L & BALANCE SHEET */
   renderProfitAndLoss() {
-    const totalSales = this.data.invoices.reduce((s, i) => s + i.grandTotal, 0);
-    const totalPurchases = this.data.purchases.reduce((s, p) => s + p.totalAmount, 0);
-    const stockVal = this.data.stock.reduce((s, it) => s + (it.stock * it.cost), 0);
+    const s = this.data.settings;
+    document.getElementById('plReportTitle').textContent = s.compName;
+    const totalSales = this.data.invoices.reduce((sum, i) => sum + i.grandTotal, 0);
+    const totalPurchases = this.data.purchases.reduce((sum, p) => sum + p.totalAmount, 0);
+    const stockVal = this.data.stock.reduce((sum, it) => sum + (it.stock * it.cost), 0);
     const openingStock = 50000;
 
     const grossProfit = (totalSales + stockVal) - (openingStock + totalPurchases);
@@ -2787,20 +3062,22 @@ class PassInvotorERP {
   }
 
   renderBalanceSheet() {
-    const totalSales = this.data.invoices.reduce((s, i) => s + i.grandTotal, 0);
-    const totalPurchases = this.data.purchases.reduce((s, p) => s + p.totalAmount, 0);
-    const stockVal = this.data.stock.reduce((s, it) => s + (it.stock * it.cost), 0);
+    const s = this.data.settings;
+    document.getElementById('bsReportTitle').textContent = s.compName;
+    const totalSales = this.data.invoices.reduce((sum, i) => sum + i.grandTotal, 0);
+    const totalPurchases = this.data.purchases.reduce((sum, p) => sum + p.totalAmount, 0);
+    const stockVal = this.data.stock.reduce((sum, it) => sum + (it.stock * it.cost), 0);
     const openingStock = 50000;
     const grossProfit = (totalSales + stockVal) - (openingStock + totalPurchases);
     const netProfit = grossProfit - (25000 + 45000 + 6500 + 4000);
 
-    const capital = this.data.settings.capital;
-    const fixedAssets = this.data.settings.fixedAssets;
-    const receivables = this.data.invoices.reduce((s, i) => s + i.balanceDue, 0);
-    const payables = this.data.purchases.filter(p => !p.payStatus.includes('Paid')).reduce((s, p) => s + p.totalAmount, 0);
+    const capital = s.capital;
+    const fixedAssets = s.fixedAssets;
+    const receivables = this.data.invoices.reduce((sum, i) => sum + i.balanceDue, 0);
+    const payables = this.data.purchases.filter(p => !p.payStatus.includes('Paid')).reduce((sum, p) => sum + p.totalAmount, 0);
     
-    const bankBal = this.data.settings.bankBalance;
-    const cashBal = this.data.settings.cashBalance;
+    const bankBal = s.bankBalance;
+    const cashBal = s.cashBalance;
 
     const totalLiab = capital + netProfit + payables;
     const totalAssets = fixedAssets + stockVal + receivables + bankBal + cashBal;
@@ -2856,12 +3133,12 @@ class PassInvotorERP {
 
   /* GATEWAY */
   renderGateway() {
-    const totalSales = this.data.invoices.reduce((s, i) => s + i.grandTotal, 0);
-    const stockVal = this.data.stock.reduce((s, it) => s + (it.stock * it.cost), 0);
-    const receivables = this.data.invoices.reduce((s, i) => s + i.balanceDue, 0);
-    const payables = this.data.purchases.filter(p => !p.payStatus.includes('Paid')).reduce((s, p) => s + p.totalAmount, 0);
+    const totalSales = this.data.invoices.reduce((sum, i) => sum + i.grandTotal, 0);
+    const stockVal = this.data.stock.reduce((sum, it) => sum + (it.stock * it.cost), 0);
+    const receivables = this.data.invoices.reduce((sum, i) => sum + i.balanceDue, 0);
+    const payables = this.data.purchases.filter(p => !p.payStatus.includes('Paid')).reduce((sum, p) => sum + p.totalAmount, 0);
     
-    const totalPurchases = this.data.purchases.reduce((s, p) => s + p.totalAmount, 0);
+    const totalPurchases = this.data.purchases.reduce((sum, p) => sum + p.totalAmount, 0);
     const grossProfit = (totalSales + stockVal) - (50000 + totalPurchases);
     const netProfit = grossProfit - (25000 + 45000 + 6500 + 4000);
     const margin = totalSales > 0 ? ((netProfit / totalSales) * 100).toFixed(1) : 0;
@@ -2869,7 +3146,7 @@ class PassInvotorERP {
     document.getElementById('kpiTotalSales').textContent = `₹${totalSales.toFixed(2)}`;
     document.getElementById('kpiSalesCount').textContent = `${this.data.invoices.length} Invoices Generated`;
     document.getElementById('kpiStockVal').textContent = `₹${stockVal.toFixed(2)}`;
-    document.getElementById('kpiStockItems').textContent = `${this.data.stock.length} Safety Gear Items in Catalog`;
+    document.getElementById('kpiStockItems').textContent = `${this.data.stock.length} Master Items`;
     document.getElementById('kpiReceivables').textContent = `₹${receivables.toFixed(2)}`;
     document.getElementById('kpiPayables').textContent = `₹${payables.toFixed(2)}`;
     document.getElementById('kpiNetProfit').textContent = `₹${netProfit.toFixed(2)}`;
@@ -2927,36 +3204,24 @@ class PassInvotorERP {
     this.renderLiveInvoicePreview();
   }
 
-  /* SETTINGS */
-  toggleGstMode(mode) {
-    this.data.settings.gstMode = mode;
-    const badge = document.getElementById('topGstBadge');
-    if (mode === 'registered') {
-      badge.className = 'gst-badge registered';
-      badge.textContent = 'GST: Registered';
-      document.getElementById('viewGstBanner').textContent = 'GSTIN: 27AAACP1234F1Z0 | Regular';
-      document.getElementById('billDocType').value = 'TAX INVOICE';
-    } else {
-      badge.className = 'gst-badge';
-      badge.textContent = 'GST: Non-GST (Unregistered)';
-      document.getElementById('viewGstBanner').textContent = 'GSTIN: Unregistered (Non-GST Bill of Supply)';
-      document.getElementById('billDocType').value = 'BILL OF SUPPLY';
-    }
-    this.saveState();
-    this.renderLiveInvoicePreview();
-  }
-
   saveSettings() {
     this.data.settings.compName = document.getElementById('cfgCompName').value;
     this.data.settings.compTagline = document.getElementById('cfgCompTagline').value;
     this.data.settings.address = document.getElementById('cfgAddress').value;
     this.data.settings.phone = document.getElementById('cfgMobile').value;
     this.data.settings.email = document.getElementById('cfgEmail').value;
+    this.data.settings.gstin = document.getElementById('cfgGstin').value;
+    this.data.settings.pan = document.getElementById('cfgPan').value;
+    this.data.settings.bankName = document.getElementById('cfgBankName').value;
+    this.data.settings.accountNo = document.getElementById('cfgAccountNo').value;
+    this.data.settings.ifsc = document.getElementById('cfgIfsc').value;
+    this.data.settings.branch = document.getElementById('cfgBranch').value;
     this.data.settings.invoicePrefix = document.getElementById('cfgPrefix').value;
     this.data.settings.nextInvoiceNo = parseInt(document.getElementById('cfgNextNo').value) || 1;
     this.saveState();
     alert('✅ Configurations saved successfully!');
     this.renderGateway();
+    this.renderLiveInvoicePreview();
   }
 
   resetAllData() {
