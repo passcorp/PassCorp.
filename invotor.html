@@ -888,7 +888,7 @@ body {
           </div>
           <div class="form-group">
             <label>Invoice Date</label>
-            <input type="date" id="billDate" class="form-control" onchange="erp.renderLiveInvoicePreview()" />
+            <input type="date" id="billDate" class="form-control" onchange="erp.handleInvoiceDateChange(this.value)" />
           </div>
           <div class="form-group">
             <label>Print Bill Copies</label>
@@ -982,16 +982,17 @@ body {
                   <input type="text" id="billEwayBillNo" class="form-control" placeholder="e.g. 2410 9876 5432" oninput="erp.renderLiveInvoicePreview()" />
                 </div>
                 <div class="form-group" style="grid-column: span 2;">
-                  <label style="color: #1e40af; font-weight: 800;">Payment Terms</label>
-                  <select id="billPaymentTerms" class="form-control" onchange="erp.renderLiveInvoicePreview()" style="font-weight: 700;">
-                    <option value="As Agreed" selected>As Agreed</option>
+                  <label style="color: #1e40af; font-weight: 800;">Payment Terms (Auto-computes Due Date)</label>
+                  <select id="billPaymentTerms" class="form-control" onchange="erp.handlePaymentTermsChange(this.value)" style="font-weight: 700;">
+                    <option value="As Agreed" selected>As Agreed (Immediate / Due on Receipt)</option>
                     <option value="Immediate / Cash">Immediate / Cash</option>
                     <option value="100% Advance">100% Advance</option>
                     <option value="Against Delivery (COD)">Against Delivery (COD)</option>
-                    <option value="15 Days Credit">15 Days Credit</option>
-                    <option value="30 Days Credit">30 Days Credit</option>
-                    <option value="45 Days Credit">45 Days Credit</option>
-                    <option value="60 Days Credit">60 Days Credit</option>
+                    <option value="15 Days Credit">15 Days Credit (+15 Days from Bill Date)</option>
+                    <option value="30 Days Credit">30 Days Credit (+30 Days from Bill Date)</option>
+                    <option value="45 Days Credit">45 Days Credit (+45 Days from Bill Date)</option>
+                    <option value="60 Days Credit">60 Days Credit (+60 Days from Bill Date)</option>
+                    <option value="90 Days Credit">90 Days Credit (+90 Days from Bill Date)</option>
                   </select>
                 </div>
               </div>
@@ -2559,15 +2560,70 @@ class PassInvotorERP {
     this.renderLiveInvoicePreview();
   }
 
+  calculateDueDateFromTerms(invDateStr, termsStr) {
+    if (!invDateStr) return '';
+    const d = new Date(invDateStr);
+    if (isNaN(d.getTime())) return invDateStr;
+
+    let daysToAdd = 0;
+    const t = (termsStr || '').toLowerCase();
+
+    if (t.includes('15 day') || t.includes('15-day') || t.includes('15 days')) {
+      daysToAdd = 15;
+    } else if (t.includes('30 day') || t.includes('30-day') || t.includes('30 days')) {
+      daysToAdd = 30;
+    } else if (t.includes('45 day') || t.includes('45-day') || t.includes('45 days')) {
+      daysToAdd = 45;
+    } else if (t.includes('60 day') || t.includes('60-day') || t.includes('60 days')) {
+      daysToAdd = 60;
+    } else if (t.includes('90 day') || t.includes('90-day') || t.includes('90 days')) {
+      daysToAdd = 90;
+    } else {
+      const match = t.match(/(\d+)\s*days?/);
+      if (match && match[1]) {
+        daysToAdd = parseInt(match[1], 10);
+      } else {
+        daysToAdd = 0;
+      }
+    }
+
+    d.setDate(d.getDate() + daysToAdd);
+    return d.toISOString().split('T')[0];
+  }
+
+  handleInvoiceDateChange(newDate) {
+    this.currentInvoice.date = newDate;
+    const terms = document.getElementById('billPaymentTerms') ? document.getElementById('billPaymentTerms').value : (this.currentInvoice.paymentTerms || 'As Agreed');
+    const autoDue = this.calculateDueDateFromTerms(newDate, terms);
+    this.currentInvoice.dueDate = autoDue;
+    if (document.getElementById('billDueDate')) {
+      document.getElementById('billDueDate').value = autoDue;
+    }
+    this.renderLiveInvoicePreview();
+  }
+
+  handlePaymentTermsChange(terms) {
+    this.currentInvoice.paymentTerms = terms;
+    const invDate = document.getElementById('billDate') ? document.getElementById('billDate').value : (this.currentInvoice.date || new Date().toISOString().split('T')[0]);
+    const autoDue = this.calculateDueDateFromTerms(invDate, terms);
+    this.currentInvoice.dueDate = autoDue;
+    if (document.getElementById('billDueDate')) {
+      document.getElementById('billDueDate').value = autoDue;
+    }
+    this.renderLiveInvoicePreview();
+  }
+
   createEmptyInvoice(docType = 'BILL OF SUPPLY') {
     const today = new Date().toISOString().split('T')[0];
+    const terms = 'As Agreed';
+    const initDueDate = this.calculateDueDateFromTerms(today, terms);
     return {
       docType: docType,
       invoiceNo: this.getNextInvoiceNumber(docType),
       date: today,
-      dueDate: today,
+      dueDate: initDueDate,
       copyOption: 'original_duplicate',
-      paymentTerms: 'As Agreed',
+      paymentTerms: terms,
       customer: {
         company: 'M/s. ABC Industries Pvt. Ltd.',
         person: 'Mr. Rajesh Sharma',
