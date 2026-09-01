@@ -2241,15 +2241,17 @@ class PassInvotorERP {
             <td colspan="5" style="font-weight: bold; font-size: 10px; padding: 3px 6px;">Shipped To (Consignee):</td>
           </tr>
           <tr>
-            <td colspan="5" style="padding: 4px 6px; vertical-align: top; height: 48px;">
-              <div style="font-size: 11px; font-weight: bold; color: #0c2340;">${p.custName || 'M/s. ABC Industries Pvt. Ltd.'}</div>
-              <div style="margin-top: 2px; line-height: 1.3; font-size: 9.5px;">${p.custAddr || 'Chikhali, Pune'}</div>
-              <div style="margin-top: 3px; font-size: 9px;"><span class="inv-bold">GSTIN/UIN:</span> ${p.custGst || 'Unregistered'}</div>
+            <td colspan="5" style="padding: 4px 6px; vertical-align: top; min-height: 48px;">
+              <div style="font-size: 11.5px; font-weight: 800; color: #0c2340;">${p.custName || 'M/s. ABC Industries Pvt. Ltd.'}</div>
+              <div style="margin-top: 2px; line-height: 1.35; font-size: 9.5px;">${p.custAddr || 'Chikhali, Pune'}</div>
+              ${p.custPhone ? `<div style="margin-top: 2px; font-size: 9.5px; color: #0c2340;"><span class="inv-bold">Phone / Mobile:</span> <span style="font-family: monospace; font-weight: bold;">${p.custPhone}</span></div>` : ''}
+              <div style="margin-top: 2px; font-size: 9px;"><span class="inv-bold">GSTIN/UIN:</span> ${p.custGst || 'Unregistered'}</div>
             </td>
-            <td colspan="5" style="padding: 4px 6px; vertical-align: top; height: 48px;">
-              <div style="font-size: 11px; font-weight: bold; color: #0c2340;">${p.custName || 'M/s. ABC Industries Pvt. Ltd.'}</div>
-              <div style="margin-top: 2px; line-height: 1.3; font-size: 9.5px;">${p.custAddr || 'Chikhali, Pune'}</div>
-              <div style="margin-top: 3px; font-size: 9px;"><span class="inv-bold">GSTIN/UIN:</span> ${p.custGst || 'Unregistered'}</div>
+            <td colspan="5" style="padding: 4px 6px; vertical-align: top; min-height: 48px;">
+              <div style="font-size: 11.5px; font-weight: 800; color: #0c2340;">${p.custName || 'M/s. ABC Industries Pvt. Ltd.'}</div>
+              <div style="margin-top: 2px; line-height: 1.35; font-size: 9.5px;">${p.custAddr || 'Chikhali, Pune'}</div>
+              ${p.custPhone ? `<div style="margin-top: 2px; font-size: 9.5px; color: #0c2340;"><span class="inv-bold">Phone / Mobile:</span> <span style="font-family: monospace; font-weight: bold;">${p.custPhone}</span></div>` : ''}
+              <div style="margin-top: 2px; font-size: 9px;"><span class="inv-bold">GSTIN/UIN:</span> ${p.custGst || 'Unregistered'}</div>
             </td>
           </tr>
 
