@@ -1606,26 +1606,43 @@ body {
 
 <!-- MODAL 3: PRODUCT PICKER MODAL -->
 <div class="modal-backdrop" id="productPickerModal">
-  <div class="modal-box" style="max-width: 750px;">
+  <div class="modal-box" style="max-width: 920px; width: 95%;">
     <div class="modal-header">
-      <span>Pick Item from Master Catalog</span>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="font-weight: 800; font-size: 15px;">📦 PASS CORP. Master Safety Catalog</span>
+        <span class="badge badge-blue" id="catalogModalBadge" style="font-size: 11px; padding: 3px 8px;">186+ Products Connected</span>
+      </div>
       <div style="display: flex; gap: 6px;">
         <button class="btn btn-outline btn-sm" style="background:#fff; color:#0c2340;" onclick="erp.openNewProductModal()">+ Save New Product</button>
         <button class="btn btn-danger btn-sm" onclick="erp.closeModal('productPickerModal')">✕</button>
       </div>
     </div>
     <div class="modal-body" style="padding: 14px;">
-      <input type="text" id="catalogSearch" class="form-control" placeholder="Search safety items by name, HSN code, or brand..." style="margin-bottom: 12px;" oninput="erp.filterCatalogPicker()" />
-      <div style="max-height: 400px; overflow-y: auto;">
-        <table class="data-table">
-          <thead>
+      <div style="display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap;">
+        <input type="text" id="catalogSearch" class="form-control" placeholder="🔍 Search safety product, brand (Hillson, Karam, Udyogi, 3M, Wild Bull), HSN..." style="flex: 2; min-width: 240px; font-weight: 600;" oninput="erp.filterCatalogPicker()" />
+        <select id="catalogCategoryFilter" class="form-control" style="flex: 1; min-width: 180px; font-weight: 600;" onchange="erp.filterCatalogPicker()">
+          <option value="all">🌐 All Categories (186+ Products)</option>
+          <option value="shoes">🥾 Safety Shoes & Footwear</option>
+          <option value="gloves">🧤 Safety Gloves & Hand Protection</option>
+          <option value="head">🪖 Safety Helmets & Head Protection</option>
+          <option value="eye">👓 Safety Goggles & Eye Protection</option>
+          <option value="resp">😷 Respiratory & Dust Masks</option>
+          <option value="fall">🧗 Fall Protection & Safety Harness</option>
+          <option value="body">🦺 High-Vis Jackets & Bodywear</option>
+          <option value="hearing">🦻 Hearing Protection & Ear Muffs</option>
+          <option value="spill">🛢️ Spill Control & Absorbents</option>
+        </select>
+      </div>
+      <div style="max-height: 460px; overflow-y: auto; border: 1px solid var(--line); border-radius: 6px;">
+        <table class="data-table" style="margin: 0;">
+          <thead style="position: sticky; top: 0; background: #f8fafc; z-index: 10;">
             <tr>
-              <th>Item Description</th>
+              <th style="min-width: 280px;">Item Description & Brand</th>
               <th>HSN Code</th>
-              <th>Brand / Unit</th>
+              <th>Unit</th>
               <th class="num">Stock</th>
               <th class="num">Selling Rate (₹)</th>
-              <th class="center">Action</th>
+              <th class="center" style="min-width: 100px;">Action</th>
             </tr>
           </thead>
           <tbody id="catalogPickerBody"></tbody>
@@ -2141,11 +2158,12 @@ class PassInvotorERP {
       document.body.appendChild(dl);
     }
     dl.innerHTML = '';
-    if (this.data && this.data.stock) {
-      this.data.stock.forEach(item => {
+    const allItems = this.getAllProducts();
+    if (allItems && allItems.length > 0) {
+      allItems.forEach(item => {
         const opt = document.createElement('option');
         opt.value = item.name;
-        opt.label = `[${item.brand || 'PASS'}] HSN:${item.hsn || '-'} ₹${item.price || item.cost}`;
+        opt.label = `[${item.brand || 'PASS CORP'}] HSN:${item.hsn || '-'} ₹${item.price || item.cost}`;
         dl.appendChild(opt);
       });
     }
@@ -3183,11 +3201,43 @@ class PassInvotorERP {
     });
   }
 
+  getAllProducts() {
+    const siteProducts = this.getWebsiteCatalog();
+    const map = new Map();
+    
+    // 1. First add default website products
+    siteProducts.forEach(p => {
+      const k = (p.name || '').toLowerCase().trim();
+      if (k) map.set(k, p);
+    });
+
+    // 2. Add or merge any custom items from stock
+    if (this.data && Array.isArray(this.data.stock)) {
+      this.data.stock.forEach(s => {
+        const key = (s.name || '').toLowerCase().trim();
+        if (key) {
+          if (!map.has(key)) {
+            map.set(key, s);
+          } else {
+            const existing = map.get(key);
+            if (s.price) existing.price = s.price;
+            if (s.hsn) existing.hsn = s.hsn;
+            if (s.unit) existing.unit = s.unit;
+            if (s.stock !== undefined) existing.stock = s.stock;
+          }
+        }
+      });
+    }
+
+    return Array.from(map.values());
+  }
+
   handleItemNameInput(index, value) {
     this.currentInvoice.items[index].name = value;
     const v = (value || '').trim().toLowerCase();
     if (!v) return;
-    const match = this.data.stock.find(p => p.name.toLowerCase() === v || p.id.toLowerCase() === v || (p.name.toLowerCase().includes(v) && v.length >= 3));
+    const allItems = this.getAllProducts();
+    const match = allItems.find(p => p.name.toLowerCase() === v || p.id.toLowerCase() === v || (p.name.toLowerCase().includes(v) && v.length >= 3));
     if (match) {
       this.currentInvoice.items[index].name = match.name;
       this.currentInvoice.items[index].desc = match.desc || match.spec || `${match.brand || ''} ${match.cat || ''}`.trim();
@@ -3203,7 +3253,8 @@ class PassInvotorERP {
   handleQuickItemSearchSelect(inp) {
     const val = (inp.value || '').trim().toLowerCase();
     if (!val) return;
-    const match = this.data.stock.find(p => p.name.toLowerCase() === val || p.id.toLowerCase() === val || p.name.toLowerCase().includes(val) || (p.hsn && p.hsn.toLowerCase() === val));
+    const allItems = this.getAllProducts();
+    const match = allItems.find(p => p.name.toLowerCase() === val || p.id.toLowerCase() === val || p.name.toLowerCase().includes(val) || (p.hsn && p.hsn.toLowerCase() === val));
     if (match) {
       this.addCatalogItemToBill(match.id);
       inp.value = '';
@@ -3255,42 +3306,67 @@ class PassInvotorERP {
   }
 
   filterCatalogPicker() {
-    const q = (document.getElementById('catalogSearch').value || '').toLowerCase().trim();
+    const q = (document.getElementById('catalogSearch') ? document.getElementById('catalogSearch').value : '').toLowerCase().trim();
+    const catFilter = (document.getElementById('catalogCategoryFilter') ? document.getElementById('catalogCategoryFilter').value : 'all').toLowerCase();
     const tbody = document.getElementById('catalogPickerBody');
     if (!tbody) return;
     tbody.innerHTML = '';
     
-    const matches = this.data.stock.filter(it => 
-      !q ||
-      it.name.toLowerCase().includes(q) || 
-      (it.hsn && it.hsn.toLowerCase().includes(q)) || 
-      (it.brand && it.brand.toLowerCase().includes(q)) ||
-      (it.cat && it.cat.toLowerCase().includes(q)) ||
-      (it.desc && it.desc.toLowerCase().includes(q))
-    );
+    const allItems = this.getAllProducts();
+    const matches = allItems.filter(it => {
+      const name = (it.name || '').toLowerCase();
+      const hsn = (it.hsn || '').toLowerCase();
+      const brand = (it.brand || '').toLowerCase();
+      const cat = (it.cat || '').toLowerCase();
+      const desc = (it.desc || '').toLowerCase();
+
+      // Category check
+      if (catFilter !== 'all') {
+        if (!cat.includes(catFilter) && !name.includes(catFilter)) {
+          if (catFilter === 'shoes' && !cat.includes('foot') && !name.includes('shoe') && !name.includes('boot')) return false;
+          if (catFilter === 'gloves' && !cat.includes('hand') && !name.includes('glove')) return false;
+          if (catFilter === 'head' && !cat.includes('helmet') && !name.includes('helmet') && !name.includes('cap')) return false;
+          if (catFilter === 'eye' && !cat.includes('goggle') && !name.includes('goggle') && !name.includes('spectacle')) return false;
+          if (catFilter === 'resp' && !cat.includes('mask') && !name.includes('mask') && !name.includes('respirator')) return false;
+          if (catFilter === 'fall' && !cat.includes('harness') && !name.includes('harness') && !name.includes('lanyard')) return false;
+          if (catFilter === 'body' && !cat.includes('jacket') && !name.includes('jacket') && !name.includes('vest') && !name.includes('suit')) return false;
+          if (catFilter === 'hearing' && !cat.includes('ear') && !name.includes('ear') && !name.includes('muff')) return false;
+          if (catFilter === 'spill' && !cat.includes('spill') && !name.includes('absorbent') && !name.includes('pad')) return false;
+        }
+      }
+
+      // Keyword query check
+      if (!q) return true;
+      return name.includes(q) || hsn.includes(q) || brand.includes(q) || cat.includes(q) || desc.includes(q);
+    });
+
+    const badge = document.getElementById('catalogModalBadge');
+    if (badge) badge.textContent = `${matches.length} Products Available`;
 
     if (matches.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 20px; color:#64748b;">No products found matching "${q}".</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 24px; color:#64748b; font-size: 13px;">No products found matching "${q}".</td></tr>`;
       return;
     }
 
-    matches.slice(0, 100).forEach(item => {
+    matches.forEach(item => {
       const tr = document.createElement('tr');
       const thumb = item.image || 'https://passcorp.in/assets/logo.png';
       tr.innerHTML = `
-        <td style="display:flex; align-items:center; gap: 8px;">
-          <img src="${thumb}" style="width: 32px; height: 32px; object-fit: contain; background: #f8fafc; border-radius: 4px; border: 1px solid #e2e8f0; flex-shrink:0;" onerror="this.src='https://passcorp.in/assets/logo.png'" />
-          <div>
-            <strong style="color:#0c2340; font-size:12px;">${item.name}</strong>
-            <div style="font-size: 10px; color: #64748b;">${item.brand || 'PASS CORP'} &bull; ${item.cat || 'Industrial Safety'}</div>
+        <td>
+          <div style="display:flex; align-items:center; gap: 10px;">
+            <img src="${thumb}" style="width: 38px; height: 38px; object-fit: contain; background: #fff; border-radius: 4px; border: 1px solid #cbd5e1; padding: 2px; flex-shrink:0;" onerror="this.src='https://passcorp.in/assets/logo.png'" />
+            <div>
+              <strong style="color:#0c2340; font-size:12px; display:block; line-height: 1.3;">${item.name}</strong>
+              <span style="font-size: 10.5px; color: #64748b; font-weight: 500;">${item.brand || 'PASS CORP'} &bull; ${item.cat || 'Industrial Safety'}</span>
+            </div>
           </div>
         </td>
-        <td><strong style="font-family: monospace; color: #1e40af;">${item.hsn || '6506'}</strong></td>
-        <td><span class="badge" style="background:#e0f2fe; color:#0369a1; font-weight:bold; font-size:10px;">${item.unit || 'Nos.'}</span></td>
-        <td class="num"><strong>${item.stock || 100}</strong></td>
-        <td class="num" style="font-weight:bold; color:#0c2340;">₹${(item.price || 0).toFixed(2)}</td>
+        <td><strong style="font-family: monospace; color: #1e40af; font-size: 12px;">${item.hsn || '6506'}</strong></td>
+        <td><span class="badge" style="background:#e0f2fe; color:#0369a1; font-weight:bold; font-size:11px;">${item.unit || 'Nos.'}</span></td>
+        <td class="num"><strong style="color: #059669;">${item.stock || 100}</strong></td>
+        <td class="num" style="font-weight:800; color:#0c2340; font-size: 13px;">₹${(item.price || 0).toFixed(2)}</td>
         <td class="center">
-          <button class="btn btn-blue btn-sm" onclick="erp.addCatalogItemToBill('${item.id}')" style="font-weight:bold; padding: 4px 10px;">+ Add to Bill</button>
+          <button class="btn btn-blue btn-sm" onclick="erp.addCatalogItemToBill('${item.id}')" style="font-weight:bold; padding: 5px 12px; font-size: 11.5px;">+ Add to Bill</button>
         </td>
       `;
       tbody.appendChild(tr);
@@ -3298,7 +3374,8 @@ class PassInvotorERP {
   }
 
   addCatalogItemToBill(itemId) {
-    const p = this.data.stock.find(s => s.id === itemId);
+    const allProducts = this.getAllProducts();
+    const p = allProducts.find(s => s.id === itemId) || (this.data && this.data.stock ? this.data.stock.find(s => s.id === itemId) : null);
     if (!p) return;
 
     if (this._targetRowIndex !== undefined && this._targetRowIndex >= 0 && this.currentInvoice.items[this._targetRowIndex]) {
