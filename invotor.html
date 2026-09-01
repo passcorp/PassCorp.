@@ -709,11 +709,12 @@ body {
             <select id="billDocType" class="form-control" onchange="erp.handleDocTypeChange(this.value)">
               <option value="BILL OF SUPPLY" selected>Non-GST (Bill of Supply)</option>
               <option value="TAX INVOICE">GST (Tax Invoice)</option>
+              <option value="DELIVERY CHALLAN">Delivery Challan (Gate Pass)</option>
             </select>
           </div>
           <div class="form-group">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-              <label>Invoice Number</label>
+              <label>Document / Bill No.</label>
               <span style="font-size: 9px; font-weight: 800; color: #059669; background: #ecfdf5; padding: 1px 4px; border-radius: 3px;">Auto-Sequential</span>
             </div>
             <input type="text" id="billInvoiceNo" class="form-control" style="font-weight: bold; font-family: 'IBM Plex Mono', monospace; color: #0c2340;" oninput="erp.handleInvoiceNoInput(this.value)" />
@@ -774,7 +775,7 @@ body {
               </div>
             </div>
 
-            <!-- RIGHT: ORDER & DISPATCH DETAILS (WITH PAYMENT TERMS DIRECTLY UNDER TRANSPORT) -->
+            <!-- RIGHT: ORDER & DISPATCH DETAILS (WITH VEHICLE NO, E-WAY BILL NO & PAYMENT TERMS) -->
             <div style="border-left: 1px solid #e2e8f0; padding-left: 16px;">
               <div style="font-size: 10px; font-weight: 800; color: #475569; margin-bottom: 6px; text-transform: uppercase;">2. Order, Transport & Terms</div>
               <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
@@ -787,7 +788,7 @@ body {
                   <input type="date" id="billPoDate" class="form-control" onchange="erp.renderLiveInvoicePreview()" />
                 </div>
                 <div class="form-group" style="grid-column: span 2;">
-                  <label>Transport / Vehicle</label>
+                  <label>Transport / Mode</label>
                   <select id="billTransport" class="form-control" onchange="erp.renderLiveInvoicePreview()">
                     <option value="Direct Delivery / Surface" selected>Direct Delivery / Surface</option>
                     <option value="By Hand / Person Delivery">By Hand / Person Delivery</option>
@@ -798,8 +799,16 @@ body {
                     <option value="TCI Freight / Surface">TCI Freight / Surface</option>
                   </select>
                 </div>
+                <div class="form-group">
+                  <label>Vehicle No.</label>
+                  <input type="text" id="billVehicleNo" class="form-control" placeholder="e.g. MH 14 EM 2026" oninput="erp.renderLiveInvoicePreview()" />
+                </div>
+                <div class="form-group">
+                  <label>E-Way Bill No.</label>
+                  <input type="text" id="billEwayBillNo" class="form-control" placeholder="e.g. 2410 9876 5432" oninput="erp.renderLiveInvoicePreview()" />
+                </div>
                 <div class="form-group" style="grid-column: span 2;">
-                  <label style="color: #1e40af; font-weight: 800;">Payment Terms (Under Transport)</label>
+                  <label style="color: #1e40af; font-weight: 800;">Payment Terms</label>
                   <select id="billPaymentTerms" class="form-control" onchange="erp.renderLiveInvoicePreview()" style="font-weight: 700;">
                     <option value="As Agreed" selected>As Agreed</option>
                     <option value="Immediate / Cash">Immediate / Cash</option>
@@ -1569,6 +1578,8 @@ class PassInvotorERP {
           if (!this.data.settings.nextGstNo) this.data.settings.nextGstNo = 1;
           if (!this.data.settings.nonGstPrefix) this.data.settings.nonGstPrefix = "PC";
           if (!this.data.settings.nextNonGstNo) this.data.settings.nextNonGstNo = 1;
+          if (!this.data.settings.dcPrefix) this.data.settings.dcPrefix = "DC/2026-27/";
+          if (!this.data.settings.nextDcNo) this.data.settings.nextDcNo = 1;
         }
       } catch (e) { this.data = this.getDefaultState(); }
     } else {
@@ -2026,6 +2037,10 @@ class PassInvotorERP {
       const prefix = s.gstPrefix || "PC/2026-27/";
       const nextNo = s.nextGstNo ? parseInt(s.nextGstNo) : (s.nextInvoiceNo ? parseInt(s.nextInvoiceNo) : 1);
       return `${prefix}${String(nextNo).padStart(3, '0')}`;
+    } else if (dt === 'DELIVERY CHALLAN') {
+      const prefix = s.dcPrefix || "DC/2026-27/";
+      const nextNo = s.nextDcNo ? parseInt(s.nextDcNo) : 1;
+      return `${prefix}${String(nextNo).padStart(3, '0')}`;
     } else {
       const prefix = s.nonGstPrefix || "PC";
       const nextNo = s.nextNonGstNo ? parseInt(s.nextNonGstNo) : (s.nextInvoiceNo ? parseInt(s.nextInvoiceNo) : 1);
@@ -2062,6 +2077,8 @@ class PassInvotorERP {
       poRef: 'PO/2026/089',
       poDate: today,
       transport: 'Direct Delivery / Surface',
+      vehicleNo: '',
+      ewayBillNo: '',
       placeOfSupply: 'Maharashtra (Code: 27)',
       items: [
         { id: 'helm_udyogi_7000', name: 'Safety Helmet Udyogi Ultravent 7000 (Ratchet)', desc: 'ISI Marked IS:2925, High Impact Polymer, Yellow Colour', brand: 'UDYOGI', hsn: '6506', unit: 'Nos.', qty: 10, rate: 245.00, taxable: 2450.00, gstRate: 0, taxAmt: 0, total: 2450.00 },
@@ -2099,6 +2116,8 @@ class PassInvotorERP {
     const poRef = document.getElementById('billPoRef') ? document.getElementById('billPoRef').value : this.currentInvoice.poRef;
     const poDate = document.getElementById('billPoDate') ? document.getElementById('billPoDate').value : this.currentInvoice.poDate;
     const transport = document.getElementById('billTransport') ? document.getElementById('billTransport').value : this.currentInvoice.transport;
+    const vehicleNo = document.getElementById('billVehicleNo') ? document.getElementById('billVehicleNo').value : (this.currentInvoice.vehicleNo || '');
+    const ewayBillNo = document.getElementById('billEwayBillNo') ? document.getElementById('billEwayBillNo').value : (this.currentInvoice.ewayBillNo || '');
     const pos = document.getElementById('billPlaceOfSupply') ? document.getElementById('billPlaceOfSupply').value : this.currentInvoice.placeOfSupply;
     const discount = document.getElementById('billDiscount') ? parseFloat(document.getElementById('billDiscount').value) || 0 : this.currentInvoice.discount;
     const freight = document.getElementById('billFreight') ? parseFloat(document.getElementById('billFreight').value) || 0 : this.currentInvoice.freight;
@@ -2114,10 +2133,14 @@ class PassInvotorERP {
     if (document.getElementById('billPoRef')) document.getElementById('billPoRef').value = poRef;
     if (document.getElementById('billPoDate')) document.getElementById('billPoDate').value = poDate;
     if (document.getElementById('billTransport')) document.getElementById('billTransport').value = transport;
+    if (document.getElementById('billVehicleNo')) document.getElementById('billVehicleNo').value = vehicleNo;
+    if (document.getElementById('billEwayBillNo')) document.getElementById('billEwayBillNo').value = ewayBillNo;
     if (document.getElementById('billPlaceOfSupply')) document.getElementById('billPlaceOfSupply').value = pos;
 
     let copyBadges = [];
-    if (copyOption === 'all_three') {
+    if (docType === 'DELIVERY CHALLAN') {
+      copyBadges = ['Original for Consignee', 'Duplicate for Transporter'];
+    } else if (copyOption === 'all_three') {
       copyBadges = ['Original for Recipient', 'Duplicate for Transporter', 'Triplicate for Supplier'];
     } else {
       copyBadges = ['Original for Recipient', 'Duplicate for Transporter'];
@@ -2129,7 +2152,7 @@ class PassInvotorERP {
 
     copyBadges.forEach(badgeLabel => {
       const sheetHtml = this.generateSingleA4SheetHtml({
-        s, docType, invNo, invDate, badgeLabel, payTerms, custCompany, custPerson, custAddr, custGst, custPhone, poRef, poDate, transport, pos, discount, freight, items: this.currentInvoice.items
+        s, docType, invNo, invDate, badgeLabel, payTerms, custCompany, custPerson, custAddr, custGst, custPhone, poRef, poDate, transport, vehicleNo, ewayBillNo, pos, discount, freight, items: this.currentInvoice.items
       });
       const wrap = document.createElement('div');
       wrap.innerHTML = sheetHtml;
@@ -2214,6 +2237,8 @@ class PassInvotorERP {
     const grandTotal = Math.round(rawGrandTotal);
     const roundOff = (grandTotal - rawGrandTotal).toFixed(2);
 
+    const docDisplayTitle = p.docType === 'DELIVERY CHALLAN' ? 'DELIVERY CHALLAN (RULE 55 / MOVEMENT OF GOODS)' : p.docType;
+
     return `
       <div class="a4-sheet">
         <table class="inv-outer-table">
@@ -2234,7 +2259,7 @@ class PassInvotorERP {
           <tr>
             <td colspan="10" style="padding: 3px 6px; border-bottom: 1px solid #000;">
               <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div style="font-size: 11px; font-weight: bold; color: #0c2340;">${p.docType}</div>
+                <div style="font-size: 11px; font-weight: bold; color: #0c2340;">${docDisplayTitle}</div>
                 <div class="inv-top-copy"><span class="inv-top-badge">${p.badgeLabel}</span></div>
               </div>
             </td>
@@ -2266,14 +2291,16 @@ class PassInvotorERP {
           <!-- 3. INVOICE META BAR -->
           <tr>
             <td colspan="5" style="vertical-align: top; padding: 4px 6px;">
-              <div class="inv-meta-label"><span class="inv-bold">Invoice No:</span> <span style="font-weight: bold; font-size: 11px;">${p.invNo}</span></div>
-              <div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">Invoice Date:</span> ${this.formatDate(p.invDate)}</div>
+              <div class="inv-meta-label"><span class="inv-bold">${p.docType === 'DELIVERY CHALLAN' ? 'Challan No:' : 'Invoice No:'}</span> <span style="font-weight: bold; font-size: 11px;">${p.invNo}</span></div>
+              <div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">${p.docType === 'DELIVERY CHALLAN' ? 'Challan Date:' : 'Invoice Date:'}</span> ${this.formatDate(p.invDate)}</div>
               <div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">Place of Supply:</span> ${p.pos}</div>
             </td>
             <td colspan="5" style="vertical-align: top; padding: 4px 6px;">
               <div class="inv-meta-label"><span class="inv-bold">PO / Ref No:</span> <span style="font-weight: bold;">${p.poRef || 'NA'}</span></div>
               <div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">PO / Ref Date:</span> ${this.formatDate(p.poDate) || 'NA'}</div>
-              <div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">Transport / Dispatch:</span> ${p.transport || 'Direct Delivery / Surface'}</div>
+              <div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">Transport:</span> ${p.transport || 'Direct Delivery / Surface'}</div>
+              ${p.vehicleNo ? `<div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">Vehicle No:</span> <span style="font-weight: bold; font-family: monospace;">${p.vehicleNo}</span></div>` : ''}
+              ${p.ewayBillNo ? `<div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">E-Way Bill No:</span> <span style="font-weight: bold; font-family: monospace;">${p.ewayBillNo}</span></div>` : ''}
               <div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">Payment Terms:</span> ${p.payTerms}</div>
             </td>
           </tr>
@@ -2579,7 +2606,7 @@ class PassInvotorERP {
     const discount = parseFloat(document.getElementById('billDiscount').value) || 0;
     const freight = parseFloat(document.getElementById('billFreight').value) || 0;
     const grandTotal = Math.max(0, subtotal - discount + freight);
-    const advance = parseFloat(document.getElementById('billAdvancePaid').value) || 0;
+    const advance = parseFloat(document.getElementById('billAdvancePaid') ? document.getElementById('billAdvancePaid').value : 0) || 0;
     const balanceDue = Math.max(0, grandTotal - advance);
 
     const inv = {
@@ -2600,6 +2627,8 @@ class PassInvotorERP {
       poRef: document.getElementById('billPoRef').value,
       poDate: document.getElementById('billPoDate').value,
       transport: document.getElementById('billTransport').value,
+      vehicleNo: document.getElementById('billVehicleNo') ? document.getElementById('billVehicleNo').value : '',
+      ewayBillNo: document.getElementById('billEwayBillNo') ? document.getElementById('billEwayBillNo').value : '',
       placeOfSupply: document.getElementById('billPlaceOfSupply').value,
       items: JSON.parse(JSON.stringify(this.currentInvoice.items)),
       subtotal: subtotal,
@@ -2617,9 +2646,11 @@ class PassInvotorERP {
       if (stockItem) stockItem.stock = Math.max(0, stockItem.stock - it.qty);
     });
 
-    // Increment respective next invoice number
+    // Increment respective next document number
     if (inv.docType === 'TAX INVOICE') {
       this.data.settings.nextGstNo = (parseInt(this.data.settings.nextGstNo) || 1) + 1;
+    } else if (inv.docType === 'DELIVERY CHALLAN') {
+      this.data.settings.nextDcNo = (parseInt(this.data.settings.nextDcNo) || 1) + 1;
     } else {
       this.data.settings.nextNonGstNo = (parseInt(this.data.settings.nextNonGstNo) || 1) + 1;
     }
@@ -2628,7 +2659,8 @@ class PassInvotorERP {
     this.saveState();
     this.saveCatalog();
     
-    alert(`✅ ${inv.docType === 'TAX INVOICE' ? 'GST Tax Invoice' : 'Non-GST Bill of Supply'} ${inv.invoiceNo} saved successfully!\nNext auto number: ${this.getNextInvoiceNumber(inv.docType)}`);
+    const docLabel = inv.docType === 'TAX INVOICE' ? 'GST Tax Invoice' : (inv.docType === 'DELIVERY CHALLAN' ? 'Delivery Challan' : 'Non-GST Bill of Supply');
+    alert(`✅ ${docLabel} ${inv.invoiceNo} saved successfully!\nNext auto number: ${this.getNextInvoiceNumber(inv.docType)}`);
     this.newInvoice();
   }
 
@@ -2647,7 +2679,8 @@ class PassInvotorERP {
     msg += `*Bank Details:*\n${s.bankName} | A/c: ${s.accountNo} | IFSC: ${s.ifsc}\n\n`;
     msg += `_Precision | Assurance | Safety | Solution_`;
 
-    const phone = (document.getElementById('billCustomerPhone').value || '').replace(/\D/g, '');
+    const rawPhone = (document.getElementById('billCustomerPhone').value || '').replace(/\D/g, '');
+    const phone = rawPhone.length >= 10 ? '91' + rawPhone.slice(-10) : '';
     const url = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(msg)}` : `https://wa.me/?text=${encodeURIComponent(msg)}`;
     window.open(url, '_blank');
   }
@@ -2656,7 +2689,7 @@ class PassInvotorERP {
   renderGateway() {
     const totalSales = this.data.invoices.reduce((sum, i) => sum + i.grandTotal, 0);
     const stockVal = this.data.stock.reduce((sum, it) => sum + (it.stock * it.cost), 0);
-    const receivables = this.data.invoices.reduce((sum, i) => sum + i.balanceDue, 0);
+    const receivables = this.data.invoices.reduce((sum, i) => sum + (i.balanceDue !== undefined ? i.balanceDue : (i.grandTotal - (i.advancePaid||0))), 0);
     const payables = this.data.purchases.filter(p => !p.payStatus.includes('Paid')).reduce((sum, p) => sum + p.totalAmount, 0);
 
     document.getElementById('kpiTotalSales').textContent = `₹${totalSales.toFixed(2)}`;
@@ -2678,7 +2711,7 @@ class PassInvotorERP {
           <td>${this.formatDate(inv.date)}</td>
           <td><span class="tag tag-blue">${inv.docType}</span></td>
           <td><strong>${inv.invoiceNo}</strong></td>
-          <td>${inv.customer.name}</td>
+          <td>${inv.customer.company || inv.customer.name}</td>
           <td class="num"><strong>₹${inv.grandTotal.toFixed(2)}</strong></td>
           <td><span class="tag ${inv.status === 'Paid' ? 'tag-paid' : (inv.status === 'Partial' ? 'tag-partial' : 'tag-unpaid')}">${inv.status}</span></td>
           <td class="center">
@@ -2740,19 +2773,139 @@ class PassInvotorERP {
     sel.innerHTML = '';
     this.savedBuyers.forEach(c => {
       const opt = document.createElement('option');
-      opt.value = 'cust:' + c.name;
-      opt.textContent = 'Customer: ' + c.name;
+      const compName = c.company || c.name;
+      opt.value = 'cust:' + compName;
+      opt.textContent = 'Customer: ' + compName;
       sel.appendChild(opt);
     });
   }
 
   renderLedgerStatement() {
     this.populatePartyDropdowns();
+    const sel = document.getElementById('ledgerSelect');
+    if (!sel) return;
+    const val = sel.value;
+    const tbody = document.getElementById('ledgerTableBody');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+
+    if (!val) {
+      tbody.innerHTML = `<tr><td colspan="6" class="center" style="padding: 20px; color: #64748b;">Select an account from the dropdown above to view statement.</td></tr>`;
+      return;
+    }
+
+    const partyName = val.replace('cust:', '');
+    const partyInvoices = this.data.invoices.filter(i => (i.customer.company || i.customer.name || '').toLowerCase() === partyName.toLowerCase());
+
+    let runningBal = 0;
+    let totalDebit = 0;
+    let totalCredit = 0;
+
+    if (partyInvoices.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="6" class="center" style="padding: 20px; color: #64748b;">No billing transactions recorded yet for <strong>${partyName}</strong>.</td></tr>`;
+    } else {
+      partyInvoices.forEach(inv => {
+        totalDebit += inv.grandTotal;
+        const paid = (inv.advancePaid || 0);
+        totalCredit += paid;
+        runningBal += (inv.grandTotal - paid);
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${this.formatDate(inv.date)}</td>
+          <td>${inv.docType} (${inv.invoiceNo})</td>
+          <td class="num" style="font-weight: bold; color: #0c2340;">₹${inv.grandTotal.toFixed(2)}</td>
+          <td class="num" style="color: #059669;">₹${paid.toFixed(2)}</td>
+          <td class="num" style="font-weight: 800; color: ${runningBal > 0 ? '#dc2626' : '#059669'};">₹${runningBal.toFixed(2)}</td>
+          <td class="center"><button class="btn btn-outline btn-sm" onclick="erp.loadInvoiceForPrint('${inv.id}')">View</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    if (document.getElementById('ledgerClosingBalance')) {
+      document.getElementById('ledgerClosingBalance').textContent = `₹${runningBal.toFixed(2)} ${runningBal > 0 ? 'Dr (Receivable)' : 'Nil'}`;
+    }
   }
 
   printLedger() { window.print(); }
 
-  renderReceivablesPayables() {}
+  /* FEATURE 6: RECEIVABLES / PAYABLES & 1-CLICK WHATSAPP REMINDER */
+  renderReceivablesPayables() {
+    const recvBody = document.getElementById('receivablesTableBody');
+    if (!recvBody) return;
+    recvBody.innerHTML = '';
+
+    let totalRecv = 0;
+    const unpaidInvoices = this.data.invoices.filter(i => (i.balanceDue !== undefined ? i.balanceDue : (i.grandTotal - (i.advancePaid || 0))) > 0);
+
+    if (unpaidInvoices.length === 0) {
+      recvBody.innerHTML = `<tr><td colspan="5" class="center" style="padding: 18px; color: #059669; font-weight: bold;">🎉 All Customer Bills are fully settled! Zero outstanding receivables.</td></tr>`;
+    } else {
+      unpaidInvoices.forEach(inv => {
+        const bal = (inv.balanceDue !== undefined ? inv.balanceDue : (inv.grandTotal - (inv.advancePaid || 0)));
+        totalRecv += bal;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${inv.invoiceNo}</strong></td>
+          <td>
+            <div style="font-weight: 700; color: var(--pass-navy); font-size: 12px;">${inv.customer.company || inv.customer.name}</div>
+            <div style="font-size: 10px; color: #64748b;">${inv.customer.person ? inv.customer.person + ' | ' : ''}Mob: ${inv.customer.phone || '-'}</div>
+          </td>
+          <td>${this.formatDate(inv.date)}</td>
+          <td class="num" style="font-weight: 800; color: #dc2626; font-size: 13px;">₹${bal.toFixed(2)}</td>
+          <td class="center">
+            <div style="display: inline-flex; gap: 4px;">
+              <button class="btn btn-success btn-sm" onclick="erp.recordPaymentModal('${inv.id}')" title="Record Received Payment">💳 Pay</button>
+              <button class="btn btn-sm" style="background: #25D366; color: #fff; font-weight: 700; border: none; padding: 2px 7px;" onclick="erp.sendWhatsAppPaymentReminder('${inv.id}')" title="Send WhatsApp Payment Reminder">📲 WA</button>
+              <button class="btn btn-outline btn-sm" onclick="erp.loadInvoiceForPrint('${inv.id}')">View</button>
+            </div>
+          </td>
+        `;
+        recvBody.appendChild(tr);
+      });
+    }
+    if (document.getElementById('totalRecvHeader')) {
+      document.getElementById('totalRecvHeader').textContent = `₹${totalRecv.toFixed(2)}`;
+    }
+    if (document.getElementById('bsDebtors')) {
+      document.getElementById('bsDebtors').textContent = `₹${totalRecv.toFixed(2)}`;
+    }
+  }
+
+  sendWhatsAppPaymentReminder(invId) {
+    const inv = this.data.invoices.find(i => i.id === invId);
+    if (!inv) return;
+    const rawPhone = (inv.customer.phone || '').replace(/\D/g, '');
+    const phone = rawPhone.length >= 10 ? '91' + rawPhone.slice(-10) : '';
+    const clientName = inv.customer.person || inv.customer.company || inv.customer.name;
+    const bal = (inv.balanceDue !== undefined ? inv.balanceDue : (inv.grandTotal - (inv.advancePaid || 0))).toFixed(2);
+    
+    const msg = `Dear ${clientName},\n\nGreetings from PASS CORP.!\n\nThis is a gentle reminder regarding Invoice No: *${inv.invoiceNo}* dated *${this.formatDate(inv.date)}*.\n\n*Outstanding Balance Due: ₹${bal}*\n\nKindly arrange to clear the payment at your earliest convenience.\n\n*Bank Details:*\nBank: ${this.data.settings.bankName}\nA/C No: ${this.data.settings.accountNo}\nIFSC: ${this.data.settings.ifsc}\nBranch: ${this.data.settings.branch}\n\nThank you!\n*PASS CORP. - Precision | Assurance | Safety | Solution*\nPhone: ${this.data.settings.phone}`;
+
+    const url = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(msg)}` : `https://wa.me/?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+  }
+
+  recordPaymentModal(invId) {
+    const inv = this.data.invoices.find(i => i.id === invId);
+    if (!inv) return;
+    const currentBal = (inv.balanceDue !== undefined ? inv.balanceDue : (inv.grandTotal - (inv.advancePaid || 0)));
+    const amtStr = prompt(`Record payment received for Invoice ${inv.invoiceNo} (Current Balance Due: ₹${currentBal.toFixed(2)}):\nEnter amount received (₹):`, currentBal.toFixed(2));
+    if (amtStr === null) return;
+    const amt = parseFloat(amtStr);
+    if (isNaN(amt) || amt <= 0) return alert('Please enter a valid received amount');
+
+    inv.advancePaid = (inv.advancePaid || 0) + amt;
+    inv.balanceDue = Math.max(0, inv.grandTotal - inv.advancePaid);
+    inv.status = inv.balanceDue === 0 ? 'Paid' : 'Partial';
+
+    this.saveState();
+    this.renderReceivablesPayables();
+    this.renderGateway();
+    alert(`✅ Payment of ₹${amt.toFixed(2)} successfully recorded for Invoice ${inv.invoiceNo}!\nRemaining Balance Due: ₹${inv.balanceDue.toFixed(2)}`);
+  }
+
   renderProfitAndLoss() {}
   renderBalanceSheet() {}
   renderDayBook() {}
