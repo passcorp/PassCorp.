@@ -11,6 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="data.js"></script>
 <style>
 :root {
   --bg: #f8fafc;
@@ -1833,13 +1834,35 @@ class PassInvotorERP {
       this.data = this.getDefaultState();
     }
 
-    // 2. Persistent Catalog
+    // 2. Persistent Catalog & Live Website Integration
+    const websiteItems = this.getWebsiteCatalog();
     const rawCatalog = localStorage.getItem(this.catalogKey);
+    let currentStock = [];
     if (rawCatalog) {
-      try { this.data.stock = JSON.parse(rawCatalog); } catch(e) {}
+      try { currentStock = JSON.parse(rawCatalog); } catch(e) { currentStock = INITIAL_SAFETY_CATALOG.slice(); }
     } else {
-      this.saveCatalog();
+      currentStock = INITIAL_SAFETY_CATALOG.slice();
     }
+
+    if (websiteItems && websiteItems.length > 0) {
+      const stockMap = new Map();
+      currentStock.forEach(s => stockMap.set(s.name.toLowerCase().trim(), s));
+      websiteItems.forEach(wp => {
+        const key = wp.name.toLowerCase().trim();
+        if (!stockMap.has(key)) {
+          currentStock.push(wp);
+          stockMap.set(key, wp);
+        } else {
+          const ex = stockMap.get(key);
+          if (!ex.image && wp.image) ex.image = wp.image;
+          if (!ex.desc && wp.desc) ex.desc = wp.desc;
+          if (!ex.brand && wp.brand) ex.brand = wp.brand;
+        }
+      });
+    }
+
+    this.data.stock = currentStock;
+    this.saveCatalog();
 
     // 3. Persistent Buyers
     const rawBuyers = localStorage.getItem(this.buyersKey);
@@ -1849,6 +1872,65 @@ class PassInvotorERP {
       this.savedBuyers = this.getDefaultBuyers();
       this.saveBuyers();
     }
+  }
+
+  getWebsiteCatalog() {
+    let siteProducts = [];
+    let contentObj = null;
+    if (typeof loadContent === 'function') {
+      try { contentObj = loadContent(); } catch(e){}
+    }
+    if (!contentObj && typeof CONTENT !== 'undefined' && CONTENT && Array.isArray(CONTENT.products)) {
+      contentObj = CONTENT;
+    }
+    if (!contentObj && typeof DEFAULT_CONTENT !== 'undefined' && DEFAULT_CONTENT && Array.isArray(DEFAULT_CONTENT.products)) {
+      contentObj = DEFAULT_CONTENT;
+    }
+
+    if (contentObj && Array.isArray(contentObj.products)) {
+      siteProducts = contentObj.products.map(p => {
+        let specsText = p.name;
+        if (p.brand) specsText += '\nBrand: ' + p.brand;
+        if (p.cert) specsText += ' | ' + p.cert;
+        if (p.desc) specsText += '\n' + p.desc;
+        
+        const cat = (p.category || '').toLowerCase();
+        let defaultHsn = '6506';
+        let defaultUnit = 'Nos.';
+        if (cat.includes('shoe') || cat.includes('foot')) { defaultHsn = '6403'; defaultUnit = 'Pairs'; }
+        else if (cat.includes('glove') || cat.includes('hand')) { defaultHsn = '6116'; defaultUnit = 'Pairs'; }
+        else if (cat.includes('eye') || cat.includes('goggle')) { defaultHsn = '9004'; defaultUnit = 'Nos.'; }
+        else if (cat.includes('resp') || cat.includes('mask')) { defaultHsn = '6307'; defaultUnit = 'Nos.'; }
+        else if (cat.includes('fall') || cat.includes('harness')) { defaultHsn = '6307'; defaultUnit = 'Sets'; }
+        else if (cat.includes('body') || cat.includes('coverall') || cat.includes('jacket')) { defaultHsn = '6211'; defaultUnit = 'Nos.'; }
+        
+        let imgUrl = p.img || '';
+        if (imgUrl && !imgUrl.startsWith('http') && !imgUrl.startsWith('data:')) {
+          imgUrl = 'https://passcorp.in/' + imgUrl.replace(/^\.?\//, '');
+        }
+
+        const priceVal = parseFloat(p.price || 180);
+        const costVal = parseFloat(p.costPrice || (priceVal * 0.75));
+
+        return {
+          id: p.id || ('prod_' + Math.random().toString(36).substr(2, 9)),
+          name: p.name + (p.brand && !p.name.toLowerCase().includes(p.brand.toLowerCase()) ? ' (' + p.brand + ')' : ''),
+          desc: specsText,
+          spec: specsText,
+          brand: p.brand || 'PASS CORP',
+          cat: p.categoryName || p.category || 'Industrial Safety',
+          hsn: p.hsn || defaultHsn,
+          unit: p.unit || defaultUnit,
+          cost: costVal,
+          price: priceVal,
+          stock: 100,
+          minAlert: 10,
+          image: imgUrl || 'https://passcorp.in/assets/logo.png'
+        };
+      });
+    }
+
+    return siteProducts;
   }
 
   /* ---------------- GITHUB CLOUD AUTO-SYNC ENGINE ---------------- */
@@ -3173,20 +3255,42 @@ class PassInvotorERP {
   }
 
   filterCatalogPicker() {
-    const q = (document.getElementById('catalogSearch').value || '').toLowerCase();
+    const q = (document.getElementById('catalogSearch').value || '').toLowerCase().trim();
     const tbody = document.getElementById('catalogPickerBody');
+    if (!tbody) return;
     tbody.innerHTML = '';
     
-    this.data.stock.filter(it => it.name.toLowerCase().includes(q) || (it.hsn && it.hsn.toLowerCase().includes(q)) || it.brand.toLowerCase().includes(q)).forEach(item => {
+    const matches = this.data.stock.filter(it => 
+      !q ||
+      it.name.toLowerCase().includes(q) || 
+      (it.hsn && it.hsn.toLowerCase().includes(q)) || 
+      (it.brand && it.brand.toLowerCase().includes(q)) ||
+      (it.cat && it.cat.toLowerCase().includes(q)) ||
+      (it.desc && it.desc.toLowerCase().includes(q))
+    );
+
+    if (matches.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 20px; color:#64748b;">No products found matching "${q}".</td></tr>`;
+      return;
+    }
+
+    matches.slice(0, 100).forEach(item => {
       const tr = document.createElement('tr');
+      const thumb = item.image || 'https://passcorp.in/assets/logo.png';
       tr.innerHTML = `
-        <td><strong>${item.name}</strong><br><span style="font-size: 10.5px; color: #64748b;">${item.cat}</span></td>
-        <td><strong style="font-family: monospace; color: #1e40af;">${item.hsn}</strong></td>
-        <td>${item.brand} / ${item.unit}</td>
-        <td class="num"><strong>${item.stock}</strong></td>
-        <td class="num">₹${item.price.toFixed(2)}</td>
+        <td style="display:flex; align-items:center; gap: 8px;">
+          <img src="${thumb}" style="width: 32px; height: 32px; object-fit: contain; background: #f8fafc; border-radius: 4px; border: 1px solid #e2e8f0; flex-shrink:0;" onerror="this.src='https://passcorp.in/assets/logo.png'" />
+          <div>
+            <strong style="color:#0c2340; font-size:12px;">${item.name}</strong>
+            <div style="font-size: 10px; color: #64748b;">${item.brand || 'PASS CORP'} &bull; ${item.cat || 'Industrial Safety'}</div>
+          </div>
+        </td>
+        <td><strong style="font-family: monospace; color: #1e40af;">${item.hsn || '6506'}</strong></td>
+        <td><span class="badge" style="background:#e0f2fe; color:#0369a1; font-weight:bold; font-size:10px;">${item.unit || 'Nos.'}</span></td>
+        <td class="num"><strong>${item.stock || 100}</strong></td>
+        <td class="num" style="font-weight:bold; color:#0c2340;">₹${(item.price || 0).toFixed(2)}</td>
         <td class="center">
-          <button class="btn btn-blue btn-sm" onclick="erp.addCatalogItemToBill('${item.id}')">+ Add</button>
+          <button class="btn btn-blue btn-sm" onclick="erp.addCatalogItemToBill('${item.id}')" style="font-weight:bold; padding: 4px 10px;">+ Add to Bill</button>
         </td>
       `;
       tbody.appendChild(tr);
