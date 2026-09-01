@@ -1851,8 +1851,8 @@ class PassInvotorERP {
     const card = document.getElementById('authLockCard');
     const val = inp ? inp.value.trim() : '';
 
-    // Master Passcode & Quick PINs
-    if (val === 'Pawanjali@241997' || val === '2419' || val === 'passcorp') {
+    // Master Passcode & PIN
+    if (val === '2497' || val === 'Pawanjali@241997') {
       sessionStorage.setItem('PASS_INVOTOR_AUTH', '1');
       if (err) err.textContent = '';
       const overlay = document.getElementById('authLockOverlay');
