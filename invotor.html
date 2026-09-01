@@ -730,11 +730,11 @@ body {
     <div class="auth-lock-body">
       <div class="auth-lock-badge">🔒 Protected Billing & Accounts Vault</div>
       <p style="font-size: 12px; color: #64748b; margin-top: 0; margin-bottom: 16px; line-height: 1.4;">
-        Enter Master Passcode / PIN to unlock Invotor Prime.
+        Enter Master Password to unlock Invotor Prime ERP.
       </p>
       <form onsubmit="event.preventDefault(); erp.submitUnlock();">
         <div class="auth-input-wrap">
-          <input type="password" id="authPassInput" class="auth-input" placeholder="Enter PIN or Passcode" autofocus autocomplete="current-password" />
+          <input type="password" id="authPassInput" class="auth-input" placeholder="Enter Master Password" autofocus autocomplete="current-password" />
         </div>
         <button type="submit" class="auth-unlock-btn">🔓 UNLOCK SYSTEM</button>
         <div id="authErrorMsg" class="auth-error"></div>
@@ -1851,14 +1851,14 @@ class PassInvotorERP {
     const card = document.getElementById('authLockCard');
     const val = inp ? inp.value.trim() : '';
 
-    // Master Passcode & PIN
-    if (val === '2497' || val === 'Pawanjali@241997') {
+    // Master Password Only
+    if (val === 'Pawanjali@241997') {
       sessionStorage.setItem('PASS_INVOTOR_AUTH', '1');
       if (err) err.textContent = '';
       const overlay = document.getElementById('authLockOverlay');
       if (overlay) overlay.style.display = 'none';
     } else {
-      if (err) err.textContent = '❌ Incorrect passcode. Please try again.';
+      if (err) err.textContent = '❌ Incorrect Master Password. Please try again.';
       if (card) {
         card.classList.remove('auth-shake');
         void card.offsetWidth;
