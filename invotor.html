@@ -961,21 +961,24 @@ body {
           </div>
         </div>
 
-        <!-- 2. BUYER & DISPATCH -->
-        <div style="background: #f8fafc; border: 1px solid var(--line); border-radius: 8px; padding: 14px; margin-bottom: 18px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px;">
-            <span style="font-size: 11px; font-weight: 800; color: var(--pass-navy); text-transform: uppercase;">👤 BILLED TO (RECEIVER) & DISPATCH DETAILS</span>
+        <!-- 2. BUYER (BILLED TO), CONSIGNEE (SHIPPED TO) & DISPATCH DETAILS -->
+        <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 8px; padding: 14px; margin-bottom: 18px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid #cbd5e1; padding-bottom: 8px;">
+            <span style="font-size: 11.5px; font-weight: 800; color: var(--pass-navy); text-transform: uppercase;">👤 BILLED TO (RECEIVER), 🚚 SHIPPED TO (CONSIGNEE) & DISPATCH DETAILS</span>
             <div style="display: flex; gap: 6px;">
-              <button class="btn btn-outline btn-sm" onclick="erp.openAddBuyerModal()" title="Add New Buyer to Database">➕ Add New Buyer</button>
-              <button class="btn btn-blue btn-sm" onclick="erp.openBuyersModal()" title="Manage & Edit Saved Buyers">👥 Manage & Edit Buyers</button>
+              <button type="button" class="btn btn-outline btn-sm" onclick="erp.openAddBuyerModal()" title="Add New Buyer to Database">➕ Add New Buyer</button>
+              <button type="button" class="btn btn-blue btn-sm" onclick="erp.openBuyersModal()" title="Manage & Edit Saved Buyers">👥 Manage & Edit Buyers</button>
             </div>
           </div>
           
-          <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px;">
-            <!-- LEFT: BUYER DETAILS (WITH PLACE OF SUPPLY & DUE DATE) -->
-            <div>
-              <div style="font-size: 10px; font-weight: 800; color: #475569; margin-bottom: 6px; text-transform: uppercase;">1. Buyer / Receiver Info</div>
-              <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;">
+            
+            <!-- 1. BILLED TO (DETAILS OF RECEIVER / BUYER) -->
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px;">
+              <div style="font-size: 11px; font-weight: 800; color: #1e40af; margin-bottom: 8px; text-transform: uppercase;">
+                <span>👤 1. Billed To (Buyer Info)</span>
+              </div>
+              <div class="form-grid" style="gap: 8px;">
                 <div class="form-group" style="grid-column: span 2;">
                   <label>Company Name * (Auto-Saved)</label>
                   <input type="text" id="billCustomerName" list="savedBuyersList" class="form-control" placeholder="Search or Enter Buyer / Company Name" oninput="erp.handleBuyerInputChange()" />
@@ -986,35 +989,76 @@ body {
                   <input type="text" id="billCustomerPerson" class="form-control" placeholder="Contact Person Name (Optional)" oninput="erp.handleBuyerFieldChange()" />
                 </div>
                 <div class="form-group" style="grid-column: span 2;">
-                  <label>Address *</label>
-                  <input type="text" id="billCustomerAddress" class="form-control" placeholder="Company Delivery / Billing Address" oninput="erp.handleBuyerFieldChange()" />
+                  <label>Billing Address *</label>
+                  <textarea id="billCustomerAddress" class="form-control" style="height: 48px; resize: vertical; font-size: 11.5px;" placeholder="Company Registered / Billing Address" oninput="erp.handleBuyerFieldChange()"></textarea>
                 </div>
                 <div class="form-group">
                   <label>GST / GSTIN</label>
                   <input type="text" id="billCustomerGst" class="form-control" placeholder="Unregistered / 27XXXX" oninput="erp.handleBuyerFieldChange()" />
                 </div>
-                <div class="form-group" style="grid-column: span 2;">
-                  <label>Buyer Phone no</label>
+                <div class="form-group">
+                  <label>Buyer Phone No.</label>
                   <input type="text" id="billCustomerPhone" class="form-control" placeholder="+91 98XXXXXXXX" oninput="erp.handleBuyerFieldChange()" />
                 </div>
                 <div class="form-group" style="grid-column: span 2;">
                   <label>Place of Supply *</label>
                   <input type="text" id="billPlaceOfSupply" class="form-control" value="Maharashtra (Code: 27)" oninput="erp.renderLiveInvoicePreview()" />
                 </div>
-                <div class="form-group" style="grid-column: span 2; background: #fef2f2; padding: 8px 10px; border-radius: 6px; border: 1.5px solid #fca5a5;">
-                  <label style="font-weight: 800; color: #991b1b; display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span>📅 Due Date of Invoice (Payment Due Date)</span>
-                    <span style="font-size: 9.5px; font-weight: 600; color: #dc2626;">(Under Place of Supply)</span>
+                <div class="form-group" style="grid-column: span 2; background: #fef2f2; padding: 6px 8px; border-radius: 5px; border: 1.5px solid #fca5a5;">
+                  <label style="font-weight: 800; color: #991b1b; display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                    <span>📅 Due Date of Invoice</span>
+                    <span style="font-size: 9px; color: #dc2626;">(Under Place of Supply)</span>
                   </label>
-                  <input type="date" id="billDueDate" class="form-control" onchange="erp.renderLiveInvoicePreview()" style="font-weight: bold; color: #991b1b; background: #ffffff; border: 1.5px solid #ef4444;" />
+                  <input type="date" id="billDueDate" class="form-control" onchange="erp.renderLiveInvoicePreview()" style="font-weight: bold; color: #991b1b; background: #ffffff; border: 1.5px solid #ef4444; padding: 3px 6px;" />
                 </div>
               </div>
             </div>
 
-            <!-- RIGHT: ORDER & DISPATCH DETAILS (WITH VEHICLE NO, E-WAY BILL NO & PAYMENT TERMS) -->
-            <div style="border-left: 1px solid #e2e8f0; padding-left: 16px;">
-              <div style="font-size: 10px; font-weight: 800; color: #475569; margin-bottom: 6px; text-transform: uppercase;">2. Order, Transport & Terms</div>
-              <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
+            <!-- 2. SHIPPED TO (CONSIGNEE / DELIVERY SITE / PLANT ADDRESS) -->
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px;">
+              <div style="font-size: 11px; font-weight: 800; color: #047857; margin-bottom: 8px; text-transform: uppercase; display: flex; align-items: center; justify-content: space-between;">
+                <span>🚚 2. Shipped To (Consignee)</span>
+                <label style="font-size: 11px; font-weight: 700; color: #0f766e; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; text-transform: none; background: #f0fdf4; padding: 2px 6px; border-radius: 4px; border: 1px solid #86efac;">
+                  <input type="checkbox" id="billShipSameCheckbox" onchange="erp.toggleShipSameAsBill(this.checked)" checked style="accent-color: #059669; cursor: pointer;" />
+                  Same as Billed To
+                </label>
+              </div>
+
+              <div id="shipToFieldsContainer">
+                <div class="form-grid" style="gap: 8px;">
+                  <div class="form-group" style="grid-column: span 2;">
+                    <label>Consignee / Plant Company Name</label>
+                    <input type="text" id="billShipCompany" class="form-control" placeholder="Plant / Site Name (e.g. Chakan Plant IV)" oninput="erp.handleShipFieldChange()" disabled />
+                  </div>
+                  <div class="form-group" style="grid-column: span 2;">
+                    <label>Delivery Site / Plant Address *</label>
+                    <textarea id="billShipAddress" class="form-control" style="height: 48px; resize: vertical; font-size: 11.5px;" placeholder="Factory / Plant / Godown Delivery Address" oninput="erp.handleShipFieldChange()" disabled></textarea>
+                  </div>
+                  <div class="form-group" style="grid-column: span 2;">
+                    <label>Consignee Contact Person (Site Rep)</label>
+                    <input type="text" id="billShipPerson" class="form-control" placeholder="Site Engineer / Stores Manager Name" oninput="erp.handleShipFieldChange()" disabled />
+                  </div>
+                  <div class="form-group">
+                    <label>Consignee Phone No.</label>
+                    <input type="text" id="billShipPhone" class="form-control" placeholder="Site Contact Number" oninput="erp.handleShipFieldChange()" disabled />
+                  </div>
+                  <div class="form-group">
+                    <label>Consignee GSTIN (If Different)</label>
+                    <input type="text" id="billShipGst" class="form-control" placeholder="Unregistered / 27XXXX" oninput="erp.handleShipFieldChange()" disabled />
+                  </div>
+                  <div id="shipSameAlert" style="grid-column: span 2; font-size: 10.5px; color: #047857; background: #f0fdf4; border: 1px dashed #86efac; border-radius: 4px; padding: 6px 8px; margin-top: 4px;">
+                    ✓ Delivery address is automatically synced with Billed To Address. Uncheck <b>"Same as Billed To"</b> above to enter a different plant or site address.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. ORDER, TRANSPORT & TERMS -->
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px;">
+              <div style="font-size: 11px; font-weight: 800; color: #475569; margin-bottom: 8px; text-transform: uppercase;">
+                <span>📦 3. Order, Transport & Terms</span>
+              </div>
+              <div class="form-grid" style="gap: 8px;">
                 <div class="form-group">
                   <label>Client PO Ref No.</label>
                   <input type="text" id="billPoRef" class="form-control" placeholder="PO/2026/089" oninput="erp.renderLiveInvoicePreview()" />
@@ -1044,7 +1088,7 @@ body {
                   <input type="text" id="billEwayBillNo" class="form-control" placeholder="e.g. 2410 9876 5432" oninput="erp.renderLiveInvoicePreview()" />
                 </div>
                 <div class="form-group" style="grid-column: span 2;">
-                  <label style="color: #1e40af; font-weight: 800;">Payment Terms (Auto-computes Due Date)</label>
+                  <label style="color: #1e40af; font-weight: 800;">Payment Terms</label>
                   <select id="billPaymentTerms" class="form-control" onchange="erp.handlePaymentTermsChange(this.value)" style="font-weight: 700;">
                     <option value="As Agreed" selected>As Agreed (Immediate / Due on Receipt)</option>
                     <option value="Immediate / Cash">Immediate / Cash</option>
@@ -1059,6 +1103,7 @@ body {
                 </div>
               </div>
             </div>
+
           </div>
         </div>
 
@@ -2579,6 +2624,16 @@ class PassInvotorERP {
       this.saveBuyers();
       this.renderBuyersDatalist();
     }
+
+    const isShipSame = document.getElementById('billShipSameCheckbox') ? document.getElementById('billShipSameCheckbox').checked : true;
+    if (isShipSame) {
+      if (document.getElementById('billShipCompany') && document.getElementById('billShipCompany').disabled) document.getElementById('billShipCompany').value = company;
+      if (document.getElementById('billShipPerson') && document.getElementById('billShipPerson').disabled) document.getElementById('billShipPerson').value = person;
+      if (document.getElementById('billShipAddress') && document.getElementById('billShipAddress').disabled) document.getElementById('billShipAddress').value = addr;
+      if (document.getElementById('billShipPhone') && document.getElementById('billShipPhone').disabled) document.getElementById('billShipPhone').value = phone;
+      if (document.getElementById('billShipGst') && document.getElementById('billShipGst').disabled) document.getElementById('billShipGst').value = gst;
+    }
+
     this.renderLiveInvoicePreview();
   }
 
@@ -2715,6 +2770,15 @@ class PassInvotorERP {
     if (document.getElementById('billCustomerGst')) document.getElementById('billCustomerGst').value = b.gst || 'Unregistered';
     if (document.getElementById('billPlaceOfSupply') && b.pos) document.getElementById('billPlaceOfSupply').value = b.pos;
 
+    const isShipSame = document.getElementById('billShipSameCheckbox') ? document.getElementById('billShipSameCheckbox').checked : true;
+    if (isShipSame) {
+      if (document.getElementById('billShipCompany')) document.getElementById('billShipCompany').value = compName;
+      if (document.getElementById('billShipPerson')) document.getElementById('billShipPerson').value = b.person || '';
+      if (document.getElementById('billShipAddress')) document.getElementById('billShipAddress').value = b.address || '';
+      if (document.getElementById('billShipPhone')) document.getElementById('billShipPhone').value = b.phone || '';
+      if (document.getElementById('billShipGst')) document.getElementById('billShipGst').value = b.gst || 'Unregistered';
+    }
+
     this.closeModal('buyersModal');
     this.renderLiveInvoicePreview();
   }
@@ -2825,6 +2889,46 @@ class PassInvotorERP {
     this.renderLiveInvoicePreview();
   }
 
+  toggleShipSameAsBill(isSame) {
+    if (!this.currentInvoice.shipping) {
+      this.currentInvoice.shipping = {};
+    }
+    this.currentInvoice.shipping.sameAsBilling = isSame;
+    const alertEl = document.getElementById('shipSameAlert');
+    const compEl = document.getElementById('billShipCompany');
+    const addrEl = document.getElementById('billShipAddress');
+    const personEl = document.getElementById('billShipPerson');
+    const phoneEl = document.getElementById('billShipPhone');
+    const gstEl = document.getElementById('billShipGst');
+
+    if (isSame) {
+      if (alertEl) alertEl.style.display = 'block';
+      if (compEl) { compEl.value = document.getElementById('billCustomerName') ? document.getElementById('billCustomerName').value : ''; compEl.disabled = true; }
+      if (addrEl) { addrEl.value = document.getElementById('billCustomerAddress') ? document.getElementById('billCustomerAddress').value : ''; addrEl.disabled = true; }
+      if (personEl) { personEl.value = document.getElementById('billCustomerPerson') ? document.getElementById('billCustomerPerson').value : ''; personEl.disabled = true; }
+      if (phoneEl) { phoneEl.value = document.getElementById('billCustomerPhone') ? document.getElementById('billCustomerPhone').value : ''; phoneEl.disabled = true; }
+      if (gstEl) { gstEl.value = document.getElementById('billCustomerGst') ? document.getElementById('billCustomerGst').value : ''; gstEl.disabled = true; }
+    } else {
+      if (alertEl) alertEl.style.display = 'none';
+      if (compEl) compEl.disabled = false;
+      if (addrEl) addrEl.disabled = false;
+      if (personEl) personEl.disabled = false;
+      if (phoneEl) phoneEl.disabled = false;
+      if (gstEl) gstEl.disabled = false;
+    }
+    this.renderLiveInvoicePreview();
+  }
+
+  handleShipFieldChange() {
+    if (!this.currentInvoice.shipping) this.currentInvoice.shipping = {};
+    this.currentInvoice.shipping.company = document.getElementById('billShipCompany') ? document.getElementById('billShipCompany').value : '';
+    this.currentInvoice.shipping.address = document.getElementById('billShipAddress') ? document.getElementById('billShipAddress').value : '';
+    this.currentInvoice.shipping.person = document.getElementById('billShipPerson') ? document.getElementById('billShipPerson').value : '';
+    this.currentInvoice.shipping.phone = document.getElementById('billShipPhone') ? document.getElementById('billShipPhone').value : '';
+    this.currentInvoice.shipping.gst = document.getElementById('billShipGst') ? document.getElementById('billShipGst').value : '';
+    this.renderLiveInvoicePreview();
+  }
+
   createEmptyInvoice(docType = 'BILL OF SUPPLY') {
     const today = new Date().toISOString().split('T')[0];
     const terms = 'As Agreed';
@@ -2843,6 +2947,14 @@ class PassInvotorERP {
         address: '',
         phone: '',
         gst: 'Unregistered'
+      },
+      shipping: {
+        sameAsBilling: true,
+        company: '',
+        person: '',
+        address: '',
+        phone: '',
+        gst: ''
       },
       poRef: '',
       poDate: today,
@@ -2864,6 +2976,10 @@ class PassInvotorERP {
     if (document.getElementById('billInvoiceNo')) {
       document.getElementById('billInvoiceNo').value = this.currentInvoice.invoiceNo;
     }
+    if (document.getElementById('billShipSameCheckbox')) {
+      document.getElementById('billShipSameCheckbox').checked = true;
+      this.toggleShipSameAsBill(true);
+    }
     this.renderLiveInvoicePreview();
   }
 
@@ -2881,6 +2997,34 @@ class PassInvotorERP {
     const custAddr = document.getElementById('billCustomerAddress') ? document.getElementById('billCustomerAddress').value : this.currentInvoice.customer.address;
     const custGst = document.getElementById('billCustomerGst') ? document.getElementById('billCustomerGst').value : this.currentInvoice.customer.gst;
     const custPhone = document.getElementById('billCustomerPhone') ? document.getElementById('billCustomerPhone').value : this.currentInvoice.customer.phone;
+    
+    const isShipSame = document.getElementById('billShipSameCheckbox') ? document.getElementById('billShipSameCheckbox').checked : (this.currentInvoice.shipping ? this.currentInvoice.shipping.sameAsBilling : true);
+
+    let shipCompany = '';
+    let shipPerson = '';
+    let shipAddr = '';
+    let shipPhone = '';
+    let shipGst = '';
+
+    if (isShipSame) {
+      shipCompany = custCompany;
+      shipPerson = custPerson;
+      shipAddr = custAddr;
+      shipPhone = custPhone;
+      shipGst = custGst;
+      if (document.getElementById('billShipCompany') && document.getElementById('billShipCompany').disabled) document.getElementById('billShipCompany').value = custCompany;
+      if (document.getElementById('billShipPerson') && document.getElementById('billShipPerson').disabled) document.getElementById('billShipPerson').value = custPerson;
+      if (document.getElementById('billShipAddress') && document.getElementById('billShipAddress').disabled) document.getElementById('billShipAddress').value = custAddr;
+      if (document.getElementById('billShipPhone') && document.getElementById('billShipPhone').disabled) document.getElementById('billShipPhone').value = custPhone;
+      if (document.getElementById('billShipGst') && document.getElementById('billShipGst').disabled) document.getElementById('billShipGst').value = custGst;
+    } else {
+      shipCompany = document.getElementById('billShipCompany') ? document.getElementById('billShipCompany').value : (this.currentInvoice.shipping ? this.currentInvoice.shipping.company : custCompany);
+      shipPerson = document.getElementById('billShipPerson') ? document.getElementById('billShipPerson').value : (this.currentInvoice.shipping ? this.currentInvoice.shipping.person : custPerson);
+      shipAddr = document.getElementById('billShipAddress') ? document.getElementById('billShipAddress').value : (this.currentInvoice.shipping ? this.currentInvoice.shipping.address : custAddr);
+      shipPhone = document.getElementById('billShipPhone') ? document.getElementById('billShipPhone').value : (this.currentInvoice.shipping ? this.currentInvoice.shipping.phone : custPhone);
+      shipGst = document.getElementById('billShipGst') ? document.getElementById('billShipGst').value : (this.currentInvoice.shipping ? this.currentInvoice.shipping.gst : custGst);
+    }
+
     const poRef = document.getElementById('billPoRef') ? document.getElementById('billPoRef').value : this.currentInvoice.poRef;
     const poDate = document.getElementById('billPoDate') ? document.getElementById('billPoDate').value : this.currentInvoice.poDate;
     const transport = document.getElementById('billTransport') ? document.getElementById('billTransport').value : this.currentInvoice.transport;
@@ -2921,7 +3065,10 @@ class PassInvotorERP {
 
     copyBadges.forEach(badgeLabel => {
       const sheetHtml = this.generateSingleA4SheetHtml({
-        s, docType, invNo, invDate, dueDate, badgeLabel, payTerms, custCompany, custPerson, custAddr, custGst, custPhone, poRef, poDate, transport, vehicleNo, ewayBillNo, pos, discount, freight, items: this.currentInvoice.items
+        s, docType, invNo, invDate, dueDate, badgeLabel, payTerms, 
+        custCompany, custPerson, custAddr, custGst, custPhone,
+        shipCompany, shipPerson, shipAddr, shipPhone, shipGst,
+        poRef, poDate, transport, vehicleNo, ewayBillNo, pos, discount, freight, items: this.currentInvoice.items
       });
       const wrap = document.createElement('div');
       wrap.innerHTML = sheetHtml;
@@ -3106,11 +3253,11 @@ class PassInvotorERP {
               <div><span class="inv-bold">Buyer Phone no:</span> <span style="font-family: monospace; font-weight: bold;">${p.custPhone || '-'}</span></div>
             </td>
             <td colspan="5" style="padding: 4px 6px; vertical-align: top; font-size: 9.5px; line-height: 1.4;">
-              <div><span class="inv-bold">Company Name:</span> <strong style="font-size: 11px; color: #0c2340; text-transform: uppercase;">${p.custCompany || '-'}</strong></div>
-              <div><span class="inv-bold">Address:</span> ${p.custAddr || '-'}</div>
-              <div><span class="inv-bold">GST:</span> ${p.custGst || 'Unregistered'}</div>
-              <div><span class="inv-bold">Buyer name:</span> ${p.custPerson || p.custCompany || '-'}</div>
-              <div><span class="inv-bold">Buyer Phone no:</span> <span style="font-family: monospace; font-weight: bold;">${p.custPhone || '-'}</span></div>
+              <div><span class="inv-bold">Company Name:</span> <strong style="font-size: 11px; color: #0c2340; text-transform: uppercase;">${p.shipCompany || p.custCompany || '-'}</strong></div>
+              <div><span class="inv-bold">Address:</span> ${p.shipAddr || p.custAddr || '-'}</div>
+              <div><span class="inv-bold">GST:</span> ${p.shipGst || p.custGst || 'Unregistered'}</div>
+              <div><span class="inv-bold">Consignee Name:</span> ${p.shipPerson || p.custPerson || p.custCompany || '-'}</div>
+              <div><span class="inv-bold">Contact Phone:</span> <span style="font-family: monospace; font-weight: bold;">${p.shipPhone || p.custPhone || '-'}</span></div>
             </td>
           </tr>
 
