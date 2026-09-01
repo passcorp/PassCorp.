@@ -654,13 +654,24 @@ body {
           <span class="brand-tag">PASS CORP. MASTER</span>
         </div>
         <div style="display: flex; gap: 6px;">
-          <button class="btn btn-outline btn-sm" onclick="erp.openCompanyProfileModal()" title="Edit Company & Bank Details">🏢 Company Details</button>
+          <button class="btn btn-outline btn-sm" onclick="erp.openCompanyProfileModal()" title="Edit Company & Bank Details" style="font-weight: 800; border-color: #2563eb; color: #1e40af; background: #eff6ff;">🏢 Edit Company Profile</button>
           <button class="btn btn-outline btn-sm" onclick="erp.newInvoice()">+ New / Reset</button>
           <button class="btn btn-blue btn-sm" onclick="erp.saveInvoice()">💾 Save Bill</button>
         </div>
       </div>
       
       <div class="card-body" style="padding: 18px 20px;">
+
+        <!-- COMPANY PROFILE QUICK-VIEW BANNER (EDITABLE) -->
+        <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+          <div>
+            <span style="font-weight: 900; color: #0c2340; font-size: 13px;" id="bannerCompName">PASS CORP.</span>
+            <span style="color: #c81e1e; font-weight: 800; font-size: 11px; margin-left: 8px;" id="bannerCompTagline">PRECISION | ASSURANCE | SAFETY | SOLUTION</span>
+            <div style="font-size: 11px; color: #475569; margin-top: 2px;" id="bannerCompDetails">📍 Dehu Alandi Road, Chikhali, Pune - 411062 | Bank: HDFC Bank (A/C: 50200012345678)</div>
+          </div>
+          <button class="btn btn-blue btn-sm" onclick="erp.openCompanyProfileModal()">✏️ Edit Company & Bank Details</button>
+        </div>
+
         <!-- 1. INVOICE META -->
         <div class="form-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px;">
           <div class="form-group">
@@ -673,8 +684,11 @@ body {
             </select>
           </div>
           <div class="form-group">
-            <label>Invoice Number</label>
-            <input type="text" id="billInvoiceNo" class="form-control" oninput="erp.handleInvoiceNoInput(this.value)" />
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <label>Invoice Number</label>
+              <span style="font-size: 9px; font-weight: 800; color: #059669; background: #ecfdf5; padding: 1px 4px; border-radius: 3px;">Auto-Sequential</span>
+            </div>
+            <input type="text" id="billInvoiceNo" class="form-control" style="font-weight: bold; font-family: 'IBM Plex Mono', monospace; color: #0c2340;" oninput="erp.handleInvoiceNoInput(this.value)" />
           </div>
           <div class="form-group">
             <label>Invoice Date</label>
@@ -685,19 +699,6 @@ body {
             <select id="billCopyOption" class="form-control" onchange="erp.renderLiveInvoicePreview()">
               <option value="original_duplicate" selected>Original + Duplicate (OD - 2 Pages)</option>
               <option value="all_three">Original + Duplicate + Triplicate (ODT - 3 Pages)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Payment Terms</label>
-            <select id="billPaymentTerms" class="form-control" onchange="erp.renderLiveInvoicePreview()">
-              <option value="As Agreed" selected>As Agreed</option>
-              <option value="Immediate / Cash">Immediate / Cash</option>
-              <option value="100% Advance">100% Advance</option>
-              <option value="Against Delivery (COD)">Against Delivery (COD)</option>
-              <option value="15 Days Credit">15 Days Credit</option>
-              <option value="30 Days Credit">30 Days Credit</option>
-              <option value="45 Days Credit">45 Days Credit</option>
-              <option value="60 Days Credit">60 Days Credit</option>
             </select>
           </div>
         </div>
@@ -740,7 +741,28 @@ body {
             </div>
             <div class="form-group">
               <label>Transport / Vehicle</label>
-              <input type="text" id="billTransport" class="form-control" value="Direct Delivery / Surface" oninput="erp.renderLiveInvoicePreview()" />
+              <select id="billTransport" class="form-control" onchange="erp.renderLiveInvoicePreview()">
+                <option value="Direct Delivery / Surface" selected>Direct Delivery / Surface</option>
+                <option value="By Hand / Person Delivery">By Hand / Person Delivery</option>
+                <option value="Customer Vehicle Pickup">Customer Vehicle Pickup</option>
+                <option value="Tempo / Auto Delivery">Tempo / Auto Delivery</option>
+                <option value="Courier / Express (DTDC/Porter)">Courier / Express (DTDC/Porter)</option>
+                <option value="VRL Logistics / Transport">VRL Logistics / Transport</option>
+                <option value="TCI Freight / Surface">TCI Freight / Surface</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Payment Terms</label>
+              <select id="billPaymentTerms" class="form-control" onchange="erp.renderLiveInvoicePreview()">
+                <option value="As Agreed" selected>As Agreed</option>
+                <option value="Immediate / Cash">Immediate / Cash</option>
+                <option value="100% Advance">100% Advance</option>
+                <option value="Against Delivery (COD)">Against Delivery (COD)</option>
+                <option value="15 Days Credit">15 Days Credit</option>
+                <option value="30 Days Credit">30 Days Credit</option>
+                <option value="45 Days Credit">45 Days Credit</option>
+                <option value="60 Days Credit">60 Days Credit</option>
+              </select>
             </div>
           </div>
         </div>
@@ -1507,6 +1529,11 @@ class PassInvotorERP {
 
   syncSettingsFields() {
     const s = this.data.settings;
+    if (document.getElementById('bannerCompName')) document.getElementById('bannerCompName').textContent = s.compName;
+    if (document.getElementById('bannerCompTagline')) document.getElementById('bannerCompTagline').textContent = s.compTagline;
+    if (document.getElementById('bannerCompDetails')) {
+      document.getElementById('bannerCompDetails').textContent = `📍 ${s.address} | Bank: ${s.bankName} (A/C: ${s.accountNo} | IFSC: ${s.ifsc})`;
+    }
     if (document.getElementById('cfgCompName')) document.getElementById('cfgCompName').value = s.compName;
     if (document.getElementById('cfgCompTagline')) document.getElementById('cfgCompTagline').value = s.compTagline;
     if (document.getElementById('cfgAddress')) document.getElementById('cfgAddress').value = s.address;
@@ -1697,12 +1724,17 @@ class PassInvotorERP {
     if (tabId === 'daybook') this.renderDayBook();
   }
 
+  getNextInvoiceNumber() {
+    const prefix = (this.data && this.data.settings && this.data.settings.invoicePrefix) ? this.data.settings.invoicePrefix : "PS/2026-27/";
+    const nextNo = (this.data && this.data.settings && this.data.settings.nextInvoiceNo) ? parseInt(this.data.settings.nextInvoiceNo) : 1;
+    return `${prefix}${String(nextNo).padStart(3, '0')}`;
+  }
+
   createEmptyInvoice() {
     const today = new Date().toISOString().split('T')[0];
-    const num = String(this.data.settings.nextInvoiceNo).padStart(3, '0');
     return {
       docType: 'BILL OF SUPPLY',
-      invoiceNo: `${this.data.settings.invoicePrefix}${num}`,
+      invoiceNo: this.getNextInvoiceNumber(),
       date: today,
       copyOption: 'original_duplicate',
       paymentTerms: 'As Agreed',
@@ -1717,8 +1749,8 @@ class PassInvotorERP {
       transport: 'Direct Delivery / Surface',
       placeOfSupply: 'Maharashtra (Code: 27)',
       items: [
-        { id: 'helm_udyogi_7000', name: 'Safety Helmet Udyogi Ultravent 7000 (Ratchet)', brand: 'UDYOGI', hsn: '6506', unit: 'Nos.', qty: 10, rate: 245.00, taxable: 2450.00, gstRate: 0, taxAmt: 0, total: 2450.00 },
-        { id: 'shoe_hillson_power', name: 'Safety Shoe Hillson Power Plus High Ankle', brand: 'HILLSON', hsn: '6403', unit: 'Pairs', qty: 5, rate: 780.00, taxable: 3900.00, gstRate: 0, taxAmt: 0, total: 3900.00 }
+        { id: 'helm_udyogi_7000', name: 'Safety Helmet Udyogi Ultravent 7000 (Ratchet)', desc: 'ISI Marked IS:2925, High Impact Polymer, Yellow Colour', brand: 'UDYOGI', hsn: '6506', unit: 'Nos.', qty: 10, rate: 245.00, taxable: 2450.00, gstRate: 0, taxAmt: 0, total: 2450.00 },
+        { id: 'shoe_hillson_power', name: 'Safety Shoe Hillson Power Plus High Ankle', desc: 'Steel Toe Cap 200J, Oil & Acid Resistant PU Sole, Size: 8', brand: 'HILLSON', hsn: '6403', unit: 'Pairs', qty: 5, rate: 780.00, taxable: 3900.00, gstRate: 0, taxAmt: 0, total: 3900.00 }
       ],
       discount: 0,
       freight: 0,
@@ -1728,12 +1760,7 @@ class PassInvotorERP {
   }
 
   newInvoice() {
-    const num = String(this.data.settings.nextInvoiceNo).padStart(3, '0');
     this.currentInvoice = this.createEmptyInvoice();
-    this.currentInvoice.invoiceNo = `${this.data.settings.invoicePrefix}${num}`;
-    if (document.getElementById('billInvoiceNo')) {
-      document.getElementById('billInvoiceNo').value = this.currentInvoice.invoiceNo;
-    }
     this.renderLiveInvoicePreview();
   }
 
@@ -1741,7 +1768,7 @@ class PassInvotorERP {
   renderLiveInvoicePreview() {
     const s = this.data.settings;
     const docType = document.getElementById('billDocType') ? document.getElementById('billDocType').value : this.currentInvoice.docType;
-    const invNo = document.getElementById('billInvoiceNo') ? document.getElementById('billInvoiceNo').value : this.currentInvoice.invoiceNo;
+    const invNo = document.getElementById('billInvoiceNo') ? document.getElementById('billInvoiceNo').value : (this.currentInvoice.invoiceNo || this.getNextInvoiceNumber());
     const invDate = document.getElementById('billDate') ? document.getElementById('billDate').value : this.currentInvoice.date;
     const copyOption = document.getElementById('billCopyOption') ? document.getElementById('billCopyOption').value : (this.currentInvoice.copyOption || 'original_duplicate');
     const payTerms = document.getElementById('billPaymentTerms') ? document.getElementById('billPaymentTerms').value : this.currentInvoice.paymentTerms;
@@ -1822,7 +1849,10 @@ class PassInvotorERP {
       itemsRowsHtml += `
         <tr class="inv-tally-item-row">
           <td class="text-center">${idx + 1}</td>
-          <td class="text-left" style="font-weight: 600;">${item.name}</td>
+          <td class="text-left" style="padding-top: 3px; padding-bottom: 3px;">
+            <div style="font-weight: 700; color: #0c2340; font-size: 10.5px;">${item.name}</div>
+            ${item.desc ? `<div style="font-size: 8.5px; color: #334155; font-weight: normal; margin-top: 1.5px; line-height: 1.25; white-space: pre-line;">${item.desc}</div>` : ''}
+          </td>
           <td class="text-center" style="font-weight: bold;">${item.hsn || '6506'}</td>
           <td class="text-right" style="font-weight: bold;">${item.qty}</td>
           <td class="text-center">${item.unit}</td>
@@ -2102,23 +2132,24 @@ class PassInvotorERP {
       const tr = document.createElement('tr');
       const amount = (item.qty * item.rate).toFixed(2);
       tr.innerHTML = `
-        <td style="text-align: center; font-weight: bold; color: var(--pass-navy);">${index + 1}</td>
+        <td style="text-align: center; font-weight: bold; color: var(--pass-navy); vertical-align: top; padding-top: 8px;">${index + 1}</td>
         <td>
-          <input type="text" class="form-control" value="${item.name}" placeholder="Item Description" oninput="erp.updateItemRow(${index}, 'name', this.value)" style="font-weight: 600; width: 100%;" />
+          <input type="text" class="form-control" value="${item.name || ''}" placeholder="Product Name / Title" oninput="erp.updateItemRow(${index}, 'name', this.value)" style="font-weight: 700; width: 100%; margin-bottom: 4px;" />
+          <textarea class="form-control" placeholder="Add description, specifications, size, standard, make..." oninput="erp.updateItemRow(${index}, 'desc', this.value)" style="font-size: 11px; width: 100%; height: 32px; resize: vertical; background: #fafafa; font-family: inherit;">${item.desc || ''}</textarea>
         </td>
-        <td style="text-align: center;">
+        <td style="text-align: center; vertical-align: top; padding-top: 8px;">
           <input type="text" class="form-control" value="${item.hsn || '6506'}" placeholder="HSN" oninput="erp.updateItemRow(${index}, 'hsn', this.value)" style="font-weight: bold; font-family: monospace; text-align: center; width: 100%; color: #1e40af;" />
         </td>
-        <td>
+        <td style="vertical-align: top; padding-top: 8px;">
           <input type="number" class="form-control" value="${item.qty}" min="1" oninput="erp.updateItemRow(${index}, 'qty', this.value)" style="font-weight: bold; text-align: right; width: 100%;" />
         </td>
-        <td>
+        <td style="vertical-align: top; padding-top: 8px;">
           <input type="text" class="form-control" value="${item.unit || 'Nos.'}" placeholder="Nos./Pairs" oninput="erp.updateItemRow(${index}, 'unit', this.value)" style="width: 100%; text-align: center;" />
         </td>
-        <td>
+        <td style="vertical-align: top; padding-top: 8px;">
           <input type="number" class="form-control" value="${item.rate}" min="0" oninput="erp.updateItemRow(${index}, 'rate', this.value)" style="font-weight: bold; text-align: right; width: 100%;" />
         </td>
-        <td>
+        <td style="vertical-align: top; padding-top: 8px;">
           <select class="form-control" onchange="erp.updateItemRow(${index}, 'gstRate', this.value)" style="font-weight: 600; text-align: center; width: 100%;">
             <option value="0" ${item.gstRate == 0 ? 'selected' : ''}>0%</option>
             <option value="5" ${item.gstRate == 5 ? 'selected' : ''}>5%</option>
@@ -2127,10 +2158,10 @@ class PassInvotorERP {
             <option value="28" ${item.gstRate == 28 ? 'selected' : ''}>28%</option>
           </select>
         </td>
-        <td style="text-align: right; font-weight: 800; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--pass-navy);">
+        <td style="text-align: right; font-weight: 800; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--pass-navy); vertical-align: top; padding-top: 10px;">
           ₹${amount}
         </td>
-        <td style="text-align: center;">
+        <td style="text-align: center; vertical-align: top; padding-top: 8px;">
           <button class="btn btn-danger btn-sm" onclick="erp.removeBillItem(${index})" title="Remove Item" style="padding: 3px 7px; font-size: 11px;">✕</button>
         </td>
       `;
@@ -2140,6 +2171,7 @@ class PassInvotorERP {
 
   updateItemRow(index, field, value) {
     if (field === 'name') this.currentInvoice.items[index].name = value;
+    if (field === 'desc') this.currentInvoice.items[index].desc = value;
     if (field === 'qty') this.currentInvoice.items[index].qty = Math.max(1, parseFloat(value) || 1);
     if (field === 'rate') this.currentInvoice.items[index].rate = Math.max(0, parseFloat(value) || 0);
     if (field === 'unit') this.currentInvoice.items[index].unit = value;
@@ -2265,8 +2297,8 @@ class PassInvotorERP {
     this.saveState();
     this.saveCatalog();
     
-    alert(`✅ Invoice ${inv.invoiceNo} saved successfully!\nNext invoice number is automatically set to PS/2026-27/${String(this.data.settings.nextInvoiceNo).padStart(3,'0')}.`);
-    this.switchTab('gateway');
+    alert(`✅ Invoice ${inv.invoiceNo} saved successfully!\nNext invoice number is automatically generated: ${this.getNextInvoiceNumber()}`);
+    this.newInvoice();
   }
 
   shareWhatsAppBill() {
