@@ -859,7 +859,7 @@ body {
     <button class="hdr-btn" onclick="erp.openCompanyProfileModal()" title="Edit Company Details & Bank Info">
       <span>🏢</span> Company Profile
     </button>
-    <button class="hdr-btn" onclick="erp.openNewProductModal()" title="Add New Product to Inventory / Catalog">
+    <button class="hdr-btn" onclick="erp.openNewProductModal()" title="Add New Product to Inventory / Catalogue">
       <span>➕</span> Add Product
     </button>
     <button class="hdr-btn hdr-btn-cloud" id="btnInvotorCloudStatus" onclick="erp.openCloudModal()" title="GitHub Cloud Backup & Auto-Sync">
@@ -1072,7 +1072,7 @@ body {
             <div style="flex: 1; min-width: 250px;">
               <input type="text" list="catalogDatalist" id="quickItemSearchInp" class="form-control" placeholder="Type keyword (e.g. Helmet, Shoe, Gloves, Jacket) to insert item immediately..." onchange="erp.handleQuickItemSearchSelect(this)" style="font-weight: 700; font-size: 12.5px; background: #ffffff; border: 1.5px solid #3b82f6;" />
             </div>
-            <button type="button" class="btn btn-blue btn-sm" onclick="erp.openProductPickerModal()" style="font-weight: 800; padding: 6px 12px; display: inline-flex; align-items: center; gap: 5px;">📦 Browse Catalog (186+ Items)</button>
+            <button type="button" class="btn btn-blue btn-sm" onclick="erp.openProductPickerModal()" style="font-weight: 800; padding: 6px 12px; display: inline-flex; align-items: center; gap: 5px;">📦 Browse Catalogue (186+ Items)</button>
             <button type="button" class="btn btn-outline btn-sm" onclick="erp.openNewProductModal()" title="Save New Product">➕ New Product</button>
           </div>
 
@@ -1236,7 +1236,7 @@ body {
   <section id="stockView" class="erp-view">
     <div class="card">
       <div class="card-header">
-        <span>📦 Stock Summary & Master Catalog</span>
+        <span>📦 Stock Summary & Master Catalogue</span>
         <div style="display: flex; gap: 8px;">
           <input type="text" id="stockSearchInput" class="form-control" style="width: 220px; padding: 4px 8px; font-size: 12px;" placeholder="Search item, HSN, SKU..." oninput="erp.renderStockTable()" />
           <button class="btn btn-blue btn-sm" onclick="erp.openNewProductModal()">+ Add New Product</button>
@@ -1625,7 +1625,7 @@ body {
 <div class="modal-backdrop" id="newProductModal">
   <div class="modal-box">
     <div class="modal-header">
-      <span>➕ Save New Product to Master Catalog</span>
+      <span>➕ Save New Product to Master Catalogue</span>
       <button class="btn btn-danger btn-sm" onclick="erp.closeModal('newProductModal')">✕</button>
     </div>
     <div class="modal-body">
@@ -1699,7 +1699,7 @@ body {
   <div class="modal-box" style="max-width: 920px; width: 95%;">
     <div class="modal-header">
       <div style="display: flex; align-items: center; gap: 8px;">
-        <span style="font-weight: 800; font-size: 15px;">📦 PASS CORP. Master Safety Catalog</span>
+        <span style="font-weight: 800; font-size: 15px;">📦 PASS CORP. Master Safety Catalogue</span>
         <span class="badge badge-blue" id="catalogModalBadge" style="font-size: 11px; padding: 3px 8px;">186+ Products Connected</span>
       </div>
       <div style="display: flex; gap: 6px;">
@@ -2513,7 +2513,7 @@ class PassInvotorERP {
     this.closeModal('productPickerModal');
     this.renderLiveInvoicePreview();
     this.renderStockTable();
-    alert(`✅ Product "${newProd.name}" saved to Master Catalog and added to Bill!`);
+    alert(`✅ Product "${newProd.name}" saved to Master Catalogue and added to Bill!`);
   }
 
   renderBuyersDatalist() {
@@ -3272,9 +3272,9 @@ class PassInvotorERP {
         <tr>
           <td colspan="9" style="text-align: center; padding: 30px 14px; background: #f8fafc; color: #64748b;">
             <div style="font-size: 14px; font-weight: 700; color: #0c2340; margin-bottom: 4px;">📋 No Products Added Yet</div>
-            <div style="font-size: 12px; margin-bottom: 12px;">Type any product in the Quick Search Bar above, or click below to pick from master safety catalog.</div>
+            <div style="font-size: 12px; margin-bottom: 12px;">Type any product in the Quick Search Bar above, or click below to pick from master safety catalogue.</div>
             <div style="display: flex; justify-content: center; gap: 8px;">
-              <button type="button" class="btn btn-blue btn-sm" onclick="erp.openProductPickerModal()" style="font-weight: 700; padding: 6px 14px;">📦 Browse Master Catalog (186+ Products)</button>
+              <button type="button" class="btn btn-blue btn-sm" onclick="erp.openProductPickerModal()" style="font-weight: 700; padding: 6px 14px;">📦 Browse Master Catalogue (186+ Products)</button>
               <button type="button" class="btn btn-outline btn-sm" onclick="erp.addCustomBillItem()" style="font-weight: 700; padding: 6px 14px;">➕ Add Blank Item Row</button>
             </div>
           </td>
