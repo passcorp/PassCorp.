@@ -785,7 +785,7 @@ body {
 <div id="authLockOverlay" style="display: flex; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 99999999; background: radial-gradient(circle at 50% 40%, #1e293b 0%, #090d16 100%); align-items: center; justify-content: center; padding: 20px;">
   <div class="auth-lock-box" id="authLockCard">
     <div class="auth-lock-header">
-      <img src="https://passcorp.in/assets/logo.png" alt="PASS CORP." class="auth-lock-logo" style="max-height: 48px; max-width: 140px; object-fit: contain; margin-bottom: 8px;" onerror="this.src='stamp.png'" />
+      <img src="https://passcorp.in/assets/logo.png" alt="PASS CORP." class="auth-lock-logo" style="max-height: 48px; max-width: 140px; object-fit: contain; margin-bottom: 8px;" onerror="this.style.display='none'" />
       <div class="auth-lock-title">PASS CORP. ERP SECURITY</div>
       <div class="auth-lock-sub">PRECISION | ASSURANCE | SAFETY | SOLUTION</div>
     </div>
@@ -842,7 +842,7 @@ body {
 <!-- HEADER -->
 <header class="app-header no-print">
   <div class="brand-lockup">
-    <img src="https://passcorp.in/assets/logo.png" alt="PASS CORP." class="brand-logo" onerror="this.src='stamp.png'" />
+    <img src="https://passcorp.in/assets/logo.png" alt="PASS CORP." class="brand-logo" onerror="this.style.display='none'" />
     <div class="brand-title-wrap">
       <div class="brand-heading">
         <span class="brand-name">PASS CORP.</span>
@@ -3204,7 +3204,7 @@ class PassInvotorERP {
               <table style="width: 100%; border: none; border-collapse: collapse;">
                 <tr>
                   <td style="width: 140px; vertical-align: middle; border: none; text-align: left; padding: 2px;">
-                    <img src="https://passcorp.in/assets/logo.png" class="inv-logo-large" alt="PASS CORP." onerror="this.src='stamp.png'" />
+                    <img src="https://passcorp.in/assets/logo.png" class="inv-logo-large" alt="PASS CORP." onerror="this.style.display='none'" />
                   </td>
                   <td style="vertical-align: middle; border: none; text-align: center;">
                     <div class="inv-company-name">PASS CORP.</div>
@@ -3394,9 +3394,8 @@ class PassInvotorERP {
                   <td style="width: 50%; border: none; vertical-align: bottom; text-align: center; padding-bottom: 2px;">
                     <div style="border-top: 1px dashed #666; padding-top: 3px; font-size: 9px; font-weight: bold;">Receiver's Signature</div>
                   </td>
-                  <td style="width: 50%; border: none; vertical-align: top; text-align: center; padding-top: 2px; padding-bottom: 2px;">
-                    <div style="font-size: 9.5px; font-weight: bold; margin-bottom: 2px;">For PASS CORP.</div>
-                    <img src="stamp.png" class="foot-stamp-img" alt="Stamp" onerror="this.style.display='none'" />
+                  <td style="width: 50%; border: none; vertical-align: bottom; text-align: center; padding-top: 2px; padding-bottom: 2px;">
+                    <div style="font-size: 9.5px; font-weight: bold; margin-bottom: 40px;">For PASS CORP.</div>
                     <div style="border-top: 1px solid #000; padding-top: 2px; font-size: 9px; font-weight: bold;">Authorised Signatory</div>
                   </td>
                 </tr>
