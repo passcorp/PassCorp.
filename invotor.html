@@ -955,8 +955,8 @@ body {
           <div class="form-group">
             <label>Print Bill Copies</label>
             <select id="billCopyOption" class="form-control" onchange="erp.renderLiveInvoicePreview()">
-              <option value="original_duplicate" selected>Original + Duplicate (OD - 2 Pages)</option>
-              <option value="all_three">Original + Duplicate + Triplicate (ODT - 3 Pages)</option>
+              <option value="all_three" selected>Original + Duplicate + Triplicate (ODT - 3 Pages)</option>
+              <option value="original_duplicate">Original + Duplicate (OD - 2 Pages)</option>
             </select>
           </div>
         </div>
@@ -2938,7 +2938,7 @@ class PassInvotorERP {
       invoiceNo: this.getNextInvoiceNumber(docType),
       date: today,
       dueDate: initDueDate,
-      copyOption: 'original_duplicate',
+      copyOption: 'all_three',
       paymentTerms: terms,
       customer: {
         company: '',
@@ -2990,7 +2990,7 @@ class PassInvotorERP {
     const invNo = document.getElementById('billInvoiceNo') ? document.getElementById('billInvoiceNo').value : (this.currentInvoice.invoiceNo || this.getNextInvoiceNumber());
     const invDate = document.getElementById('billDate') ? document.getElementById('billDate').value : this.currentInvoice.date;
     const dueDate = document.getElementById('billDueDate') ? document.getElementById('billDueDate').value : (this.currentInvoice.dueDate || '');
-    const copyOption = document.getElementById('billCopyOption') ? document.getElementById('billCopyOption').value : (this.currentInvoice.copyOption || 'original_duplicate');
+    const copyOption = document.getElementById('billCopyOption') ? document.getElementById('billCopyOption').value : (this.currentInvoice.copyOption || 'all_three');
     const payTerms = document.getElementById('billPaymentTerms') ? document.getElementById('billPaymentTerms').value : this.currentInvoice.paymentTerms;
     const custCompany = document.getElementById('billCustomerName') ? document.getElementById('billCustomerName').value : (this.currentInvoice.customer.company || this.currentInvoice.customer.name);
     const custPerson = document.getElementById('billCustomerPerson') ? document.getElementById('billCustomerPerson').value : (this.currentInvoice.customer.person || '');
