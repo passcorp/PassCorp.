@@ -697,67 +697,81 @@ body {
 
         <!-- 2. BUYER & DISPATCH -->
         <div style="background: #f8fafc; border: 1px solid var(--line); border-radius: 8px; padding: 14px; margin-bottom: 18px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px;">
             <span style="font-size: 11px; font-weight: 800; color: var(--pass-navy); text-transform: uppercase;">👤 BILLED TO (RECEIVER) & DISPATCH DETAILS</span>
             <div style="display: flex; gap: 6px;">
               <button class="btn btn-outline btn-sm" onclick="erp.openAddBuyerModal()" title="Add New Buyer to Database">➕ Add New Buyer</button>
               <button class="btn btn-blue btn-sm" onclick="erp.openBuyersModal()" title="Manage & Edit Saved Buyers">👥 Manage & Edit Buyers</button>
             </div>
           </div>
-          <div class="form-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
-            <div class="form-group" style="grid-column: span 2;">
-              <label>Buyer Company / Name (Auto-Saved)</label>
-              <input type="text" id="billCustomerName" list="savedBuyersList" class="form-control" placeholder="Select or type buyer name..." oninput="erp.handleBuyerInputChange()" />
-              <datalist id="savedBuyersList"></datalist>
+          
+          <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px;">
+            <!-- LEFT: BUYER DETAILS -->
+            <div>
+              <div style="font-size: 10px; font-weight: 800; color: #475569; margin-bottom: 6px; text-transform: uppercase;">1. Buyer / Receiver Info</div>
+              <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div class="form-group" style="grid-column: span 2;">
+                  <label>Buyer Company / Name (Auto-Saved)</label>
+                  <input type="text" id="billCustomerName" list="savedBuyersList" class="form-control" placeholder="Select or type buyer name..." oninput="erp.handleBuyerInputChange()" />
+                  <datalist id="savedBuyersList"></datalist>
+                </div>
+                <div class="form-group" style="grid-column: span 2;">
+                  <label>Billing & Delivery Address</label>
+                  <input type="text" id="billCustomerAddress" class="form-control" placeholder="Plot No, MIDC Bhosari, Pune - 411026" oninput="erp.handleBuyerFieldChange()" />
+                </div>
+                <div class="form-group">
+                  <label>Buyer GSTIN (Optional)</label>
+                  <input type="text" id="billCustomerGst" class="form-control" placeholder="Unregistered / 27XXXX" oninput="erp.handleBuyerFieldChange()" />
+                </div>
+                <div class="form-group">
+                  <label>Buyer Phone</label>
+                  <input type="text" id="billCustomerPhone" class="form-control" placeholder="+91 98XXXXXXXX" oninput="erp.handleBuyerFieldChange()" />
+                </div>
+                <div class="form-group" style="grid-column: span 2;">
+                  <label>Place of Supply</label>
+                  <input type="text" id="billPlaceOfSupply" class="form-control" value="Maharashtra (Code: 27)" oninput="erp.renderLiveInvoicePreview()" />
+                </div>
+              </div>
             </div>
-            <div class="form-group" style="grid-column: span 2;">
-              <label>Billing & Delivery Address</label>
-              <input type="text" id="billCustomerAddress" class="form-control" placeholder="Plot No, MIDC Bhosari, Pune - 411026" oninput="erp.handleBuyerFieldChange()" />
-            </div>
-            <div class="form-group">
-              <label>Buyer GSTIN (Optional)</label>
-              <input type="text" id="billCustomerGst" class="form-control" placeholder="Unregistered / 27XXXX" oninput="erp.handleBuyerFieldChange()" />
-            </div>
-            <div class="form-group">
-              <label>Buyer Phone</label>
-              <input type="text" id="billCustomerPhone" class="form-control" placeholder="+91 98XXXXXXXX" oninput="erp.handleBuyerFieldChange()" />
-            </div>
-            <div class="form-group">
-              <label>Place of Supply</label>
-              <input type="text" id="billPlaceOfSupply" class="form-control" value="Maharashtra (Code: 27)" oninput="erp.renderLiveInvoicePreview()" />
-            </div>
-            <div class="form-group">
-              <label>Client PO Ref No.</label>
-              <input type="text" id="billPoRef" class="form-control" placeholder="PO/2026/089" oninput="erp.renderLiveInvoicePreview()" />
-            </div>
-            <div class="form-group">
-              <label>PO Date</label>
-              <input type="date" id="billPoDate" class="form-control" onchange="erp.renderLiveInvoicePreview()" />
-            </div>
-            <div class="form-group">
-              <label>Transport / Vehicle</label>
-              <select id="billTransport" class="form-control" onchange="erp.renderLiveInvoicePreview()">
-                <option value="Direct Delivery / Surface" selected>Direct Delivery / Surface</option>
-                <option value="By Hand / Person Delivery">By Hand / Person Delivery</option>
-                <option value="Customer Vehicle Pickup">Customer Vehicle Pickup</option>
-                <option value="Tempo / Auto Delivery">Tempo / Auto Delivery</option>
-                <option value="Courier / Express (DTDC/Porter)">Courier / Express (DTDC/Porter)</option>
-                <option value="VRL Logistics / Transport">VRL Logistics / Transport</option>
-                <option value="TCI Freight / Surface">TCI Freight / Surface</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Payment Terms</label>
-              <select id="billPaymentTerms" class="form-control" onchange="erp.renderLiveInvoicePreview()">
-                <option value="As Agreed" selected>As Agreed</option>
-                <option value="Immediate / Cash">Immediate / Cash</option>
-                <option value="100% Advance">100% Advance</option>
-                <option value="Against Delivery (COD)">Against Delivery (COD)</option>
-                <option value="15 Days Credit">15 Days Credit</option>
-                <option value="30 Days Credit">30 Days Credit</option>
-                <option value="45 Days Credit">45 Days Credit</option>
-                <option value="60 Days Credit">60 Days Credit</option>
-              </select>
+
+            <!-- RIGHT: ORDER & DISPATCH DETAILS (WITH PAYMENT TERMS DIRECTLY UNDER TRANSPORT) -->
+            <div style="border-left: 1px solid #e2e8f0; padding-left: 16px;">
+              <div style="font-size: 10px; font-weight: 800; color: #475569; margin-bottom: 6px; text-transform: uppercase;">2. Order, Transport & Terms</div>
+              <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div class="form-group">
+                  <label>Client PO Ref No.</label>
+                  <input type="text" id="billPoRef" class="form-control" placeholder="PO/2026/089" oninput="erp.renderLiveInvoicePreview()" />
+                </div>
+                <div class="form-group">
+                  <label>PO Date</label>
+                  <input type="date" id="billPoDate" class="form-control" onchange="erp.renderLiveInvoicePreview()" />
+                </div>
+                <div class="form-group" style="grid-column: span 2;">
+                  <label>Transport / Vehicle</label>
+                  <select id="billTransport" class="form-control" onchange="erp.renderLiveInvoicePreview()">
+                    <option value="Direct Delivery / Surface" selected>Direct Delivery / Surface</option>
+                    <option value="By Hand / Person Delivery">By Hand / Person Delivery</option>
+                    <option value="Customer Vehicle Pickup">Customer Vehicle Pickup</option>
+                    <option value="Tempo / Auto Delivery">Tempo / Auto Delivery</option>
+                    <option value="Courier / Express (DTDC/Porter)">Courier / Express (DTDC/Porter)</option>
+                    <option value="VRL Logistics / Transport">VRL Logistics / Transport</option>
+                    <option value="TCI Freight / Surface">TCI Freight / Surface</option>
+                  </select>
+                </div>
+                <div class="form-group" style="grid-column: span 2;">
+                  <label style="color: #1e40af; font-weight: 800;">Payment Terms (Under Transport)</label>
+                  <select id="billPaymentTerms" class="form-control" onchange="erp.renderLiveInvoicePreview()" style="font-weight: 700;">
+                    <option value="As Agreed" selected>As Agreed</option>
+                    <option value="Immediate / Cash">Immediate / Cash</option>
+                    <option value="100% Advance">100% Advance</option>
+                    <option value="Against Delivery (COD)">Against Delivery (COD)</option>
+                    <option value="15 Days Credit">15 Days Credit</option>
+                    <option value="30 Days Credit">30 Days Credit</option>
+                    <option value="45 Days Credit">45 Days Credit</option>
+                    <option value="60 Days Credit">60 Days Credit</option>
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -2142,12 +2156,12 @@ class PassInvotorERP {
               <div class="inv-meta-label"><span class="inv-bold">Invoice No:</span> <span style="font-weight: bold; font-size: 11px;">${p.invNo}</span></div>
               <div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">Invoice Date:</span> ${this.formatDate(p.invDate)}</div>
               <div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">Place of Supply:</span> ${p.pos}</div>
-              <div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">Payment Terms:</span> ${p.payTerms}</div>
             </td>
             <td colspan="5" style="vertical-align: top; padding: 4px 6px;">
               <div class="inv-meta-label"><span class="inv-bold">PO / Ref No:</span> <span style="font-weight: bold;">${p.poRef || 'NA'}</span></div>
               <div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">PO / Ref Date:</span> ${this.formatDate(p.poDate) || 'NA'}</div>
-              <div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">Transport / Dispatch:</span> ${p.transport || 'Direct'}</div>
+              <div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">Transport / Dispatch:</span> ${p.transport || 'Direct Delivery / Surface'}</div>
+              <div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">Payment Terms:</span> ${p.payTerms}</div>
             </td>
           </tr>
 
