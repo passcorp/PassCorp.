@@ -640,165 +640,189 @@ body {
 <!-- MAIN APP BODY -->
 <main class="main-wrapper">
 
-  <!-- 1. BILLING / SALES INVOICE GENERATOR -->
+  <!-- 1. BILLING / SALES INVOICE GENERATOR (TOP FORM & BOTTOM PREVIEW) -->
   <section id="billingView" class="erp-view active">
-    <div class="billing-split">
+    
+    <!-- TOP FORM CONTROLS -->
+    <div class="card no-print" style="margin-bottom: 24px;">
+      <div class="card-header" style="background: #ffffff; padding: 12px 20px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 14px; font-weight: 800; color: var(--pass-navy);">🧾 Sales Invoice & Bill of Supply Generator</span>
+          <span class="brand-tag">PASS CORP. MASTER</span>
+        </div>
+        <div style="display: flex; gap: 6px;">
+          <button class="btn btn-outline btn-sm" onclick="erp.openCompanyProfileModal()" title="Edit Company & Bank Details">🏢 Company Details</button>
+          <button class="btn btn-outline btn-sm" onclick="erp.newInvoice()">+ New / Reset</button>
+          <button class="btn btn-blue btn-sm" onclick="erp.saveInvoice()">💾 Save Bill</button>
+        </div>
+      </div>
       
-      <!-- INVOICE BUILDER CONTROLS (COMPACT 360PX SIDEBAR) -->
-      <aside class="no-print">
-        <div class="card">
-          <div class="card-header">
-            <span>🧾 Create Invoice / Bill of Supply</span>
-            <div style="display: flex; gap: 5px;">
-              <button class="btn btn-outline btn-sm" onclick="erp.openCompanyProfileModal()" title="Edit Company & Bank Details">🏢 Company</button>
-              <button class="btn btn-outline btn-sm" onclick="erp.newInvoice()">+ Reset</button>
-              <button class="btn btn-blue btn-sm" onclick="erp.saveInvoice()">💾 Save Bill</button>
-            </div>
+      <div class="card-body" style="padding: 18px 20px;">
+        <!-- 1. INVOICE META -->
+        <div class="form-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px;">
+          <div class="form-group">
+            <label>Document Title</label>
+            <select id="billDocType" class="form-control" onchange="erp.renderLiveInvoicePreview()">
+              <option value="BILL OF SUPPLY" selected>Bill of Supply (Non-GST)</option>
+              <option value="COMMERCIAL INVOICE">Commercial Invoice</option>
+              <option value="TAX INVOICE">Tax Invoice (GST Registered)</option>
+              <option value="RETAIL CASH BILL">Retail Cash Bill</option>
+            </select>
           </div>
-          <div class="card-body" style="padding: 12px;">
-            
-            <div class="form-grid" style="margin-bottom: 10px;">
-              <div class="form-group" style="grid-column: span 2;">
-                <label>Document Title</label>
-                <select id="billDocType" class="form-control" onchange="erp.renderLiveInvoicePreview()">
-                  <option value="BILL OF SUPPLY" selected>Bill of Supply (Non-GST)</option>
-                  <option value="COMMERCIAL INVOICE">Commercial Invoice</option>
-                  <option value="TAX INVOICE">Tax Invoice (GST Registered)</option>
-                  <option value="RETAIL CASH BILL">Retail Cash Bill</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Invoice Number</label>
-                <input type="text" id="billInvoiceNo" class="form-control" oninput="erp.handleInvoiceNoInput(this.value)" />
-              </div>
-              <div class="form-group">
-                <label>Invoice Date</label>
-                <input type="date" id="billDate" class="form-control" onchange="erp.renderLiveInvoicePreview()" />
-              </div>
-              <div class="form-group" style="grid-column: span 2;">
-                <label>Print Bill Copies</label>
-                <select id="billCopyOption" class="form-control" onchange="erp.renderLiveInvoicePreview()">
-                  <option value="original" selected>Original for Recipient (1 Copy)</option>
-                  <option value="duplicate">Duplicate for Transporter (1 Copy)</option>
-                  <option value="triplicate">Triplicate for Supplier (1 Copy)</option>
-                  <option value="original_duplicate">Original + Duplicate (2 Copies)</option>
-                  <option value="all_three">Original + Duplicate + Triplicate (3 Copies / Full Set)</option>
-                </select>
-              </div>
-              <div class="form-group" style="grid-column: span 2;">
-                <label>Payment Terms</label>
-                <select id="billPaymentTerms" class="form-control" onchange="erp.renderLiveInvoicePreview()">
-                  <option value="As Agreed" selected>As Agreed</option>
-                  <option value="Immediate / Cash">Immediate / Cash</option>
-                  <option value="100% Advance">100% Advance</option>
-                  <option value="Against Delivery (COD)">Against Delivery (COD)</option>
-                  <option value="15 Days Credit">15 Days Credit</option>
-                  <option value="30 Days Credit">30 Days Credit</option>
-                  <option value="45 Days Credit">45 Days Credit</option>
-                  <option value="60 Days Credit">60 Days Credit</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- BUYER DETAILS (WITH AUTO-SAVE & AUTO-SUGGEST) -->
-            <div style="border-top: 1px solid var(--line); padding-top: 10px; margin-bottom: 10px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                <label style="font-size: 10px; font-weight: 800; color: var(--pass-navy);">👤 BILLED TO (RECEIVER) & DISPATCH</label>
-              </div>
-              <div class="form-grid">
-                <div class="form-group" style="grid-column: span 2;">
-                  <label>Buyer Company / Name (Auto-Saved)</label>
-                  <input type="text" id="billCustomerName" list="savedBuyersList" class="form-control" placeholder="Select or type buyer name..." oninput="erp.handleBuyerInputChange()" />
-                  <datalist id="savedBuyersList"></datalist>
-                </div>
-                <div class="form-group" style="grid-column: span 2;">
-                  <label>Billing Address</label>
-                  <input type="text" id="billCustomerAddress" class="form-control" placeholder="Plot No, MIDC Bhosari, Pune - 411026" oninput="erp.handleBuyerFieldChange()" />
-                </div>
-                <div class="form-group">
-                  <label>Buyer GSTIN (Optional)</label>
-                  <input type="text" id="billCustomerGst" class="form-control" placeholder="Unregistered / 27XXXX" oninput="erp.handleBuyerFieldChange()" />
-                </div>
-                <div class="form-group">
-                  <label>Buyer Phone</label>
-                  <input type="text" id="billCustomerPhone" class="form-control" placeholder="+91 98XXXXXXXX" oninput="erp.handleBuyerFieldChange()" />
-                </div>
-                <div class="form-group">
-                  <label>Place of Supply</label>
-                  <input type="text" id="billPlaceOfSupply" class="form-control" value="Maharashtra (Code: 27)" oninput="erp.renderLiveInvoicePreview()" />
-                </div>
-                <div class="form-group">
-                  <label>Client PO Ref No.</label>
-                  <input type="text" id="billPoRef" class="form-control" placeholder="PO/2026/089" oninput="erp.renderLiveInvoicePreview()" />
-                </div>
-                <div class="form-group">
-                  <label>PO Date</label>
-                  <input type="date" id="billPoDate" class="form-control" onchange="erp.renderLiveInvoicePreview()" />
-                </div>
-                <div class="form-group" style="grid-column: span 2;">
-                  <label>Transport / Vehicle</label>
-                  <input type="text" id="billTransport" class="form-control" value="Direct Delivery / Surface" oninput="erp.renderLiveInvoicePreview()" />
-                </div>
-              </div>
-            </div>
-
-            <!-- ITEMS WITH CLEAR HSN CODE FIELD & PRODUCT SAVE OPTION -->
-            <div style="border-top: 1px solid var(--line); padding-top: 10px; margin-bottom: 10px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                <label style="font-size: 10px; font-weight: 800; color: var(--pass-navy);">📦 BILL ITEMS (WITH HSN)</label>
-                <div style="display: flex; gap: 4px;">
-                  <button class="btn btn-outline btn-sm" onclick="erp.openNewProductModal()" title="Save New Product to Library">+ New Product</button>
-                  <button class="btn btn-blue btn-sm" onclick="erp.openProductPickerModal()">+ Pick Catalog</button>
-                </div>
-              </div>
-
-              <div id="billItemsContainer"></div>
-              <button class="btn btn-outline btn-sm" style="width: 100%; margin-top: 6px;" onclick="erp.addCustomBillItem()">+ Add Custom Item Line</button>
-            </div>
-
-            <!-- TOTAL ADJUSTMENTS -->
-            <div style="border-top: 1px solid var(--line); padding-top: 10px;">
-              <div class="form-grid">
-                <div class="form-group">
-                  <label>Discount (₹)</label>
-                  <input type="number" id="billDiscount" class="form-control" value="0" min="0" oninput="erp.renderLiveInvoicePreview()" />
-                </div>
-                <div class="form-group">
-                  <label>Freight / Transport (₹)</label>
-                  <input type="number" id="billFreight" class="form-control" value="0" min="0" oninput="erp.renderLiveInvoicePreview()" />
-                </div>
-                <div class="form-group">
-                  <label>Advance Received (₹)</label>
-                  <input type="number" id="billAdvancePaid" class="form-control" value="0" min="0" oninput="erp.renderLiveInvoicePreview()" />
-                </div>
-                <div class="form-group">
-                  <label>Payment Mode</label>
-                  <select id="billPaymentMode" class="form-control">
-                    <option value="Credit / Due">Unpaid / Credit Due</option>
-                    <option value="Cash">Cash</option>
-                    <option value="Bank NEFT/RTGS">HDFC Bank (NEFT/RTGS)</option>
-                    <option value="UPI / GPay">UPI / GPay</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <!-- ACTIONS -->
-            <div style="margin-top: 12px; display: flex; gap: 6px;">
-              <button class="btn btn-primary" style="flex: 1;" onclick="window.print()">🖨️ Print / Save PDF</button>
-              <button class="btn btn-success" style="flex: 1;" onclick="erp.shareWhatsAppBill()">📲 WhatsApp Bill</button>
-            </div>
-
+          <div class="form-group">
+            <label>Invoice Number</label>
+            <input type="text" id="billInvoiceNo" class="form-control" oninput="erp.handleInvoiceNoInput(this.value)" />
+          </div>
+          <div class="form-group">
+            <label>Invoice Date</label>
+            <input type="date" id="billDate" class="form-control" onchange="erp.renderLiveInvoicePreview()" />
+          </div>
+          <div class="form-group">
+            <label>Print Bill Copies</label>
+            <select id="billCopyOption" class="form-control" onchange="erp.renderLiveInvoicePreview()">
+              <option value="original" selected>Original for Recipient (1 Copy)</option>
+              <option value="duplicate">Duplicate for Transporter (1 Copy)</option>
+              <option value="triplicate">Triplicate for Supplier (1 Copy)</option>
+              <option value="original_duplicate">Original + Duplicate (2 Copies)</option>
+              <option value="all_three">Original + Duplicate + Triplicate (3 Copies / Full Set)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Payment Terms</label>
+            <select id="billPaymentTerms" class="form-control" onchange="erp.renderLiveInvoicePreview()">
+              <option value="As Agreed" selected>As Agreed</option>
+              <option value="Immediate / Cash">Immediate / Cash</option>
+              <option value="100% Advance">100% Advance</option>
+              <option value="Against Delivery (COD)">Against Delivery (COD)</option>
+              <option value="15 Days Credit">15 Days Credit</option>
+              <option value="30 Days Credit">30 Days Credit</option>
+              <option value="45 Days Credit">45 Days Credit</option>
+              <option value="60 Days Credit">60 Days Credit</option>
+            </select>
           </div>
         </div>
-      </aside>
 
-      <!-- LIVE A4 SHEET PREVIEW CONTAINER (EXPANDED RIGHT VIEWPORT) -->
-      <div class="a4-preview-card" id="sheetsContainer">
-        <!-- Rendered A4 Sheet(s) Injected Dynamically by erp.renderLiveInvoicePreview() -->
+        <!-- 2. BUYER & DISPATCH -->
+        <div style="background: #f8fafc; border: 1px solid var(--line); border-radius: 8px; padding: 14px; margin-bottom: 18px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <span style="font-size: 11px; font-weight: 800; color: var(--pass-navy); text-transform: uppercase;">👤 BILLED TO (RECEIVER) & DISPATCH DETAILS</span>
+            <span style="font-size: 11px; color: #2563eb; font-weight: 700;">💾 Buyer details auto-save automatically</span>
+          </div>
+          <div class="form-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+            <div class="form-group" style="grid-column: span 2;">
+              <label>Buyer Company / Name (Auto-Saved)</label>
+              <input type="text" id="billCustomerName" list="savedBuyersList" class="form-control" placeholder="Select or type buyer name..." oninput="erp.handleBuyerInputChange()" />
+              <datalist id="savedBuyersList"></datalist>
+            </div>
+            <div class="form-group" style="grid-column: span 2;">
+              <label>Billing & Delivery Address</label>
+              <input type="text" id="billCustomerAddress" class="form-control" placeholder="Plot No, MIDC Bhosari, Pune - 411026" oninput="erp.handleBuyerFieldChange()" />
+            </div>
+            <div class="form-group">
+              <label>Buyer GSTIN (Optional)</label>
+              <input type="text" id="billCustomerGst" class="form-control" placeholder="Unregistered / 27XXXX" oninput="erp.handleBuyerFieldChange()" />
+            </div>
+            <div class="form-group">
+              <label>Buyer Phone</label>
+              <input type="text" id="billCustomerPhone" class="form-control" placeholder="+91 98XXXXXXXX" oninput="erp.handleBuyerFieldChange()" />
+            </div>
+            <div class="form-group">
+              <label>Place of Supply</label>
+              <input type="text" id="billPlaceOfSupply" class="form-control" value="Maharashtra (Code: 27)" oninput="erp.renderLiveInvoicePreview()" />
+            </div>
+            <div class="form-group">
+              <label>Client PO Ref No.</label>
+              <input type="text" id="billPoRef" class="form-control" placeholder="PO/2026/089" oninput="erp.renderLiveInvoicePreview()" />
+            </div>
+            <div class="form-group">
+              <label>PO Date</label>
+              <input type="date" id="billPoDate" class="form-control" onchange="erp.renderLiveInvoicePreview()" />
+            </div>
+            <div class="form-group">
+              <label>Transport / Vehicle</label>
+              <input type="text" id="billTransport" class="form-control" value="Direct Delivery / Surface" oninput="erp.renderLiveInvoicePreview()" />
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. FULL-WIDTH ITEM BUILDER -->
+        <div style="margin-bottom: 18px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span style="font-size: 11.5px; font-weight: 800; color: var(--pass-navy); text-transform: uppercase;">📦 BILL ITEMS & LINE DETAILS (HSN, QTY, UNIT, RATE, GST)</span>
+            <div style="display: flex; gap: 6px;">
+              <button class="btn btn-outline btn-sm" onclick="erp.openNewProductModal()" title="Save New Product to Library">➕ Save New Product to Library</button>
+              <button class="btn btn-blue btn-sm" onclick="erp.openProductPickerModal()">📦 Pick from Catalog</button>
+            </div>
+          </div>
+
+          <div class="table-responsive" style="border: 1px solid var(--line); border-radius: 8px; background: #ffffff;">
+            <table class="data-table" style="font-size: 12px;">
+              <thead>
+                <tr>
+                  <th style="width: 35px; text-align: center;">#</th>
+                  <th style="min-width: 250px;">Description of Goods / Safety Equipment</th>
+                  <th style="width: 110px; text-align: center;">HSN / SAC</th>
+                  <th style="width: 90px; text-align: right;">Qty</th>
+                  <th style="width: 100px;">Unit</th>
+                  <th style="width: 110px; text-align: right;">Rate (₹)</th>
+                  <th style="width: 95px; text-align: center;">GST %</th>
+                  <th style="width: 130px; text-align: right;">Total Amount (₹)</th>
+                  <th style="width: 50px; text-align: center;">✕</th>
+                </tr>
+              </thead>
+              <tbody id="billItemsTableBody"></tbody>
+            </table>
+          </div>
+          <button class="btn btn-outline btn-sm" style="margin-top: 8px;" onclick="erp.addCustomBillItem()">+ Add Custom Item Line</button>
+        </div>
+
+        <!-- 4. TOTAL ADJUSTMENTS & ACTIONS -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; background: #f8fafc; border: 1px solid var(--line); border-radius: 8px; padding: 14px;">
+          <div class="form-group">
+            <label>Discount (₹)</label>
+            <input type="number" id="billDiscount" class="form-control" value="0" min="0" oninput="erp.renderLiveInvoicePreview()" />
+          </div>
+          <div class="form-group">
+            <label>Freight / Transport (₹)</label>
+            <input type="number" id="billFreight" class="form-control" value="0" min="0" oninput="erp.renderLiveInvoicePreview()" />
+          </div>
+          <div class="form-group">
+            <label>Advance Received (₹)</label>
+            <input type="number" id="billAdvancePaid" class="form-control" value="0" min="0" oninput="erp.renderLiveInvoicePreview()" />
+          </div>
+          <div class="form-group">
+            <label>Payment Mode</label>
+            <select id="billPaymentMode" class="form-control">
+              <option value="Credit / Due">Unpaid / Credit Due</option>
+              <option value="Cash">Cash</option>
+              <option value="Bank NEFT/RTGS">HDFC Bank (NEFT/RTGS)</option>
+              <option value="UPI / GPay">UPI / GPay</option>
+            </select>
+          </div>
+          <div style="display: flex; gap: 6px; align-items: flex-end;">
+            <button class="btn btn-primary" style="flex: 1; padding: 8px 10px;" onclick="window.print()">🖨️ Print / PDF</button>
+            <button class="btn btn-success" style="flex: 1; padding: 8px 10px;" onclick="erp.shareWhatsAppBill()">📲 WhatsApp</button>
+          </div>
+        </div>
+
       </div>
-
     </div>
+
+    <!-- BOTTOM LIVE A4 INVOICE PREVIEW -->
+    <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 40px;">
+      <div class="no-print" style="margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; width: 210mm; max-width: 100%;">
+        <span style="font-weight: 800; font-size: 13px; color: var(--pass-navy);">👁️ LIVE A4 INVOICE PREVIEW</span>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-primary btn-sm" onclick="window.print()">🖨️ Print / PDF</button>
+          <button class="btn btn-success btn-sm" onclick="erp.shareWhatsAppBill()">📲 WhatsApp</button>
+          <button class="btn btn-blue btn-sm" onclick="erp.saveInvoice()">💾 Save Bill</button>
+        </div>
+      </div>
+      <div class="a4-preview-card" id="sheetsContainer" style="width: 100%; max-width: 980px;">
+        <!-- Rendered A4 Sheet(s) Injected Dynamically -->
+      </div>
+    </div>
+
   </section>
 
   <!-- 2. GATEWAY OF INVOTOR -->
@@ -2076,57 +2100,47 @@ class PassInvotorERP {
   }
 
   renderEditorItems() {
-    const container = document.getElementById('billItemsContainer');
-    if (!container) return;
-    container.innerHTML = '';
+    const tbody = document.getElementById('billItemsTableBody');
+    if (!tbody) return;
+    tbody.innerHTML = '';
 
     this.currentInvoice.items.forEach((item, index) => {
-      const row = document.createElement('div');
-      row.style.cssText = 'background: #ffffff; border: 1px solid var(--line); border-radius: 8px; padding: 10px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);';
-      row.innerHTML = `
-        <div style="display: flex; gap: 6px; margin-bottom: 8px; align-items: center;">
-          <span style="font-weight: 800; font-size: 11.5px; color: var(--pass-navy); min-width: 18px;">${index + 1}.</span>
-          <input type="text" class="form-control" value="${item.name}" placeholder="Item Description" oninput="erp.updateItemRow(${index}, 'name', this.value)" style="flex: 1; font-weight: 700; font-size: 12.5px; padding: 5px 8px;" />
-          <button class="btn btn-danger btn-sm" onclick="erp.removeBillItem(${index})" title="Remove item" style="padding: 4px 8px; font-size: 11px;">🗑️</button>
-        </div>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 6px;">
-          <div>
-            <label style="font-size: 9.5px; font-weight: 800; color: #1e40af; display: block; margin-bottom: 2px;">HSN / SAC</label>
-            <input type="text" class="form-control" value="${item.hsn || '6506'}" placeholder="HSN" oninput="erp.updateItemRow(${index}, 'hsn', this.value)" style="font-weight: bold; font-family: monospace; padding: 4px 6px; font-size: 11.5px;" />
-          </div>
-          <div>
-            <label style="font-size: 9.5px; font-weight: 700; color: var(--ink-muted); display: block; margin-bottom: 2px;">QTY</label>
-            <input type="number" class="form-control" value="${item.qty}" min="1" oninput="erp.updateItemRow(${index}, 'qty', this.value)" style="font-weight: bold; padding: 4px 6px; font-size: 11.5px;" />
-          </div>
-          <div>
-            <label style="font-size: 9.5px; font-weight: 700; color: var(--ink-muted); display: block; margin-bottom: 2px;">UNIT</label>
-            <input type="text" class="form-control" value="${item.unit || 'Nos.'}" placeholder="Nos./Pairs" oninput="erp.updateItemRow(${index}, 'unit', this.value)" style="padding: 4px 6px; font-size: 11.5px;" />
-          </div>
-        </div>
-
-        <div style="display: grid; grid-template-columns: 1.1fr 1fr 1.1fr; gap: 6px; align-items: center; background: #f8fafc; padding: 6px 8px; border-radius: 6px; border: 1px solid var(--line);">
-          <div>
-            <label style="font-size: 9.5px; font-weight: 700; color: var(--ink-muted); display: block; margin-bottom: 2px;">RATE (₹)</label>
-            <input type="number" class="form-control" value="${item.rate}" min="0" oninput="erp.updateItemRow(${index}, 'rate', this.value)" style="font-weight: bold; padding: 4px 6px; font-size: 11.5px;" />
-          </div>
-          <div>
-            <label style="font-size: 9.5px; font-weight: 700; color: var(--ink-muted); display: block; margin-bottom: 2px;">GST %</label>
-            <select class="form-control" onchange="erp.updateItemRow(${index}, 'gstRate', this.value)" style="padding: 4px 4px; font-size: 11.5px; font-weight: 600;">
-              <option value="0" ${item.gstRate == 0 ? 'selected' : ''}>0%</option>
-              <option value="5" ${item.gstRate == 5 ? 'selected' : ''}>5%</option>
-              <option value="12" ${item.gstRate == 12 ? 'selected' : ''}>12%</option>
-              <option value="18" ${item.gstRate == 18 || !item.gstRate ? 'selected' : ''}>18%</option>
-              <option value="28" ${item.gstRate == 28 ? 'selected' : ''}>28%</option>
-            </select>
-          </div>
-          <div style="text-align: right;">
-            <label style="font-size: 9.5px; font-weight: 700; color: var(--ink-muted); display: block; margin-bottom: 2px;">TOTAL</label>
-            <div style="font-size: 12.5px; font-weight: 900; color: var(--pass-navy); font-family: 'IBM Plex Mono', monospace;">₹${(item.qty * item.rate).toFixed(2)}</div>
-          </div>
-        </div>
+      const tr = document.createElement('tr');
+      const amount = (item.qty * item.rate).toFixed(2);
+      tr.innerHTML = `
+        <td style="text-align: center; font-weight: bold; color: var(--pass-navy);">${index + 1}</td>
+        <td>
+          <input type="text" class="form-control" value="${item.name}" placeholder="Item Description" oninput="erp.updateItemRow(${index}, 'name', this.value)" style="font-weight: 600; width: 100%;" />
+        </td>
+        <td style="text-align: center;">
+          <input type="text" class="form-control" value="${item.hsn || '6506'}" placeholder="HSN" oninput="erp.updateItemRow(${index}, 'hsn', this.value)" style="font-weight: bold; font-family: monospace; text-align: center; width: 100%; color: #1e40af;" />
+        </td>
+        <td>
+          <input type="number" class="form-control" value="${item.qty}" min="1" oninput="erp.updateItemRow(${index}, 'qty', this.value)" style="font-weight: bold; text-align: right; width: 100%;" />
+        </td>
+        <td>
+          <input type="text" class="form-control" value="${item.unit || 'Nos.'}" placeholder="Nos./Pairs" oninput="erp.updateItemRow(${index}, 'unit', this.value)" style="width: 100%; text-align: center;" />
+        </td>
+        <td>
+          <input type="number" class="form-control" value="${item.rate}" min="0" oninput="erp.updateItemRow(${index}, 'rate', this.value)" style="font-weight: bold; text-align: right; width: 100%;" />
+        </td>
+        <td>
+          <select class="form-control" onchange="erp.updateItemRow(${index}, 'gstRate', this.value)" style="font-weight: 600; text-align: center; width: 100%;">
+            <option value="0" ${item.gstRate == 0 ? 'selected' : ''}>0%</option>
+            <option value="5" ${item.gstRate == 5 ? 'selected' : ''}>5%</option>
+            <option value="12" ${item.gstRate == 12 ? 'selected' : ''}>12%</option>
+            <option value="18" ${item.gstRate == 18 || !item.gstRate ? 'selected' : ''}>18%</option>
+            <option value="28" ${item.gstRate == 28 ? 'selected' : ''}>28%</option>
+          </select>
+        </td>
+        <td style="text-align: right; font-weight: 800; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--pass-navy);">
+          ₹${amount}
+        </td>
+        <td style="text-align: center;">
+          <button class="btn btn-danger btn-sm" onclick="erp.removeBillItem(${index})" title="Remove Item" style="padding: 3px 7px; font-size: 11px;">✕</button>
+        </td>
       `;
-      container.appendChild(row);
+      tbody.appendChild(tr);
     });
   }
 
