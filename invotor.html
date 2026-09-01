@@ -1072,7 +1072,7 @@ body {
             <div style="flex: 1; min-width: 250px;">
               <input type="text" list="catalogDatalist" id="quickItemSearchInp" class="form-control" placeholder="Type keyword (e.g. Helmet, Shoe, Gloves, Jacket) to insert item immediately..." onchange="erp.handleQuickItemSearchSelect(this)" style="font-weight: 700; font-size: 12.5px; background: #ffffff; border: 1.5px solid #3b82f6;" />
             </div>
-            <button type="button" class="btn btn-blue btn-sm" onclick="erp.openProductPickerModal()" style="font-weight: 800; padding: 6px 12px;">🔍 Catalog Modal</button>
+            <button type="button" class="btn btn-blue btn-sm" onclick="erp.openProductPickerModal()" style="font-weight: 800; padding: 6px 12px; display: inline-flex; align-items: center; gap: 5px;">📦 Browse Catalog (186+ Items)</button>
             <button type="button" class="btn btn-outline btn-sm" onclick="erp.openNewProductModal()" title="Save New Product">➕ New Product</button>
           </div>
 
@@ -3291,7 +3291,7 @@ class PassInvotorERP {
         <td>
           <div style="display: flex; gap: 4px; margin-bottom: 4px;">
             <input type="text" list="catalogDatalist" class="form-control" value="${item.name || ''}" placeholder="Type or pick safety product..." oninput="erp.handleItemNameInput(${index}, this.value)" onchange="erp.handleItemNameInput(${index}, this.value)" style="font-weight: 700; width: 100%;" />
-            <button type="button" class="btn btn-outline btn-sm" onclick="erp.openRowProductSelector(${index})" title="Pick from Catalog Modal" style="padding: 2px 7px; font-size: 11px; background: #f8fafc; border-color: #cbd5e1;">📦</button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="erp.openRowProductSelector(${index})" title="Pick from Master Catalog" style="padding: 2px 7px; font-size: 11px; background: #f8fafc; border-color: #cbd5e1;">📦</button>
           </div>
           <textarea class="form-control" placeholder="Add description, specifications, size, standard, make..." oninput="erp.updateItemRow(${index}, 'desc', this.value)" style="font-size: 11px; width: 100%; height: 32px; resize: vertical; background: #fafafa; font-family: inherit;">${item.desc || ''}</textarea>
         </td>
