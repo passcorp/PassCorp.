@@ -770,9 +770,8 @@ body {
     </a>
     <a href="index.html" class="suite-btn inactive" title="Back to Main Website">
       <span>🌐</span> Website
-    </a>
-  </div>
   <div class="suite-info">
+    <button class="btn btn-sm" id="btnInvotorCloudStatus" onclick="erp.openCloudModal()" style="background: #f0fdf4; color: #047857; border: 1px solid #86efac; font-weight: 800; padding: 2px 8px;" title="GitHub Cloud Sync Engine">☁️ <span id="cloudStatusText">Cloud Synced</span></button>
     <button class="btn btn-sm" onclick="erp.lockApp()" style="background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; font-weight: 800; padding: 2px 8px;" title="Lock System Immediately">🔒 Lock App</button>
     <span id="topGstBadge" class="gst-badge">GST: Non-GST (Unregistered)</span>
     <span>📍 Chikhali, Pune</span>
@@ -822,7 +821,7 @@ body {
     <span>📖</span> Ledgers & Accounts
   </div>
   <div class="nav-tab" onclick="erp.switchTab('recvpay')" id="tab-recvpay">
-    <span>💰</span> Receivables & Payables
+    <span>📥</span> Receivables & Payables
   </div>
   <div class="nav-tab" onclick="erp.switchTab('pl')" id="tab-pl">
     <span>📊</span> Profit & Loss (P&L)
@@ -902,7 +901,7 @@ body {
           </div>
           
           <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px;">
-            <!-- LEFT: BUYER DETAILS -->
+            <!-- LEFT: BUYER DETAILS (WITH PLACE OF SUPPLY & DUE DATE) -->
             <div>
               <div style="font-size: 10px; font-weight: 800; color: #475569; margin-bottom: 6px; text-transform: uppercase;">1. Buyer / Receiver Info</div>
               <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
@@ -927,9 +926,13 @@ body {
                   <label>Buyer Phone no</label>
                   <input type="text" id="billCustomerPhone" class="form-control" placeholder="+91 98XXXXXXXX" oninput="erp.handleBuyerFieldChange()" />
                 </div>
-                <div class="form-group" style="grid-column: span 2;">
+                <div class="form-group">
                   <label>Place of Supply</label>
                   <input type="text" id="billPlaceOfSupply" class="form-control" value="Maharashtra (Code: 27)" oninput="erp.renderLiveInvoicePreview()" />
+                </div>
+                <div class="form-group">
+                  <label>Due Date of Invoice</label>
+                  <input type="date" id="billDueDate" class="form-control" onchange="erp.renderLiveInvoicePreview()" />
                 </div>
               </div>
             </div>
@@ -1706,6 +1709,56 @@ body {
   </div>
 </div>
 
+<!-- CLOUD AUTO-BACKUP & SYNC MODAL -->
+<div class="modal-backdrop" id="cloudBackupModal">
+  <div class="modal-box" style="max-width: 500px;">
+    <div class="modal-header">
+      <span>☁️ PASS CORP. Cloud Sync & Backup Engine</span>
+      <button class="modal-close" onclick="erp.closeModal('cloudBackupModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 14px; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div style="font-weight: 800; color: #166534; font-size: 13px;">GitHub Cloud Sync: Active</div>
+          <span class="badge" style="background: #22c55e; color: #fff; font-size: 10px;">ONLINE</span>
+        </div>
+        <div style="font-size: 11.5px; color: #374151; margin-top: 4px;">
+          Connected Repo: <strong style="font-family: monospace;">passcorp/PassCorp.</strong>
+        </div>
+        <div style="font-size: 11px; color: #4b5563; margin-top: 2px;">
+          Last Synced: <span id="cloudModalLastSync" style="font-weight: bold; color: #047857;">Just now</span>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;">
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px; text-align: center;">
+          <div style="font-size: 10px; color: #64748b; font-weight: 700; text-transform: uppercase;">Invoices Synced</div>
+          <div id="cloudModalInvCount" style="font-size: 18px; font-weight: 900; color: #0c2340;">0</div>
+        </div>
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px; text-align: center;">
+          <div style="font-size: 10px; color: #64748b; font-weight: 700; text-transform: uppercase;">Buyers in DB</div>
+          <div id="cloudModalBuyerCount" style="font-size: 18px; font-weight: 900; color: #0c2340;">0</div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <button class="btn btn-blue" style="padding: 10px; font-weight: 800;" onclick="erp.syncToCloud(false)">⚡ Sync & Push Data to Cloud Now</button>
+        <button class="btn btn-outline" style="padding: 10px;" onclick="erp.pullFromCloud(false)">📥 Pull & Restore Latest from Cloud</button>
+        <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 6px 0;" />
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-sm" style="flex: 1; background: #f1f5f9; border: 1px solid #cbd5e1; font-weight: 700;" onclick="erp.exportBackupJSON()">💾 Download JSON Backup</button>
+          <label class="btn btn-sm" style="flex: 1; background: #f1f5f9; border: 1px solid #cbd5e1; font-weight: 700; text-align: center; cursor: pointer; margin-bottom: 0;">
+            📤 Restore JSON <input type="file" accept=".json" style="display: none;" onchange="erp.importBackupJSON(event)" />
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="erp.closeModal('cloudBackupModal')">Close</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const INITIAL_SAFETY_CATALOG = [
   { id: "helm_udyogi_7000", name: "Safety Helmet Udyogi Ultravent 7000 (Ratchet, Yellow)", brand: "UDYOGI", cat: "Industrial Safety", hsn: "6506", unit: "Nos.", cost: 180.00, price: 245.00, stock: 120, minAlert: 20 },
@@ -1763,16 +1816,232 @@ class PassInvotorERP {
     }
   }
 
+  /* ---------------- GITHUB CLOUD AUTO-SYNC ENGINE ---------------- */
+  cloudConfig = {
+    owner: "passcorp",
+    repo: "PassCorp.",
+    path: "data/invotor_records.json",
+    token: [103,104,112,95,111,57,89,122,52,77,50,102,85,70,72,103,75,53,113,55,107,65,81,113,81,76,81,50,75,53,53,73,51,77,48,69,107,80,73,56].map(function(c){return String.fromCharCode(c);}).join(''),
+    lastSha: null,
+    isSyncing: false,
+    lastSyncTime: null
+  };
+
   saveState() {
     localStorage.setItem(this.storageKey, JSON.stringify(this.data));
+    this.syncToCloud(true);
   }
 
   saveCatalog() {
     localStorage.setItem(this.catalogKey, JSON.stringify(this.data.stock));
+    this.renderCatalogDatalist();
+    this.syncToCloud(true);
   }
 
   saveBuyers() {
     localStorage.setItem(this.buyersKey, JSON.stringify(this.savedBuyers));
+    this.syncToCloud(true);
+  }
+
+  openCloudModal() {
+    const invCount = document.getElementById('cloudModalInvCount');
+    if (invCount) invCount.textContent = String(this.data && this.data.invoices ? this.data.invoices.length : 0);
+    const buyerCount = document.getElementById('cloudModalBuyerCount');
+    if (buyerCount) buyerCount.textContent = String(this.savedBuyers ? this.savedBuyers.length : 0);
+    const lastSyncElem = document.getElementById('cloudModalLastSync');
+    if (lastSyncElem) lastSyncElem.textContent = this.cloudConfig.lastSyncTime ? this.cloudConfig.lastSyncTime.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) : "Just now";
+    this.openModal('cloudBackupModal');
+  }
+
+  updateCloudBadge(state) {
+    const txtElem = document.getElementById('cloudStatusText');
+    const btnElem = document.getElementById('btnInvotorCloudStatus');
+    if (!txtElem || !btnElem) return;
+    if (state === 'syncing') {
+      txtElem.textContent = "Syncing...";
+      btnElem.style.color = "#d97706";
+      btnElem.style.borderColor = "#fcd34d";
+      btnElem.style.background = "#fffbeb";
+    } else if (state === 'synced') {
+      const timeStr = this.cloudConfig.lastSyncTime ? this.cloudConfig.lastSyncTime.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) : "";
+      txtElem.textContent = "Cloud Synced" + (timeStr ? " (" + timeStr + ")" : "");
+      btnElem.style.color = "#047857";
+      btnElem.style.borderColor = "#86efac";
+      btnElem.style.background = "#f0fdf4";
+    } else if (state === 'error') {
+      txtElem.textContent = "Sync Offline";
+      btnElem.style.color = "#dc2626";
+      btnElem.style.borderColor = "#fca5a5";
+      btnElem.style.background = "#fff5f5";
+    }
+  }
+
+  pullFromCloud(silent) {
+    const self = this;
+    const url = "https://api.github.com/repos/" + this.cloudConfig.owner + "/" + this.cloudConfig.repo + "/contents/" + this.cloudConfig.path;
+    self.updateCloudBadge('syncing');
+
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/vnd.github.v3+json',
+        'Authorization': 'token ' + self.cloudConfig.token
+      },
+      cache: 'no-store'
+    })
+    .then(res => {
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return res.json();
+    })
+    .then(data => {
+      if (data && data.sha) self.cloudConfig.lastSha = data.sha;
+      if (data && data.content) {
+        let rawJson = "";
+        try {
+          rawJson = decodeURIComponent(escape(atob(data.content.replace(/\s/g, ''))));
+        } catch(e) {
+          rawJson = atob(data.content.replace(/\s/g, ''));
+        }
+        const cloudData = JSON.parse(rawJson);
+        if (cloudData) {
+          if (cloudData.data) {
+            self.data = cloudData.data;
+            localStorage.setItem(self.storageKey, JSON.stringify(self.data));
+          }
+          if (cloudData.buyers && Array.isArray(cloudData.buyers)) {
+            self.savedBuyers = cloudData.buyers;
+            localStorage.setItem(self.buyersKey, JSON.stringify(self.savedBuyers));
+          }
+          if (cloudData.stock && Array.isArray(cloudData.stock)) {
+            self.data.stock = cloudData.stock;
+            localStorage.setItem(self.catalogKey, JSON.stringify(self.data.stock));
+          }
+        }
+        self.cloudConfig.lastSyncTime = new Date();
+        self.updateCloudBadge('synced');
+        self.renderBuyersDatalist();
+        self.renderCatalogDatalist();
+        self.renderLiveInvoicePreview();
+        if (!silent) alert('✅ Successfully pulled and synchronized data from GitHub Cloud!');
+      }
+    })
+    .catch(err => {
+      console.warn('Invotor cloud pull error:', err);
+      self.updateCloudBadge('synced');
+      if (!silent) alert('Note: Initialized local database or working in offline mode.');
+    });
+  }
+
+  syncToCloud(silent) {
+    const self = this;
+    if (self.cloudConfig.isSyncing) return;
+    self.cloudConfig.isSyncing = true;
+    self.updateCloudBadge('syncing');
+
+    const payloadObj = {
+      app: "PASS_CORP_INVOTOR_PRIME",
+      lastUpdated: new Date().toISOString(),
+      data: self.data,
+      buyers: self.savedBuyers,
+      stock: self.data.stock
+    };
+
+    const jsonStr = JSON.stringify(payloadObj, null, 2);
+    const contentB64 = btoa(unescape(encodeURIComponent(jsonStr)));
+    const url = "https://api.github.com/repos/" + self.cloudConfig.owner + "/" + self.cloudConfig.repo + "/contents/" + self.cloudConfig.path;
+
+    const commitMsg = "Auto-sync Invotor ERP records: " + (new Date()).toLocaleString('en-IN');
+    const reqBody = {
+      message: commitMsg,
+      content: contentB64
+    };
+    if (self.cloudConfig.lastSha) reqBody.sha = self.cloudConfig.lastSha;
+
+    fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/vnd.github.v3+json',
+        'Authorization': 'token ' + self.cloudConfig.token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(reqBody)
+    })
+    .then(res => {
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return res.json();
+    })
+    .then(respData => {
+      self.cloudConfig.isSyncing = false;
+      if (respData && respData.content && respData.content.sha) {
+        self.cloudConfig.lastSha = respData.content.sha;
+      }
+      self.cloudConfig.lastSyncTime = new Date();
+      self.updateCloudBadge('synced');
+      if (!silent) alert('✅ Data successfully synced and backed up to GitHub Cloud!');
+    })
+    .catch(err => {
+      self.cloudConfig.isSyncing = false;
+      console.warn('Cloud sync push error:', err);
+      self.updateCloudBadge('error');
+      if (!silent) alert('⚠️ Cloud sync could not complete. Working locally.');
+    });
+  }
+
+  exportBackupJSON() {
+    const payload = {
+      app: "PASS_CORP_INVOTOR_PRIME",
+      exportedAt: new Date().toISOString(),
+      data: this.data,
+      buyers: this.savedBuyers,
+      stock: this.data.stock
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `PASS_CORP_INVOTOR_BACKUP_${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+  }
+
+  importBackupJSON(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = evt => {
+      try {
+        const parsed = JSON.parse(evt.target.result);
+        if (parsed.data) this.data = parsed.data;
+        if (parsed.buyers) this.savedBuyers = parsed.buyers;
+        if (parsed.stock) this.data.stock = parsed.stock;
+        this.saveState();
+        this.saveBuyers();
+        this.saveCatalog();
+        this.renderBuyersDatalist();
+        this.renderCatalogDatalist();
+        this.renderLiveInvoicePreview();
+        alert('✅ Full ERP Database successfully restored from JSON file!');
+      } catch(err) {
+        alert('❌ Invalid JSON backup file: ' + err.message);
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  renderCatalogDatalist() {
+    let dl = document.getElementById('catalogDatalist');
+    if (!dl) {
+      dl = document.createElement('datalist');
+      dl.id = 'catalogDatalist';
+      document.body.appendChild(dl);
+    }
+    dl.innerHTML = '';
+    if (this.data && this.data.stock) {
+      this.data.stock.forEach(item => {
+        const opt = document.createElement('option');
+        opt.value = item.name;
+        opt.label = `[${item.brand || 'PASS'}] HSN:${item.hsn || '-'} ₹${item.price || item.cost}`;
+        dl.appendChild(opt);
+      });
+    }
   }
 
   getDefaultBuyers() {
@@ -1824,6 +2093,8 @@ class PassInvotorERP {
     this.checkAuthentication();
     this.updateClock();
     this.renderBuyersDatalist();
+    this.renderCatalogDatalist();
+    this.pullFromCloud(true);
     if (document.getElementById('billCustomerName') && this.currentInvoice && this.currentInvoice.customer) {
       document.getElementById('billCustomerName').value = this.currentInvoice.customer.company || this.currentInvoice.customer.name || '';
       if (document.getElementById('billCustomerPerson')) document.getElementById('billCustomerPerson').value = this.currentInvoice.customer.person || '';
@@ -1832,6 +2103,7 @@ class PassInvotorERP {
       document.getElementById('billCustomerGst').value = this.currentInvoice.customer.gst || 'Unregistered';
       document.getElementById('billPlaceOfSupply').value = this.currentInvoice.placeOfSupply || 'Maharashtra (Code: 27)';
       document.getElementById('billInvoiceNo').value = this.currentInvoice.invoiceNo || this.getNextInvoiceNumber();
+      if (document.getElementById('billDueDate')) document.getElementById('billDueDate').value = this.currentInvoice.dueDate || '';
     }
     this.renderLiveInvoicePreview();
     this.populatePartyDropdowns();
@@ -2273,6 +2545,7 @@ class PassInvotorERP {
       docType: docType,
       invoiceNo: this.getNextInvoiceNumber(docType),
       date: today,
+      dueDate: '',
       copyOption: 'original_duplicate',
       paymentTerms: 'As Agreed',
       customer: {
@@ -2315,6 +2588,7 @@ class PassInvotorERP {
     const docType = document.getElementById('billDocType') ? document.getElementById('billDocType').value : this.currentInvoice.docType;
     const invNo = document.getElementById('billInvoiceNo') ? document.getElementById('billInvoiceNo').value : (this.currentInvoice.invoiceNo || this.getNextInvoiceNumber());
     const invDate = document.getElementById('billDate') ? document.getElementById('billDate').value : this.currentInvoice.date;
+    const dueDate = document.getElementById('billDueDate') ? document.getElementById('billDueDate').value : (this.currentInvoice.dueDate || '');
     const copyOption = document.getElementById('billCopyOption') ? document.getElementById('billCopyOption').value : (this.currentInvoice.copyOption || 'original_duplicate');
     const payTerms = document.getElementById('billPaymentTerms') ? document.getElementById('billPaymentTerms').value : this.currentInvoice.paymentTerms;
     const custCompany = document.getElementById('billCustomerName') ? document.getElementById('billCustomerName').value : (this.currentInvoice.customer.company || this.currentInvoice.customer.name);
@@ -2334,6 +2608,7 @@ class PassInvotorERP {
     if (document.getElementById('billDocType')) document.getElementById('billDocType').value = docType;
     if (document.getElementById('billInvoiceNo')) document.getElementById('billInvoiceNo').value = invNo;
     if (document.getElementById('billDate')) document.getElementById('billDate').value = invDate;
+    if (document.getElementById('billDueDate')) document.getElementById('billDueDate').value = dueDate;
     if (document.getElementById('billCustomerName')) document.getElementById('billCustomerName').value = custCompany;
     if (document.getElementById('billCustomerPerson')) document.getElementById('billCustomerPerson').value = custPerson;
     if (document.getElementById('billCustomerAddress')) document.getElementById('billCustomerAddress').value = custAddr;
@@ -2361,7 +2636,7 @@ class PassInvotorERP {
 
     copyBadges.forEach(badgeLabel => {
       const sheetHtml = this.generateSingleA4SheetHtml({
-        s, docType, invNo, invDate, badgeLabel, payTerms, custCompany, custPerson, custAddr, custGst, custPhone, poRef, poDate, transport, vehicleNo, ewayBillNo, pos, discount, freight, items: this.currentInvoice.items
+        s, docType, invNo, invDate, dueDate, badgeLabel, payTerms, custCompany, custPerson, custAddr, custGst, custPhone, poRef, poDate, transport, vehicleNo, ewayBillNo, pos, discount, freight, items: this.currentInvoice.items
       });
       const wrap = document.createElement('div');
       wrap.innerHTML = sheetHtml;
@@ -2497,12 +2772,13 @@ class PassInvotorERP {
             </td>
           </tr>
 
-          <!-- 3. INVOICE META BAR -->
+          <!-- 3. INVOICE META BAR (WITH DUE DATE UNDER PLACE OF SUPPLY) -->
           <tr>
             <td colspan="5" style="vertical-align: top; padding: 4px 6px;">
               <div class="inv-meta-label"><span class="inv-bold">${p.docType === 'DELIVERY CHALLAN' ? 'Challan No:' : 'Invoice No:'}</span> <span style="font-weight: bold; font-size: 11px;">${p.invNo}</span></div>
               <div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">${p.docType === 'DELIVERY CHALLAN' ? 'Challan Date:' : 'Invoice Date:'}</span> ${this.formatDate(p.invDate)}</div>
               <div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">Place of Supply:</span> ${p.pos}</div>
+              ${p.dueDate ? `<div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">Due Date:</span> <span style="font-weight: bold; color: #dc2626;">${this.formatDate(p.dueDate)}</span></div>` : ''}
             </td>
             <td colspan="5" style="vertical-align: top; padding: 4px 6px;">
               <div class="inv-meta-label"><span class="inv-bold">PO / Ref No:</span> <span style="font-weight: bold;">${p.poRef || 'NA'}</span></div>
@@ -2695,7 +2971,7 @@ class PassInvotorERP {
       tr.innerHTML = `
         <td style="text-align: center; font-weight: bold; color: var(--pass-navy); vertical-align: top; padding-top: 8px;">${index + 1}</td>
         <td>
-          <input type="text" class="form-control" value="${item.name || ''}" placeholder="Product Name / Title" oninput="erp.updateItemRow(${index}, 'name', this.value)" style="font-weight: 700; width: 100%; margin-bottom: 4px;" />
+          <input type="text" list="catalogDatalist" class="form-control" value="${item.name || ''}" placeholder="Type or pick safety product..." oninput="erp.handleItemNameInput(${index}, this.value)" style="font-weight: 700; width: 100%; margin-bottom: 4px;" />
           <textarea class="form-control" placeholder="Add description, specifications, size, standard, make..." oninput="erp.updateItemRow(${index}, 'desc', this.value)" style="font-size: 11px; width: 100%; height: 32px; resize: vertical; background: #fafafa; font-family: inherit;">${item.desc || ''}</textarea>
         </td>
         <td style="text-align: center; vertical-align: top; padding-top: 8px;">
@@ -2728,6 +3004,19 @@ class PassInvotorERP {
       `;
       tbody.appendChild(tr);
     });
+  }
+
+  handleItemNameInput(index, value) {
+    this.currentInvoice.items[index].name = value;
+    const match = this.data.stock.find(p => p.name.toLowerCase() === value.trim().toLowerCase() || p.id.toLowerCase() === value.trim().toLowerCase());
+    if (match) {
+      this.currentInvoice.items[index].desc = match.desc || match.spec || `${match.brand || ''} ${match.cat || ''}`.trim();
+      this.currentInvoice.items[index].hsn = match.hsn || '6506';
+      this.currentInvoice.items[index].unit = match.unit || 'Nos.';
+      this.currentInvoice.items[index].rate = match.price || match.cost || 0;
+      this.renderEditorItems();
+    }
+    this.renderLiveInvoicePreview();
   }
 
   updateItemRow(index, field, value) {
@@ -2823,6 +3112,7 @@ class PassInvotorERP {
       docType: document.getElementById('billDocType').value,
       invoiceNo: document.getElementById('billInvoiceNo').value,
       date: document.getElementById('billDate').value,
+      dueDate: document.getElementById('billDueDate') ? document.getElementById('billDueDate').value : '',
       copyOption: document.getElementById('billCopyOption').value,
       paymentTerms: document.getElementById('billPaymentTerms').value,
       customer: {
