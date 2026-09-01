@@ -1372,7 +1372,7 @@ body {
             <div style="background: var(--pass-navy); color: #fff; padding: 8px 12px; font-weight: 800; font-size: 12.5px; display: flex; justify-content: space-between;">
               <span>CAPITAL & LIABILITIES</span><span>AMOUNT (₹)</span>
             </div>
-            <div style="padding: 8px 12px; font-size: 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line);"><span>Owner's Capital</span><span id="bsCapital">₹5,00,000.00</span></div>
+            <div style="padding: 8px 12px; font-size: 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line);"><span>Owner's Capital</span><span id="bsCapital">₹0.00</span></div>
             <div style="padding: 8px 12px; font-size: 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line);"><span>Add: Net Profit</span><span id="bsNetProfit">₹0.00</span></div>
             <div style="padding: 8px 12px; font-size: 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line);"><span>Sundry Creditors (Payables)</span><span id="bsCreditors">₹0.00</span></div>
             <div style="padding: 10px 12px; font-size: 13px; font-weight: 800; display: flex; justify-content: space-between; background: #f8fafc; border-top: 2px solid var(--pass-navy);"><span>Total Liabilities</span><span id="bsTotalLiabilities">₹0.00</span></div>
@@ -1381,10 +1381,10 @@ body {
             <div style="background: var(--pass-navy); color: #fff; padding: 8px 12px; font-weight: 800; font-size: 12.5px; display: flex; justify-content: space-between;">
               <span>ASSETS / PROPERTIES</span><span>AMOUNT (₹)</span>
             </div>
-            <div style="padding: 8px 12px; font-size: 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line);"><span>Fixed Assets (Equipment)</span><span id="bsFixedAssets">₹1,50,000.00</span></div>
+            <div style="padding: 8px 12px; font-size: 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line);"><span>Fixed Assets (Equipment)</span><span id="bsFixedAssets">₹0.00</span></div>
             <div style="padding: 8px 12px; font-size: 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line);"><span>Closing Stock in Hand</span><span id="bsStockInHand">₹0.00</span></div>
             <div style="padding: 8px 12px; font-size: 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line);"><span>Sundry Debtors (Receivables)</span><span id="bsDebtors">₹0.00</span></div>
-            <div style="padding: 8px 12px; font-size: 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line);"><span>Bank Balance (HDFC)</span><span id="bsBankBalance">₹3,50,000.00</span></div>
+            <div style="padding: 8px 12px; font-size: 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line);"><span>Bank Balance (HDFC)</span><span id="bsBankBalance">₹0.00</span></div>
             <div style="padding: 10px 12px; font-size: 13px; font-weight: 800; display: flex; justify-content: space-between; background: #f8fafc; border-top: 2px solid var(--pass-navy);"><span>Total Assets</span><span id="bsTotalAssets">₹0.00</span></div>
           </div>
         </div>
@@ -1867,6 +1867,9 @@ class PassInvotorERP {
           if (!this.data.settings.nextNonGstNo) this.data.settings.nextNonGstNo = 1;
           if (!this.data.settings.dcPrefix) this.data.settings.dcPrefix = "DC/2026-27/";
           if (!this.data.settings.nextDcNo) this.data.settings.nextDcNo = 1;
+          if (this.data.settings.capital === 500000) this.data.settings.capital = 0;
+          if (this.data.settings.fixedAssets === 150000) this.data.settings.fixedAssets = 0;
+          if (this.data.settings.bankBalance === 350000) this.data.settings.bankBalance = 0;
         }
       } catch (e) { this.data = this.getDefaultState(); }
     } else {
@@ -1878,14 +1881,17 @@ class PassInvotorERP {
     const rawCatalog = localStorage.getItem(this.catalogKey);
     let currentStock = [];
     if (rawCatalog) {
-      try { currentStock = JSON.parse(rawCatalog); } catch(e) { currentStock = INITIAL_SAFETY_CATALOG.slice(); }
+      try { currentStock = JSON.parse(rawCatalog); } catch(e) { currentStock = []; }
     } else {
-      currentStock = INITIAL_SAFETY_CATALOG.slice();
+      currentStock = [];
     }
 
     if (websiteItems && websiteItems.length > 0) {
       const stockMap = new Map();
-      currentStock.forEach(s => stockMap.set(s.name.toLowerCase().trim(), s));
+      currentStock.forEach(s => {
+        if (s.stock === 100) s.stock = 0;
+        stockMap.set(s.name.toLowerCase().trim(), s);
+      });
       websiteItems.forEach(wp => {
         const key = wp.name.toLowerCase().trim();
         if (!stockMap.has(key)) {
@@ -1973,7 +1979,7 @@ class PassInvotorERP {
           unit: p.unit || defaultUnit,
           cost: costVal,
           price: priceVal,
-          stock: 100,
+          stock: 0,
           minAlert: 10,
           image: imgUrl || 'https://passcorp.in/assets/logo.png'
         };
@@ -3846,9 +3852,9 @@ class PassInvotorERP {
 
   renderBalanceSheet() {
     const s = this.data.settings || {};
-    const capital = s.capital || 500000;
-    const fixedAssets = s.fixedAssets || 150000;
-    const bankBal = s.bankBalance || 350000;
+    const capital = s.capital || 0;
+    const fixedAssets = s.fixedAssets || 0;
+    const bankBal = s.bankBalance || 0;
 
     let totalSales = 0;
     let totalDebtors = 0;
