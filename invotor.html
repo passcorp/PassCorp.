@@ -51,9 +51,9 @@ body {
 
 /* TOP SUITE BAR */
 .suite-topbar {
-  background: #ffffff;
+  background: #f8fafc;
   color: #64748b;
-  padding: 8px 24px;
+  padding: 6px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -63,49 +63,75 @@ body {
 .suite-links {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+}
+.suite-label {
+  font-weight: 800;
+  color: var(--pass-navy);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  margin-right: 4px;
 }
 .suite-btn {
-  padding: 5px 12px;
+  padding: 4px 10px;
   border-radius: 6px;
   text-decoration: none;
   font-weight: 700;
-  font-size: 12px;
+  font-size: 11.5px;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   transition: all 0.15s;
   border: 1px solid transparent;
 }
 .suite-btn.inactive {
-  background: #f1f5f9;
+  background: #ffffff;
   color: #475569;
-  border-color: var(--line);
+  border-color: #e2e8f0;
 }
 .suite-btn.inactive:hover {
-  background: #e2e8f0;
+  background: #f1f5f9;
   color: var(--pass-navy);
+  border-color: #cbd5e1;
 }
 .suite-btn.active {
   background: var(--pass-navy);
   color: #ffffff;
-  box-shadow: 0 2px 6px rgba(12, 35, 64, 0.2);
+  box-shadow: 0 2px 4px rgba(12, 35, 64, 0.15);
 }
 .suite-info {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 11.5px;
+  font-size: 11px;
+}
+.info-item {
+  color: #64748b;
+  font-weight: 600;
 }
 .gst-badge {
   background: #eff6ff;
   color: #1e40af;
-  padding: 2px 10px;
+  padding: 2px 8px;
   border-radius: 999px;
   font-weight: 700;
-  font-size: 11px;
+  font-size: 10.5px;
   border: 1px solid #bfdbfe;
+}
+.btn-top-lock {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fca5a5;
+  font-weight: 700;
+  font-size: 11px;
+  padding: 2px 9px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-top-lock:hover {
+  background: #fecaca;
 }
 
 /* HEADER NAVIGATION */
@@ -116,33 +142,37 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
 }
 .brand-lockup {
   display: flex;
   align-items: center;
   gap: 12px;
   text-decoration: none;
+  flex-shrink: 0;
 }
 .brand-logo {
-  height: 44px;
+  height: 42px;
   width: auto;
   object-fit: contain;
 }
-.brand-title-wrap h1 {
+.brand-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.1;
+}
+.brand-name {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 20px;
   font-weight: 800;
   color: var(--pass-navy);
   letter-spacing: 0.5px;
-  line-height: 1.1;
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
 .brand-tag {
   background: var(--accent-tint);
   color: var(--accent-blue);
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 800;
   padding: 2px 7px;
   border-radius: 4px;
@@ -150,47 +180,69 @@ body {
   border: 1px solid #bfdbfe;
 }
 .brand-sub {
-  font-size: 10.5px;
+  font-size: 10px;
   color: var(--pass-red);
   font-weight: 800;
   letter-spacing: 0.8px;
   text-transform: uppercase;
+  margin-top: 2px;
 }
 
 .header-actions-bar {
   display: flex;
   align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
+  gap: 7px;
+  flex-wrap: nowrap;
 }
-.key-btn {
+.hdr-btn {
   background: #ffffff;
-  border: 1px solid var(--line-dark);
-  color: var(--ink);
-  padding: 6px 11px;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  padding: 6px 12px;
   border-radius: 6px;
-  font-size: 11.5px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 700;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 5px;
   transition: all 0.15s;
+  white-space: nowrap;
 }
-.key-btn kbd {
-  background: #f1f5f9;
+.hdr-btn:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
   color: var(--pass-navy);
-  border: 1px solid var(--line);
-  padding: 1px 5px;
-  border-radius: 3px;
-  font-weight: 800;
-  font-size: 10px;
-  font-family: 'IBM Plex Mono', monospace;
 }
-.key-btn:hover {
-  background: var(--accent-tint);
-  border-color: var(--accent-blue);
-  color: var(--accent-blue);
+.hdr-btn-cloud {
+  background: #f0fdf4;
+  color: #047857;
+  border-color: #86efac;
+}
+.hdr-btn-cloud:hover {
+  background: #dcfce7;
+  border-color: #4ade80;
+  color: #065f46;
+}
+.hdr-btn-primary {
+  background: var(--pass-navy);
+  color: #ffffff;
+  border-color: var(--pass-navy);
+}
+.hdr-btn-primary:hover {
+  background: #07192f;
+  border-color: #07192f;
+  color: #ffffff;
+}
+.hdr-btn-whatsapp {
+  background: #25d366;
+  color: #ffffff;
+  border-color: #22c55e;
+}
+.hdr-btn-whatsapp:hover {
+  background: #16a34a;
+  border-color: #15803d;
+  color: #ffffff;
 }
 
 /* APP NAVIGATION TABS */
@@ -765,7 +817,7 @@ body {
 <!-- SUITE TOPBAR -->
 <div class="suite-topbar no-print">
   <div class="suite-links">
-    <span style="font-weight: 800; color: var(--pass-navy); margin-right: 6px;">PASS CORP. SUITE:</span>
+    <span class="suite-label">PASS CORP. SUITE:</span>
     <a href="invotor.html" class="suite-btn active" title="Current App: Invotor Enterprise ERP">
       <span>📦</span> Invotor (Billing & ERP)
     </a>
@@ -773,18 +825,17 @@ body {
       <span>⚡</span> Quotor (Quotation)
     </a>
     <a href="admin.html" class="suite-btn inactive" title="Go to Manage Content CMS">
-      <span>⚙️</span> Manage content
+      <span>⚙️</span> Manage Content
     </a>
     <a href="index.html" class="suite-btn inactive" title="Back to Main Website">
       <span>🌐</span> Website
     </a>
   </div>
   <div class="suite-info">
-    <button class="btn btn-sm" id="btnInvotorCloudStatus" onclick="erp.openCloudModal()" style="background: #f0fdf4; color: #047857; border: 1px solid #86efac; font-weight: 800; padding: 2px 8px;" title="GitHub Cloud Sync Engine">☁️ <span id="cloudStatusText">Cloud Synced</span></button>
-    <button class="btn btn-sm" onclick="erp.lockApp()" style="background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; font-weight: 800; padding: 2px 8px;" title="Lock System Immediately">🔒 Lock App</button>
     <span id="topGstBadge" class="gst-badge">GST: Non-GST (Unregistered)</span>
-    <span>📍 Chikhali, Pune</span>
-    <span id="liveClock">01 Sep 2026</span>
+    <span class="info-item">📍 Chikhali, Pune</span>
+    <span id="liveClock" class="info-item">01 Sep 2026</span>
+    <button class="btn-top-lock" onclick="erp.lockApp()" title="Lock System Immediately">🔒 Lock App</button>
   </div>
 </div>
 
@@ -793,23 +844,33 @@ body {
   <div class="brand-lockup">
     <img src="https://passcorp.in/assets/logo.png" alt="PASS CORP." class="brand-logo" onerror="this.src='stamp.png'" />
     <div class="brand-title-wrap">
-      <h1>PASS CORP. <span class="brand-tag">INVOTOR PRIME</span></h1>
+      <div class="brand-heading">
+        <span class="brand-name">PASS CORP.</span>
+        <span class="brand-tag">INVOTOR PRIME</span>
+      </div>
       <div class="brand-sub">PRECISION | ASSURANCE | SAFETY | SOLUTION</div>
     </div>
   </div>
 
   <div class="header-actions-bar">
-    <button class="key-btn" onclick="erp.openBuyersModal()">👥 Manage Buyers</button>
-    <button class="key-btn" onclick="erp.openCompanyProfileModal()">🏢 Edit Company Details</button>
-    <button class="key-btn" onclick="erp.openCloudModal()" style="background: #f0fdf4; color: #047857; border: 1.5px solid #86efac; font-weight: 800;">☁️ Cloud Sync & Backup</button>
-    <button class="key-btn" onclick="erp.openNewProductModal()">➕ Add Product</button>
-    <button class="key-btn" onclick="erp.switchTab('billing')"><kbd>F8</kbd> Sales Bill</button>
-    <button class="key-btn" onclick="erp.switchTab('purchases')"><kbd>F9</kbd> Purchase</button>
-    <button class="key-btn" onclick="erp.openVoucherModal('RECEIPT')"><kbd>F6</kbd> Receipt</button>
-    <button class="key-btn" onclick="erp.openVoucherModal('PAYMENT')"><kbd>F5</kbd> Payment</button>
-    <button class="key-btn" onclick="erp.switchTab('stock')"><kbd>F3</kbd> Stock</button>
-    <button class="key-btn" onclick="erp.switchTab('ledgers')"><kbd>Alt+L</kbd> Ledgers</button>
-    <button class="key-btn" onclick="erp.lockApp()" style="background: #fee2e2; color: #991b1b; border-color: #fca5a5;">🔒 Lock</button>
+    <button class="hdr-btn" onclick="erp.openBuyersModal()" title="Manage Client / Customer Database">
+      <span>👥</span> Manage Buyers
+    </button>
+    <button class="hdr-btn" onclick="erp.openCompanyProfileModal()" title="Edit Company Details & Bank Info">
+      <span>🏢</span> Company Profile
+    </button>
+    <button class="hdr-btn" onclick="erp.openNewProductModal()" title="Add New Product to Inventory / Catalog">
+      <span>➕</span> Add Product
+    </button>
+    <button class="hdr-btn hdr-btn-cloud" id="btnInvotorCloudStatus" onclick="erp.openCloudModal()" title="GitHub Cloud Backup & Auto-Sync">
+      <span>☁️</span> <span id="cloudStatusText">Cloud Synced</span>
+    </button>
+    <button class="hdr-btn hdr-btn-primary" onclick="erp.printInvoice()" title="Print Current Document (A4 Tally Sheet)">
+      <span>🖨️</span> Print / PDF
+    </button>
+    <button class="hdr-btn hdr-btn-whatsapp" onclick="erp.shareWhatsApp()" title="Share Bill on WhatsApp">
+      <span>💬</span> WhatsApp
+    </button>
   </div>
 </header>
 
