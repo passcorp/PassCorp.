@@ -537,14 +537,138 @@ body {
   background: var(--pass-navy);
   color: #ffffff;
   padding: 12px 18px;
+/* AUTH LOCK SCREEN */
+#authLockOverlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at 50% 40%, #1e293b 0%, #090d16 100%);
+  z-index: 9999999;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  font-weight: 800;
-  font-size: 14px;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(10px);
 }
-.modal-body { padding: 16px; overflow-y: auto; }
-.modal-footer { padding: 12px 16px; background: #f8fafc; border-top: 1px solid var(--line); display: flex; justify-content: flex-end; gap: 10px; }
+.auth-lock-box {
+  background: #ffffff;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.1);
+  overflow: hidden;
+  text-align: center;
+  animation: authPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes authPop {
+  from { opacity: 0; transform: scale(0.92) translateY(12px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.auth-lock-header {
+  background: #0c2340;
+  color: #ffffff;
+  padding: 26px 20px 22px;
+  position: relative;
+}
+.auth-lock-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3.5px;
+  background: linear-gradient(90deg, #c81e1e, #ef4444);
+}
+.auth-lock-logo {
+  max-height: 52px;
+  max-width: 140px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+.auth-lock-title {
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  margin: 0;
+  text-transform: uppercase;
+}
+.auth-lock-sub {
+  font-size: 10px;
+  font-weight: 800;
+  color: #cbd5e1;
+  letter-spacing: 1px;
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+.auth-lock-body {
+  padding: 24px 24px 26px;
+}
+.auth-lock-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f1f5f9;
+  color: #1e293b;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  margin-bottom: 16px;
+  border: 1px solid #cbd5e1;
+}
+.auth-input-wrap {
+  position: relative;
+  margin-bottom: 14px;
+}
+.auth-input {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 16px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 2px;
+  border: 2px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.2s;
+  background: #f8fafc;
+  box-sizing: border-box;
+}
+.auth-input:focus {
+  border-color: #0c2340;
+  background: #ffffff;
+  box-shadow: 0 0 0 3.5px rgba(12, 35, 64, 0.15);
+}
+.auth-unlock-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #ffffff;
+  background: #0c2340;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  box-shadow: 0 4px 12px rgba(12, 35, 64, 0.25);
+}
+.auth-unlock-btn:hover {
+  background: #1e3a8a;
+  transform: translateY(-1px);
+}
+.auth-error {
+  color: #dc2626;
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 10px;
+  min-height: 18px;
+}
+.auth-shake {
+  animation: authShake 0.4s ease-in-out;
+}
+@keyframes authShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-8px); }
+  40%, 80% { transform: translateX(8px); }
+}
 
 /* PRINT MEDIA */
 @media print {
@@ -559,7 +683,7 @@ body {
     -webkit-print-color-adjust: exact !important; 
     print-color-adjust: exact !important; 
   }
-  .top-industrial-accent, .suite-topbar, .app-header, .app-nav, .no-print {
+  .top-industrial-accent, .suite-topbar, .app-header, .app-nav, .no-print, #authLockOverlay {
     display: none !important;
   }
   .main-wrapper { 
@@ -595,6 +719,30 @@ body {
 </head>
 <body>
 
+<!-- AUTH SECURITY LOCK OVERLAY -->
+<div id="authLockOverlay" style="display: flex;">
+  <div class="auth-lock-box" id="authLockCard">
+    <div class="auth-lock-header">
+      <img src="https://passcorp.in/assets/logo.png" alt="PASS CORP." class="auth-lock-logo" onerror="this.src='stamp.png'" />
+      <div class="auth-lock-title">PASS CORP. ERP SECURITY</div>
+      <div class="auth-lock-sub">PRECISION | ASSURANCE | SAFETY | SOLUTION</div>
+    </div>
+    <div class="auth-lock-body">
+      <div class="auth-lock-badge">🔒 Protected Billing & Accounts Vault</div>
+      <p style="font-size: 12px; color: #64748b; margin-top: 0; margin-bottom: 16px; line-height: 1.4;">
+        Enter Master Passcode / PIN to unlock Invotor Prime.
+      </p>
+      <form onsubmit="event.preventDefault(); erp.submitUnlock();">
+        <div class="auth-input-wrap">
+          <input type="password" id="authPassInput" class="auth-input" placeholder="Enter PIN or Passcode" autofocus autocomplete="current-password" />
+        </div>
+        <button type="submit" class="auth-unlock-btn">🔓 UNLOCK SYSTEM</button>
+        <div id="authErrorMsg" class="auth-error"></div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <!-- TOP INDUSTRIAL STRIP -->
 <div class="top-industrial-accent no-print"></div>
 
@@ -616,6 +764,7 @@ body {
     </a>
   </div>
   <div class="suite-info">
+    <button class="btn btn-sm" onclick="erp.lockApp()" style="background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; font-weight: 800; padding: 2px 8px;" title="Lock System Immediately">🔒 Lock App</button>
     <span id="topGstBadge" class="gst-badge">GST: Non-GST (Unregistered)</span>
     <span>📍 Chikhali, Pune</span>
     <span id="liveClock">01 Sep 2026</span>
@@ -642,6 +791,7 @@ body {
     <button class="key-btn" onclick="erp.openVoucherModal('PAYMENT')"><kbd>F5</kbd> Payment</button>
     <button class="key-btn" onclick="erp.switchTab('stock')"><kbd>F3</kbd> Stock</button>
     <button class="key-btn" onclick="erp.switchTab('ledgers')"><kbd>Alt+L</kbd> Ledgers</button>
+    <button class="key-btn" onclick="erp.lockApp()" style="background: #fee2e2; color: #991b1b; border-color: #fca5a5;">🔒 Lock</button>
   </div>
 </header>
 
@@ -1662,6 +1812,7 @@ class PassInvotorERP {
   }
 
   initUI() {
+    this.checkAuthentication();
     this.updateClock();
     this.renderBuyersDatalist();
     if (document.getElementById('billCustomerName') && this.currentInvoice && this.currentInvoice.customer) {
@@ -1676,6 +1827,55 @@ class PassInvotorERP {
     this.renderLiveInvoicePreview();
     this.populatePartyDropdowns();
     this.syncSettingsFields();
+  }
+
+  checkAuthentication() {
+    const isAuthed = sessionStorage.getItem('PASS_INVOTOR_AUTH') === '1';
+    const overlay = document.getElementById('authLockOverlay');
+    if (overlay) {
+      if (isAuthed) {
+        overlay.style.display = 'none';
+      } else {
+        overlay.style.display = 'flex';
+        setTimeout(() => {
+          const inp = document.getElementById('authPassInput');
+          if (inp) { inp.value = ''; inp.focus(); }
+        }, 120);
+      }
+    }
+  }
+
+  submitUnlock() {
+    const inp = document.getElementById('authPassInput');
+    const err = document.getElementById('authErrorMsg');
+    const card = document.getElementById('authLockCard');
+    const val = inp ? inp.value.trim() : '';
+
+    // Master Passcode & Quick PINs
+    if (val === 'Pawanjali@241997' || val === '2419' || val === 'passcorp') {
+      sessionStorage.setItem('PASS_INVOTOR_AUTH', '1');
+      if (err) err.textContent = '';
+      const overlay = document.getElementById('authLockOverlay');
+      if (overlay) overlay.style.display = 'none';
+    } else {
+      if (err) err.textContent = '❌ Incorrect passcode. Please try again.';
+      if (card) {
+        card.classList.remove('auth-shake');
+        void card.offsetWidth;
+        card.classList.add('auth-shake');
+      }
+      if (inp) {
+        inp.select();
+        inp.focus();
+      }
+    }
+  }
+
+  lockApp() {
+    sessionStorage.removeItem('PASS_INVOTOR_AUTH');
+    const err = document.getElementById('authErrorMsg');
+    if (err) err.textContent = '';
+    this.checkAuthentication();
   }
 
   updateClock() {
