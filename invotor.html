@@ -800,6 +800,7 @@ body {
   <div class="header-actions-bar">
     <button class="key-btn" onclick="erp.openBuyersModal()">👥 Manage Buyers</button>
     <button class="key-btn" onclick="erp.openCompanyProfileModal()">🏢 Edit Company Details</button>
+    <button class="key-btn" onclick="erp.openCloudModal()" style="background: #f0fdf4; color: #047857; border: 1.5px solid #86efac; font-weight: 800;">☁️ Cloud Sync & Backup</button>
     <button class="key-btn" onclick="erp.openNewProductModal()">➕ Add Product</button>
     <button class="key-btn" onclick="erp.switchTab('billing')"><kbd>F8</kbd> Sales Bill</button>
     <button class="key-btn" onclick="erp.switchTab('purchases')"><kbd>F9</kbd> Purchase</button>
@@ -930,17 +931,20 @@ body {
                   <label>GST / GSTIN</label>
                   <input type="text" id="billCustomerGst" class="form-control" placeholder="Unregistered / 27XXXX" oninput="erp.handleBuyerFieldChange()" />
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="grid-column: span 2;">
                   <label>Buyer Phone no</label>
                   <input type="text" id="billCustomerPhone" class="form-control" placeholder="+91 98XXXXXXXX" oninput="erp.handleBuyerFieldChange()" />
                 </div>
-                <div class="form-group">
-                  <label>Place of Supply</label>
+                <div class="form-group" style="grid-column: span 2;">
+                  <label>Place of Supply *</label>
                   <input type="text" id="billPlaceOfSupply" class="form-control" value="Maharashtra (Code: 27)" oninput="erp.renderLiveInvoicePreview()" />
                 </div>
-                <div class="form-group">
-                  <label>Due Date of Invoice</label>
-                  <input type="date" id="billDueDate" class="form-control" onchange="erp.renderLiveInvoicePreview()" />
+                <div class="form-group" style="grid-column: span 2; background: #fef2f2; padding: 8px 10px; border-radius: 6px; border: 1.5px solid #fca5a5;">
+                  <label style="font-weight: 800; color: #991b1b; display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span>📅 Due Date of Invoice (Payment Due Date)</span>
+                    <span style="font-size: 9.5px; font-weight: 600; color: #dc2626;">(Under Place of Supply)</span>
+                  </label>
+                  <input type="date" id="billDueDate" class="form-control" onchange="erp.renderLiveInvoicePreview()" style="font-weight: bold; color: #991b1b; background: #ffffff; border: 1.5px solid #ef4444;" />
                 </div>
               </div>
             </div>
@@ -995,14 +999,23 @@ body {
           </div>
         </div>
 
-        <!-- 3. FULL-WIDTH ITEM BUILDER -->
+        <!-- 3. FULL-WIDTH ITEM BUILDER WITH FAST AUTOCOMPLETE SEARCH -->
         <div style="margin-bottom: 18px;">
+          <!-- ⚡ FAST ITEM SEARCH & AUTO-FILL STRIP -->
+          <div style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border: 1.5px solid #93c5fd; border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+            <div style="font-weight: 800; color: #1e3a8a; font-size: 13px; display: flex; align-items: center; gap: 6px;">
+              <span>📦</span> <span>Fast Item Search & Quick-Fill:</span>
+            </div>
+            <div style="flex: 1; min-width: 250px;">
+              <input type="text" list="catalogDatalist" id="quickItemSearchInp" class="form-control" placeholder="Type keyword (e.g. Helmet, Shoe, Gloves, Jacket) to insert item immediately..." onchange="erp.handleQuickItemSearchSelect(this)" style="font-weight: 700; font-size: 12.5px; background: #ffffff; border: 1.5px solid #3b82f6;" />
+            </div>
+            <button type="button" class="btn btn-blue btn-sm" onclick="erp.openProductPickerModal()" style="font-weight: 800; padding: 6px 12px;">🔍 Catalog Modal</button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="erp.openNewProductModal()" title="Save New Product">➕ New Product</button>
+          </div>
+
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
             <span style="font-size: 11.5px; font-weight: 800; color: var(--pass-navy); text-transform: uppercase;">📦 BILL ITEMS & LINE DETAILS (HSN, QTY, UNIT, RATE, GST)</span>
-            <div style="display: flex; gap: 6px;">
-              <button class="btn btn-outline btn-sm" onclick="erp.openNewProductModal()" title="Save New Product to Library">➕ Save New Product to Library</button>
-              <button class="btn btn-blue btn-sm" onclick="erp.openProductPickerModal()">📦 Pick from Catalog</button>
-            </div>
+            <span style="font-size: 11px; color: #475569;">(Autocomplete enabled in product name column)</span>
           </div>
 
           <div class="table-responsive" style="border: 1px solid var(--line); border-radius: 8px; background: #ffffff;">
@@ -2110,7 +2123,7 @@ class PassInvotorERP {
       document.getElementById('billCustomerGst').value = this.currentInvoice.customer.gst || 'Unregistered';
       document.getElementById('billPlaceOfSupply').value = this.currentInvoice.placeOfSupply || 'Maharashtra (Code: 27)';
       document.getElementById('billInvoiceNo').value = this.currentInvoice.invoiceNo || this.getNextInvoiceNumber();
-      if (document.getElementById('billDueDate')) document.getElementById('billDueDate').value = this.currentInvoice.dueDate || '';
+      if (document.getElementById('billDueDate')) document.getElementById('billDueDate').value = this.currentInvoice.dueDate || new Date().toISOString().split('T')[0];
     }
     this.renderLiveInvoicePreview();
     this.populatePartyDropdowns();
@@ -2552,7 +2565,7 @@ class PassInvotorERP {
       docType: docType,
       invoiceNo: this.getNextInvoiceNumber(docType),
       date: today,
-      dueDate: '',
+      dueDate: today,
       copyOption: 'original_duplicate',
       paymentTerms: 'As Agreed',
       customer: {
@@ -2785,7 +2798,7 @@ class PassInvotorERP {
               <div class="inv-meta-label"><span class="inv-bold">${p.docType === 'DELIVERY CHALLAN' ? 'Challan No:' : 'Invoice No:'}</span> <span style="font-weight: bold; font-size: 11px;">${p.invNo}</span></div>
               <div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">${p.docType === 'DELIVERY CHALLAN' ? 'Challan Date:' : 'Invoice Date:'}</span> ${this.formatDate(p.invDate)}</div>
               <div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">Place of Supply:</span> ${p.pos}</div>
-              ${p.dueDate ? `<div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">Due Date:</span> <span style="font-weight: bold; color: #dc2626;">${this.formatDate(p.dueDate)}</span></div>` : ''}
+              <div class="inv-meta-label" style="margin-top: 2px;"><span class="inv-bold">Due Date:</span> <span style="font-weight: bold; color: #dc2626;">${p.dueDate ? this.formatDate(p.dueDate) : (p.invDate ? this.formatDate(p.invDate) : 'Immediate')}</span></div>
             </td>
             <td colspan="5" style="vertical-align: top; padding: 4px 6px;">
               <div class="inv-meta-label"><span class="inv-bold">PO / Ref No:</span> <span style="font-weight: bold;">${p.poRef || 'NA'}</span></div>
@@ -2978,7 +2991,10 @@ class PassInvotorERP {
       tr.innerHTML = `
         <td style="text-align: center; font-weight: bold; color: var(--pass-navy); vertical-align: top; padding-top: 8px;">${index + 1}</td>
         <td>
-          <input type="text" list="catalogDatalist" class="form-control" value="${item.name || ''}" placeholder="Type or pick safety product..." oninput="erp.handleItemNameInput(${index}, this.value)" style="font-weight: 700; width: 100%; margin-bottom: 4px;" />
+          <div style="display: flex; gap: 4px; margin-bottom: 4px;">
+            <input type="text" list="catalogDatalist" class="form-control" value="${item.name || ''}" placeholder="Type or pick safety product..." oninput="erp.handleItemNameInput(${index}, this.value)" onchange="erp.handleItemNameInput(${index}, this.value)" style="font-weight: 700; width: 100%;" />
+            <button type="button" class="btn btn-outline btn-sm" onclick="erp.openRowProductSelector(${index})" title="Pick from Catalog Modal" style="padding: 2px 7px; font-size: 11px; background: #f8fafc; border-color: #cbd5e1;">📦</button>
+          </div>
           <textarea class="form-control" placeholder="Add description, specifications, size, standard, make..." oninput="erp.updateItemRow(${index}, 'desc', this.value)" style="font-size: 11px; width: 100%; height: 32px; resize: vertical; background: #fafafa; font-family: inherit;">${item.desc || ''}</textarea>
         </td>
         <td style="text-align: center; vertical-align: top; padding-top: 8px;">
@@ -3015,15 +3031,35 @@ class PassInvotorERP {
 
   handleItemNameInput(index, value) {
     this.currentInvoice.items[index].name = value;
-    const match = this.data.stock.find(p => p.name.toLowerCase() === value.trim().toLowerCase() || p.id.toLowerCase() === value.trim().toLowerCase());
+    const v = (value || '').trim().toLowerCase();
+    if (!v) return;
+    const match = this.data.stock.find(p => p.name.toLowerCase() === v || p.id.toLowerCase() === v || (p.name.toLowerCase().includes(v) && v.length >= 3));
     if (match) {
+      this.currentInvoice.items[index].name = match.name;
       this.currentInvoice.items[index].desc = match.desc || match.spec || `${match.brand || ''} ${match.cat || ''}`.trim();
+      this.currentInvoice.items[index].brand = match.brand || 'PASS CORP';
       this.currentInvoice.items[index].hsn = match.hsn || '6506';
       this.currentInvoice.items[index].unit = match.unit || 'Nos.';
       this.currentInvoice.items[index].rate = match.price || match.cost || 0;
       this.renderEditorItems();
     }
     this.renderLiveInvoicePreview();
+  }
+
+  handleQuickItemSearchSelect(inp) {
+    const val = (inp.value || '').trim().toLowerCase();
+    if (!val) return;
+    const match = this.data.stock.find(p => p.name.toLowerCase() === val || p.id.toLowerCase() === val || p.name.toLowerCase().includes(val) || (p.hsn && p.hsn.toLowerCase() === val));
+    if (match) {
+      this.addCatalogItemToBill(match.id);
+      inp.value = '';
+    }
+  }
+
+  openRowProductSelector(index) {
+    this._targetRowIndex = index;
+    this.openModal('productPickerModal');
+    this.filterCatalogPicker();
   }
 
   updateItemRow(index, field, value) {
@@ -3088,20 +3124,36 @@ class PassInvotorERP {
   addCatalogItemToBill(itemId) {
     const p = this.data.stock.find(s => s.id === itemId);
     if (!p) return;
-    this.currentInvoice.items.push({
-      id: p.id,
-      name: p.name,
-      brand: p.brand,
-      hsn: p.hsn,
-      unit: p.unit,
-      qty: 1,
-      rate: p.price,
-      taxable: p.price,
-      gstRate: 0,
-      taxAmt: 0,
-      total: p.price
-    });
+
+    if (this._targetRowIndex !== undefined && this._targetRowIndex >= 0 && this.currentInvoice.items[this._targetRowIndex]) {
+      const idx = this._targetRowIndex;
+      this.currentInvoice.items[idx].id = p.id;
+      this.currentInvoice.items[idx].name = p.name;
+      this.currentInvoice.items[idx].desc = p.desc || p.spec || `${p.brand || ''} ${p.cat || ''}`.trim();
+      this.currentInvoice.items[idx].brand = p.brand;
+      this.currentInvoice.items[idx].hsn = p.hsn;
+      this.currentInvoice.items[idx].unit = p.unit;
+      this.currentInvoice.items[idx].rate = p.price;
+      this.currentInvoice.items[idx].taxable = (this.currentInvoice.items[idx].qty || 1) * p.price;
+      this._targetRowIndex = -1;
+    } else {
+      this.currentInvoice.items.push({
+        id: p.id,
+        name: p.name,
+        desc: p.desc || p.spec || `${p.brand || ''} ${p.cat || ''}`.trim(),
+        brand: p.brand,
+        hsn: p.hsn,
+        unit: p.unit,
+        qty: 1,
+        rate: p.price,
+        taxable: p.price,
+        gstRate: 0,
+        taxAmt: 0,
+        total: p.price
+      });
+    }
     this.closeModal('productPickerModal');
+    this.renderEditorItems();
     this.renderLiveInvoicePreview();
   }
 
