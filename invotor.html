@@ -2069,14 +2069,27 @@ class PassInvotorERP {
         if (cloudData) {
           if (cloudData.data) {
             self.data = cloudData.data;
+            if (self.data.settings) {
+              if (self.data.settings.capital === 500000) self.data.settings.capital = 0;
+              if (self.data.settings.fixedAssets === 150000) self.data.settings.fixedAssets = 0;
+              if (self.data.settings.bankBalance === 350000) self.data.settings.bankBalance = 0;
+            }
             localStorage.setItem(self.storageKey, JSON.stringify(self.data));
           }
           if (cloudData.buyers && Array.isArray(cloudData.buyers)) {
-            self.savedBuyers = cloudData.buyers;
+            self.savedBuyers = cloudData.buyers.filter(b => 
+              b && b.company && 
+              !b.company.includes("ABC Industries") && 
+              !b.company.includes("Tata Motors Vendor Unit") && 
+              !b.company.includes("Kirloskar Oil Engines Partner")
+            );
             localStorage.setItem(self.buyersKey, JSON.stringify(self.savedBuyers));
           }
           if (cloudData.stock && Array.isArray(cloudData.stock)) {
             self.data.stock = cloudData.stock;
+            self.data.stock.forEach(s => {
+              if (s.stock === 100 || s.stock === 120 || s.stock === 150 || s.stock === 65 || s.stock === 90 || s.stock === 300 || s.stock === 40) s.stock = 0;
+            });
             localStorage.setItem(self.catalogKey, JSON.stringify(self.data.stock));
           }
         }
@@ -3824,19 +3837,23 @@ class PassInvotorERP {
       });
     }
 
-    // Calculate Stock Value
+    // Calculate Stock Value (comes ONLY from actual recorded stock/purchases)
     let closingStockVal = 0;
-    const allStock = this.getAllProducts();
-    if (allStock && Array.isArray(allStock)) {
-      allStock.forEach(item => {
-        closingStockVal += ((item.stock || 0) * (item.cost || item.price * 0.75 || 0));
-      });
+    if (this.data && Array.isArray(this.data.purchases) && this.data.purchases.length > 0) {
+      if (this.data.stock && Array.isArray(this.data.stock)) {
+        this.data.stock.forEach(item => {
+          const qty = parseFloat(item.stock) || 0;
+          if (qty > 0) {
+            closingStockVal += (qty * (parseFloat(item.cost) || parseFloat(item.price) * 0.75 || 0));
+          }
+        });
+      }
     }
 
     const openingStockVal = 0;
-    const grossProfit = Math.max(0, (totalSales + closingStockVal) - (openingStockVal + totalPurchases));
+    const grossProfit = (totalSales > 0 || totalPurchases > 0) ? Math.max(0, (totalSales + closingStockVal) - (openingStockVal + totalPurchases)) : 0;
     const totalIndirectExpenses = rent + salaries + misc;
-    const netProfit = grossProfit - totalIndirectExpenses;
+    const netProfit = (totalSales > 0 || totalPurchases > 0 || totalIndirectExpenses > 0) ? (grossProfit - totalIndirectExpenses) : 0;
 
     if (document.getElementById('plOpeningStock')) document.getElementById('plOpeningStock').textContent = `₹${openingStockVal.toFixed(2)}`;
     if (document.getElementById('plPurchases')) document.getElementById('plPurchases').textContent = `₹${totalPurchases.toFixed(2)}`;
@@ -3852,9 +3869,9 @@ class PassInvotorERP {
 
   renderBalanceSheet() {
     const s = this.data.settings || {};
-    const capital = s.capital || 0;
-    const fixedAssets = s.fixedAssets || 0;
-    const bankBal = s.bankBalance || 0;
+    const capital = parseFloat(s.capital) || 0;
+    const fixedAssets = parseFloat(s.fixedAssets) || 0;
+    const bankBal = parseFloat(s.bankBalance) || 0;
 
     let totalSales = 0;
     let totalDebtors = 0;
@@ -3875,18 +3892,23 @@ class PassInvotorERP {
     }
 
     let closingStockVal = 0;
-    const allStock = this.getAllProducts();
-    if (allStock && Array.isArray(allStock)) {
-      allStock.forEach(item => {
-        closingStockVal += ((item.stock || 0) * (item.cost || item.price * 0.75 || 0));
-      });
+    if (this.data && Array.isArray(this.data.purchases) && this.data.purchases.length > 0) {
+      if (this.data.stock && Array.isArray(this.data.stock)) {
+        this.data.stock.forEach(item => {
+          const qty = parseFloat(item.stock) || 0;
+          if (qty > 0) {
+            closingStockVal += (qty * (parseFloat(item.cost) || parseFloat(item.price) * 0.75 || 0));
+          }
+        });
+      }
     }
 
-    const rent = s.expRent !== undefined ? s.expRent : 0;
-    const salaries = s.expSalaries !== undefined ? s.expSalaries : 0;
-    const misc = s.expMisc !== undefined ? s.expMisc : 0;
-    const grossProfit = Math.max(0, (totalSales + closingStockVal) - totalPurchases);
-    const netProfit = grossProfit - (rent + salaries + misc);
+    const rent = parseFloat(s.expRent) || 0;
+    const salaries = parseFloat(s.expSalaries) || 0;
+    const misc = parseFloat(s.expMisc) || 0;
+    const totalIndirectExpenses = rent + salaries + misc;
+    const grossProfit = (totalSales > 0 || totalPurchases > 0) ? Math.max(0, (totalSales + closingStockVal) - totalPurchases) : 0;
+    const netProfit = (totalSales > 0 || totalPurchases > 0 || totalIndirectExpenses > 0) ? (grossProfit - totalIndirectExpenses) : 0;
 
     const totalLiab = capital + netProfit + totalCreditors;
     const totalAssets = fixedAssets + closingStockVal + totalDebtors + bankBal;
@@ -3900,6 +3922,7 @@ class PassInvotorERP {
     if (document.getElementById('bsStockInHand')) document.getElementById('bsStockInHand').textContent = `₹${closingStockVal.toFixed(2)}`;
     if (document.getElementById('bsDebtors')) document.getElementById('bsDebtors').textContent = `₹${totalDebtors.toFixed(2)}`;
     if (document.getElementById('bsBankBalance')) document.getElementById('bsBankBalance').textContent = `₹${bankBal.toFixed(2)}`;
+    if (document.getElementById('bsTotalAssets')) document.getElementById('bsTotalAssets').textContent = `₹${totalAssets.toFixed(2)}`;
     if (document.getElementById('bsTotalAssets')) document.getElementById('bsTotalAssets').textContent = `₹${totalAssets.toFixed(2)}`;
   }
 
