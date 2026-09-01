@@ -2082,32 +2082,47 @@ class PassInvotorERP {
 
     this.currentInvoice.items.forEach((item, index) => {
       const row = document.createElement('div');
-      row.style.cssText = 'background: #ffffff; border: 1px solid var(--line); border-radius: 6px; padding: 8px; margin-bottom: 8px; font-size: 11.5px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);';
+      row.style.cssText = 'background: #ffffff; border: 1px solid var(--line); border-radius: 8px; padding: 10px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);';
       row.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-          <strong style="color: var(--pass-navy); font-size: 11.5px;">${index + 1}. ${item.name}</strong>
-          <button class="btn btn-danger btn-sm" onclick="erp.removeBillItem(${index})" style="padding: 1px 5px; font-size: 10px;">✕</button>
+        <div style="display: flex; gap: 6px; margin-bottom: 8px; align-items: center;">
+          <span style="font-weight: 800; font-size: 11.5px; color: var(--pass-navy); min-width: 18px;">${index + 1}.</span>
+          <input type="text" class="form-control" value="${item.name}" placeholder="Item Description" oninput="erp.updateItemRow(${index}, 'name', this.value)" style="flex: 1; font-weight: 700; font-size: 12.5px; padding: 5px 8px;" />
+          <button class="btn btn-danger btn-sm" onclick="erp.removeBillItem(${index})" title="Remove item" style="padding: 4px 8px; font-size: 11px;">🗑️</button>
         </div>
-        <div style="display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr 1fr; gap: 4px; align-items: end;">
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 6px;">
           <div>
-            <label style="font-size: 9px; font-weight: 800; color: #1e40af; display: block;">HSN CODE</label>
-            <input type="text" class="form-control" style="padding: 3px 5px; font-size: 11px; font-weight: bold;" value="${item.hsn || '6506'}" oninput="erp.updateItemRow(${index}, 'hsn', this.value)" />
+            <label style="font-size: 9.5px; font-weight: 800; color: #1e40af; display: block; margin-bottom: 2px;">HSN / SAC</label>
+            <input type="text" class="form-control" value="${item.hsn || '6506'}" placeholder="HSN" oninput="erp.updateItemRow(${index}, 'hsn', this.value)" style="font-weight: bold; font-family: monospace; padding: 4px 6px; font-size: 11.5px;" />
           </div>
           <div>
-            <label style="font-size: 9px; color: var(--ink-muted); display: block;">QTY</label>
-            <input type="number" class="form-control" style="padding: 3px 5px; font-size: 11px;" value="${item.qty}" min="1" oninput="erp.updateItemRow(${index}, 'qty', this.value)" />
+            <label style="font-size: 9.5px; font-weight: 700; color: var(--ink-muted); display: block; margin-bottom: 2px;">QTY</label>
+            <input type="number" class="form-control" value="${item.qty}" min="1" oninput="erp.updateItemRow(${index}, 'qty', this.value)" style="font-weight: bold; padding: 4px 6px; font-size: 11.5px;" />
           </div>
           <div>
-            <label style="font-size: 9px; color: var(--ink-muted); display: block;">RATE (₹)</label>
-            <input type="number" class="form-control" style="padding: 3px 5px; font-size: 11px;" value="${item.rate}" min="0" oninput="erp.updateItemRow(${index}, 'rate', this.value)" />
+            <label style="font-size: 9.5px; font-weight: 700; color: var(--ink-muted); display: block; margin-bottom: 2px;">UNIT</label>
+            <input type="text" class="form-control" value="${item.unit || 'Nos.'}" placeholder="Nos./Pairs" oninput="erp.updateItemRow(${index}, 'unit', this.value)" style="padding: 4px 6px; font-size: 11.5px;" />
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1.1fr 1fr 1.1fr; gap: 6px; align-items: center; background: #f8fafc; padding: 6px 8px; border-radius: 6px; border: 1px solid var(--line);">
+          <div>
+            <label style="font-size: 9.5px; font-weight: 700; color: var(--ink-muted); display: block; margin-bottom: 2px;">RATE (₹)</label>
+            <input type="number" class="form-control" value="${item.rate}" min="0" oninput="erp.updateItemRow(${index}, 'rate', this.value)" style="font-weight: bold; padding: 4px 6px; font-size: 11.5px;" />
           </div>
           <div>
-            <label style="font-size: 9px; color: var(--ink-muted); display: block;">UNIT</label>
-            <input type="text" class="form-control" style="padding: 3px 5px; font-size: 11px;" value="${item.unit}" oninput="erp.updateItemRow(${index}, 'unit', this.value)" />
+            <label style="font-size: 9.5px; font-weight: 700; color: var(--ink-muted); display: block; margin-bottom: 2px;">GST %</label>
+            <select class="form-control" onchange="erp.updateItemRow(${index}, 'gstRate', this.value)" style="padding: 4px 4px; font-size: 11.5px; font-weight: 600;">
+              <option value="0" ${item.gstRate == 0 ? 'selected' : ''}>0%</option>
+              <option value="5" ${item.gstRate == 5 ? 'selected' : ''}>5%</option>
+              <option value="12" ${item.gstRate == 12 ? 'selected' : ''}>12%</option>
+              <option value="18" ${item.gstRate == 18 || !item.gstRate ? 'selected' : ''}>18%</option>
+              <option value="28" ${item.gstRate == 28 ? 'selected' : ''}>28%</option>
+            </select>
           </div>
-          <div>
-            <label style="font-size: 9px; color: var(--ink-muted); display: block;">TOTAL</label>
-            <div style="font-weight: 800; padding: 4px 0; font-family: 'IBM Plex Mono', monospace; font-size: 11px;">₹${(item.qty * item.rate).toFixed(2)}</div>
+          <div style="text-align: right;">
+            <label style="font-size: 9.5px; font-weight: 700; color: var(--ink-muted); display: block; margin-bottom: 2px;">TOTAL</label>
+            <div style="font-size: 12.5px; font-weight: 900; color: var(--pass-navy); font-family: 'IBM Plex Mono', monospace;">₹${(item.qty * item.rate).toFixed(2)}</div>
           </div>
         </div>
       `;
@@ -2116,10 +2131,12 @@ class PassInvotorERP {
   }
 
   updateItemRow(index, field, value) {
+    if (field === 'name') this.currentInvoice.items[index].name = value;
     if (field === 'qty') this.currentInvoice.items[index].qty = Math.max(1, parseFloat(value) || 1);
     if (field === 'rate') this.currentInvoice.items[index].rate = Math.max(0, parseFloat(value) || 0);
     if (field === 'unit') this.currentInvoice.items[index].unit = value;
     if (field === 'hsn') this.currentInvoice.items[index].hsn = value;
+    if (field === 'gstRate') this.currentInvoice.items[index].gstRate = parseFloat(value) || 0;
     this.renderLiveInvoicePreview();
   }
 
