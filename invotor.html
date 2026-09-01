@@ -103,11 +103,6 @@ body {
   font-size: 11px;
   border: 1px solid #bfdbfe;
 }
-.gst-badge.registered {
-  background: #ecfdf5;
-  color: #065f46;
-  border-color: #a7f3d0;
-}
 
 /* HEADER NAVIGATION */
 .app-header {
@@ -273,7 +268,7 @@ body {
 /* FORM ELEMENTS */
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 10px;
 }
 .form-group {
@@ -282,7 +277,7 @@ body {
   gap: 3px;
 }
 .form-group label {
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 700;
   color: var(--ink-muted);
   text-transform: uppercase;
@@ -291,7 +286,7 @@ body {
   padding: 7px 10px;
   border-radius: 6px;
   border: 1px solid var(--line-dark);
-  font-size: 12.5px;
+  font-size: 12px;
   font-family: inherit;
   outline: none;
   background: #ffffff;
@@ -344,7 +339,7 @@ body {
 .tag-unpaid { background: #fef2f2; color: #991b1b; }
 .tag-blue { background: #eff6ff; color: #1e40af; }
 
-/* BILLING / INVOICE EDITOR SPLIT (Compact Left Editor, Expanded Right Preview) */
+/* BILLING SPLIT (360px Sidebar / Expanded Right Preview) */
 .billing-split {
   display: grid;
   grid-template-columns: 360px 1fr;
@@ -586,7 +581,7 @@ body {
   </div>
 </div>
 
-<!-- HEADER (WHITE PASS CORP THEME) -->
+<!-- HEADER -->
 <header class="app-header no-print">
   <div class="brand-lockup">
     <img src="https://passcorp.in/assets/logo.png" alt="PASS CORP." class="brand-logo" onerror="this.src='stamp.png'" />
@@ -597,14 +592,14 @@ body {
   </div>
 
   <div class="header-actions-bar">
+    <button class="key-btn" onclick="erp.openCompanyProfileModal()">🏢 Edit Company Details</button>
+    <button class="key-btn" onclick="erp.openNewProductModal()">➕ Add Product</button>
     <button class="key-btn" onclick="erp.switchTab('billing')"><kbd>F8</kbd> Sales Bill</button>
     <button class="key-btn" onclick="erp.switchTab('purchases')"><kbd>F9</kbd> Purchase</button>
     <button class="key-btn" onclick="erp.openVoucherModal('RECEIPT')"><kbd>F6</kbd> Receipt</button>
     <button class="key-btn" onclick="erp.openVoucherModal('PAYMENT')"><kbd>F5</kbd> Payment</button>
     <button class="key-btn" onclick="erp.switchTab('stock')"><kbd>F3</kbd> Stock</button>
     <button class="key-btn" onclick="erp.switchTab('ledgers')"><kbd>Alt+L</kbd> Ledgers</button>
-    <button class="key-btn" onclick="erp.switchTab('pl')"><kbd>Alt+P</kbd> P&L</button>
-    <button class="key-btn" onclick="erp.switchTab('bs')"><kbd>Alt+B</kbd> Balance Sheet</button>
   </div>
 </header>
 
@@ -645,7 +640,7 @@ body {
 <!-- MAIN APP BODY -->
 <main class="main-wrapper">
 
-  <!-- 1. BILLING / SALES INVOICE GENERATOR (DEFAULT ACTIVE TAB) -->
+  <!-- 1. BILLING / SALES INVOICE GENERATOR -->
   <section id="billingView" class="erp-view active">
     <div class="billing-split">
       
@@ -654,14 +649,15 @@ body {
         <div class="card">
           <div class="card-header">
             <span>🧾 Create Invoice / Bill of Supply</span>
-            <div style="display: flex; gap: 6px;">
+            <div style="display: flex; gap: 5px;">
+              <button class="btn btn-outline btn-sm" onclick="erp.openCompanyProfileModal()" title="Edit Company & Bank Details">🏢 Company</button>
               <button class="btn btn-outline btn-sm" onclick="erp.newInvoice()">+ Reset</button>
               <button class="btn btn-blue btn-sm" onclick="erp.saveInvoice()">💾 Save Bill</button>
             </div>
           </div>
-          <div class="card-body" style="padding: 14px;">
+          <div class="card-body" style="padding: 12px;">
             
-            <div class="form-grid" style="margin-bottom: 12px;">
+            <div class="form-grid" style="margin-bottom: 10px;">
               <div class="form-group" style="grid-column: span 2;">
                 <label>Document Title</label>
                 <select id="billDocType" class="form-control" onchange="erp.renderLiveInvoicePreview()">
@@ -673,7 +669,7 @@ body {
               </div>
               <div class="form-group">
                 <label>Invoice Number</label>
-                <input type="text" id="billInvoiceNo" class="form-control" oninput="erp.renderLiveInvoicePreview()" />
+                <input type="text" id="billInvoiceNo" class="form-control" oninput="erp.handleInvoiceNoInput(this.value)" />
               </div>
               <div class="form-group">
                 <label>Invoice Date</label>
@@ -705,9 +701,9 @@ body {
             </div>
 
             <!-- BUYER DETAILS (WITH AUTO-SAVE & AUTO-SUGGEST) -->
-            <div style="border-top: 1px solid var(--line); padding-top: 10px; margin-bottom: 12px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                <label style="font-size: 10.5px; font-weight: 800; color: var(--pass-navy);">👤 BILLED TO (RECEIVER) & DISPATCH</label>
+            <div style="border-top: 1px solid var(--line); padding-top: 10px; margin-bottom: 10px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <label style="font-size: 10px; font-weight: 800; color: var(--pass-navy);">👤 BILLED TO (RECEIVER) & DISPATCH</label>
               </div>
               <div class="form-grid">
                 <div class="form-group" style="grid-column: span 2;">
@@ -724,7 +720,7 @@ body {
                   <input type="text" id="billCustomerGst" class="form-control" placeholder="Unregistered / 27XXXX" oninput="erp.handleBuyerFieldChange()" />
                 </div>
                 <div class="form-group">
-                  <label>Buyer Mobile / Phone</label>
+                  <label>Buyer Phone</label>
                   <input type="text" id="billCustomerPhone" class="form-control" placeholder="+91 98XXXXXXXX" oninput="erp.handleBuyerFieldChange()" />
                 </div>
                 <div class="form-group">
@@ -746,11 +742,14 @@ body {
               </div>
             </div>
 
-            <!-- ITEMS WITH DEDICATED HSN CODE INPUT -->
-            <div style="border-top: 1px solid var(--line); padding-top: 10px; margin-bottom: 12px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <label style="font-size: 10.5px; font-weight: 800; color: var(--pass-navy);">📦 BILL ITEMS</label>
-                <button class="btn btn-blue btn-sm" onclick="erp.openProductPickerModal()">+ Pick Catalog Item</button>
+            <!-- ITEMS WITH CLEAR HSN CODE FIELD & PRODUCT SAVE OPTION -->
+            <div style="border-top: 1px solid var(--line); padding-top: 10px; margin-bottom: 10px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <label style="font-size: 10px; font-weight: 800; color: var(--pass-navy);">📦 BILL ITEMS (WITH HSN)</label>
+                <div style="display: flex; gap: 4px;">
+                  <button class="btn btn-outline btn-sm" onclick="erp.openNewProductModal()" title="Save New Product to Library">+ New Product</button>
+                  <button class="btn btn-blue btn-sm" onclick="erp.openProductPickerModal()">+ Pick Catalog</button>
+                </div>
               </div>
 
               <div id="billItemsContainer"></div>
@@ -785,7 +784,7 @@ body {
             </div>
 
             <!-- ACTIONS -->
-            <div style="margin-top: 14px; display: flex; gap: 8px;">
+            <div style="margin-top: 12px; display: flex; gap: 6px;">
               <button class="btn btn-primary" style="flex: 1;" onclick="window.print()">🖨️ Print / Save PDF</button>
               <button class="btn btn-success" style="flex: 1;" onclick="erp.shareWhatsAppBill()">📲 WhatsApp Bill</button>
             </div>
@@ -822,7 +821,7 @@ body {
       </div>
       <div class="card" style="padding: 16px; margin: 0;">
         <div style="font-size: 11px; font-weight: 700; color: var(--ink-muted); text-transform: uppercase;">Payables (Creditors)</div>
-        <div style="font-size: 22px; font-weight: 900; font-family: 'IBM Plex Mono', monospace; margin: 4px 0;" id="kpiPayables">₹0.00</div>
+        <div style="font-size: 22px; font-weight: 900; font-family: 'IBM Plex Mono', monospace; margin: 4px 0; color: #d97706;" id="kpiPayables">₹0.00</div>
         <div style="font-size: 11px; color: var(--ink-muted);">Vendor Bills to Settle</div>
       </div>
     </div>
@@ -887,10 +886,10 @@ body {
   <section id="stockView" class="erp-view">
     <div class="card">
       <div class="card-header">
-        <span>📦 Stock Summary & Inventory Register</span>
+        <span>📦 Stock Summary & Master Catalog</span>
         <div style="display: flex; gap: 8px;">
-          <input type="text" id="stockSearchInput" class="form-control" style="width: 220px; padding: 4px 8px; font-size: 12px;" placeholder="Search item, brand, SKU..." oninput="erp.renderStockTable()" />
-          <button class="btn btn-blue btn-sm" onclick="erp.openNewStockItemModal()">+ Add Item</button>
+          <input type="text" id="stockSearchInput" class="form-control" style="width: 220px; padding: 4px 8px; font-size: 12px;" placeholder="Search item, HSN, SKU..." oninput="erp.renderStockTable()" />
+          <button class="btn btn-blue btn-sm" onclick="erp.openNewProductModal()">+ Add New Product</button>
         </div>
       </div>
       <div class="card-body" style="padding: 0;">
@@ -900,6 +899,7 @@ body {
               <tr>
                 <th>SKU / Code</th>
                 <th>Item Description</th>
+                <th>HSN Code</th>
                 <th>Brand</th>
                 <th>Category</th>
                 <th>Unit</th>
@@ -962,7 +962,7 @@ body {
   <section id="recvPayView" class="erp-view">
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
       <div class="card">
-        <div class="card-header">
+        <div class="card-header" style="background: #eff6ff; color: #1e40af;">
           <span>📥 Receivables (Pending Customer Bills)</span>
           <span style="font-weight: 800;" id="totalRecvHeader">₹0.00</span>
         </div>
@@ -985,7 +985,7 @@ body {
       </div>
 
       <div class="card">
-        <div class="card-header">
+        <div class="card-header" style="background: #fef2f2; color: #991b1b;">
           <span>📤 Payables (Pending Supplier Bills)</span>
           <span style="font-weight: 800;" id="totalPayHeader">₹0.00</span>
         </div>
@@ -1106,6 +1106,7 @@ body {
     <div class="card" style="max-width: 800px; margin: 0 auto;">
       <div class="card-header">
         <span>⚙️ PASS CORP. Company & GST Setup</span>
+        <button class="btn btn-blue btn-sm" onclick="erp.saveSettingsFromForm()">💾 Save Permanent Setup</button>
       </div>
       <div class="card-body">
         <div class="form-grid">
@@ -1131,7 +1132,7 @@ body {
           </div>
           <div class="form-group">
             <label>GSTIN</label>
-            <input type="text" id="cfgGstin" class="form-control" value="Unregistered" />
+            <input type="text" id="cfgGstin" class="form-control" value="Unregistered (Non-GST Bill of Supply)" />
           </div>
           <div class="form-group">
             <label>PAN</label>
@@ -1163,7 +1164,7 @@ body {
           </div>
         </div>
         <div style="margin-top: 18px; text-align: right;">
-          <button class="btn btn-blue" onclick="erp.saveSettings()">💾 Save Settings</button>
+          <button class="btn btn-blue" onclick="erp.saveSettingsFromForm()">💾 Save Permanent Setup</button>
         </div>
       </div>
     </div>
@@ -1171,15 +1172,157 @@ body {
 
 </main>
 
-<!-- PRODUCT PICKER MODAL -->
+<!-- MODAL 1: COMPANY DETAILS EDITOR -->
+<div class="modal-backdrop" id="companyModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span>🏢 Edit PASS CORP. Company & Bank Details</span>
+      <button class="btn btn-danger btn-sm" onclick="erp.closeModal('companyModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group" style="grid-column: span 2;">
+          <label>Company Legal Name</label>
+          <input type="text" id="mCompName" class="form-control" />
+        </div>
+        <div class="form-group" style="grid-column: span 2;">
+          <label>Tagline (In Red)</label>
+          <input type="text" id="mCompTagline" class="form-control" />
+        </div>
+        <div class="form-group" style="grid-column: span 2;">
+          <label>Office Address</label>
+          <input type="text" id="mCompAddress" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label>Mobile Number</label>
+          <input type="text" id="mCompPhone" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="text" id="mCompEmail" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label>GSTIN / Tax Status</label>
+          <input type="text" id="mCompGstin" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label>PAN Number</label>
+          <input type="text" id="mCompPan" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label>Bank Name</label>
+          <input type="text" id="mBankName" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label>Bank A/c Number</label>
+          <input type="text" id="mAccountNo" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label>IFSC Code</label>
+          <input type="text" id="mIfsc" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label>Branch</label>
+          <input type="text" id="mBranch" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label>Invoice Prefix</label>
+          <input type="text" id="mPrefix" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label>Next Invoice Serial No.</label>
+          <input type="number" id="mNextNo" class="form-control" />
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="erp.closeModal('companyModal')">Cancel</button>
+      <button class="btn btn-blue" onclick="erp.saveCompanyModalDetails()">💾 Save & Update Invoice</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 2: ADD NEW PRODUCT TO CATALOG -->
+<div class="modal-backdrop" id="newProductModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span>➕ Save New Product to Master Catalog</span>
+      <button class="btn btn-danger btn-sm" onclick="erp.closeModal('newProductModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group" style="grid-column: span 2;">
+          <label>Product Name / Description</label>
+          <input type="text" id="npName" class="form-control" placeholder="e.g. Safety Helmet Karam PN 521 (Vented)" />
+        </div>
+        <div class="form-group">
+          <label>HSN / SAC Code</label>
+          <input type="text" id="npHsn" class="form-control" value="6506" placeholder="e.g. 6506 / 6403" />
+        </div>
+        <div class="form-group">
+          <label>Unit of Measure</label>
+          <select id="npUnit" class="form-control">
+            <option value="Nos.">Nos.</option>
+            <option value="Pairs">Pairs</option>
+            <option value="Sets">Sets</option>
+            <option value="Kg">Kg</option>
+            <option value="Sq.Ft">Sq.Ft</option>
+            <option value="R.Ft">R.Ft</option>
+            <option value="Lot">Lot</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Selling Rate (₹)</label>
+          <input type="number" id="npPrice" class="form-control" value="250" min="0" />
+        </div>
+        <div class="form-group">
+          <label>Purchase Cost (₹)</label>
+          <input type="number" id="npCost" class="form-control" value="180" min="0" />
+        </div>
+        <div class="form-group">
+          <label>Brand / Manufacturer</label>
+          <input type="text" id="npBrand" class="form-control" value="PASS CORP" />
+        </div>
+        <div class="form-group">
+          <label>Category</label>
+          <select id="npCat" class="form-control">
+            <option value="Industrial Safety">Industrial Safety</option>
+            <option value="Head Protection">Head Protection</option>
+            <option value="Foot Protection">Foot Protection</option>
+            <option value="Hand Protection">Hand Protection</option>
+            <option value="Fall Protection">Fall Protection</option>
+            <option value="Body Protection">Body Protection</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Opening Stock Qty</label>
+          <input type="number" id="npStock" class="form-control" value="50" min="0" />
+        </div>
+        <div class="form-group">
+          <label>Min Stock Alert Level</label>
+          <input type="number" id="npMinAlert" class="form-control" value="10" min="1" />
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="erp.closeModal('newProductModal')">Cancel</button>
+      <button class="btn btn-blue" onclick="erp.saveNewProductToCatalog()">💾 Save Product & Add to Bill</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 3: PRODUCT PICKER MODAL -->
 <div class="modal-backdrop" id="productPickerModal">
   <div class="modal-box" style="max-width: 750px;">
     <div class="modal-header">
       <span>Pick Item from Master Catalog</span>
-      <button class="btn btn-danger btn-sm" onclick="erp.closeModal('productPickerModal')">✕</button>
+      <div style="display: flex; gap: 6px;">
+        <button class="btn btn-outline btn-sm" style="background:#fff; color:#0c2340;" onclick="erp.openNewProductModal()">+ Save New Product</button>
+        <button class="btn btn-danger btn-sm" onclick="erp.closeModal('productPickerModal')">✕</button>
+      </div>
     </div>
     <div class="modal-body" style="padding: 14px;">
-      <input type="text" id="catalogSearch" class="form-control" placeholder="Search safety items..." style="margin-bottom: 12px;" oninput="erp.filterCatalogPicker()" />
+      <input type="text" id="catalogSearch" class="form-control" placeholder="Search safety items by name, HSN code, or brand..." style="margin-bottom: 12px;" oninput="erp.filterCatalogPicker()" />
       <div style="max-height: 400px; overflow-y: auto;">
         <table class="data-table">
           <thead>
@@ -1199,7 +1342,7 @@ body {
   </div>
 </div>
 
-<!-- VOUCHER MODAL -->
+<!-- MODAL 4: VOUCHER MODAL -->
 <div class="modal-backdrop" id="voucherModal">
   <div class="modal-box">
     <div class="modal-header">
@@ -1235,14 +1378,16 @@ const INITIAL_SAFETY_CATALOG = [
 
 class PassInvotorERP {
   constructor() {
-    this.storageKey = "PASS_CORP_INVOTOR_V3";
-    this.buyersKey = "PASS_BUYERS_DB_V1";
+    this.storageKey = "PASS_CORP_INVOTOR_V4";
+    this.buyersKey = "PASS_BUYERS_DB_V2";
+    this.catalogKey = "PASS_CATALOG_DB_V2";
     this.loadState();
     this.currentInvoice = this.createEmptyInvoice();
     this.initUI();
   }
 
   loadState() {
+    // 1. App State & Settings
     const raw = localStorage.getItem(this.storageKey);
     if (raw) {
       try { this.data = JSON.parse(raw); } catch (e) { this.data = this.getDefaultState(); }
@@ -1250,16 +1395,30 @@ class PassInvotorERP {
       this.data = this.getDefaultState();
     }
 
+    // 2. Persistent Catalog
+    const rawCatalog = localStorage.getItem(this.catalogKey);
+    if (rawCatalog) {
+      try { this.data.stock = JSON.parse(rawCatalog); } catch(e) {}
+    } else {
+      this.saveCatalog();
+    }
+
+    // 3. Persistent Buyers
     const rawBuyers = localStorage.getItem(this.buyersKey);
     if (rawBuyers) {
       try { this.savedBuyers = JSON.parse(rawBuyers); } catch (e) { this.savedBuyers = this.getDefaultBuyers(); }
     } else {
       this.savedBuyers = this.getDefaultBuyers();
+      this.saveBuyers();
     }
   }
 
   saveState() {
     localStorage.setItem(this.storageKey, JSON.stringify(this.data));
+  }
+
+  saveCatalog() {
+    localStorage.setItem(this.catalogKey, JSON.stringify(this.data.stock));
   }
 
   saveBuyers() {
@@ -1312,6 +1471,7 @@ class PassInvotorERP {
     this.renderBuyersDatalist();
     this.renderLiveInvoicePreview();
     this.populatePartyDropdowns();
+    this.syncSettingsFields();
   }
 
   updateClock() {
@@ -1319,6 +1479,118 @@ class PassInvotorERP {
     const str = d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
     const clockEl = document.getElementById('liveClock');
     if (clockEl) clockEl.textContent = str;
+  }
+
+  syncSettingsFields() {
+    const s = this.data.settings;
+    if (document.getElementById('cfgCompName')) document.getElementById('cfgCompName').value = s.compName;
+    if (document.getElementById('cfgCompTagline')) document.getElementById('cfgCompTagline').value = s.compTagline;
+    if (document.getElementById('cfgAddress')) document.getElementById('cfgAddress').value = s.address;
+    if (document.getElementById('cfgMobile')) document.getElementById('cfgMobile').value = s.phone;
+    if (document.getElementById('cfgEmail')) document.getElementById('cfgEmail').value = s.email;
+    if (document.getElementById('cfgGstin')) document.getElementById('cfgGstin').value = s.gstin;
+    if (document.getElementById('cfgPan')) document.getElementById('cfgPan').value = s.pan;
+    if (document.getElementById('cfgBankName')) document.getElementById('cfgBankName').value = s.bankName;
+    if (document.getElementById('cfgAccountNo')) document.getElementById('cfgAccountNo').value = s.accountNo;
+    if (document.getElementById('cfgIfsc')) document.getElementById('cfgIfsc').value = s.ifsc;
+    if (document.getElementById('cfgBranch')) document.getElementById('cfgBranch').value = s.branch;
+    if (document.getElementById('cfgPrefix')) document.getElementById('cfgPrefix').value = s.invoicePrefix;
+    if (document.getElementById('cfgNextNo')) document.getElementById('cfgNextNo').value = s.nextInvoiceNo;
+  }
+
+  openCompanyProfileModal() {
+    const s = this.data.settings;
+    document.getElementById('mCompName').value = s.compName;
+    document.getElementById('mCompTagline').value = s.compTagline;
+    document.getElementById('mCompAddress').value = s.address;
+    document.getElementById('mCompPhone').value = s.phone;
+    document.getElementById('mCompEmail').value = s.email;
+    document.getElementById('mCompGstin').value = s.gstin;
+    document.getElementById('mCompPan').value = s.pan;
+    document.getElementById('mBankName').value = s.bankName;
+    document.getElementById('mAccountNo').value = s.accountNo;
+    document.getElementById('mIfsc').value = s.ifsc;
+    document.getElementById('mBranch').value = s.branch;
+    document.getElementById('mPrefix').value = s.invoicePrefix;
+    document.getElementById('mNextNo').value = s.nextInvoiceNo;
+    this.openModal('companyModal');
+  }
+
+  saveCompanyModalDetails() {
+    const s = this.data.settings;
+    s.compName = document.getElementById('mCompName').value.trim() || "PASS CORP.";
+    s.compTagline = document.getElementById('mCompTagline').value.trim() || "PRECISION | ASSURANCE | SAFETY | SOLUTION";
+    s.address = document.getElementById('mCompAddress').value.trim();
+    s.phone = document.getElementById('mCompPhone').value.trim();
+    s.email = document.getElementById('mCompEmail').value.trim();
+    s.gstin = document.getElementById('mCompGstin').value.trim();
+    s.pan = document.getElementById('mCompPan').value.trim();
+    s.bankName = document.getElementById('mBankName').value.trim();
+    s.accountNo = document.getElementById('mAccountNo').value.trim();
+    s.ifsc = document.getElementById('mIfsc').value.trim();
+    s.branch = document.getElementById('mBranch').value.trim();
+    s.invoicePrefix = document.getElementById('mPrefix').value.trim() || "PS/2026-27/";
+    s.nextInvoiceNo = parseInt(document.getElementById('mNextNo').value) || 1;
+
+    this.saveState();
+    this.syncSettingsFields();
+    this.closeModal('companyModal');
+    this.renderLiveInvoicePreview();
+    alert('✅ Company & Bank Details saved permanently to system!');
+  }
+
+  openNewProductModal() {
+    document.getElementById('npName').value = '';
+    document.getElementById('npHsn').value = '6506';
+    document.getElementById('npPrice').value = '250';
+    document.getElementById('npCost').value = '180';
+    document.getElementById('npBrand').value = 'PASS CORP';
+    document.getElementById('npStock').value = '50';
+    this.openModal('newProductModal');
+  }
+
+  saveNewProductToCatalog() {
+    const name = document.getElementById('npName').value.trim();
+    if (!name) return alert('Please enter product description');
+
+    const hsn = document.getElementById('npHsn').value.trim() || '6506';
+    const unit = document.getElementById('npUnit').value;
+    const price = parseFloat(document.getElementById('npPrice').value) || 0;
+    const cost = parseFloat(document.getElementById('npCost').value) || 0;
+    const brand = document.getElementById('npBrand').value.trim() || 'PASS CORP';
+    const cat = document.getElementById('npCat').value;
+    const stock = parseFloat(document.getElementById('npStock').value) || 0;
+    const minAlert = parseFloat(document.getElementById('npMinAlert').value) || 10;
+
+    const newProd = {
+      id: 'prod_' + Date.now().toString().slice(-6),
+      name, hsn, unit, price, cost, brand, cat, stock, minAlert
+    };
+
+    this.data.stock.unshift(newProd);
+    this.saveCatalog();
+    this.saveState();
+
+    // Also add to current bill
+    this.currentInvoice.items.push({
+      id: newProd.id,
+      name: newProd.name,
+      brand: newProd.brand,
+      hsn: newProd.hsn,
+      unit: newProd.unit,
+      qty: 1,
+      rate: newProd.price,
+      taxable: newProd.price,
+      gstRate: 0,
+      taxAmt: 0,
+      total: newProd.price
+    });
+
+    this.closeModal('newProductModal');
+    this.closeModal('productPickerModal');
+    this.renderLiveInvoicePreview();
+    this.renderStockTable();
+    alert(`✅ Product "${newProd.name}" saved to Master Catalog and added to Bill!`);
   }
 
   renderBuyersDatalist() {
@@ -1376,6 +1648,11 @@ class PassInvotorERP {
     this.renderLiveInvoicePreview();
   }
 
+  handleInvoiceNoInput(val) {
+    this.currentInvoice.invoiceNo = val;
+    this.renderLiveInvoicePreview();
+  }
+
   switchTab(tabId) {
     document.querySelectorAll('.erp-view').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
@@ -1427,13 +1704,16 @@ class PassInvotorERP {
   }
 
   newInvoice() {
+    const num = String(this.data.settings.nextInvoiceNo).padStart(3, '0');
     this.currentInvoice = this.createEmptyInvoice();
+    this.currentInvoice.invoiceNo = `${this.data.settings.invoicePrefix}${num}`;
+    if (document.getElementById('billInvoiceNo')) {
+      document.getElementById('billInvoiceNo').value = this.currentInvoice.invoiceNo;
+    }
     this.renderLiveInvoicePreview();
   }
 
-  /* ==========================================================================
-     MULTI-COPY A4 HTML GENERATOR & LIVE RENDERER
-     ========================================================================== */
+  /* MULTI-COPY LIVE PREVIEW */
   renderLiveInvoicePreview() {
     const s = this.data.settings;
     const docType = document.getElementById('billDocType') ? document.getElementById('billDocType').value : this.currentInvoice.docType;
@@ -1464,7 +1744,6 @@ class PassInvotorERP {
     if (document.getElementById('billTransport')) document.getElementById('billTransport').value = transport;
     if (document.getElementById('billPlaceOfSupply')) document.getElementById('billPlaceOfSupply').value = pos;
 
-    // Determine copies to generate
     let copyBadges = [];
     if (copyOption === 'original') copyBadges = ['Original for Recipient'];
     else if (copyOption === 'duplicate') copyBadges = ['Duplicate for Transporter'];
@@ -1526,7 +1805,7 @@ class PassInvotorERP {
         <tr class="inv-tally-item-row">
           <td class="text-center">${idx + 1}</td>
           <td class="text-left" style="font-weight: 600;">${item.name}</td>
-          <td class="text-center">${item.hsn || '6506'}</td>
+          <td class="text-center" style="font-weight: bold;">${item.hsn || '6506'}</td>
           <td class="text-right" style="font-weight: bold;">${item.qty}</td>
           <td class="text-center">${item.unit}</td>
           <td class="text-right">${item.rate.toFixed(2)}</td>
@@ -1538,14 +1817,12 @@ class PassInvotorERP {
       `;
     });
 
-    // Filler row
     itemsRowsHtml += `
       <tr class="inv-tally-filler-row">
         <td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
       </tr>
     `;
 
-    // GST analysis rows
     let gstSummaryRowsHtml = '';
     Object.keys(hsnMap).forEach(hsn => {
       const g = hsnMap[hsn];
@@ -1808,28 +2085,28 @@ class PassInvotorERP {
       row.style.cssText = 'background: #ffffff; border: 1px solid var(--line); border-radius: 6px; padding: 8px; margin-bottom: 8px; font-size: 11.5px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);';
       row.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-          <strong style="color: var(--pass-navy);">${index + 1}. ${item.name}</strong>
+          <strong style="color: var(--pass-navy); font-size: 11.5px;">${index + 1}. ${item.name}</strong>
           <button class="btn btn-danger btn-sm" onclick="erp.removeBillItem(${index})" style="padding: 1px 5px; font-size: 10px;">✕</button>
         </div>
-        <div style="display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr 1fr; gap: 5px; align-items: end;">
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr 1fr; gap: 4px; align-items: end;">
           <div>
-            <label style="font-size: 9.5px; color: var(--ink-muted); display: block;">HSN Code</label>
-            <input type="text" class="form-control" style="padding: 3px 5px; font-size: 11px;" value="${item.hsn || '6506'}" oninput="erp.updateItemRow(${index}, 'hsn', this.value)" />
+            <label style="font-size: 9px; font-weight: 800; color: #1e40af; display: block;">HSN CODE</label>
+            <input type="text" class="form-control" style="padding: 3px 5px; font-size: 11px; font-weight: bold;" value="${item.hsn || '6506'}" oninput="erp.updateItemRow(${index}, 'hsn', this.value)" />
           </div>
           <div>
-            <label style="font-size: 9.5px; color: var(--ink-muted); display: block;">Qty</label>
+            <label style="font-size: 9px; color: var(--ink-muted); display: block;">QTY</label>
             <input type="number" class="form-control" style="padding: 3px 5px; font-size: 11px;" value="${item.qty}" min="1" oninput="erp.updateItemRow(${index}, 'qty', this.value)" />
           </div>
           <div>
-            <label style="font-size: 9.5px; color: var(--ink-muted); display: block;">Rate (₹)</label>
+            <label style="font-size: 9px; color: var(--ink-muted); display: block;">RATE (₹)</label>
             <input type="number" class="form-control" style="padding: 3px 5px; font-size: 11px;" value="${item.rate}" min="0" oninput="erp.updateItemRow(${index}, 'rate', this.value)" />
           </div>
           <div>
-            <label style="font-size: 9.5px; color: var(--ink-muted); display: block;">Unit</label>
+            <label style="font-size: 9px; color: var(--ink-muted); display: block;">UNIT</label>
             <input type="text" class="form-control" style="padding: 3px 5px; font-size: 11px;" value="${item.unit}" oninput="erp.updateItemRow(${index}, 'unit', this.value)" />
           </div>
           <div>
-            <label style="font-size: 9.5px; color: var(--ink-muted); display: block;">Total</label>
+            <label style="font-size: 9px; color: var(--ink-muted); display: block;">TOTAL</label>
             <div style="font-weight: 800; padding: 4px 0; font-family: 'IBM Plex Mono', monospace; font-size: 11px;">₹${(item.qty * item.rate).toFixed(2)}</div>
           </div>
         </div>
@@ -1878,11 +2155,11 @@ class PassInvotorERP {
     const tbody = document.getElementById('catalogPickerBody');
     tbody.innerHTML = '';
     
-    this.data.stock.filter(it => it.name.toLowerCase().includes(q) || it.brand.toLowerCase().includes(q) || it.cat.toLowerCase().includes(q)).forEach(item => {
+    this.data.stock.filter(it => it.name.toLowerCase().includes(q) || (it.hsn && it.hsn.toLowerCase().includes(q)) || it.brand.toLowerCase().includes(q)).forEach(item => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td><strong>${item.name}</strong><br><span style="font-size: 10.5px; color: #64748b;">${item.cat}</span></td>
-        <td><strong style="font-family: monospace;">${item.hsn}</strong></td>
+        <td><strong style="font-family: monospace; color: #1e40af;">${item.hsn}</strong></td>
         <td>${item.brand} / ${item.unit}</td>
         <td class="num"><strong>${item.stock}</strong></td>
         <td class="num">₹${item.price.toFixed(2)}</td>
@@ -1956,10 +2233,14 @@ class PassInvotorERP {
       if (stockItem) stockItem.stock = Math.max(0, stockItem.stock - it.qty);
     });
 
-    this.data.settings.nextInvoiceNo += 1;
+    // Increment next invoice number
+    this.data.settings.nextInvoiceNo = (parseInt(this.data.settings.nextInvoiceNo) || 1) + 1;
     this.data.invoices.unshift(inv);
+    
     this.saveState();
-    alert(`✅ Invoice ${inv.invoiceNo} saved successfully!\nStock inventory updated.`);
+    this.saveCatalog();
+    
+    alert(`✅ Invoice ${inv.invoiceNo} saved successfully!\nNext invoice number is automatically set to PS/2026-27/${String(this.data.settings.nextInvoiceNo).padStart(3,'0')}.`);
     this.switchTab('gateway');
   }
 
@@ -2034,12 +2315,13 @@ class PassInvotorERP {
     const tbody = document.getElementById('stockTableBody');
     tbody.innerHTML = '';
 
-    this.data.stock.filter(it => it.name.toLowerCase().includes(q) || it.brand.toLowerCase().includes(q)).forEach((it, idx) => {
+    this.data.stock.filter(it => it.name.toLowerCase().includes(q) || (it.hsn && it.hsn.toLowerCase().includes(q)) || it.brand.toLowerCase().includes(q)).forEach((it, idx) => {
       const val = it.stock * it.cost;
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td style="font-family: monospace; font-size: 11px;">${it.id}</td>
         <td><strong>${it.name}</strong></td>
+        <td><strong style="color: #1e40af; font-family: monospace;">${it.hsn || '-'}</strong></td>
         <td>${it.brand}</td>
         <td><span class="tag tag-blue">${it.cat}</span></td>
         <td>${it.unit}</td>
@@ -2058,6 +2340,7 @@ class PassInvotorERP {
     const val = prompt(`Enter updated stock quantity for "${this.data.stock[index].name}":`, current);
     if (val !== null && !isNaN(parseFloat(val))) {
       this.data.stock[index].stock = parseFloat(val);
+      this.saveCatalog();
       this.saveState();
       this.renderStockTable();
     }
@@ -2087,27 +2370,28 @@ class PassInvotorERP {
   renderDayBook() {}
   renderPurchasesTable() {}
   openNewPurchaseModal() {}
-  openNewStockItemModal() {}
 
   openModal(id) { const el = document.getElementById(id); if (el) el.classList.add('open'); }
   closeModal(id) { const el = document.getElementById(id); if (el) el.classList.remove('open'); }
 
-  saveSettings() {
-    this.data.settings.compName = document.getElementById('cfgCompName').value;
-    this.data.settings.compTagline = document.getElementById('cfgCompTagline').value;
-    this.data.settings.address = document.getElementById('cfgAddress').value;
-    this.data.settings.phone = document.getElementById('cfgMobile').value;
-    this.data.settings.email = document.getElementById('cfgEmail').value;
-    this.data.settings.gstin = document.getElementById('cfgGstin').value;
-    this.data.settings.pan = document.getElementById('cfgPan').value;
-    this.data.settings.bankName = document.getElementById('cfgBankName').value;
-    this.data.settings.accountNo = document.getElementById('cfgAccountNo').value;
-    this.data.settings.ifsc = document.getElementById('cfgIfsc').value;
-    this.data.settings.branch = document.getElementById('cfgBranch').value;
-    this.data.settings.invoicePrefix = document.getElementById('cfgPrefix').value;
-    this.data.settings.nextInvoiceNo = parseInt(document.getElementById('cfgNextNo').value) || 1;
+  saveSettingsFromForm() {
+    const s = this.data.settings;
+    s.compName = document.getElementById('cfgCompName').value.trim() || "PASS CORP.";
+    s.compTagline = document.getElementById('cfgCompTagline').value.trim() || "PRECISION | ASSURANCE | SAFETY | SOLUTION";
+    s.address = document.getElementById('cfgAddress').value.trim();
+    s.phone = document.getElementById('cfgMobile').value.trim();
+    s.email = document.getElementById('cfgEmail').value.trim();
+    s.gstin = document.getElementById('cfgGstin').value.trim();
+    s.pan = document.getElementById('cfgPan').value.trim();
+    s.bankName = document.getElementById('cfgBankName').value.trim();
+    s.accountNo = document.getElementById('cfgAccountNo').value.trim();
+    s.ifsc = document.getElementById('cfgIfsc').value.trim();
+    s.branch = document.getElementById('cfgBranch').value.trim();
+    s.invoicePrefix = document.getElementById('cfgPrefix').value.trim() || "PS/2026-27/";
+    s.nextInvoiceNo = parseInt(document.getElementById('cfgNextNo').value) || 1;
+
     this.saveState();
-    alert('✅ Settings saved!');
+    alert('✅ Setup saved permanently!');
     this.renderLiveInvoicePreview();
   }
 
