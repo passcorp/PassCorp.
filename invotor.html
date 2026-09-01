@@ -668,11 +668,9 @@ body {
         <div class="form-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px;">
           <div class="form-group">
             <label>Document Title</label>
-            <select id="billDocType" class="form-control" onchange="erp.renderLiveInvoicePreview()">
-              <option value="BILL OF SUPPLY" selected>Bill of Supply (Non-GST)</option>
-              <option value="COMMERCIAL INVOICE">Commercial Invoice</option>
-              <option value="TAX INVOICE">Tax Invoice (GST Registered)</option>
-              <option value="RETAIL CASH BILL">Retail Cash Bill</option>
+            <select id="billDocType" class="form-control" onchange="erp.handleDocTypeChange(this.value)">
+              <option value="BILL OF SUPPLY" selected>Non-GST (Bill of Supply)</option>
+              <option value="TAX INVOICE">GST (Tax Invoice)</option>
             </select>
           </div>
           <div class="form-group">
@@ -1518,7 +1516,15 @@ class PassInvotorERP {
     // 1. App State & Settings
     const raw = localStorage.getItem(this.storageKey);
     if (raw) {
-      try { this.data = JSON.parse(raw); } catch (e) { this.data = this.getDefaultState(); }
+      try { 
+        this.data = JSON.parse(raw); 
+        if (this.data && this.data.settings) {
+          if (!this.data.settings.gstPrefix) this.data.settings.gstPrefix = "PC/2026-27/";
+          if (!this.data.settings.nextGstNo) this.data.settings.nextGstNo = 1;
+          if (!this.data.settings.nonGstPrefix) this.data.settings.nonGstPrefix = "PC";
+          if (!this.data.settings.nextNonGstNo) this.data.settings.nextNonGstNo = 1;
+        }
+      } catch (e) { this.data = this.getDefaultState(); }
     } else {
       this.data = this.getDefaultState();
     }
@@ -1576,7 +1582,11 @@ class PassInvotorERP {
         accountNo: "50200012345678",
         ifsc: "HDFC0001234",
         branch: "Chikhali, Pune",
-        invoicePrefix: "PS/2026-27/",
+        gstPrefix: "PC/2026-27/",
+        nextGstNo: 1,
+        nonGstPrefix: "PC",
+        nextNonGstNo: 1,
+        invoicePrefix: "PC01",
         nextInvoiceNo: 1,
         capital: 500000,
         fixedAssets: 150000,
@@ -1932,17 +1942,35 @@ class PassInvotorERP {
     if (tabId === 'daybook') this.renderDayBook();
   }
 
-  getNextInvoiceNumber() {
-    const prefix = (this.data && this.data.settings && this.data.settings.invoicePrefix) ? this.data.settings.invoicePrefix : "PS/2026-27/";
-    const nextNo = (this.data && this.data.settings && this.data.settings.nextInvoiceNo) ? parseInt(this.data.settings.nextInvoiceNo) : 1;
-    return `${prefix}${String(nextNo).padStart(3, '0')}`;
+  getNextInvoiceNumber(docType) {
+    const dt = docType || (document.getElementById('billDocType') ? document.getElementById('billDocType').value : (this.currentInvoice ? this.currentInvoice.docType : 'BILL OF SUPPLY'));
+    const s = (this.data && this.data.settings) ? this.data.settings : {};
+    if (dt === 'TAX INVOICE') {
+      const prefix = s.gstPrefix || "PC/2026-27/";
+      const nextNo = s.nextGstNo ? parseInt(s.nextGstNo) : (s.nextInvoiceNo ? parseInt(s.nextInvoiceNo) : 1);
+      return `${prefix}${String(nextNo).padStart(3, '0')}`;
+    } else {
+      const prefix = s.nonGstPrefix || "PC";
+      const nextNo = s.nextNonGstNo ? parseInt(s.nextNonGstNo) : (s.nextInvoiceNo ? parseInt(s.nextInvoiceNo) : 1);
+      return `${prefix}${String(nextNo).padStart(2, '0')}`;
+    }
   }
 
-  createEmptyInvoice() {
+  handleDocTypeChange(docType) {
+    this.currentInvoice.docType = docType;
+    const autoNo = this.getNextInvoiceNumber(docType);
+    this.currentInvoice.invoiceNo = autoNo;
+    if (document.getElementById('billInvoiceNo')) {
+      document.getElementById('billInvoiceNo').value = autoNo;
+    }
+    this.renderLiveInvoicePreview();
+  }
+
+  createEmptyInvoice(docType = 'BILL OF SUPPLY') {
     const today = new Date().toISOString().split('T')[0];
     return {
-      docType: 'BILL OF SUPPLY',
-      invoiceNo: this.getNextInvoiceNumber(),
+      docType: docType,
+      invoiceNo: this.getNextInvoiceNumber(docType),
       date: today,
       copyOption: 'original_duplicate',
       paymentTerms: 'As Agreed',
@@ -1968,7 +1996,11 @@ class PassInvotorERP {
   }
 
   newInvoice() {
-    this.currentInvoice = this.createEmptyInvoice();
+    const currentDocType = document.getElementById('billDocType') ? document.getElementById('billDocType').value : (this.currentInvoice ? this.currentInvoice.docType : 'BILL OF SUPPLY');
+    this.currentInvoice = this.createEmptyInvoice(currentDocType);
+    if (document.getElementById('billInvoiceNo')) {
+      document.getElementById('billInvoiceNo').value = this.currentInvoice.invoiceNo;
+    }
     this.renderLiveInvoicePreview();
   }
 
@@ -2498,14 +2530,18 @@ class PassInvotorERP {
       if (stockItem) stockItem.stock = Math.max(0, stockItem.stock - it.qty);
     });
 
-    // Increment next invoice number
-    this.data.settings.nextInvoiceNo = (parseInt(this.data.settings.nextInvoiceNo) || 1) + 1;
+    // Increment respective next invoice number
+    if (inv.docType === 'TAX INVOICE') {
+      this.data.settings.nextGstNo = (parseInt(this.data.settings.nextGstNo) || 1) + 1;
+    } else {
+      this.data.settings.nextNonGstNo = (parseInt(this.data.settings.nextNonGstNo) || 1) + 1;
+    }
     this.data.invoices.unshift(inv);
     
     this.saveState();
     this.saveCatalog();
     
-    alert(`✅ Invoice ${inv.invoiceNo} saved successfully!\nNext invoice number is automatically generated: ${this.getNextInvoiceNumber()}`);
+    alert(`✅ ${inv.docType === 'TAX INVOICE' ? 'GST Tax Invoice' : 'Non-GST Bill of Supply'} ${inv.invoiceNo} saved successfully!\nNext auto number: ${this.getNextInvoiceNumber(inv.docType)}`);
     this.newInvoice();
   }
 
