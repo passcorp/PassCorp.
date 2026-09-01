@@ -1553,10 +1553,14 @@ body {
             <option value="Nos.">Nos.</option>
             <option value="Pairs">Pairs</option>
             <option value="Sets">Sets</option>
-            <option value="Kg">Kg</option>
-            <option value="Sq.Ft">Sq.Ft</option>
-            <option value="R.Ft">R.Ft</option>
-            <option value="Lot">Lot</option>
+            <option value="Pcs.">Pcs.</option>
+            <option value="Boxes">Boxes</option>
+            <option value="Pkts.">Pkts.</option>
+            <option value="Rolls">Rolls</option>
+            <option value="Mtrs.">Mtrs.</option>
+            <option value="Kgs.">Kgs.</option>
+            <option value="Ltrs.">Ltrs.</option>
+            <option value="Dozens">Dozens</option>
           </select>
         </div>
         <div class="form-group">
@@ -3060,7 +3064,19 @@ class PassInvotorERP {
           <input type="number" class="form-control" value="${item.qty}" min="1" oninput="erp.updateItemRow(${index}, 'qty', this.value)" style="font-weight: bold; text-align: right; width: 100%;" />
         </td>
         <td style="vertical-align: top; padding-top: 8px;">
-          <input type="text" class="form-control" value="${item.unit || 'Nos.'}" placeholder="Nos./Pairs" oninput="erp.updateItemRow(${index}, 'unit', this.value)" style="width: 100%; text-align: center;" />
+          <select class="form-control" onchange="erp.updateItemRow(${index}, 'unit', this.value)" style="width: 100%; text-align: center; font-weight: 700; font-size: 11.5px; padding: 5px 2px;">
+            <option value="Nos." ${(item.unit === 'Nos.' || !item.unit) ? 'selected' : ''}>Nos.</option>
+            <option value="Pairs" ${item.unit === 'Pairs' ? 'selected' : ''}>Pairs</option>
+            <option value="Sets" ${item.unit === 'Sets' ? 'selected' : ''}>Sets</option>
+            <option value="Pcs." ${item.unit === 'Pcs.' ? 'selected' : ''}>Pcs.</option>
+            <option value="Boxes" ${item.unit === 'Boxes' ? 'selected' : ''}>Boxes</option>
+            <option value="Pkts." ${item.unit === 'Pkts.' ? 'selected' : ''}>Pkts.</option>
+            <option value="Rolls" ${item.unit === 'Rolls' ? 'selected' : ''}>Rolls</option>
+            <option value="Mtrs." ${item.unit === 'Mtrs.' ? 'selected' : ''}>Mtrs.</option>
+            <option value="Kgs." ${item.unit === 'Kgs.' ? 'selected' : ''}>Kgs.</option>
+            <option value="Ltrs." ${item.unit === 'Ltrs.' ? 'selected' : ''}>Ltrs.</option>
+            <option value="Dozens" ${item.unit === 'Dozens' ? 'selected' : ''}>Dozens</option>
+          </select>
         </td>
         <td style="vertical-align: top; padding-top: 8px;">
           <input type="number" class="form-control" value="${item.rate}" min="0" oninput="erp.updateItemRow(${index}, 'rate', this.value)" style="font-weight: bold; text-align: right; width: 100%;" />
