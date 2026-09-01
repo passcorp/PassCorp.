@@ -1313,10 +1313,39 @@ body {
             <div style="padding: 8px 12px; font-size: 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line);"><span>To Opening Stock</span><span id="plOpeningStock">₹0.00</span></div>
             <div style="padding: 8px 12px; font-size: 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line);"><span>To Purchases (Stock Inwards)</span><span id="plPurchases">₹0.00</span></div>
             <div style="padding: 8px 12px; font-size: 12px; display: flex; justify-content: space-between; font-weight: 700; color: #059669; border-bottom: 1px solid var(--line);"><span>To Gross Profit c/d</span><span id="plGrossProfit">₹0.00</span></div>
-            <div style="padding: 8px 12px; font-size: 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line); margin-top: 10px; font-weight: 700;"><span>Indirect Operating Expenses:</span><span></span></div>
-            <div style="padding: 8px 12px; font-size: 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line);"><span>To Office & Godown Rent</span><span id="plExpRent">₹25,000.00</span></div>
-            <div style="padding: 8px 12px; font-size: 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line);"><span>To Staff Salaries & Wages</span><span id="plExpSalaries">₹45,000.00</span></div>
-            <div style="padding: 8px 12px; font-size: 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line); font-weight: 700; color: #2563eb;"><span>To Net Profit</span><span id="plNetProfit">₹0.00</span></div>
+            
+            <div style="padding: 8px 12px; font-size: 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line); margin-top: 10px; font-weight: 800; background: #f8fafc; color: #0c2340;">
+              <span>Indirect Operating Expenses:</span><span>(Editable Values)</span>
+            </div>
+            
+            <div style="padding: 6px 12px; font-size: 12px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); background: #ffffff;">
+              <span style="font-weight: 600;">To Office & Godown Rent:</span>
+              <div style="display: flex; align-items: center; gap: 4px;">
+                <span style="font-weight: bold; color: #64748b;">₹</span>
+                <input type="number" id="plInputRent" class="form-control" style="width: 130px; text-align: right; font-weight: bold; padding: 4px 8px; font-size: 12px; color: #0c2340;" value="0" min="0" placeholder="0.00" oninput="erp.handleExpenseChange('rent', this.value)" />
+              </div>
+            </div>
+            
+            <div style="padding: 6px 12px; font-size: 12px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); background: #ffffff;">
+              <span style="font-weight: 600;">To Staff Salaries & Wages:</span>
+              <div style="display: flex; align-items: center; gap: 4px;">
+                <span style="font-weight: bold; color: #64748b;">₹</span>
+                <input type="number" id="plInputSalaries" class="form-control" style="width: 130px; text-align: right; font-weight: bold; padding: 4px 8px; font-size: 12px; color: #0c2340;" value="0" min="0" placeholder="0.00" oninput="erp.handleExpenseChange('salaries', this.value)" />
+              </div>
+            </div>
+
+            <div style="padding: 6px 12px; font-size: 12px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); background: #ffffff;">
+              <span style="font-weight: 600;">To Misc Operating / Admin Exp:</span>
+              <div style="display: flex; align-items: center; gap: 4px;">
+                <span style="font-weight: bold; color: #64748b;">₹</span>
+                <input type="number" id="plInputMisc" class="form-control" style="width: 130px; text-align: right; font-weight: bold; padding: 4px 8px; font-size: 12px; color: #0c2340;" value="0" min="0" placeholder="0.00" oninput="erp.handleExpenseChange('misc', this.value)" />
+              </div>
+            </div>
+
+            <div style="padding: 10px 12px; font-size: 13px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line); font-weight: 800; color: #1e40af; background: #eff6ff;">
+              <span>To Net Profit (Transfer to Capital)</span>
+              <span id="plNetProfit">₹0.00</span>
+            </div>
           </div>
           <div>
             <div style="background: var(--pass-navy); color: #fff; padding: 8px 12px; font-weight: 800; font-size: 12.5px; display: flex; justify-content: space-between;">
@@ -1324,7 +1353,7 @@ body {
             </div>
             <div style="padding: 8px 12px; font-size: 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line);"><span>By Sales Revenue (Billed)</span><span id="plSales">₹0.00</span></div>
             <div style="padding: 8px 12px; font-size: 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line);"><span>By Closing Stock</span><span id="plClosingStock">₹0.00</span></div>
-            <div style="padding: 8px 12px; font-size: 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line); margin-top: 50px; font-weight: 700;"><span>By Gross Profit b/d</span><span id="plGrossProfitBd">₹0.00</span></div>
+            <div style="padding: 8px 12px; font-size: 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line); margin-top: 50px; font-weight: 700; background: #f8fafc;"><span>By Gross Profit b/d</span><span id="plGrossProfitBd">₹0.00</span></div>
           </div>
         </div>
       </div>
@@ -3746,8 +3775,128 @@ class PassInvotorERP {
     alert(`✅ Payment of ₹${amt.toFixed(2)} successfully recorded for Invoice ${inv.invoiceNo}!\nRemaining Balance Due: ₹${inv.balanceDue.toFixed(2)}`);
   }
 
-  renderProfitAndLoss() {}
-  renderBalanceSheet() {}
+  handleExpenseChange(type, value) {
+    if (!this.data.settings) this.data.settings = {};
+    const val = Math.max(0, parseFloat(value) || 0);
+    if (type === 'rent') this.data.settings.expRent = val;
+    if (type === 'salaries') this.data.settings.expSalaries = val;
+    if (type === 'misc') this.data.settings.expMisc = val;
+    this.saveState();
+    this.renderProfitAndLoss();
+    this.renderBalanceSheet();
+  }
+
+  renderProfitAndLoss() {
+    const s = this.data.settings || {};
+    const rent = s.expRent !== undefined ? s.expRent : 0;
+    const salaries = s.expSalaries !== undefined ? s.expSalaries : 0;
+    const misc = s.expMisc !== undefined ? s.expMisc : 0;
+
+    if (document.getElementById('plInputRent') && document.activeElement !== document.getElementById('plInputRent')) {
+      document.getElementById('plInputRent').value = rent || '';
+    }
+    if (document.getElementById('plInputSalaries') && document.activeElement !== document.getElementById('plInputSalaries')) {
+      document.getElementById('plInputSalaries').value = salaries || '';
+    }
+    if (document.getElementById('plInputMisc') && document.activeElement !== document.getElementById('plInputMisc')) {
+      document.getElementById('plInputMisc').value = misc || '';
+    }
+
+    // Calculate Sales from all recorded invoices
+    let totalSales = 0;
+    if (this.data.invoices && Array.isArray(this.data.invoices)) {
+      this.data.invoices.forEach(inv => {
+        totalSales += (inv.grandTotal || 0);
+      });
+    }
+
+    // Calculate Purchases from all recorded purchases
+    let totalPurchases = 0;
+    if (this.data.purchases && Array.isArray(this.data.purchases)) {
+      this.data.purchases.forEach(pur => {
+        totalPurchases += (pur.amount || pur.total || 0);
+      });
+    }
+
+    // Calculate Stock Value
+    let closingStockVal = 0;
+    const allStock = this.getAllProducts();
+    if (allStock && Array.isArray(allStock)) {
+      allStock.forEach(item => {
+        closingStockVal += ((item.stock || 0) * (item.cost || item.price * 0.75 || 0));
+      });
+    }
+
+    const openingStockVal = 0;
+    const grossProfit = Math.max(0, (totalSales + closingStockVal) - (openingStockVal + totalPurchases));
+    const totalIndirectExpenses = rent + salaries + misc;
+    const netProfit = grossProfit - totalIndirectExpenses;
+
+    if (document.getElementById('plOpeningStock')) document.getElementById('plOpeningStock').textContent = `₹${openingStockVal.toFixed(2)}`;
+    if (document.getElementById('plPurchases')) document.getElementById('plPurchases').textContent = `₹${totalPurchases.toFixed(2)}`;
+    if (document.getElementById('plSales')) document.getElementById('plSales').textContent = `₹${totalSales.toFixed(2)}`;
+    if (document.getElementById('plClosingStock')) document.getElementById('plClosingStock').textContent = `₹${closingStockVal.toFixed(2)}`;
+    if (document.getElementById('plGrossProfit')) document.getElementById('plGrossProfit').textContent = `₹${grossProfit.toFixed(2)}`;
+    if (document.getElementById('plGrossProfitBd')) document.getElementById('plGrossProfitBd').textContent = `₹${grossProfit.toFixed(2)}`;
+    if (document.getElementById('plNetProfit')) {
+      document.getElementById('plNetProfit').textContent = `₹${netProfit.toFixed(2)}`;
+      document.getElementById('plNetProfit').style.color = netProfit >= 0 ? '#1e40af' : '#dc2626';
+    }
+  }
+
+  renderBalanceSheet() {
+    const s = this.data.settings || {};
+    const capital = s.capital || 500000;
+    const fixedAssets = s.fixedAssets || 150000;
+    const bankBal = s.bankBalance || 350000;
+
+    let totalSales = 0;
+    let totalDebtors = 0;
+    if (this.data.invoices && Array.isArray(this.data.invoices)) {
+      this.data.invoices.forEach(inv => {
+        totalSales += (inv.grandTotal || 0);
+        totalDebtors += (inv.balanceDue !== undefined ? inv.balanceDue : (inv.status === 'Paid' ? 0 : inv.grandTotal || 0));
+      });
+    }
+
+    let totalPurchases = 0;
+    let totalCreditors = 0;
+    if (this.data.purchases && Array.isArray(this.data.purchases)) {
+      this.data.purchases.forEach(pur => {
+        totalPurchases += (pur.amount || pur.total || 0);
+        totalCreditors += (pur.balanceDue !== undefined ? pur.balanceDue : 0);
+      });
+    }
+
+    let closingStockVal = 0;
+    const allStock = this.getAllProducts();
+    if (allStock && Array.isArray(allStock)) {
+      allStock.forEach(item => {
+        closingStockVal += ((item.stock || 0) * (item.cost || item.price * 0.75 || 0));
+      });
+    }
+
+    const rent = s.expRent !== undefined ? s.expRent : 0;
+    const salaries = s.expSalaries !== undefined ? s.expSalaries : 0;
+    const misc = s.expMisc !== undefined ? s.expMisc : 0;
+    const grossProfit = Math.max(0, (totalSales + closingStockVal) - totalPurchases);
+    const netProfit = grossProfit - (rent + salaries + misc);
+
+    const totalLiab = capital + netProfit + totalCreditors;
+    const totalAssets = fixedAssets + closingStockVal + totalDebtors + bankBal;
+
+    if (document.getElementById('bsCapital')) document.getElementById('bsCapital').textContent = `₹${capital.toFixed(2)}`;
+    if (document.getElementById('bsNetProfit')) document.getElementById('bsNetProfit').textContent = `₹${netProfit.toFixed(2)}`;
+    if (document.getElementById('bsCreditors')) document.getElementById('bsCreditors').textContent = `₹${totalCreditors.toFixed(2)}`;
+    if (document.getElementById('bsTotalLiabilities')) document.getElementById('bsTotalLiabilities').textContent = `₹${totalLiab.toFixed(2)}`;
+
+    if (document.getElementById('bsFixedAssets')) document.getElementById('bsFixedAssets').textContent = `₹${fixedAssets.toFixed(2)}`;
+    if (document.getElementById('bsStockInHand')) document.getElementById('bsStockInHand').textContent = `₹${closingStockVal.toFixed(2)}`;
+    if (document.getElementById('bsDebtors')) document.getElementById('bsDebtors').textContent = `₹${totalDebtors.toFixed(2)}`;
+    if (document.getElementById('bsBankBalance')) document.getElementById('bsBankBalance').textContent = `₹${bankBal.toFixed(2)}`;
+    if (document.getElementById('bsTotalAssets')) document.getElementById('bsTotalAssets').textContent = `₹${totalAssets.toFixed(2)}`;
+  }
+
   renderDayBook() {}
   renderPurchasesTable() {}
   openNewPurchaseModal() {}
