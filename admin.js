@@ -198,7 +198,7 @@ function adminNav(){
   const tabs = [["products","box","Products"],["categories","grid","Categories"],["content","settings","Site content"]];
   return `
     <div class="admin-side">
-      <a href="invotor.html" target="_blank" style="background:#0c2340;color:#ffffff;border:1px solid #f59e0b;display:flex;align-items:center;justify-content:center;gap:8px;padding:9px 12px;border-radius:6px;font-weight:700;font-size:13px;text-decoration:none;margin-bottom:8px;box-shadow:0 2px 8px rgba(12,35,64,0.3);text-align:center;">
+      <a href="invotor.html?v=5" target="_blank" style="background:#0c2340;color:#ffffff;border:1px solid #2563eb;display:flex;align-items:center;justify-content:center;gap:8px;padding:9px 12px;border-radius:6px;font-weight:700;font-size:13px;text-decoration:none;margin-bottom:8px;box-shadow:0 2px 8px rgba(12,35,64,0.3);text-align:center;">
         📦 Invotor (Billing & ERP) ↗
       </a>
       <a href="quotation.html?secure=1" target="_blank" style="background:#2563eb;color:#ffffff;display:flex;align-items:center;justify-content:center;gap:8px;padding:9px 12px;border-radius:6px;font-weight:700;font-size:13px;text-decoration:none;margin-bottom:12px;box-shadow:0 2px 8px rgba(37,99,235,0.3);text-align:center;">
