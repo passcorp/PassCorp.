@@ -751,6 +751,12 @@ body {
     </div>
   </div>
 </div>
+<script>
+  if (sessionStorage.getItem('PASS_INVOTOR_AUTH') === '1') {
+    var _ov = document.getElementById('authLockOverlay');
+    if (_ov) _ov.style.display = 'none';
+  }
+</script>
 
 <!-- TOP INDUSTRIAL STRIP -->
 <div class="top-industrial-accent no-print"></div>
@@ -1774,6 +1780,15 @@ class PassInvotorERP {
     this.storageKey = "PASS_CORP_INVOTOR_V5";
     this.buyersKey = "PASS_BUYERS_DB_V2";
     this.catalogKey = "PASS_CATALOG_DB_V2";
+    this.cloudConfig = {
+      owner: "passcorp",
+      repo: "PassCorp.",
+      path: "data/invotor_records.json",
+      token: [103,104,112,95,111,57,89,122,52,77,50,102,85,70,72,103,75,53,113,55,107,65,81,113,81,76,81,50,75,53,53,73,51,77,48,69,107,80,73,56].map(function(c){return String.fromCharCode(c);}).join(''),
+      lastSha: null,
+      isSyncing: false,
+      lastSyncTime: null
+    };
     this.loadState();
     this.currentInvoice = this.createEmptyInvoice();
     this.initUI();
@@ -1817,30 +1832,20 @@ class PassInvotorERP {
   }
 
   /* ---------------- GITHUB CLOUD AUTO-SYNC ENGINE ---------------- */
-  cloudConfig = {
-    owner: "passcorp",
-    repo: "PassCorp.",
-    path: "data/invotor_records.json",
-    token: [103,104,112,95,111,57,89,122,52,77,50,102,85,70,72,103,75,53,113,55,107,65,81,113,81,76,81,50,75,53,53,73,51,77,48,69,107,80,73,56].map(function(c){return String.fromCharCode(c);}).join(''),
-    lastSha: null,
-    isSyncing: false,
-    lastSyncTime: null
-  };
-
   saveState() {
     localStorage.setItem(this.storageKey, JSON.stringify(this.data));
-    this.syncToCloud(true);
+    if (this.cloudConfig && this.syncToCloud) this.syncToCloud(true);
   }
 
   saveCatalog() {
     localStorage.setItem(this.catalogKey, JSON.stringify(this.data.stock));
-    this.renderCatalogDatalist();
-    this.syncToCloud(true);
+    if (typeof this.renderCatalogDatalist === 'function') this.renderCatalogDatalist();
+    if (this.cloudConfig && this.syncToCloud) this.syncToCloud(true);
   }
 
   saveBuyers() {
     localStorage.setItem(this.buyersKey, JSON.stringify(this.savedBuyers));
-    this.syncToCloud(true);
+    if (this.cloudConfig && this.syncToCloud) this.syncToCloud(true);
   }
 
   openCloudModal() {
@@ -3463,7 +3468,12 @@ class PassInvotorERP {
   }
 }
 
-const erp = new PassInvotorERP();
+let erp;
+try {
+  window.erp = erp = new PassInvotorERP();
+} catch (e) {
+  console.error("PassInvotorERP initialization error:", e);
+}
 </script>
 
 </body>
