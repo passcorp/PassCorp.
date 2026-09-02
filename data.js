@@ -6,7 +6,7 @@
    "Export JSON" in the CMS to back up your content to a file.
 ========================================================= */
 
-const STORAGE_KEY = "passCorpContent_v9";
+const STORAGE_KEY = "passCorpContent_v10";
 
 
 /* =========================================================
@@ -10616,6 +10616,1526 @@ const DEFAULT_CONTENT = {
       [
         "Typical Application",
         "Live Line Working, Rail Traction, High Voltage Substations, Electrical Utilities"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_crc_101_a",
+    "category": "gloves",
+    "name": "Udyogi CRC-101 A Blue Crinkle Latex Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/crc_101_a.png",
+    "cert": "EN 388:2016 (2241X) · CE",
+    "price": 110,
+    "rating": 4.8,
+    "reviews": 32,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "10-gauge seamless polycotton liner with blue crinkle latex palm coating for superior grip, dexterity and all-weather durability.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "CRC-101 A"
+      ],
+      [
+        "Liner",
+        "10-Gauge Seamless Grey Polycotton Liner"
+      ],
+      [
+        "Coating Material",
+        "Blue Natural Latex (Crinkle Finish)"
+      ],
+      [
+        "Coating Coverage",
+        "Palm & Finger Coated"
+      ],
+      [
+        "Available Size",
+        "Size 9 (L)"
+      ],
+      [
+        "Weight",
+        "85 g per pair"
+      ],
+      [
+        "Mechanical Rating",
+        "EN 388:2016 (2241X)"
+      ],
+      [
+        "Typical Application",
+        "Construction, Material Handling, Glass Logistics, Warehousing & General Maintenance"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_crc_101_yo",
+    "category": "gloves",
+    "name": "Udyogi CRC-101 (Y/O) High-Vis Orange Latex Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/crc_101_yo.png",
+    "cert": "EN 388:2016 (2241X) · CE",
+    "price": 115,
+    "rating": 4.7,
+    "reviews": 26,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "High-visibility 10-gauge yellow polycotton liner with orange latex crinkle palm coating for enhanced signaling and safety.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "CRC-101 (Y/O)"
+      ],
+      [
+        "Liner",
+        "10-Gauge Seamless Yellow Polycotton Liner"
+      ],
+      [
+        "Coating Material",
+        "High-Vis Orange Crinkle Latex"
+      ],
+      [
+        "Available Size",
+        "Size 9"
+      ],
+      [
+        "Weight",
+        "85 g per pair"
+      ],
+      [
+        "Standards",
+        "EN 388:2016 (2241X), CE"
+      ],
+      [
+        "Typical Application",
+        "Highway Maintenance, Scaffolding, Cargo Handling, Loading/Unloading"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_drc_105",
+    "category": "gloves",
+    "name": "Udyogi DRC 105 Heavy-Duty 5-Ply Green Latex Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/drc_105.png",
+    "cert": "EN 388:2016 (3243) · CE",
+    "price": 135,
+    "rating": 4.9,
+    "reviews": 38,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Heavy-duty 10-gauge yellow polycotton liner with 5-ply thread and green natural rubber latex crinkle coating for maximum tear resistance.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "DRC 105"
+      ],
+      [
+        "Liner",
+        "10-Gauge Yellow Polycotton with 5-Ply Thread (Reinforced)"
+      ],
+      [
+        "Coating",
+        "Green Natural Rubber Latex Crinkled Coating"
+      ],
+      [
+        "Weight",
+        "95 g per pair"
+      ],
+      [
+        "Available Size",
+        "Size 9"
+      ],
+      [
+        "Mechanical Performance",
+        "EN 388:2016 (3243)"
+      ],
+      [
+        "Typical Application",
+        "Bricklaying, Concrete Handling, Metal Fabrication, Quarrying & Heavy Logistics"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_nrc_1310_rb",
+    "category": "gloves",
+    "name": "Udyogi NRC-1310 RB Black Crinkle Latex Coated Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/nrc_1310_rb.png",
+    "cert": "EN 388:2016 (3131X) · CE",
+    "price": 95,
+    "rating": 4.6,
+    "reviews": 19,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "13-gauge red polyester liner with black natural rubber latex crinkled palm coating. Ultra-lightweight (50g) and agile.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "NRC-1310 RB"
+      ],
+      [
+        "Liner",
+        "13-Gauge Red Color Polyester Liner"
+      ],
+      [
+        "Coating",
+        "Black Natural Rubber Latex Crinkled Finish"
+      ],
+      [
+        "Weight",
+        "50 g per pair (Lightweight)"
+      ],
+      [
+        "Available Size",
+        "Size 9"
+      ],
+      [
+        "Standard",
+        "EN 388:2016 (3131X)"
+      ],
+      [
+        "Typical Application",
+        "Automotive Parts Assembly, Small Component Sorting, Light Manufacturing"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_nnc_1310",
+    "category": "gloves",
+    "name": "Udyogi NNC-1310 Flat Nitrile Palm Coated Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/nnc_1310.png",
+    "cert": "EN 388:2016 (4131X) · CE",
+    "price": 85,
+    "rating": 4.8,
+    "reviews": 44,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "13-gauge white polyester liner with grey flat nitrile palm coating offering high abrasion resistance and oil repellency.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "NNC-1310"
+      ],
+      [
+        "Liner",
+        "13-Gauge White Polyester Liner"
+      ],
+      [
+        "Coating",
+        "Grey Color Flat Nitrile Palm Coated"
+      ],
+      [
+        "Weight",
+        "40 g per pair"
+      ],
+      [
+        "Size",
+        "Size 9"
+      ],
+      [
+        "Standard",
+        "EN 388:2016 (4131X)"
+      ],
+      [
+        "Typical Application",
+        "Oily Parts Handling, Machine Shops, Light Press Operation, Packaging"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_nnc_bb",
+    "category": "gloves",
+    "name": "Udyogi NNC BB All-Black Nitrile Palm Coated Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/nnc_bb.png",
+    "cert": "EN 388:2016 (4131X) · CE",
+    "price": 85,
+    "rating": 4.8,
+    "reviews": 36,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "All-black 13-gauge polyester liner with black flat nitrile coating that hides grease and dirt for longer operational life.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "NNC BB"
+      ],
+      [
+        "Liner",
+        "13-Gauge Black Polyester Liner"
+      ],
+      [
+        "Coating",
+        "Black Flat Nitrile Palm Coated"
+      ],
+      [
+        "Weight",
+        "40 g per pair"
+      ],
+      [
+        "Size",
+        "Size 9"
+      ],
+      [
+        "Standard",
+        "EN 388:2016 (4131X)"
+      ],
+      [
+        "Typical Application",
+        "Automotive Service, Garage Maintenance, CNC Machining, Industrial Assembly"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_ndjs2",
+    "category": "gloves",
+    "name": "Udyogi NDJS2 Fully Coated Blue Nitrile Heavy Duty Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/ndjs2.png",
+    "cert": "EN 388:2016 (4222) · CE",
+    "price": 175,
+    "rating": 4.9,
+    "reviews": 27,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Full-dip blue nitrile cotton jersey glove with reinforced safety cuff for oil, water and heavy puncture/extrusion resistance.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "NDJS2"
+      ],
+      [
+        "Liner",
+        "Cotton Jersey Fabric with Stiff Safety Cuff"
+      ],
+      [
+        "Coating",
+        "Blue Heavy Nitrile (Fully Coated 360°)"
+      ],
+      [
+        "Weight",
+        "110 g per pair"
+      ],
+      [
+        "Size",
+        "Size 8"
+      ],
+      [
+        "Performance Rating",
+        "EN 388:2016 (4222)"
+      ],
+      [
+        "Typical Application",
+        "Foundries, Metal Scrap Handling, Oil Drum Handling, Heavy Stamping & Machinery Maintenance"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_upn3",
+    "category": "gloves",
+    "name": "Udyogi UPN3 Polyester/Lycra Mixed U3 Nitrile Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/upn3.png",
+    "cert": "EN 388:2016 (4131A) · CE",
+    "price": 120,
+    "rating": 4.7,
+    "reviews": 21,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "13-gauge polyester and Lycra mixed U3 liner with black flat nitrile palm coating providing skin-fit ergonomics and fatigue reduction.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "UPN3"
+      ],
+      [
+        "Liner",
+        "13-Gauge Polyester / Lycra Blend U3 Seamless Liner"
+      ],
+      [
+        "Coating",
+        "Black Flat Nitrile Palm Coating"
+      ],
+      [
+        "Weight",
+        "56 g per pair"
+      ],
+      [
+        "Size",
+        "Size 9"
+      ],
+      [
+        "Standard",
+        "EN 388:2016 (4131A)"
+      ],
+      [
+        "Typical Application",
+        "Precision Assembly, Quality Control, White Goods Assembly, Power Tool Handling"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_nnc_plus",
+    "category": "gloves",
+    "name": "Udyogi NNC PLUS Double-Dip Nitrile Grip Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/nnc_plus.png",
+    "cert": "EN 388:2016 (4131X) · CE",
+    "price": 95,
+    "rating": 4.8,
+    "reviews": 18,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Double-dipped 13-gauge white polyester liner with grey flat nitrile coating offering extended abrasion cycles.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "NNC PLUS"
+      ],
+      [
+        "Liner",
+        "13-Gauge White Polyester (Double Dip Processing)"
+      ],
+      [
+        "Coating",
+        "Grey Flat Nitrile Palm Coated with Superior Grip Technology"
+      ],
+      [
+        "Weight",
+        "44 g per pair"
+      ],
+      [
+        "Size",
+        "Size 9"
+      ],
+      [
+        "Standard",
+        "EN 388:2016 (4131X)"
+      ],
+      [
+        "Typical Application",
+        "Automotive Component Assembly, General Handling, Warehousing"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_u_grip",
+    "category": "gloves",
+    "name": "Udyogi U-GRIP Fully Coated Oil-Repellent Nitrile Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/u_grip.png",
+    "cert": "EN 388:2016 (4131X) · CE",
+    "price": 130,
+    "rating": 4.8,
+    "reviews": 23,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "13-gauge seamless polyester glove fully encapsulated in black nitrile for complete liquid barrier and oil repellence.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "U-GRIP"
+      ],
+      [
+        "Liner",
+        "13-Gauge Seamless Polyester Liner"
+      ],
+      [
+        "Coating",
+        "Black Nitrile (Fully Coated 360°)"
+      ],
+      [
+        "Weight",
+        "60 g per pair"
+      ],
+      [
+        "Size",
+        "Size 9"
+      ],
+      [
+        "Standard",
+        "EN 388:2016 (4131X)"
+      ],
+      [
+        "Typical Application",
+        "Coolant-Soaked Machining, Oily Sheet Stamping, Plumbing, Petrochemical Maintenance"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_npu_b",
+    "category": "gloves",
+    "name": "Udyogi NPU-B Black PU Coated Assembly Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/npu_b.png",
+    "cert": "EN 388:2016 (4131X) · CE",
+    "price": 65,
+    "rating": 4.8,
+    "reviews": 56,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Ultra-light (23g) 13-gauge seamless black polyester glove with black polyurethane palm coating for maximum tactile sensitivity.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "NPU-B"
+      ],
+      [
+        "Liner",
+        "13-Gauge Seamless Black Polyester Liner"
+      ],
+      [
+        "Coating",
+        "Black Polyurethane (PU) Palm Coated"
+      ],
+      [
+        "Weight",
+        "23 g per pair (Ultra-Light)"
+      ],
+      [
+        "Available Sizes",
+        "Sizes 8 & 9"
+      ],
+      [
+        "Standard",
+        "EN 388:2016 (4131X)"
+      ],
+      [
+        "Typical Application",
+        "Electronics Assembly, Inspection, Automotive Wiring, Cleanroom & Small Parts Picking"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_npu_g",
+    "category": "gloves",
+    "name": "Udyogi NPU-G Grey PU Coated Precision Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/npu_g.png",
+    "cert": "EN 388:2016 (4131X) · CE",
+    "price": 65,
+    "rating": 4.8,
+    "reviews": 42,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "13-gauge grey polyester liner with grey PU coating. Clean, non-linting, and ideal for dry delicate assembly.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "NPU-G"
+      ],
+      [
+        "Liner",
+        "13-Gauge Seamless Grey Polyester Liner"
+      ],
+      [
+        "Coating",
+        "Grey Polyurethane (PU) Palm Coated"
+      ],
+      [
+        "Weight",
+        "40 g per pair"
+      ],
+      [
+        "Available Sizes",
+        "Sizes 8 & 9"
+      ],
+      [
+        "Standard",
+        "EN 388:2016 (4131X)"
+      ],
+      [
+        "Typical Application",
+        "Dry Component Handling, Light Precision Assembly, Instrument Manufacturing"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_npu_w",
+    "category": "gloves",
+    "name": "Udyogi NPU-W White PU Coated Automotive Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/npu_w.png",
+    "cert": "EN 388:2016 (4131X) · CE",
+    "price": 65,
+    "rating": 4.7,
+    "reviews": 31,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "13-gauge white polyester liner with white PU coating designed for automotive paint shops, white goods and pharmaceutical packing.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "NPU-W"
+      ],
+      [
+        "Liner",
+        "13-Gauge Seamless White Polyester Liner"
+      ],
+      [
+        "Coating",
+        "White Polyurethane (PU) Palm Coated"
+      ],
+      [
+        "Weight",
+        "40 g per pair"
+      ],
+      [
+        "Available Sizes",
+        "Sizes 8 & 9"
+      ],
+      [
+        "Standard",
+        "EN 388:2016 (4131X)"
+      ],
+      [
+        "Typical Application",
+        "Automotive Final Inspection, Paint Shops, Pharmaceutical Clean Rooms, Food Packaging"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_esd_pu",
+    "category": "gloves",
+    "name": "Udyogi ESD PU Anti-Static Carbon Fiber Knitted Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/esd_pu.png",
+    "cert": "EN 388:2016 (0130) · CE · ESD Certified",
+    "price": 95,
+    "rating": 4.9,
+    "reviews": 29,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "13-gauge polyester interlock liner with continuous conductive carbon fiber filament and smooth PU fingertip coating for static discharge prevention.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "ESD PU"
+      ],
+      [
+        "Liner",
+        "13-Gauge Polyester Interlock Liner with Conductive Carbon Fiber"
+      ],
+      [
+        "Coating",
+        "Smooth Polyurethane (PU) Coated on Fingertips Only"
+      ],
+      [
+        "Length",
+        "10\" (250mm)"
+      ],
+      [
+        "Weight",
+        "22 g per pair (Ultra-Lightweight)"
+      ],
+      [
+        "Size",
+        "Size 9"
+      ],
+      [
+        "Standard",
+        "EN 388:2016 (0130), Anti-Static / ESD Safe"
+      ],
+      [
+        "Typical Application",
+        "PCB Assembly, Semiconductor Manufacturing, Mobile Phone Assembly, Electronics Repair"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_hpu_3",
+    "category": "gloves",
+    "name": "Udyogi HPU-3 Cut Level 3 UHMWPE PU Coated Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/hpu_3.png",
+    "cert": "EN 388:2016 (4342C) · CE",
+    "price": 195,
+    "rating": 4.8,
+    "reviews": 25,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "13-gauge seamless salt-and-pepper UHMWPE cut-resistant liner with grey PU palm coating offering high dexterity and Cut Level 3/C protection.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "HPU-3"
+      ],
+      [
+        "Liner",
+        "13-Gauge Seamless Salt-Pepper UHMWPE Cut-Resistant Yarn"
+      ],
+      [
+        "Coating",
+        "Grey Polyurethane (PU) Palm Coated"
+      ],
+      [
+        "Cut Resistance",
+        "Cut Level 3 / TDM Level C"
+      ],
+      [
+        "Available Sizes",
+        "Sizes 7, 8 & 9"
+      ],
+      [
+        "Standard",
+        "EN 388:2016 (4342C)"
+      ],
+      [
+        "Typical Application",
+        "Sheet Metal Trimming, Glass Cutting, Plastic Extrusion, Machinery Maintenance"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_hpu_5",
+    "category": "gloves",
+    "name": "Udyogi HPU-5 Cut Level 5 / Level D UHMWPE PU Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/hpu_5.png",
+    "cert": "EN 388:2016 (4543D) · CE",
+    "price": 260,
+    "rating": 4.9,
+    "reviews": 37,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Maximum Cut Level 5 / TDM Level D protection with 13-gauge UHMWPE liner and grey PU coating for sharp blade and steel edge protection.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "HPU-5"
+      ],
+      [
+        "Liner",
+        "13-Gauge Seamless Salt-Pepper UHMWPE Cut 5 Liner"
+      ],
+      [
+        "Coating",
+        "Grey Polyurethane (PU) Palm Coated"
+      ],
+      [
+        "Cut Rating",
+        "Cut Level 5 / TDM Level D (4543D)"
+      ],
+      [
+        "Available Sizes",
+        "Sizes 7, 8 & 9"
+      ],
+      [
+        "Standard",
+        "EN 388:2016 (4543D)"
+      ],
+      [
+        "Typical Application",
+        "Metal Stamping, Press Brake Work, Automotive Body Shop, Glass Glazing & Installation"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_drc_cut_5",
+    "category": "gloves",
+    "name": "Udyogi DRC CUT 5 Crinkled Latex Cut Level 5 Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/drc_cut_5.png",
+    "cert": "EN 388:2016 (4542C) · CE",
+    "price": 295,
+    "rating": 4.9,
+    "reviews": 31,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "13-gauge UHMWPE cut level 5/C liner with crinkled blue latex palm coating delivering extraordinary wet grip on slippery sharp steel sheets.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "DRC CUT 5"
+      ],
+      [
+        "Liner",
+        "13-Gauge Salt-Pepper UHMWPE Cut Resistant Liner"
+      ],
+      [
+        "Coating",
+        "Crinkled Blue Natural Rubber Latex Palm Coating"
+      ],
+      [
+        "Cut Rating",
+        "Cut Level 5 / ISO Cut Level C"
+      ],
+      [
+        "Available Sizes",
+        "Sizes 8, 9 & 10"
+      ],
+      [
+        "Standard",
+        "EN 388:2016 (4542C)"
+      ],
+      [
+        "Typical Application",
+        "Wet Glass Handling, Sharp Metal Cutting, Roofing, Construction & Recycling"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_h5101",
+    "category": "gloves",
+    "name": "Udyogi H5101 3/4th Double Sandy Nitrile Cut 5 Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/h5101.png",
+    "cert": "EN 388:2016 (4544D) · CE",
+    "price": 380,
+    "rating": 5.0,
+    "reviews": 29,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "HPPE cut level 5 interlock glove with 3/4th double nitrile dip and heavy sandy nitrile palm finish for oily press shops and metal deburring.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "H5101"
+      ],
+      [
+        "Liner",
+        "HPPE Cut Level 5 Seamless Interlock Knit"
+      ],
+      [
+        "Coating",
+        "3/4th Double Dip Nitrile + Sandy Finish Outer Palm"
+      ],
+      [
+        "Cut Rating",
+        "Cut Level 5 / TDM Level D (4544D)"
+      ],
+      [
+        "Available Sizes",
+        "Sizes 9 & 10"
+      ],
+      [
+        "Standard",
+        "EN 388:2016 (4544D)"
+      ],
+      [
+        "Typical Application",
+        "Automotive Press Line, Heavy Machinery Maintenance, CNC Milling, Oil-Coated Metal Deburring"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_hnr5",
+    "category": "gloves",
+    "name": "Udyogi HNR5 HPPE + Glass Fiber Composite Nitrile Cut Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/hnr5.png",
+    "cert": "EN 388:2016 (4543D) · CE",
+    "price": 310,
+    "rating": 4.8,
+    "reviews": 22,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "13-gauge HPPE + glass fiber composite liner with black flat nitrile palm coating. High cut resistance (TDM Level D) with smooth dexterity.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "HNR5"
+      ],
+      [
+        "Liner",
+        "13-Gauge HPPE + Glass Fiber Engineering Composite"
+      ],
+      [
+        "Coating",
+        "Black Flat Nitrile Palm Coating"
+      ],
+      [
+        "Cut Level",
+        "TDM Cut Level D"
+      ],
+      [
+        "Available Sizes",
+        "Sizes 8 & 9"
+      ],
+      [
+        "Standard",
+        "EN 388:2016 (4543D)"
+      ],
+      [
+        "Typical Application",
+        "Appliance Assembly, Sheet Metal Forming, Automotive Tier-1 Manufacturing"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_hp5",
+    "category": "gloves",
+    "name": "Udyogi HP5 Uncoated Cut Resistance Level 5 Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/hp5.png",
+    "cert": "EN 388:2016 (454XD) · CE",
+    "price": 240,
+    "rating": 4.7,
+    "reviews": 16,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Uncoated engineering-grade composite yarn glove with Cut Level 5 protection. Highly breathable, ambidextrous and washable.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "HP5"
+      ],
+      [
+        "Liner",
+        "Engineering-Grade Composite Yarn (HPPE)"
+      ],
+      [
+        "Coating",
+        "Uncoated (Maximum Air Permeability)"
+      ],
+      [
+        "Cut Rating",
+        "Cut Level 5 / TDM Level D"
+      ],
+      [
+        "Size",
+        "Size 9"
+      ],
+      [
+        "Standard",
+        "EN 388:2016 (454XD)"
+      ],
+      [
+        "Typical Application",
+        "Meat Processing, Food Prep, Paper Mills, Under-Glove Protective Liner"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_tpr_9004",
+    "category": "gloves",
+    "name": "Udyogi TPR 9004 Heavy-Duty Impact + Cut Level 5 Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/tpr_9004.png",
+    "cert": "EN 388:2016 (4544DP) · CE · Impact Certified",
+    "price": 750,
+    "rating": 5.0,
+    "reviews": 38,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "13-gauge HPPE Cut Level 5 shell with red sandy nitrile palm, molded TPR impact armor across knuckles and fingers, and reinforced thumb crotch.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "TPR 9004"
+      ],
+      [
+        "Shell Construction",
+        "13-Gauge Seamless HPPE Shell (Cut Level 5)"
+      ],
+      [
+        "Palm Coating",
+        "Red Sandy Nitrile Coating for Extreme Oily Grip"
+      ],
+      [
+        "Impact Protection",
+        "Molded TPR (Thermo-Plastic Rubber) on Knuckles & Full Finger Length"
+      ],
+      [
+        "Thumb Crotch",
+        "Reinforced Thumb Crotch Patch for Extra Wear Life"
+      ],
+      [
+        "Closure",
+        "Hook-and-Loop Velcro Wrist Closure for Custom Fit"
+      ],
+      [
+        "Available Sizes",
+        "Sizes 9 & 10"
+      ],
+      [
+        "Standards",
+        "EN 388:2016 (4544DP) with Impact Certification 'P'"
+      ],
+      [
+        "Typical Application",
+        "Oil & Gas Drilling, Mining, Heavy Rigging, Demolition, Heavy Equipment Maintenance"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_chain_mesh",
+    "category": "gloves",
+    "name": "Udyogi 304L Stainless Steel Chain Mesh Cut Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/chain_mesh.png",
+    "cert": "EN 1082-1 · CE · Food Grade Certified",
+    "price": 2850,
+    "rating": 5.0,
+    "reviews": 24,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Industrial 304L stainless steel welded wire ring mesh for complete knife blade and serrated cut protection with reversible ambidextrous design.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "CHAIN MESH"
+      ],
+      [
+        "Material",
+        "Durable Stainless Steel 304L Wire Mesh Rings"
+      ],
+      [
+        "Design",
+        "Reversible Ambidextrous Use (Fits Left or Right Hand)"
+      ],
+      [
+        "Wrist Closure",
+        "Adjustable Wrist Strap Secured by 4 Metal Snaps"
+      ],
+      [
+        "Size Identification",
+        "Color-Coded Bands for Easy Sizing"
+      ],
+      [
+        "Standards",
+        "EN 1082-1, Food Grade Hygiene Certified"
+      ],
+      [
+        "Typical Application",
+        "Meat Carving, Industrial Cutting Machines, Textile Cutting, Plastic Slitting"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_pib12",
+    "category": "gloves",
+    "name": "Udyogi PIB12 12\" Heavy-Duty PVC Chemical Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/pib12.png",
+    "cert": "EN 388:2016 (4131) · EN ISO 374-1:2016 (AJLK) · CE",
+    "price": 240,
+    "rating": 4.8,
+    "reviews": 33,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "12\" (300mm) triple-dipped PVC coated gloves with cotton interlock liner and sandy palm finish for chemical, acid and alkali handling.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "PIB12"
+      ],
+      [
+        "Liner",
+        "Heavy-Duty Cotton Interlock Liner"
+      ],
+      [
+        "Coating Material",
+        "Blue Triple-Dipped PVC Coating"
+      ],
+      [
+        "Finish",
+        "Sandy Finish on Palm and Fingers for Enhanced Wet Grip"
+      ],
+      [
+        "Length",
+        "12\" (300 mm)"
+      ],
+      [
+        "Palm Thickness",
+        "1.7 mm Heavy-Duty Barrier"
+      ],
+      [
+        "Certifications",
+        "EN 388:2016 (4131), EN ISO 374-1:2016 Type A (AJLK)"
+      ],
+      [
+        "Chemical Resistance",
+        "A (Methanol), J (n-Heptane), L (Sulfuric Acid 96%), K (Sodium Hydroxide 40%)"
+      ],
+      [
+        "Typical Application",
+        "Chemical Processing, Electroplating, Degreasing, Acid Wash, Waste Water Treatment"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_ksg_1830",
+    "category": "gloves",
+    "name": "Udyogi KSG-1830 18-Gauge Chemical Gauntlet Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/ksg_1830.png",
+    "cert": "EN 388:2016 (4121X) · EN ISO 374-1 (AJLK) · EN 407 (X1XXXX) · CE",
+    "price": 340,
+    "rating": 4.9,
+    "reviews": 21,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "18-gauge ultra-dexterous nylon chemical gauntlet (300mm length) with dual-color green/black sandy grip and contact heat resistance up to 100°C.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "KSG-1830"
+      ],
+      [
+        "Liner",
+        "18-Gauge Seamless Knit Nylon Liner (Supreme Flexibility)"
+      ],
+      [
+        "Coating",
+        "Dual Tone Green/Black with Sandy Finish Grip"
+      ],
+      [
+        "Cuff / Length",
+        "Gauntlet Cuff, Length: 300 mm"
+      ],
+      [
+        "Available Size",
+        "Size 9"
+      ],
+      [
+        "Certifications",
+        "EN 388:2016 (4121X), EN ISO 374-1:2016 (AJLK), EN ISO 374-5:2016 (PASS Virus/Bacteria), EN 407:2004 (X1XXXX Contact Heat)"
+      ],
+      [
+        "Typical Application",
+        "Petrochemical Refineries, Chemical Tank Cleaning, Hot Liquid Immersion, Lab Maintenance"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_pib14",
+    "category": "gloves",
+    "name": "Udyogi PIB14 14\" Heavy-Duty PVC Chemical Gloves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/pib14.png",
+    "cert": "EN 388:2016 (4131) · EN ISO 374-1:2016 (AJLK) · CE",
+    "price": 290,
+    "rating": 4.8,
+    "reviews": 28,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "14\" (350mm) extended forearm PVC chemical gloves with triple dip sandy finish for dipping tanks and deep drum handling.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "PIB14"
+      ],
+      [
+        "Liner",
+        "Heavy-Duty Cotton Interlock Liner"
+      ],
+      [
+        "Coating",
+        "Triple-Dipped Blue PVC with Sandy Grip Finish"
+      ],
+      [
+        "Length",
+        "14\" (350 mm Extended Forearm Protection)"
+      ],
+      [
+        "Palm Thickness",
+        "1.7 mm"
+      ],
+      [
+        "Standards",
+        "EN 388:2016 (4131), EN ISO 374-1:2016 (AJLK)"
+      ],
+      [
+        "Typical Application",
+        "Chemical Dipping Tanks, Automotive Degreasing, Galvanizing Plants, Battery Manufacturing"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_pib_24",
+    "category": "gloves",
+    "name": "Udyogi PIB 24 Full-Arm 24\" PVC Chemical Sleeves",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/pib_24.png",
+    "cert": "EN 388:2016 (4131) · EN ISO 374-1:2016 (AJLK) · CE",
+    "price": 490,
+    "rating": 4.9,
+    "reviews": 17,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "24\" (600mm) full shoulder-length heavy PVC gauntlet with elasticated top cuff for complete arm immersion and splash safety.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "PIB 24"
+      ],
+      [
+        "Liner",
+        "Cotton Interlock Liner with Elasticated Arm Top"
+      ],
+      [
+        "Coating",
+        "Triple-Dipped PVC with Sandy Finish on Palm and Fingers"
+      ],
+      [
+        "Length",
+        "24\" (600 mm Shoulder-Length)"
+      ],
+      [
+        "Palm Thickness",
+        "1.7 mm"
+      ],
+      [
+        "Standards",
+        "EN 388:2016 (4131), EN ISO 374-1:2016 (AJLK)"
+      ],
+      [
+        "Typical Application",
+        "Deep Chemical Immersion, Effluent Treatment Plants (ETP), Acid Tank Maintenance, Agrochemical Mixing"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_armguard_velcro",
+    "category": "gloves",
+    "name": "Udyogi 18\" Cut Level 5 HPPE Armguard Sleeve with Velcro",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/armguard_velcro.png",
+    "cert": "EN 388:2016 (3542C) · CE",
+    "price": 320,
+    "rating": 4.9,
+    "reviews": 35,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "18\" (450mm) Cut Level 5 HPPE and spandex protective sleeve with adjustable bicep velcro strapping and thumbhole design.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "ARMGUARD WITH VELCRO"
+      ],
+      [
+        "Material",
+        "13-Gauge HPPE and Spandex Liner"
+      ],
+      [
+        "Cut Resistance",
+        "Cut Level 5 / TDM Level C (3542C)"
+      ],
+      [
+        "Dimensions",
+        "Length: 18\" (450 mm), Width: 4.6\""
+      ],
+      [
+        "Features",
+        "Adjustable Velcro Bicep Strap to Prevent Slippage, Available With/Without Thumbhole Design"
+      ],
+      [
+        "Standard",
+        "EN 388:2016 (3542C)"
+      ],
+      [
+        "Typical Application",
+        "Automotive Assembly Line, Stamping Plants, Glass Manufacturing, Sheet Metal Handling"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_pdsbb7045",
+    "category": "gloves",
+    "name": "Udyogi PDSBB7045 7-Gauge Blue Dotted Gloves (45g)",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/pdsbb7045.png",
+    "cert": "Industrial Standard · Udyogi Tested",
+    "price": 28,
+    "rating": 4.6,
+    "reviews": 48,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "7-gauge blue cotton knitted glove with single-side blue PVC dotting for high-friction grip in light packaging.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "PDSBB7045"
+      ],
+      [
+        "Liner",
+        "7-Gauge Blue Cotton Knitted Liner"
+      ],
+      [
+        "Dotting",
+        "Single-Side High-Grip Blue PVC Dots with UDYOGI Marking"
+      ],
+      [
+        "Weight",
+        "45 g per pair"
+      ],
+      [
+        "Typical Application",
+        "Warehouse Sorting, Packaging, Light Assembly, Loading & Unloading"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_pdsbb1060",
+    "category": "gloves",
+    "name": "Udyogi PDSBB1060 10-Gauge Blue Dotted Gloves (60g)",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/pdsbb1060.png",
+    "cert": "Industrial Standard · Udyogi Tested",
+    "price": 35,
+    "rating": 4.7,
+    "reviews": 39,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "10-gauge fine knit blue liner with blue PVC dotted palm. Weighs 60g for balanced comfort and tear resistance.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "PDSBB1060"
+      ],
+      [
+        "Liner",
+        "10-Gauge Fine Knit Blue Liner"
+      ],
+      [
+        "Dotting",
+        "Single-Side Blue Dotted Grip with UDYOGI Branding"
+      ],
+      [
+        "Weight",
+        "60 g per pair"
+      ],
+      [
+        "Typical Application",
+        "Carton Packing, Logistics, Material Handling, Light Engineering"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_pdswb7070",
+    "category": "gloves",
+    "name": "Udyogi PDSWB7070 7-Gauge White Dotted Gloves (70g)",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/pdswb7070.png",
+    "cert": "Industrial Standard · Udyogi Tested",
+    "price": 38,
+    "rating": 4.8,
+    "reviews": 52,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "7-gauge natural white cotton glove with dense blue PVC dots for general industrial material handling.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "PDSWB7070"
+      ],
+      [
+        "Liner",
+        "7-Gauge Bleached White Cotton Knitted Liner"
+      ],
+      [
+        "Dotting",
+        "Single-Side Blue Dotted High-Friction Grip"
+      ],
+      [
+        "Weight",
+        "70 g per pair"
+      ],
+      [
+        "Typical Application",
+        "Agriculture, General Industrial Handling, Construction Labor, Packaging"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_pdsbb7080",
+    "category": "gloves",
+    "name": "Udyogi PDSBB7080 7-Gauge Heavy Blue Dotted Gloves (80g)",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/pdsbb7080.png",
+    "cert": "Industrial Standard · Udyogi Tested",
+    "price": 42,
+    "rating": 4.9,
+    "reviews": 46,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Heavy-duty 80g 7-gauge blue knitted glove with heavy PVC dots for maximum durability in logistics and cargo handling.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "PDSBB7080"
+      ],
+      [
+        "Liner",
+        "7-Gauge Heavy Blue Cotton Liner"
+      ],
+      [
+        "Dotting",
+        "Heavy Density Single-Side Blue PVC Dots"
+      ],
+      [
+        "Weight",
+        "80 g per pair (Heavy-Duty Construction)"
+      ],
+      [
+        "Typical Application",
+        "Steel Yard Handling, Heavy Cargo Freight, Warehousing, Pallet Moving"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_pdsgb1062",
+    "category": "gloves",
+    "name": "Udyogi PDSGB1062 10-Gauge Grey Dotted Knitted Gloves (62g)",
+    "brand": "Udyogi",
+    "img": "assets/products/gloves/pdsgb1062.png",
+    "cert": "Industrial Standard · Udyogi Tested",
+    "price": 36,
+    "rating": 4.7,
+    "reviews": 27,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "10-gauge grey knitted liner (dirt-camouflaging) with blue PVC dotting for maintenance and machine shops.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Code",
+        "PDSGB1062"
+      ],
+      [
+        "Liner",
+        "10-Gauge Grey Knitted Polycotton Liner"
+      ],
+      [
+        "Dotting",
+        "Single-Side Blue Dotted Grip with UDYOGI Marking"
+      ],
+      [
+        "Weight",
+        "62 g per pair"
+      ],
+      [
+        "Typical Application",
+        "Machine Tool Operation, Auto Ancillary Units, Maintenance & Fabrication"
       ]
     ]
   }
