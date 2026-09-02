@@ -6,7 +6,7 @@
    "Export JSON" in the CMS to back up your content to a file.
 ========================================================= */
 
-const STORAGE_KEY = "passCorpContent_v12";
+const STORAGE_KEY = "passCorpContent_v13";
 
 
 /* =========================================================
@@ -149,8 +149,8 @@ const DEFAULT_CONTENT = {
     },
     {
       "id": "spill",
-      "name": "Spill Control & Kits",
-      "blurb": "Hydrocarbon oil & chemical hazmat spill kits",
+      "name": "Spill Control & Safety Cabinets",
+      "blurb": "Flammable storage cabinets, safety cans & spill containment",
       "emoji": "\ud83e\uddea"
     },
     {
@@ -15064,6 +15064,1366 @@ const DEFAULT_CONTENT = {
       [
         "Features",
         "Easy to Clean, Reusable and Highly Durable"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_wa8109100",
+    "category": "spill",
+    "name": "Udyogi Sysbel 6 Gal (22.6L) Foot-Operated Oily Waste Can (Red)",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/wa8109100.png",
+    "cert": "OSHA 29 CFR 1910.108 · FM Approved · CE",
+    "price": 4850,
+    "rating": 4.9,
+    "reviews": 31,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Essential safety receptacle for rags and cloths soaked with flammable liquids, solvents, thinners and oils to prevent spontaneous combustion fires.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "WA8109100"
+      ],
+      [
+        "Capacity",
+        "6 Gallon / 22.6 Litre"
+      ],
+      [
+        "Operation Type",
+        "Hands-Free Foot Pedal Operated (Opens ≤ 60°)"
+      ],
+      [
+        "Lid Style",
+        "Self-Closing Snug-Fitting Lid (Restricts Oxygen)"
+      ],
+      [
+        "Ventilation Base",
+        "Elevated Perforated Base Disperses Heat & Air Circulation"
+      ],
+      [
+        "Dimensions (H x D)",
+        "40 x 30 cm"
+      ],
+      [
+        "Net Weight",
+        "4.5 Kg"
+      ],
+      [
+        "Certifications",
+        "OSHA 29 CFR 1910.108, FM Approved, CE Certified"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_wa8109100y",
+    "category": "spill",
+    "name": "Udyogi Sysbel 10 Gal (38L) Oily Waste Can (Yellow)",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/wa8109100y.png",
+    "cert": "OSHA 29 CFR 1910.108 · FM Approved · CE",
+    "price": 6200,
+    "rating": 4.8,
+    "reviews": 24,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "High-visibility yellow foot-operated oily waste container for solvent-soaked wipes, preventing shopfloor ignition risks.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "WA8109300Y"
+      ],
+      [
+        "Capacity",
+        "10 Gallon / 38 Litre"
+      ],
+      [
+        "Body Colour",
+        "High-Visibility Yellow"
+      ],
+      [
+        "Operation",
+        "Hands-Free Foot Pedal"
+      ],
+      [
+        "Lid Design",
+        "Self-Closing (Snuffs Out Fire Spontaneously)"
+      ],
+      [
+        "Dimensions (H x D)",
+        "46 x 35 cm"
+      ],
+      [
+        "Net Weight",
+        "6.0 Kg"
+      ],
+      [
+        "Standards",
+        "OSHA Compliant, FM Global Approved, CE"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_scan002r",
+    "category": "spill",
+    "name": "Udyogi Sysbel Type I 5 Gallon (19L) Steel Safety Can (Red)",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/scan002r.png",
+    "cert": "OSHA 29 CFR 1910.106 · FM Approved · UL/ULC",
+    "price": 3450,
+    "rating": 5.0,
+    "reviews": 58,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Galvanized steel Type I safety container for gasoline and flammable liquids with internal stainless steel flame arrester.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "SCAN002R"
+      ],
+      [
+        "Type Classification",
+        "Type I Safety Can (Single Spout for Filling & Pouring)"
+      ],
+      [
+        "Capacity",
+        "5 Gallon / 19 Litre"
+      ],
+      [
+        "Material",
+        "High-Grade Hot-Dipped Galvanized Steel (0.8mm)"
+      ],
+      [
+        "Safety Feature",
+        "Double Mesh Stainless Steel Flame Arrester Prevents Flashback Ignition"
+      ],
+      [
+        "Pressure Relief",
+        "Automatic Positive-Pressure Relief Mechanism (3 to 5 psi)"
+      ],
+      [
+        "Dimensions (H x D)",
+        "29 x 40 cm"
+      ],
+      [
+        "Approvals",
+        "OSHA 29 CFR 1910.106, NFPA 30, FM Approved, UL/ULC"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_scan004r",
+    "category": "spill",
+    "name": "Udyogi Sysbel Type II 5 Gallon (19L) Safety Can with Metal Hose",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/scan004r.png",
+    "cert": "OSHA 29 CFR 1910.106 · FM Approved · UL/ULC",
+    "price": 5200,
+    "rating": 5.0,
+    "reviews": 47,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Two-opening Type II safety can featuring independent fill opening and precision flexible metal pouring hose for controlled dispensing.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "SCAN004R"
+      ],
+      [
+        "Type Classification",
+        "Type II Safety Can (Dual Openings: Pour + Fill)"
+      ],
+      [
+        "Capacity",
+        "5 Gallon / 19 Litre"
+      ],
+      [
+        "Dispensing Spout",
+        "Flexible Metal Hose (9\" Length) with Grounding Wire Bracket"
+      ],
+      [
+        "Safety Feature",
+        "Dual Dual-Density Flame Arresters on Both Inlets"
+      ],
+      [
+        "Dimensions (H x D)",
+        "29 x 40 cm"
+      ],
+      [
+        "Approvals",
+        "OSHA 29 CFR 1910.106, NFPA 30, FM Global, UL Listed"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_scan004y",
+    "category": "spill",
+    "name": "Udyogi Sysbel Type II 5 Gallon (19L) Safety Can (Yellow / Diesel)",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/scan004y.png",
+    "cert": "OSHA 29 CFR 1910.106 · FM Approved",
+    "price": 5350,
+    "rating": 4.9,
+    "reviews": 32,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Yellow Type II safety container with flexible metal hose designated specifically for diesel fuel, solvents and combustibles.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "SCAN004Y"
+      ],
+      [
+        "Capacity",
+        "5 Gallon / 19 Litre"
+      ],
+      [
+        "Colour Designation",
+        "Yellow (OSHA Designated for Diesel & Light Oils)"
+      ],
+      [
+        "Pouring Spout",
+        "Flexible Metal Hose for Precision Pouring"
+      ],
+      [
+        "Flame Arrester",
+        "Built-in Stainless Steel Flame Arrester"
+      ],
+      [
+        "Dimensions (H x D)",
+        "29 x 40 cm"
+      ],
+      [
+        "Certifications",
+        "FM Approved, OSHA 29 CFR 1910.106"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_c_scan002r_1",
+    "category": "spill",
+    "name": "Udyogi Sysbel 5 Gallon Safety Can with Bottom Dispensing Faucet",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/c_scan002r_1.png",
+    "cert": "OSHA Compliant · FM Approved Brass Faucet",
+    "price": 6100,
+    "rating": 4.9,
+    "reviews": 19,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Bench-top dispensing safety can fitted with heavy-duty self-closing brass bottom faucet for effortless fluid transfer.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "C-SCAN002R-1"
+      ],
+      [
+        "Capacity",
+        "5 Gallon / 19 Litre"
+      ],
+      [
+        "Special Feature",
+        "Factory-Fitted Bottom Brass Faucet Tap with Self-Closing Valve"
+      ],
+      [
+        "Body Construction",
+        "Heavy Galvanized Steel with Fire Red Powder Coat"
+      ],
+      [
+        "Dimensions (H x D)",
+        "29 x 40 cm"
+      ],
+      [
+        "Weight",
+        "2.15 Kg (Empty)"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_scan030w",
+    "category": "spill",
+    "name": "Udyogi Sysbel 2.0L Stainless Steel Dispensing Plunger Can",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/scan030w.png",
+    "cert": "OSHA 29 CFR 1910.106 · FM Approved",
+    "price": 3200,
+    "rating": 4.8,
+    "reviews": 28,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Stainless steel plunger dispensing can safely moistens cleaning rags and swabs with flammable solvent without waste or fumes.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "SCAN030W"
+      ],
+      [
+        "Capacity",
+        "2.0 Litre"
+      ],
+      [
+        "Material",
+        "Premium Grade Stainless Steel (Chemical Resistant)"
+      ],
+      [
+        "Mechanism",
+        "Spring-Loaded Brass Pump with Perforated Flame Arrester Pan"
+      ],
+      [
+        "Dimensions (H x D)",
+        "11.5 x 25 cm"
+      ],
+      [
+        "Safety Feature",
+        "Pumps Measured Fluid Upwards; Excess Drains Back Safely"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_wa8109200",
+    "category": "spill",
+    "name": "Udyogi Sysbel 6 Gallon (22.7L) Biohazard Waste Can (Red)",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/wa8109200.png",
+    "cert": "OSHA 29 CFR 1910.1030 (Bloodborne Pathogens)",
+    "price": 5400,
+    "rating": 4.9,
+    "reviews": 22,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Foot-operated biohazard container for medical waste, infectious materials, Petri dishes and biological contamination control.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "WA8109200"
+      ],
+      [
+        "Capacity",
+        "6 Gallon / 22.7 Litre"
+      ],
+      [
+        "Colour",
+        "Biohazard Red with Universal Biohazard Warning Graphic"
+      ],
+      [
+        "Operation",
+        "Foot Pedal Operated Self-Closing Lid"
+      ],
+      [
+        "Dimensions (H x W x D)",
+        "42 x 38 x 38 cm"
+      ],
+      [
+        "Standard",
+        "OSHA 29 CFR 1910.1030 Compliant"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_wa810040",
+    "category": "spill",
+    "name": "Udyogi Sysbel 4 Gallon (15L) Flammable Storage Cabinet",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/wa810040.png",
+    "cert": "OSHA 29 CFR 1910.106 · NFPA CODE 30 · FM Approved",
+    "price": 18500,
+    "rating": 4.9,
+    "reviews": 35,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Compact 4-gallon benchtop/wall flammable cabinet with double-walled 18-gauge steel, 38mm air barrier and 3-point bullet lock.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "WA810040"
+      ],
+      [
+        "Storage Volume",
+        "4 Gallon / 15 Litre"
+      ],
+      [
+        "Door Style",
+        "Single Door / Manual Operation"
+      ],
+      [
+        "Wall Construction",
+        "Double-Walled 18-Gauge (1.2mm) Cold Rolled Steel with 38mm Insulating Air Space"
+      ],
+      [
+        "Shelf Capacity",
+        "1 Adjustable Galvanized Shelf (50 Kgs Load)"
+      ],
+      [
+        "Containment Sump",
+        "50mm Leak-Proof Liquid Sump at Base"
+      ],
+      [
+        "Dimensions (H x W x D)",
+        "56 x 43 x 43 cm"
+      ],
+      [
+        "Fire Resistance",
+        "15 Minute Flash Fire Retardant"
+      ],
+      [
+        "Certifications",
+        "OSHA 29 CFR 1910.106, NFPA CODE 30, FM Global Standard 6050"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_wa810120",
+    "category": "spill",
+    "name": "Udyogi Sysbel 12 Gallon (45L) Flammable Storage Cabinet",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/wa810120.png",
+    "cert": "OSHA 29 CFR 1910.106 · NFPA CODE 30 · FM Approved",
+    "price": 26500,
+    "rating": 4.8,
+    "reviews": 29,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Single door industrial flammable cabinet for laboratory and workshop chemical can storage with dual flame arrester vents.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "WA810120"
+      ],
+      [
+        "Volume",
+        "12 Gallon / 45 Litre"
+      ],
+      [
+        "Door Type",
+        "Single Door / Manual"
+      ],
+      [
+        "Adjustable Shelves",
+        "1 Shelf (50 Kgs Load Bearing)"
+      ],
+      [
+        "Dimensions (H x W x D)",
+        "89 x 59 x 46 cm"
+      ],
+      [
+        "Venting Ports",
+        "Dual Vents with Built-In Flame Arresters on Both Sides"
+      ],
+      [
+        "Safety Grounding",
+        "Static Grounding Connector Included"
+      ],
+      [
+        "Standard",
+        "OSHA, NFPA 30, FM Approved"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_wa810220",
+    "category": "spill",
+    "name": "Udyogi Sysbel 22 Gallon (83L) Slimline Flammable Cabinet",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/wa810220.png",
+    "cert": "OSHA · NFPA 30 · FM Approved",
+    "price": 36000,
+    "rating": 4.9,
+    "reviews": 26,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Slim-profile space-saving flammable storage cabinet (60cm width) with 3 adjustable shelves for tight shopfloors.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "WA810220"
+      ],
+      [
+        "Capacity",
+        "22 Gallon / 83 Litre"
+      ],
+      [
+        "Profile Style",
+        "Slimline Space Saver (165cm Height x 60cm Width)"
+      ],
+      [
+        "Shelves",
+        "3 Adjustable Spill-Slope Galvanized Shelves (50 Kg Each)"
+      ],
+      [
+        "Door",
+        "Single Door / Manual"
+      ],
+      [
+        "Dimensions (H x W x D)",
+        "165 x 60 x 46 cm"
+      ],
+      [
+        "Standards",
+        "OSHA 29 CFR 1910.106, NFPA 30, FM Approved"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_wa810300",
+    "category": "spill",
+    "name": "Udyogi Sysbel 30 Gallon (114L) Double Door Flammable Cabinet",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/wa810300.png",
+    "cert": "OSHA 29 CFR 1910.106 · NFPA CODE 30 · FM Approved",
+    "price": 42500,
+    "rating": 5.0,
+    "reviews": 64,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Most popular industrial flammable storage cabinet worldwide. 30-gallon capacity with double doors, 3-point stainless latch and 50mm containment sump.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "WA810300"
+      ],
+      [
+        "Volume",
+        "30 Gallon / 114 Litre"
+      ],
+      [
+        "Door Configuration",
+        "Double Door / Manual (180° Door Swing)"
+      ],
+      [
+        "Lock Mechanism",
+        "Keyed Paddle Latch with 3-Point Stainless Bullet Latching"
+      ],
+      [
+        "Shelves",
+        "1 Heavy Galvanized Shelf (50 Kgs Load Bearing)"
+      ],
+      [
+        "Dimensions (H x W x D)",
+        "112 x 109 x 46 cm"
+      ],
+      [
+        "Finish",
+        "Lead-Free Epoxy-Polyester Hybrid Powder Coating"
+      ],
+      [
+        "Approvals",
+        "OSHA 29 CFR 1910.106, NFPA CODE 30, FM Approved Standard 6050"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_wa810450",
+    "category": "spill",
+    "name": "Udyogi Sysbel 45 Gallon (170L) Double Door Flammable Cabinet",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/wa810450.png",
+    "cert": "OSHA 29 CFR 1910.106 · NFPA CODE 30 · FM Approved",
+    "price": 52000,
+    "rating": 5.0,
+    "reviews": 78,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Heavy-duty 45-gallon flammable chemical storage cabinet with 2 reinforced 100kg shelves, 50mm containment sump and continuous piano hinges.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "WA810450"
+      ],
+      [
+        "Volume",
+        "45 Gallon / 170 Litre"
+      ],
+      [
+        "Door Type",
+        "Double Door / Manual"
+      ],
+      [
+        "Shelves",
+        "2 Adjustable Shelves (100 Kgs Load Bearing Each)"
+      ],
+      [
+        "Dimensions (H x W x D)",
+        "165 x 109 x 46 cm"
+      ],
+      [
+        "Liquid Sump",
+        "50mm Deep Leak-Proof Sump for Spill Control"
+      ],
+      [
+        "Lock System",
+        "3-Point Mutual Latch with Master Key Padlock Option"
+      ],
+      [
+        "Standard",
+        "OSHA 29 CFR 1910.106, NFPA CODE 30, FM Approved"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_wa810600",
+    "category": "spill",
+    "name": "Udyogi Sysbel 60 Gallon (227L) Flammable Storage Cabinet",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/wa810600.png",
+    "cert": "OSHA 29 CFR 1910.106 · NFPA CODE 30 · FM Approved",
+    "price": 63500,
+    "rating": 4.9,
+    "reviews": 45,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Deep-capacity (86cm deep) 60-gallon cabinet designed to accommodate large containers, carboys and flammable chemical cans.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "WA810600"
+      ],
+      [
+        "Volume",
+        "60 Gallon / 227 Litre"
+      ],
+      [
+        "Door Type",
+        "Double Door / Manual"
+      ],
+      [
+        "Shelves",
+        "2 Heavy-Duty Shelves (100 Kgs Load Rating Each)"
+      ],
+      [
+        "Dimensions (H x W x D)",
+        "165 x 86 x 86 cm (Deep Square Design)"
+      ],
+      [
+        "Construction",
+        "Double Wall 18-Gauge Cold Rolled Steel with 38mm Insulating Air Gap"
+      ],
+      [
+        "Standard",
+        "OSHA, NFPA 30, FM Approved"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_wa810860",
+    "category": "spill",
+    "name": "Udyogi Sysbel 90 Gallon (340L) Heavy Duty Flammable Cabinet",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/wa810860.png",
+    "cert": "OSHA 29 CFR 1910.106 · NFPA CODE 30 · FM Approved",
+    "price": 78500,
+    "rating": 5.0,
+    "reviews": 52,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Maximum-capacity 90-gallon flammable storage cabinet for major industrial manufacturing, refinery and warehouse facilities.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "WA810860"
+      ],
+      [
+        "Storage Volume",
+        "90 Gallon / 340 Litre"
+      ],
+      [
+        "Door Style",
+        "Double Door / Manual"
+      ],
+      [
+        "Shelves",
+        "2 Reinforced Heavy Shelves (100 Kgs Load Bearing Each)"
+      ],
+      [
+        "Dimensions (H x W x D)",
+        "165 x 109 x 87 cm"
+      ],
+      [
+        "Safety Hinges",
+        "Continuous Full-Length Piano Hinges Ensure Smooth Closure"
+      ],
+      [
+        "Approvals",
+        "OSHA 29 CFR 1910.106, NFPA 30, FM Approved Standard 6050"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_wa810451",
+    "category": "spill",
+    "name": "Udyogi Sysbel 45 Gallon Self-Closing Flammable Cabinet",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/wa810451.png",
+    "cert": "OSHA · NFPA CODE 30 · FM Approved · Fusible Link",
+    "price": 58500,
+    "rating": 5.0,
+    "reviews": 39,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Self-closing double doors equipped with thermal fusible link that automatically releases and snaps doors shut at 74°C in a fire.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "WA810451"
+      ],
+      [
+        "Volume",
+        "45 Gallon / 170 Litre"
+      ],
+      [
+        "Door Mechanism",
+        "Double Door Self-Closing with 74°C (165°F) Thermal Fusible Link"
+      ],
+      [
+        "Automatic Closure",
+        "Doors Snap Shut Automatically in Fire Condition"
+      ],
+      [
+        "Dimensions (H x W x D)",
+        "165 x 109 x 46 cm"
+      ],
+      [
+        "Shelves",
+        "2 Shelves (100 Kgs Rating Each)"
+      ],
+      [
+        "Standard",
+        "OSHA, NFPA 1 & 30, Uniform Fire Code (UFC), FM Approved"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_se890450",
+    "category": "spill",
+    "name": "Udyogi Sysbel 45 Gal (170L) 90-Minute Fire Rated Safety Cabinet",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/se890450.png",
+    "cert": "EN 14470-1:2006 (Type 90) · TÜV Rheinland · CE",
+    "price": 165000,
+    "rating": 5.0,
+    "reviews": 18,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "European Type 90 certified cabinet providing full 90 minutes of fire resistance tested by TÜV Rheinland to protect lives and allow evacuation.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "SE890450"
+      ],
+      [
+        "Fire Endurance",
+        "90 Minutes (Type 90 under EN 14470-1:2006)"
+      ],
+      [
+        "Volume",
+        "45 Gallon / 170 Litre"
+      ],
+      [
+        "Door Type",
+        "Double Door Self-Closing with Thermal Sensors"
+      ],
+      [
+        "Insulation",
+        "Multi-Layer Thermal Aerogel & Fireboard Barrier"
+      ],
+      [
+        "Automatic Sealing",
+        "Intumescent Seal Expands at 100°C to Seal All Gaps Completely"
+      ],
+      [
+        "Dimensions (H x W x D)",
+        "204 x 116 x 62.5 cm"
+      ],
+      [
+        "Certification",
+        "TÜV Rheinland Tested, CE Compliant, EN 14470-1"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_se490450b",
+    "category": "spill",
+    "name": "Udyogi Sysbel 90-Minute Battery Charging Safety Cabinet (40 Sockets)",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/se490450b.png",
+    "cert": "EN 14470-1 (90 Min) · Fire Extinguishing Port · 40 PUD",
+    "price": 245000,
+    "rating": 5.0,
+    "reviews": 14,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "90-minute fire resistant charging safe for lithium-ion power tool batteries, drones and electric equipment with 40 sockets and thermal cutoffs.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "SE490450B"
+      ],
+      [
+        "Fire Resistance",
+        "90 Minutes Rated (EN 14470-1:2006)"
+      ],
+      [
+        "Industrial Sockets",
+        "40 Power Outlets (5 Shelves x 8 Sockets Each)"
+      ],
+      [
+        "Operating Voltage",
+        "AC 220V / 16A with Circuit Breaker Overload Protection"
+      ],
+      [
+        "Door Type",
+        "Double Door Automatic Closure"
+      ],
+      [
+        "Dimensions (H x W x D)",
+        "218 x 116 x 62.5 cm"
+      ],
+      [
+        "Application",
+        "Lithium-ion Battery Charging, Drone Battery Safe, AGV Charging"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_se790102",
+    "category": "spill",
+    "name": "Udyogi Sysbel 2-Cylinder 90-Minute Gas Cylinder Storage Cabinet",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/se790102.png",
+    "cert": "EN 14470-2 (Type G90) · 90-Minute Fire Rated · CE",
+    "price": 138000,
+    "rating": 5.0,
+    "reviews": 16,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "90-minute fire rated gas cylinder bunker for 2 pressurized cylinders with cylinder ramp, clamp brackets and exhaust ventilation port.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "SE790102"
+      ],
+      [
+        "Fire Endurance",
+        "90 Minutes (Type G90 under EN 14470-2:2006)"
+      ],
+      [
+        "Capacity",
+        "2 Standard High-Pressure Gas Cylinders"
+      ],
+      [
+        "Cylinder Loading Ramp",
+        "Built-in Foldable Stainless Steel Cylinder Rolling Ramp"
+      ],
+      [
+        "Safety Restraints",
+        "Adjustable Stainless Steel Cylinder Straps"
+      ],
+      [
+        "Dimensions (H x W x D)",
+        "205 x 90 x 62.5 cm"
+      ],
+      [
+        "Door",
+        "Double Door Manual with Key Lock"
+      ],
+      [
+        "Standards",
+        "EN 14470-2, CE Certified"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_wa510024",
+    "category": "spill",
+    "name": "Udyogi Sysbel 45 Gal Outdoor Weatherproof Flammable Cabinet",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/wa510024.png",
+    "cert": "Outdoor Rated · Slanted Rain Roof · Forklift Base",
+    "price": 68000,
+    "rating": 4.9,
+    "reviews": 23,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Outdoor-grade flammable liquids cabinet with sloped weather-shedding roof, UV-resistant coating and integrated forklift skid channels.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "WA510024"
+      ],
+      [
+        "Volume",
+        "45 Gallon / 170 Litre"
+      ],
+      [
+        "Weatherproofing",
+        "Slanted Overhang Rain Roof & Weather-Strip Door Seals"
+      ],
+      [
+        "Handling",
+        "Built-in Forklift Pockets at Base for Easy Relocation"
+      ],
+      [
+        "Dimensions (H x W x D)",
+        "108 x 109 x 57 cm"
+      ],
+      [
+        "Shelves",
+        "2 Adjustable Shelves (100 Kgs Capacity Each)"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_wa810550",
+    "category": "spill",
+    "name": "Udyogi Sysbel 55 Gallon (207L) Drum Flammable Storage Cabinet",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/wa810550.png",
+    "cert": "OSHA 29 CFR 1910.106 · NFPA 30 · FM Approved",
+    "price": 69500,
+    "rating": 5.0,
+    "reviews": 34,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Designed specifically for safe vertical storage of one 55-gallon (200L) chemical drum with bottom roller ramp for easy loading.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "WA810550"
+      ],
+      [
+        "Storage Volume",
+        "55 Gallon / 207 Litre (Single Vertical Drum)"
+      ],
+      [
+        "Door Type",
+        "Double Door / Manual"
+      ],
+      [
+        "Drum Loading Base",
+        "Heavy-Duty Drum Roller Base for Ergonomic Loading"
+      ],
+      [
+        "Dimensions (H x W x D)",
+        "165 x 86 x 86 cm"
+      ],
+      [
+        "Sump Capacity",
+        "Deep Containment Sump Traps Accidental Leaks"
+      ],
+      [
+        "Standards",
+        "OSHA 29 CFR 1910.106, NFPA 30, FM Approved"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_wa0810230",
+    "category": "spill",
+    "name": "Udyogi Sysbel 23 Gallon (87L) Under-Counter Flammable Cabinet",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/wa0810230.png",
+    "cert": "OSHA · NFPA 30 · FM Approved",
+    "price": 38500,
+    "rating": 4.8,
+    "reviews": 27,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Designed to slide under standard laboratory workbenches and fume hoods (89cm height) for immediate flammable solvent access.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "WA0810230"
+      ],
+      [
+        "Volume",
+        "23 Gallon / 87 Litre"
+      ],
+      [
+        "Form Factor",
+        "Under-Counter / Lab Workbench Height (89 cm)"
+      ],
+      [
+        "Door Type",
+        "Double Door / Manual"
+      ],
+      [
+        "Dimensions (H x W x D)",
+        "89 x 89 x 55 cm"
+      ],
+      [
+        "Shelves",
+        "1 Adjustable Shelf (50 Kgs Capacity)"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_wa810450r",
+    "category": "spill",
+    "name": "Udyogi Sysbel 45 Gallon (170L) Combustible Liquids Cabinet (Red)",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/wa810450r.png",
+    "cert": "OSHA 29 CFR 1910.106 · NFPA 30 · FM Approved",
+    "price": 53500,
+    "rating": 4.9,
+    "reviews": 38,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Red safety cabinet designed specifically for paintings, inks, oils and combustible liquids with flash point ≥ 37.8°C.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "WA810450R"
+      ],
+      [
+        "Volume",
+        "45 Gallon / 170 Litre"
+      ],
+      [
+        "Target Chemicals",
+        "Paints, Inks, Lubricating Oils, Resins (Combustible Flash Point ≥ 37.8°C)"
+      ],
+      [
+        "Colour Code",
+        "OSHA Red Powder Coat"
+      ],
+      [
+        "Door Type",
+        "Double Door / Manual"
+      ],
+      [
+        "Dimensions (H x W x D)",
+        "165 x 109 x 46 cm"
+      ],
+      [
+        "Shelves",
+        "2 Adjustable Heavy Shelves (100 Kgs Load Each)"
+      ],
+      [
+        "Standards",
+        "OSHA 29 CFR 1910.106, NFPA 30, FM Approved"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_wa810450b",
+    "category": "spill",
+    "name": "Udyogi Sysbel 45 Gallon (170L) Corrosive Liquids Cabinet (Blue)",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/wa810450b.png",
+    "cert": "OSHA 29 CFR 1910.106 · NFPA 30 · FM Approved",
+    "price": 55000,
+    "rating": 5.0,
+    "reviews": 42,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Blue steel safety cabinet lined with acid-resistant polyethylene spill trays on shelves and sump for corrosive acids and bases.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "WA810450B"
+      ],
+      [
+        "Volume",
+        "45 Gallon / 170 Litre"
+      ],
+      [
+        "Target Chemicals",
+        "Corrosive Liquids, Mild Acids, Bases, Caustic Solvents"
+      ],
+      [
+        "Colour Code",
+        "Safety Blue with Hazard Corrosive Warning"
+      ],
+      [
+        "Corrosion Protection",
+        "Fitted with Polyethylene (PE) Acid Trays on Shelves and Sump"
+      ],
+      [
+        "Dimensions (H x W x D)",
+        "165 x 109 x 46 cm"
+      ],
+      [
+        "Standards",
+        "OSHA, NFPA 30, FM Global 6050"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_wa810450w",
+    "category": "spill",
+    "name": "Udyogi Sysbel 45 Gallon Toxic Chemicals Cabinet (White)",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/wa810450w.png",
+    "cert": "OSHA · NFPA 30 · FM Approved",
+    "price": 54000,
+    "rating": 4.9,
+    "reviews": 21,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "White powder-coated safety cabinet designated for hazardous toxic chemicals, poison control and pharmaceutical active ingredients.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "WA810450W"
+      ],
+      [
+        "Volume",
+        "45 Gallon / 170 Litre"
+      ],
+      [
+        "Colour",
+        "Safety White (OSHA Designated for Toxic Substances)"
+      ],
+      [
+        "Door Type",
+        "Double Door / Manual (Keyed Security Latch)"
+      ],
+      [
+        "Dimensions (H x W x D)",
+        "165 x 109 x 46 cm"
+      ],
+      [
+        "Shelves",
+        "2 Adjustable Shelves (100 Kgs Rating Each)"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_wa810450g",
+    "category": "spill",
+    "name": "Udyogi Sysbel 45 Gallon Pesticide Storage Cabinet (Green)",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/wa810450g.png",
+    "cert": "OSHA · NFPA 30 · FM Approved",
+    "price": 54000,
+    "rating": 4.8,
+    "reviews": 18,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Green chemical locker for secure storage of insecticides, agricultural pesticides, disinfectants and agrochemicals.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "WA810450G"
+      ],
+      [
+        "Volume",
+        "45 Gallon / 170 Litre"
+      ],
+      [
+        "Colour",
+        "Safety Green (Designated for Pesticides & Insecticides)"
+      ],
+      [
+        "Door Type",
+        "Double Door / Manual"
+      ],
+      [
+        "Dimensions (H x W x D)",
+        "165 x 109 x 46 cm"
+      ],
+      [
+        "Shelves",
+        "2 Adjustable Shelves (100 Kgs Load Bearing)"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_acp810030",
+    "category": "spill",
+    "name": "Udyogi Sysbel 30 Gallon (114L) 8mm Polypropylene Acid Cabinet",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/acp810030.png",
+    "cert": "100% Rust-Proof · 8mm Pure Polypropylene (PP)",
+    "price": 68500,
+    "rating": 5.0,
+    "reviews": 36,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Seamless welded 8mm thick polypropylene construction completely immune to rust and corrosion from fuming nitric, sulfuric and hydrochloric acids.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "ACP810030"
+      ],
+      [
+        "Volume",
+        "30 Gallon / 114 Litre"
+      ],
+      [
+        "Material Construction",
+        "8mm High-Strength Pure Polypropylene (PP) Sheet"
+      ],
+      [
+        "Corrosion Resistance",
+        "Impermeable to Fuming Acids (Nitric, Hydrochloric, Sulfuric Acid)"
+      ],
+      [
+        "Door Hardware",
+        "Non-Metallic All-Polypropylene Acid-Proof Hinges & Latches"
+      ],
+      [
+        "Dimensions (H x W x D)",
+        "112 x 109 x 46 cm"
+      ],
+      [
+        "Liquid Sump",
+        "Liquid-Tight Sump Traps Acid Spills"
+      ]
+    ]
+  },
+  {
+    "id": "sysbel_wab001",
+    "category": "spill",
+    "name": "Udyogi Sysbel Wall-Mounted Steel MSDS Document Storage Box",
+    "brand": "Udyogi Sysbel",
+    "img": "assets/products/cabinets/wab001.png",
+    "cert": "OSHA Hazard Communication Standard",
+    "price": 1650,
+    "rating": 4.9,
+    "reviews": 63,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Heavy-duty steel wall-mounted lockable documentation box for Material Safety Data Sheets (MSDS / SDS) and plant chemical dossiers.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Sysbel"
+      ],
+      [
+        "Model Number",
+        "WAB001 / DB01"
+      ],
+      [
+        "Application",
+        "Mounts onto Steel Safety Cabinets or Factory Walls"
+      ],
+      [
+        "Material",
+        "Sturdy Powder-Coated Red Steel Case"
+      ],
+      [
+        "Signage",
+        "High-Contrast \"MSDS - Material Safety Data Sheet\" Label"
+      ],
+      [
+        "Dimensions (H x W x D)",
+        "30.8 x 23 x 4.5 cm"
+      ],
+      [
+        "Weight",
+        "0.45 Kg"
+      ],
+      [
+        "Compliance",
+        "OSHA 1910.1200 Hazard Communication"
       ]
     ]
   }
