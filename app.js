@@ -311,7 +311,7 @@ function renderHeader(){
             <button class="nav-link${STATE.view==="about"?" active":""}" onclick="A.goAbout()">About us</button>
             <button class="nav-link${STATE.view==="shop"?" active":""}" onclick="A.goShop('all')">Full Catalogue</button>
             <button class="nav-link${STATE.view==="brands"?" active":""}" onclick="A.goBrands()">Brands</button>
-            <button class="nav-link${STATE.view==="compare"?" active":""}" onclick="A.goCompare()" title="Brand & Technical Comparison Matrix">⚖️ Compare Brands</button>
+            <button class="nav-link${STATE.view==="compare"?" active":""}" onclick="A.goCompare()" title="Brand & Technical Comparison Matrix">Compare Brands</button>
             <button class="nav-link" onclick="A.openRFQ()">Instant RFQ ${STATE.rfqItems.length ? `<span class="rfq-count-badge">${STATE.rfqItems.length}</span>` : ''}</button>
             <button class="nav-link${STATE.view==="contact"?" active":""}" onclick="A.goContact()">Contact us</button>
           </nav>
@@ -326,7 +326,7 @@ function renderHeader(){
         <button class="mobile-nav-link${STATE.view==="about"?" active":""}" onclick="A.goAbout()"><span>🏢 About PASS CORP.</span> ${icon("chevronRight",14)}</button>
         <button class="mobile-nav-link${STATE.view==="shop"?" active":""}" onclick="A.goShop('all')"><span>🛡️ Full Catalogue (186+ Products)</span> ${icon("chevronRight",14)}</button>
         <button class="mobile-nav-link${STATE.view==="brands"?" active":""}" onclick="A.goBrands()"><span>⭐ Authorised Brands</span> ${icon("chevronRight",14)}</button>
-        <button class="mobile-nav-link${STATE.view==="compare"?" active":""}" onclick="A.goCompare()"><span>⚖️ Compare Brands (Brand Matrix)</span> ${icon("chevronRight",14)}</button>
+        <button class="mobile-nav-link${STATE.view==="compare"?" active":""}" onclick="A.goCompare()"><span>Compare Brands</span> ${icon("chevronRight",14)}</button>
         <button class="mobile-nav-link" onclick="A.openRFQ();A.closeMobileMenu()"><span>⚡ Instant RFQ Engine</span> ${STATE.rfqItems.length ? `<span class="rfq-count-badge">${STATE.rfqItems.length}</span>` : icon("chevronRight",14)}</button>
         <button class="mobile-nav-link${STATE.view==="contact"?" active":""}" onclick="A.goContact()"><span>📞 Contact & Location</span> ${icon("chevronRight",14)}</button>
         <div style="padding-top:12px;margin-top:8px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px">
@@ -363,7 +363,7 @@ function renderFooter(){
           <h3>Company</h3>
           <a onclick="A.goAbout()">About us</a>
           <a onclick="A.goBrands()">Authorised brands</a>
-          <a onclick="A.goCompare()">⚖️ Brand Comparison Matrix</a>
+          <a onclick="A.goCompare()">Brand Comparison Matrix</a>
           <a onclick="A.goContact()">Bulk orders</a>
         </div>
         <div>
@@ -376,7 +376,7 @@ function renderFooter(){
       <div class="footer-bottom">
         <span>© 2026 Pass Corp.</span>
         <div style="display:inline-flex;align-items:center;gap:18px;">
-          <a onclick="A.goCompare()" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer">⚖️ Compare Matrix</a>
+          <a onclick="A.goCompare()" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer">Compare Brands</a>
           <a href="invotor.html?v=5" target="_blank" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer">${icon("box",13)} Invotor</a>
           <a href="quotation.html?secure=1" target="_blank" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer">${icon("box",13)} Quotor</a>
           <a href="admin.html" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer">${icon("settings",13)} Manage content</a>
