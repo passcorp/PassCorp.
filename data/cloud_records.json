@@ -1,5 +1,5 @@
 {
-  "version": "2026.09.03.v11",
+  "version": "2026.09.03.v12",
   "lastUpdated": "2026-09-01T10:25:25.058Z",
   "updatedBy": "PASS CORP. Unified 3-Way Cloud",
   "catalogContent": {
@@ -14057,6 +14057,958 @@
           [
             "Standard",
             "IS 15298 Part 3"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_resprotek_8200",
+        "category": "resp",
+        "name": "Udyogi Resprotek 8200 Reusable Half Face Mask (TPE)",
+        "brand": "Udyogi Resprotek",
+        "img": "assets/products/respiratory/resprotek_8200.png",
+        "cert": "CE EN 140:1998 · Bayonet Twin Port",
+        "price": 680,
+        "rating": 4.9,
+        "reviews": 38,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Reusable twin-filter half face mask made of durable hypoallergenic TPE with bayonet connection and drop-down head harness.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi Resprotek"
+          ],
+          [
+            "Model Name",
+            "8200"
+          ],
+          [
+            "Facepiece Material",
+            "Hypoallergenic Thermoplastic Elastomer (TPE)"
+          ],
+          [
+            "Filter Connection",
+            "Twin Filter Bayonet Connection (3-Point Quick Lock)"
+          ],
+          [
+            "Harness System",
+            "Adjustable 4-Point Cradle with Optional Drop-Down Strap"
+          ],
+          [
+            "Filter Compatibility",
+            "Resprotek 8100 Series & 3000 Series Twin Filters"
+          ],
+          [
+            "Maintenance",
+            "Effortless Cleaning & Replaceable Valves/Harness"
+          ],
+          [
+            "Standard",
+            "CE EN 140:1998"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_resprotek_9000",
+        "category": "resp",
+        "name": "Udyogi Resprotek 9000 Reusable Half Face Mask (Silicone)",
+        "brand": "Udyogi Resprotek",
+        "img": "assets/products/respiratory/resprotek_9000.png",
+        "cert": "CE EN 140:1998 · Medical-Grade Silicone",
+        "price": 950,
+        "rating": 5.0,
+        "reviews": 44,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Premium medical-grade silicone reusable half face mask offering exceptional seal, skin comfort and extreme temperature flexibility.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi Resprotek"
+          ],
+          [
+            "Model Name",
+            "9000"
+          ],
+          [
+            "Facepiece Material",
+            "100% Medical-Grade Liquid Silicone Rubber (LSR)"
+          ],
+          [
+            "Filter Connection",
+            "Bayonet Twin Filter System"
+          ],
+          [
+            "Harness",
+            "Heavy-Duty Adjustable Silicone Head Harness with Drop-Down Mode"
+          ],
+          [
+            "Compatibility",
+            "Resprotek 8100 Series Gas Filters & 3000 Series Particulate Filters"
+          ],
+          [
+            "Comfort Feature",
+            "No Pressure Marks, Superior Facial Contouring, Hypoallergenic"
+          ],
+          [
+            "Standard",
+            "CE EN 140:1998"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_resprotek_8800",
+        "category": "resp",
+        "name": "Udyogi Resprotek 8800 Reusable Full Face Mask (Silicone)",
+        "brand": "Udyogi Resprotek",
+        "img": "assets/products/respiratory/resprotek_8800.png",
+        "cert": "CE EN 136:1998 Class 2 · Panoramic Visor",
+        "price": 2950,
+        "rating": 5.0,
+        "reviews": 31,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Class 2 full face respirator with distortion-free panoramic anti-fog polycarbonate visor, silicone seal and built-in speaking diaphragm.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi Resprotek"
+          ],
+          [
+            "Model Name",
+            "8800"
+          ],
+          [
+            "Face Seal",
+            "Comfortable Soft Silicone Perimeter Face Seal"
+          ],
+          [
+            "Visor / Lens",
+            "High-Impact Polycarbonate Lens with Anti-Fog & Anti-Scratch Coating"
+          ],
+          [
+            "Field of View",
+            "Panoramic 180° Unobstructed Vision"
+          ],
+          [
+            "Harness",
+            "Four-Point Adjustable Silicone Head Harness for Secure Locking"
+          ],
+          [
+            "Acoustic",
+            "Integrated Speech Diaphragm for Clear Communications"
+          ],
+          [
+            "Filter Ports",
+            "Dual Bayonet Connection (Twin Filter)"
+          ],
+          [
+            "Standard",
+            "CE EN 136:1998 Class 2"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_resprotek_3001",
+        "category": "resp",
+        "name": "Udyogi Resprotek 3001 P3 R Particulate Twin Filter (OV)",
+        "brand": "Udyogi Resprotek",
+        "img": "assets/products/respiratory/resprotek_3001.png",
+        "cert": "CE EN 143:2021 · P3 R 99.95%",
+        "price": 380,
+        "rating": 4.9,
+        "reviews": 49,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "P3 R high-efficiency (99.95%) particulate filter with activated carbon layer against welding fumes, dust and nuisance organic vapours.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi Resprotek"
+          ],
+          [
+            "Model Name",
+            "3001"
+          ],
+          [
+            "Filter Type",
+            "P3 R Particulate Disc Filter (Reusable)"
+          ],
+          [
+            "Filtration Efficiency",
+            "P3 R (99.95% Against Solid and Liquid Toxic Aerosols)"
+          ],
+          [
+            "Nuisance Relief",
+            "Effective Against Nuisance Levels of Organic Vapours (OV)"
+          ],
+          [
+            "Design",
+            "Low Breathing Resistance, 360° Rotation Bayonet Fitting"
+          ],
+          [
+            "Compatibility",
+            "Resprotek 8200, 9000 Half Face & 8800 Full Face Masks"
+          ],
+          [
+            "Standard",
+            "CE EN 143:2021"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_resprotek_3003",
+        "category": "resp",
+        "name": "Udyogi Resprotek 3003 P3 R Particulate Twin Filter (AG)",
+        "brand": "Udyogi Resprotek",
+        "img": "assets/products/respiratory/resprotek_3003.png",
+        "cert": "CE EN 143:2021 · P3 R 99.95%",
+        "price": 395,
+        "rating": 4.8,
+        "reviews": 36,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "P3 R 99.95% particulate filter with treated carbon media for welding, grinding, and nuisance acid gases (SO2, HF, HCl).",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi Resprotek"
+          ],
+          [
+            "Model Name",
+            "3003"
+          ],
+          [
+            "Filter Type",
+            "P3 R Particulate Disc Filter with Acid Gas Carbon"
+          ],
+          [
+            "Filtration Efficiency",
+            "99.95% P3 R Reusable"
+          ],
+          [
+            "Nuisance Relief",
+            "Nuisance Levels of Acid Gases (AG) & Ozone"
+          ],
+          [
+            "Fitting",
+            "360° Rotatable Bayonet Connection"
+          ],
+          [
+            "Compatibility",
+            "Resprotek 8200, 9000 & 8800 Masks"
+          ],
+          [
+            "Standard",
+            "CE EN 143:2021"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_resprotek_3005",
+        "category": "resp",
+        "name": "Udyogi Resprotek 3005 Encapsulated P3 R Particulate Filter",
+        "brand": "Udyogi Resprotek",
+        "img": "assets/products/respiratory/resprotek_3005.png",
+        "cert": "CE EN 143:2021 · P3 R 99.95%",
+        "price": 450,
+        "rating": 4.9,
+        "reviews": 28,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Hard plastic-encased P3 R particulate filter specifically engineered to withstand flying sparks, hot spatter, high heat and humidity.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi Resprotek"
+          ],
+          [
+            "Model Name",
+            "3005"
+          ],
+          [
+            "Filter Type",
+            "Enclosed P3 R Particulate Filter Box"
+          ],
+          [
+            "Encapsulation",
+            "Durable Protective Polypropylene Casing (Spark & Splash Barrier)"
+          ],
+          [
+            "Efficiency",
+            "P3 R (99.95% Filtration Reusable)"
+          ],
+          [
+            "Typical Application",
+            "Heavy Arc Welding, Metal Foundry, Smelting, High Humidity Mining"
+          ],
+          [
+            "Compatibility",
+            "Resprotek 8200, 9000 & 8800 Respirators"
+          ],
+          [
+            "Standard",
+            "CE EN 143:2021"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_resprotek_8101",
+        "category": "resp",
+        "name": "Udyogi Resprotek 8101 Organic Vapour (OV) Twin Gas Filter",
+        "brand": "Udyogi Resprotek",
+        "img": "assets/products/respiratory/resprotek_8101.png",
+        "cert": "CE EN 14387:2004+A1:2008 · Class 1 A1",
+        "price": 420,
+        "rating": 4.9,
+        "reviews": 55,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Class 1 Organic Vapour twin filter cartridge for spray painting, solvents, thinners, resins and degreasing operations.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi Resprotek"
+          ],
+          [
+            "Model Name",
+            "8101"
+          ],
+          [
+            "Filter Class / Type",
+            "Class 1, Type A(OV)"
+          ],
+          [
+            "Colour Code",
+            "Brown Band"
+          ],
+          [
+            "Connection",
+            "Bayonet Quick-Lock Connection (Twin Filter)"
+          ],
+          [
+            "Target Hazards",
+            "Organic Vapours and Gases with Boiling Point > 65°C"
+          ],
+          [
+            "Typical Industries",
+            "Automotive Painting, Chemical Handling, Printing, Petrochemical"
+          ],
+          [
+            "Compatibility",
+            "Resprotek 8200, 9000 & 8800 Masks"
+          ],
+          [
+            "Standard",
+            "CE EN 14387:2004+A1:2008"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_resprotek_8103",
+        "category": "resp",
+        "name": "Udyogi Resprotek 8103 Organic Vapour & Acid Gas (OV/AG) Filter",
+        "brand": "Udyogi Resprotek",
+        "img": "assets/products/respiratory/resprotek_8103.png",
+        "cert": "CE EN 14387:2004+A1:2008 · Class 1 AE1",
+        "price": 480,
+        "rating": 4.8,
+        "reviews": 42,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Class 1 combination cartridge protecting against Organic Vapours, Chlorine, Hydrogen Chloride and Sulfur Dioxide.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi Resprotek"
+          ],
+          [
+            "Model Name",
+            "8103"
+          ],
+          [
+            "Filter Class / Type",
+            "Class 1, Type AE (OV/AG)"
+          ],
+          [
+            "Colour Code",
+            "Brown & Yellow Band"
+          ],
+          [
+            "Target Hazards",
+            "Organic Vapours, Chlorine, HCl, Sulfur Dioxide, Acid Gases"
+          ],
+          [
+            "Connection",
+            "Bayonet Connection (Twin Filter)"
+          ],
+          [
+            "Compatibility",
+            "Resprotek 8200, 9000 & 8800 Masks"
+          ],
+          [
+            "Standard",
+            "CE EN 14387:2004+A1:2008"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_resprotek_8104",
+        "category": "resp",
+        "name": "Udyogi Resprotek 8104 Ammonia & Methylamine Gas Filter",
+        "brand": "Udyogi Resprotek",
+        "img": "assets/products/respiratory/resprotek_8104.png",
+        "cert": "CE EN 14387:2004+A1:2008 · Class 1 K1",
+        "price": 520,
+        "rating": 4.9,
+        "reviews": 27,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "Specialized Class 1 Type K ammonia and methylamine twin filter cartridge for refrigeration plants and chemical production.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi Resprotek"
+          ],
+          [
+            "Model Name",
+            "8104"
+          ],
+          [
+            "Filter Class / Type",
+            "Class 1, Type K (Ammonia & Derivatives)"
+          ],
+          [
+            "Colour Code",
+            "Green Band"
+          ],
+          [
+            "Connection",
+            "Bayonet Twin Port"
+          ],
+          [
+            "Target Hazards",
+            "Ammonia Gas, Methylamine, Basic Amine Compounds"
+          ],
+          [
+            "Typical Application",
+            "Cold Storage Plants, Fertiliser Plants, Agricultural Chemical Spraying"
+          ],
+          [
+            "Standard",
+            "CE EN 14387:2004+A1:2008"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_resprotek_8106",
+        "category": "resp",
+        "name": "Udyogi Resprotek 8106 Multi-Gas & Vapour (ABEK) Twin Filter",
+        "brand": "Udyogi Resprotek",
+        "img": "assets/products/respiratory/resprotek_8106.png",
+        "cert": "CE EN 14387:2004+A1:2008 · Class 1 ABEK1",
+        "price": 580,
+        "rating": 5.0,
+        "reviews": 48,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Universal Class 1 ABEK multi-gas cartridge providing comprehensive defense against organic, inorganic, acid and ammonia gases.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi Resprotek"
+          ],
+          [
+            "Model Name",
+            "8106"
+          ],
+          [
+            "Filter Class / Type",
+            "Class 1, Type ABEK (Multi-Gas)"
+          ],
+          [
+            "Colour Code",
+            "Brown, Yellow, Grey & Green Band"
+          ],
+          [
+            "Target Hazards",
+            "Type A (Organic Vapours), Type B (Inorganic Gases), Type E (Acid Gases), Type K (Ammonia)"
+          ],
+          [
+            "Connection",
+            "Bayonet Quick-Lock"
+          ],
+          [
+            "Compatibility",
+            "Resprotek 8200, 9000 & 8800 Masks"
+          ],
+          [
+            "Standard",
+            "CE EN 14387:2004+A1:2008"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_resprotek_811",
+        "category": "resp",
+        "name": "Udyogi Resprotek 811 P2 R Particulate Pre-Filter (Pack of 10)",
+        "brand": "Udyogi Resprotek",
+        "img": "assets/products/respiratory/resprotek_811.png",
+        "cert": "CE EN 14387:2004+A1:2008 · P2 R",
+        "price": 350,
+        "rating": 4.8,
+        "reviews": 52,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "P2 R reusable particulate pre-filter pads to block coarse dust, overspray and paint mists, extending gas cartridge service life.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi Resprotek"
+          ],
+          [
+            "Model Name",
+            "811"
+          ],
+          [
+            "Filter Class",
+            "P2 R (Protection Against Solid & Liquid Aerosols)"
+          ],
+          [
+            "Usage",
+            "Snaps Onto 8100 Series Gas Filters using 810 Retainer Clip"
+          ],
+          [
+            "Packaging",
+            "Pack of 10 Pieces (5 Pairs)"
+          ],
+          [
+            "Standard",
+            "CE EN 14387:2004+A1:2008"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_resprotek_810",
+        "category": "resp",
+        "name": "Udyogi Resprotek 810 Pre-Filter Retainer Clip (Pack of 2)",
+        "brand": "Udyogi Resprotek",
+        "img": "assets/products/respiratory/resprotek_810.png",
+        "cert": "Industrial Grade Retainer",
+        "price": 120,
+        "rating": 4.7,
+        "reviews": 34,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "Translucent snap-fit retainer clip designed to firmly hold 811 pre-filters onto Resprotek 8100 series gas cartridges.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi Resprotek"
+          ],
+          [
+            "Model Name",
+            "810"
+          ],
+          [
+            "Component Type",
+            "Pre-Filter Snap Retainer Holder"
+          ],
+          [
+            "Compatibility",
+            "Locks 811 Pre-Filter onto 8101, 8103, 8104, 8106 Cartridges"
+          ],
+          [
+            "Packing",
+            "1 Pair (2 Pieces)"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_resprotek_8103pr",
+        "category": "resp",
+        "name": "Udyogi Resprotek 8103PR OV/AG + P3 R Combined Twin Filter",
+        "brand": "Udyogi Resprotek",
+        "img": "assets/products/respiratory/resprotek_8103pr.png",
+        "cert": "CE EN 14387:2004+A1:2008 · AE1 P3 R",
+        "price": 720,
+        "rating": 5.0,
+        "reviews": 33,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Integrated twin combined filter uniting Organic Vapour & Acid Gas protection with 99.95% P3 R particulate HEPA filtration.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi Resprotek"
+          ],
+          [
+            "Model Name",
+            "8103PR OV/AG"
+          ],
+          [
+            "Filter Type",
+            "Combined Gas & Particulate Twin Filter"
+          ],
+          [
+            "Rating",
+            "Class 1, Type AE (OV/AG) + P3 R (99.95% Particulate Barrier)"
+          ],
+          [
+            "Colour Code",
+            "Brown & Yellow with White P3 Top"
+          ],
+          [
+            "Connection",
+            "Bayonet Port (Twin Filter)"
+          ],
+          [
+            "Compatibility",
+            "Resprotek 8200, 9000 Half Masks & 8800 Full Face Mask"
+          ],
+          [
+            "Standard",
+            "CE EN 14387:2004+A1:2008"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_resprotek_8106pr",
+        "category": "resp",
+        "name": "Udyogi Resprotek 8106PR Multi-Gas + P3 R Combined Filter",
+        "brand": "Udyogi Resprotek",
+        "img": "assets/products/respiratory/resprotek_8106pr.png",
+        "cert": "CE EN 14387:2004+A1:2008 · ABEKP (MG) P3 R",
+        "price": 850,
+        "rating": 5.0,
+        "reviews": 41,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Highest-tier combined cartridge defending against Multi-Gases (ABEK) PLUS radioactive, viral and toxic particulates (P3 R 99.95%).",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi Resprotek"
+          ],
+          [
+            "Model Name",
+            "8106PR"
+          ],
+          [
+            "Filter Type",
+            "Multi-Gas, Vapour and Particulate Combined Twin Filter"
+          ],
+          [
+            "Rating",
+            "Class 1, Type ABEKP (MG) + P3 R"
+          ],
+          [
+            "Colour Code",
+            "Brown, Yellow, Grey & Green with White P3 Header"
+          ],
+          [
+            "Connection",
+            "Bayonet Quick-Lock"
+          ],
+          [
+            "Compatibility",
+            "Resprotek 8200, 9000 & 8800 Full Masks"
+          ],
+          [
+            "Standard",
+            "CE EN 14387:2004+A1:2008"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_resprotek_4200",
+        "category": "resp",
+        "name": "Udyogi Resprotek 4200 Single Filter Reusable Half Mask (TPE)",
+        "brand": "Udyogi Resprotek",
+        "img": "assets/products/respiratory/resprotek_4200.png",
+        "cert": "GB 2890:2009 Compliance · Push-to-Lock",
+        "price": 490,
+        "rating": 4.7,
+        "reviews": 31,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "Economical single-filter reusable half face mask with push-to-lock central cartridge mount, flexible TPE seal and adjustable cradle.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi Resprotek"
+          ],
+          [
+            "Model Name",
+            "4200"
+          ],
+          [
+            "Facepiece Material",
+            "Flexible Hypoallergenic TPE"
+          ],
+          [
+            "Filter Connection",
+            "Central Push-to-Lock Mechanism (Single Filter)"
+          ],
+          [
+            "Harness",
+            "Adjustable Dual Head Harness"
+          ],
+          [
+            "Compatibility",
+            "Resprotek 4000 Series Single Filters (4001, 4002, 4701)"
+          ],
+          [
+            "Standard",
+            "Compliance GB 2890:2009"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_resprotek_4001",
+        "category": "resp",
+        "name": "Udyogi Resprotek 4001 OV Single Filter Cartridge",
+        "brand": "Udyogi Resprotek",
+        "img": "assets/products/respiratory/resprotek_4001.png",
+        "cert": "GB 2890:2009 · Class 1 A(OV)",
+        "price": 310,
+        "rating": 4.7,
+        "reviews": 24,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "Central push-to-lock organic vapour filter cartridge for Resprotek 4200 single filter half face mask.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi Resprotek"
+          ],
+          [
+            "Model Name",
+            "4001"
+          ],
+          [
+            "Filter Class / Type",
+            "Class 1, Type A (OV)"
+          ],
+          [
+            "Colour Code",
+            "Brown Band"
+          ],
+          [
+            "Connection",
+            "Central Push to Lock"
+          ],
+          [
+            "Target Hazards",
+            "Organic Vapours (Solvents, Resins, Thinners)"
+          ],
+          [
+            "Compatibility",
+            "Resprotek 4200 Half Face Mask"
+          ],
+          [
+            "Standard",
+            "Compliance GB 2890:2009"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_resprotek_4002",
+        "category": "resp",
+        "name": "Udyogi Resprotek 4002 OV/AG Single Filter Cartridge",
+        "brand": "Udyogi Resprotek",
+        "img": "assets/products/respiratory/resprotek_4002.png",
+        "cert": "GB 2890:2009 · Class 1 AE(OV/AG)",
+        "price": 360,
+        "rating": 4.8,
+        "reviews": 22,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "Single filter cartridge offering dual organic vapour and acid gas protection for Resprotek 4200 mask.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi Resprotek"
+          ],
+          [
+            "Model Name",
+            "4002"
+          ],
+          [
+            "Filter Class / Type",
+            "Class 1, Type AE (OV/AG)"
+          ],
+          [
+            "Colour Code",
+            "Brown & Yellow Band"
+          ],
+          [
+            "Connection",
+            "Central Push to Lock Mechanism"
+          ],
+          [
+            "Target Hazards",
+            "Organic Vapours and Acid Gases (SO2, HCl)"
+          ],
+          [
+            "Compatibility",
+            "Resprotek 4200 Single Filter Mask"
+          ],
+          [
+            "Standard",
+            "Compliance GB 2890:2009"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_resprotek_4n11",
+        "category": "resp",
+        "name": "Udyogi Resprotek 4N11 Particulate Pre-Filter (Pack of 10)",
+        "brand": "Udyogi Resprotek",
+        "img": "assets/products/respiratory/resprotek_4n11.png",
+        "cert": "P1 Particulate Filter",
+        "price": 290,
+        "rating": 4.7,
+        "reviews": 28,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "Pre-filter pad designed to attach to 4001 or 4002 single filters using the 485 retainer to trap paint spray and dust.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi Resprotek"
+          ],
+          [
+            "Model Name",
+            "4N11"
+          ],
+          [
+            "Filter Type",
+            "Solid & Liquid Aerosol Particulate Pre-Filter"
+          ],
+          [
+            "Usage",
+            "Mounted onto 4001 / 4002 Filter with 485 Pre-Filter Holder"
+          ],
+          [
+            "Packing",
+            "Pack of 10 Pieces"
+          ],
+          [
+            "Standard",
+            "GB 2890:2009"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_resprotek_485",
+        "category": "resp",
+        "name": "Udyogi Resprotek 485 Pre-Filter Holder Ring",
+        "brand": "Udyogi Resprotek",
+        "img": "assets/products/respiratory/resprotek_485.png",
+        "cert": "Holder Ring GB 2890:2009",
+        "price": 95,
+        "rating": 4.6,
+        "reviews": 19,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "Durable grey circular snap ring utilized to mount the 4N11 particulate filter firmly onto 4000 series single filters.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi Resprotek"
+          ],
+          [
+            "Model Name",
+            "485"
+          ],
+          [
+            "Colour Code",
+            "Grey"
+          ],
+          [
+            "Application",
+            "Attaches 4N11 Filter to 4001 / 4002 Single Filters"
+          ],
+          [
+            "Standard",
+            "Compliance GB 2890:2009"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_resprotek_4701",
+        "category": "resp",
+        "name": "Udyogi Resprotek 4701 P2 R Particulate Filter",
+        "brand": "Udyogi Resprotek",
+        "img": "assets/products/respiratory/resprotek_4701.png",
+        "cert": "GB 2890:2009 · P2 R Particulate",
+        "price": 180,
+        "rating": 4.8,
+        "reviews": 25,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "P2 R particulate filter pad for dust, cement, silica and aerosols on the 4200 half face mask via 4800 adapter.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi Resprotek"
+          ],
+          [
+            "Model Name",
+            "4701"
+          ],
+          [
+            "Filter Class",
+            "P2 R Particulate Filter"
+          ],
+          [
+            "Colour Code",
+            "White"
+          ],
+          [
+            "Usage",
+            "Attached to 4200 Mask using 4800 Filter Adapter"
+          ],
+          [
+            "Standard",
+            "Compliance GB 2890:2009"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_resprotek_4800",
+        "category": "resp",
+        "name": "Udyogi Resprotek 4800 Filter Holder / Adapter",
+        "brand": "Udyogi Resprotek",
+        "img": "assets/products/respiratory/resprotek_4800.png",
+        "cert": "Adapter GB 2890:2009",
+        "price": 140,
+        "rating": 4.7,
+        "reviews": 21,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "Heavy-duty black push-to-lock filter adapter to mount 4701 particulate filter directly onto the 4200 mask.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi Resprotek"
+          ],
+          [
+            "Model Name",
+            "4800"
+          ],
+          [
+            "Mechanism",
+            "Push-to-Lock Filter Adapter Mechanism"
+          ],
+          [
+            "Function",
+            "Holds and Attaches 4701 Particulate Filter to 4200 Half Face Mask"
+          ],
+          [
+            "Features",
+            "Easy to Clean, Reusable and Highly Durable"
           ]
         ]
       }
