@@ -6,7 +6,7 @@
    "Export JSON" in the CMS to back up your content to a file.
 ========================================================= */
 
-const STORAGE_KEY = "passCorpContent_v14";
+const STORAGE_KEY = "passCorpContent_v15";
 
 
 /* =========================================================
@@ -17004,6 +17004,1486 @@ const DEFAULT_CONTENT = {
       [
         "Standard",
         "IS 10592:2018, ANSI Z358.1"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_airflow_pro_scba",
+    "category": "confined",
+    "name": "Udyogi Airflow Pro Self-Contained Breathing Apparatus (SCBA)",
+    "brand": "Udyogi Airflow Pro",
+    "img": "assets/products/sgbi/airflow_pro_scba.png",
+    "cert": "EN 137:2006 Type 2 · MED Approved",
+    "price": 48500,
+    "rating": 5.0,
+    "reviews": 32,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Industrial firefighting SCBA with ergonomically contoured carbon composite backplate, Type 2 flame retardant harness and balanced pressure reducer.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Airflow Pro"
+      ],
+      [
+        "Model Series",
+        "3068C / 3006S / 3009C"
+      ],
+      [
+        "Standard / Approval",
+        "EN 137:2006 Type 2 (Fire Fighting & Industrial Rescue)"
+      ],
+      [
+        "Backplate",
+        "Ultra-Lightweight Ergonomic Antistatic Composite Backplate"
+      ],
+      [
+        "Harness System",
+        "Padded Kevlar & Nomex Flame-Retardant Type 2 Harness"
+      ],
+      [
+        "Pneumatics",
+        "First-Stage Pressure Reducer with Safety Relief Valve"
+      ],
+      [
+        "Gauge & Warning",
+        "Photoluminescent Pressure Gauge with Protective Rubber Cover & 90dB Whistle"
+      ],
+      [
+        "Cylinder Strap",
+        "Universal Cam-Lock Quick-Adjust Strap for Carbon & Steel Cylinders"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_airflow_pro_mask",
+    "category": "confined",
+    "name": "Udyogi Airflow Pro Full Facepiece SCBA Mask",
+    "brand": "Udyogi Airflow Pro",
+    "img": "assets/products/sgbi/airflow_pro_mask.png",
+    "cert": "EN 136:1998 Class 3 · EN 137:2006 Type 2",
+    "price": 14500,
+    "rating": 5.0,
+    "reviews": 28,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Class 3 positive pressure SCBA full face mask in hypoallergenic liquid silicone with 5-strap Kevlar mesh net and anti-fog panoramic visor.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Airflow Pro"
+      ],
+      [
+        "Model",
+        "Pro Mask"
+      ],
+      [
+        "Classification",
+        "EN 136:1998 Class 3 & EN 137:2006 Type 2"
+      ],
+      [
+        "Face Seal",
+        "Hypoallergenic Medical-Grade Silicone Double Reflex Seal"
+      ],
+      [
+        "Harness",
+        "5-Strap Flame-Resistant Kevlar Net Head Harness"
+      ],
+      [
+        "Visor",
+        "Distortion-Free Polycarbonate Visor with Anti-Fog & Anti-Scratch Hardcoat"
+      ],
+      [
+        "Demand Valve Port",
+        "Quick-Click Positive Pressure Lung Demand Valve (LDV) Connection"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_cfk_cylinder",
+    "category": "confined",
+    "name": "Udyogi 6.8 Litre 300 Bar Carbon Composite SCBA Cylinder",
+    "brand": "Udyogi",
+    "img": "assets/products/sgbi/cfk_cylinder.png",
+    "cert": "EN 12245 · PESO (CCOE) Approved · 300 Bar",
+    "price": 28500,
+    "rating": 5.0,
+    "reviews": 41,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Lightweight 6.8L 300 bar carbon composite cylinder (70% lighter than steel) with seamless aluminum liner and self-locking ratchet valve.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Water Capacity",
+        "6.8 Litres (Free Air: ~2040 Litres at 300 Bar)"
+      ],
+      [
+        "Working Pressure",
+        "300 Bar (Test Pressure: 450 Bar)"
+      ],
+      [
+        "Structure",
+        "Seamless Aluminum Alloy Liner Overwrapped with Carbon Fiber & Epoxy Resin"
+      ],
+      [
+        "Weight Advantage",
+        "70% Lighter than Traditional Steel Cylinders (~4.1 Kg)"
+      ],
+      [
+        "Cylinder Valve",
+        "Self-Locking Ratchet Handwheel Valve in Nickel-Plated Naval Brass"
+      ],
+      [
+        "Approvals",
+        "EN 12245 Standard, PESO Approved for India"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_steel_cylinder",
+    "category": "confined",
+    "name": "Udyogi 6.0 Litre 300 Bar Steel SCBA Cylinder",
+    "brand": "Udyogi",
+    "img": "assets/products/sgbi/steel_cylinder.png",
+    "cert": "IS 7285 (Part-II):2017 · PESO Approved · 300 Bar",
+    "price": 14800,
+    "rating": 4.8,
+    "reviews": 34,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "High-tensile alloy steel breathing air cylinder for heavy industrial plants, furnace workshops and marine emergency teams.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Capacity",
+        "6.0 Litres (Free Air: ~1800 Litres at 300 Bar)"
+      ],
+      [
+        "Working Pressure",
+        "300 Bar"
+      ],
+      [
+        "Material",
+        "High-Tensile Quenched & Tempered Chromium-Molybdenum Alloy Steel"
+      ],
+      [
+        "Cylinder Valve",
+        "Integrated High-Pressure Valve with Phosphor Bronze Bursting Disc"
+      ],
+      [
+        "Standard",
+        "IS 7285 (Part-II):2017, PESO Approved"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_scba_storage_bag",
+    "category": "confined",
+    "name": "Udyogi Airflow SCBA Padded Storage Bag (Yellow)",
+    "brand": "Udyogi Airflow",
+    "img": "assets/products/sgbi/scba_storage_bag.png",
+    "cert": "Heavy Duty 1000D Nylon",
+    "price": 2600,
+    "rating": 4.8,
+    "reviews": 29,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "High-visibility padded rectangular carrier bag designed to protect the complete SCBA set, mask and cylinder during transport.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Airflow"
+      ],
+      [
+        "Material",
+        "1000D Heavy-Duty Ballistic Nylon with Water-Repellent Coating"
+      ],
+      [
+        "Protection",
+        "High-Density Foam Internal Padding on All 6 Sides"
+      ],
+      [
+        "Carrying",
+        "Reinforced Webbing Handles + Padded Adjustable Shoulder Strap"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_scba_hardshell_case",
+    "category": "confined",
+    "name": "Udyogi Alert Plus SHSCC-18133 SCBA Hardshell Carrying Case",
+    "brand": "Udyogi Alert Plus",
+    "img": "assets/products/sgbi/scba_hardshell_case.png",
+    "cert": "IP65 Rated Heavy Duty Case",
+    "price": 6500,
+    "rating": 4.9,
+    "reviews": 24,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Crushproof, UV-stable polyethylene hardshell case with perimeter rubber dust/water seal and 185° stay-open hinge.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Alert Plus"
+      ],
+      [
+        "Model Number",
+        "SHSCC-18133"
+      ],
+      [
+        "Material",
+        "High-Impact Molded Polyethylene (UV-Stable)"
+      ],
+      [
+        "Sealing",
+        "Integrated Continuous Rubber Gasket (IP65 Dust & Water Barrier)"
+      ],
+      [
+        "Hinges",
+        "Molded-in Heavy Hinge System (Opens to 185° Flat)"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_frp_scba_box",
+    "category": "confined",
+    "name": "Udyogi FRP Weatherproof SCBA Wall-Mounted Cabinet Box",
+    "brand": "Udyogi",
+    "img": "assets/products/sgbi/frp_scba_box.png",
+    "cert": "Corrosion-Proof FRP · Lockable",
+    "price": 13500,
+    "rating": 4.9,
+    "reviews": 37,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Fiberglass Reinforced Plastic (FRP) wall cabinet with inspection window and stainless latches to store emergency SCBA sets outdoors.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Material",
+        "Heavy Fiberglass Reinforced Polymer (FRP) Construction"
+      ],
+      [
+        "Weather Resistance",
+        "100% Rust-Proof, Marine Grade UV & Saline Atmosphere Resistant"
+      ],
+      [
+        "Viewing Window",
+        "Clear Acrylic Inspection Window for Pressure Gauge Visibility"
+      ],
+      [
+        "Hardware",
+        "Stainless Steel 316 Toggle Latches with Padlock Eyelet"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_alert_plus_rhj680",
+    "category": "confined",
+    "name": "Udyogi Alert Plus RHJ680/A PASS Device / Motion Alarm",
+    "brand": "Udyogi Alert Plus",
+    "img": "assets/products/sgbi/alert_plus_rhj680.png",
+    "cert": "Ex ib IIC T4 Gb · 100dB Alarm · ATEX",
+    "price": 16800,
+    "rating": 5.0,
+    "reviews": 26,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Intrinsically safe Personal Alert Safety System (PASS). Automatically sounds a piercing 100dB beacon if worker is motionless for 30 seconds.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Alert Plus"
+      ],
+      [
+        "Model Number",
+        "RHJ680/A"
+      ],
+      [
+        "Safety Rating",
+        "Ex ib IIC T4 Gb (Intrinsically Safe for Hazardous Zones)"
+      ],
+      [
+        "Motion Detection",
+        "Solid-State Motion Sensor with 30s Motionless Pre-Alarm & Full Alarm"
+      ],
+      [
+        "Alarm Output",
+        "Piercing 100 dB Siren (> 11 Hours Continuous Sounding)"
+      ],
+      [
+        "Visual Alert",
+        "Ultra-Bright 360° Red Strobe LEDs for Low Smoke Visibility"
+      ],
+      [
+        "Manual Panic",
+        "Dedicated SOS Emergency Button for Instant Manual Activation"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_cogo_plus_mask",
+    "category": "resp",
+    "name": "Udyogi COGO PLUS Fire & Smoke Escape Mask",
+    "brand": "Udyogi",
+    "img": "assets/products/sgbi/cogo_plus_mask.png",
+    "cert": "EN 403:2004 (Smoke Escape Hood) · CE",
+    "price": 3850,
+    "rating": 4.9,
+    "reviews": 54,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Flame-resistant emergency evacuation smoke hood with integrated dual canisters protecting against toxic Carbon Monoxide (CO) and ABEK1 gases.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model",
+        "COGO PLUS"
+      ],
+      [
+        "Standard",
+        "EN 403:2004 (Personal Respiratory Devices for Smoke Escape)"
+      ],
+      [
+        "Hood Material",
+        "High-Visibility Flame-Retardant Elastomer Hood with Elastic Neck Seal"
+      ],
+      [
+        "Gases Blocked",
+        "Carbon Monoxide (CO), Hydrogen Cyanide (HCN), Acrolein, HCl & ABEK1"
+      ],
+      [
+        "Visor",
+        "Anti-Fog Treated Wide Vision Polycarbonate Window"
+      ],
+      [
+        "Communication",
+        "Integrated Speech Diaphragm Allows Clear Voice Transmission"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_t40_ii_rattler",
+    "category": "misc",
+    "name": "Udyogi T40 II Rattler Single Gas Monitor",
+    "brand": "Udyogi Industrial Scientific",
+    "img": "assets/products/sgbi/t40_ii_rattler.png",
+    "cert": "ATEX · IECEx · PESO Approved · IP68",
+    "price": 18500,
+    "rating": 4.9,
+    "reviews": 31,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Rugged single-gas detector for O2, CO or H2S with rapid sensor response, 2-year continuous battery runtime and IP68 submersible protection.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Industrial Scientific"
+      ],
+      [
+        "Model",
+        "T40 II Rattler"
+      ],
+      [
+        "Sensor Options",
+        "Oxygen (O2), Carbon Monoxide (CO), or Hydrogen Sulfide (H2S)"
+      ],
+      [
+        "Battery Life",
+        "2-Year Continuous Runtime with Replaceable Lithium Cell"
+      ],
+      [
+        "Ingress Protection",
+        "IP68 (Dust-Tight and Waterproof)"
+      ],
+      [
+        "Sensors Warranty",
+        "3-Year Warranty on Oxygen & Toxic Sensors"
+      ],
+      [
+        "Approvals",
+        "ATEX, IECEx, PESO Certified for Explosive Atmospheres"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_pdm_plus",
+    "category": "misc",
+    "name": "Udyogi PDM+ Sustainable Single Gas Detector",
+    "brand": "Udyogi WatchGas",
+    "img": "assets/products/sgbi/pdm_plus.png",
+    "cert": "ATEX · IECEx · PESO · IP67",
+    "price": 15200,
+    "rating": 4.8,
+    "reviews": 28,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Replaceable-battery personal single gas detector monitoring O2, CO, H2S, SO2, NH3 or H2 with 30-event internal data logger.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi WatchGas"
+      ],
+      [
+        "Model",
+        "PDM+"
+      ],
+      [
+        "Target Gases",
+        "O2, CO, H2S, SO2, NH3, or H2"
+      ],
+      [
+        "Data Storage",
+        "Internal Memory Records 30 Most Recent Alarm Events"
+      ],
+      [
+        "Calibration",
+        "Fast Manual or Automatic Docking Station Calibration"
+      ],
+      [
+        "Certifications",
+        "ATEX Zone 0, IECEx, PESO Approved"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_m40_gas_monitor",
+    "category": "misc",
+    "name": "Udyogi M40 1-4 Gas ES Pump Multi-Gas Monitor",
+    "brand": "Udyogi Industrial Scientific",
+    "img": "assets/products/sgbi/m40_gas_monitor.png",
+    "cert": "IECEx · PESO Approved · 18h Battery",
+    "price": 38500,
+    "rating": 5.0,
+    "reviews": 49,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Compact 4-gas monitor simultaneously detecting LEL combustible gases, O2, CO and H2S with integrated ES sampling pump.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Industrial Scientific"
+      ],
+      [
+        "Model",
+        "M40 Multi-Gas Monitor"
+      ],
+      [
+        "Gases Detected",
+        "Combustible LEL, Oxygen (O2), Carbon Monoxide (CO), Hydrogen Sulfide (H2S)"
+      ],
+      [
+        "Sampling System",
+        "Integrated Motorized ES Pump with Remote Sampling Hose"
+      ],
+      [
+        "Battery Runtime",
+        "18 Hours Continuous Operation on Rechargeable Li-Ion Battery"
+      ],
+      [
+        "Alarms",
+        "90 dB Audible Siren, High-Intensity Visual LEDs, Internal Vibrator"
+      ],
+      [
+        "Approvals",
+        "IECEx, PESO Approved for Underground Mines & Petrochemical Plants"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_ventis_mx4",
+    "category": "misc",
+    "name": "Udyogi Ventis MX4 1-4 Gas Monitor with Pump",
+    "brand": "Udyogi Industrial Scientific",
+    "img": "assets/products/sgbi/ventis_mx4.png",
+    "cert": "ATEX · IECEx · PESO · MSHA Approved",
+    "price": 52000,
+    "rating": 5.0,
+    "reviews": 63,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Ultra-rugged 4-gas monitor for confined space entry with slide-on sampling pump, overmolded rubber casing and configurable sensor combinations.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Industrial Scientific"
+      ],
+      [
+        "Model",
+        "Ventis MX4"
+      ],
+      [
+        "Sensor Capabilities",
+        "LEL Combustibles, O2, CO, H2S, SO2, NO2"
+      ],
+      [
+        "Sampling Versatility",
+        "Use as Diffusion Monitor or Attach Slide-On Pump for Confined Space Entry"
+      ],
+      [
+        "Enclosure",
+        "Impact-Resistant Overmolded Polycarbonate with Rubber Armor"
+      ],
+      [
+        "Hazardous Approvals",
+        "ATEX, IECEx, PESO, MSHA, CSA"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_ventis_pro5",
+    "category": "misc",
+    "name": "Udyogi Ventis Pro5 1-5 Gas Monitor with Wireless LENS",
+    "brand": "Udyogi Industrial Scientific",
+    "img": "assets/products/sgbi/ventis_pro5.png",
+    "cert": "ATEX · IECEx · PESO · Wireless LENS Mesh",
+    "price": 78000,
+    "rating": 5.0,
+    "reviews": 35,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Advanced 5-gas monitor featuring wireless peer-to-peer LENS mesh communication, man-down panic alarms and custom action messages.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Industrial Scientific"
+      ],
+      [
+        "Model",
+        "Ventis Pro5"
+      ],
+      [
+        "Gases Monitored",
+        "Up to 5 Gases Simultaneously (LEL, O2, CO, H2S, SO2, NO2, VOCs, CO2)"
+      ],
+      [
+        "Wireless Mesh",
+        "LENS Wireless Peer-to-Peer Mesh (Instantly Shares Alarms with Nearby Teammates)"
+      ],
+      [
+        "Safety Alerts",
+        "Man-Down Panic Alarm, Dedicated SOS Button, Custom Action Prompts on Screen"
+      ],
+      [
+        "IP Rating",
+        "IP68 Certified (Submersible to 1.5m for 1 Hour)"
+      ],
+      [
+        "Certifications",
+        "ATEX, IECEx, PESO Approved"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_gmi_ps200",
+    "category": "misc",
+    "name": "Udyogi GMI PS200 1-4 Gas Multi-Gas Detector",
+    "brand": "Udyogi GMI",
+    "img": "assets/products/sgbi/gmi_ps200.png",
+    "cert": "ATEX · IECEx · 6-Month Data Logging",
+    "price": 34500,
+    "rating": 4.9,
+    "reviews": 27,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Intuitive 2-button 4-gas detector monitoring LEL, O2, CO and H2S with internal sampling pump and 6 months of logged events.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi GMI"
+      ],
+      [
+        "Model",
+        "PS200"
+      ],
+      [
+        "Gases Detected",
+        "LEL (Hydrocarbons), O2, CO, H2S"
+      ],
+      [
+        "Operation",
+        "Simple 2-Button Glove-Friendly Interface"
+      ],
+      [
+        "Internal Pump",
+        "Built-in High-Flow Suction Pump with Filter"
+      ],
+      [
+        "Data Logging",
+        "Stores up to 6 Months of Continuous Logged Exposure Data"
+      ],
+      [
+        "Certifications",
+        "ATEX, IECEx Certified"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_gmi_ps500",
+    "category": "misc",
+    "name": "Udyogi GMI PS500 1-5 Gas & VOC Monitor",
+    "brand": "Udyogi GMI",
+    "img": "assets/products/sgbi/gmi_ps500.png",
+    "cert": "ATEX · IECEx · PID VOC Sensor",
+    "price": 64000,
+    "rating": 5.0,
+    "reviews": 21,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Configurable 5-gas instrument featuring Photoionization Detection (PID) for volatile organic compounds (VOCs) and toxic industrial chemicals.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi GMI"
+      ],
+      [
+        "Model",
+        "PS500"
+      ],
+      [
+        "Sensors",
+        "LEL, O2, CO, H2S, SO2, Cl2, NH3, and PID (VOC)"
+      ],
+      [
+        "Housing",
+        "High-Impact Antistatic Polycarbonate Outer Armor"
+      ],
+      [
+        "Display",
+        "Backlit LCD Showing All 5 Gas Concentrations Simultaneously"
+      ],
+      [
+        "Standard",
+        "ATEX Zone 1, IECEx Approved"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_qgm_4_gas",
+    "category": "misc",
+    "name": "Udyogi QGM-4-GAS Portable Multi-Gas Detector",
+    "brand": "Udyogi WatchGas",
+    "img": "assets/products/sgbi/qgm_4_gas.png",
+    "cert": "ATEX · IECEx · PESO · IP67",
+    "price": 29500,
+    "rating": 4.8,
+    "reviews": 38,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Ergonomic single-button 4-gas monitor in high-grip rubberized housing with optical, acoustic and vibrating multi-alarms.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi WatchGas"
+      ],
+      [
+        "Model",
+        "QGM 4-Gas"
+      ],
+      [
+        "Detection",
+        "LEL, O2, CO, H2S"
+      ],
+      [
+        "Operation",
+        "Simple Single-Button One-Touch Operation"
+      ],
+      [
+        "Data Logger",
+        "2 Months Event and Continuous Calibration Log"
+      ],
+      [
+        "Housing",
+        "Shock-Resistant Grippable Orange Armor"
+      ],
+      [
+        "Approvals",
+        "ATEX, IECEx, PESO Approved"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_radius_bz1",
+    "category": "misc",
+    "name": "Udyogi Radius BZ1 1-7 Gas Area Monitor (50-Day Battery)",
+    "brand": "Udyogi Industrial Scientific",
+    "img": "assets/products/sgbi/radius_bz1.png",
+    "cert": "ATEX · IECEx · PESO · 108 dB Alarm · 50 Days Battery",
+    "price": 185000,
+    "rating": 5.0,
+    "reviews": 16,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Perimeter and area gas monitor protecting entire plant zones for up to 50 continuous days with a deafening 108 dB siren and wireless mesh.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Industrial Scientific"
+      ],
+      [
+        "Model",
+        "Radius BZ1 Area Monitor"
+      ],
+      [
+        "Gases Monitored",
+        "Up to 7 Gases Simultaneously (Combustibles, Toxics, O2 & PID VOC)"
+      ],
+      [
+        "Battery Runtime",
+        "Runs Continuously for 50 Days on Single Internal Battery Pack"
+      ],
+      [
+        "Alarm Volume",
+        "Ultra-Loud 108 dB Siren (Cuts Through Roaring Plant Noise)"
+      ],
+      [
+        "Visual Alert",
+        "360° Bold Wraparound Strobe Light Tower"
+      ],
+      [
+        "Networking",
+        "LENS Wireless Mesh Connects Multiple Radius BZ1 Units Seamlessly"
+      ],
+      [
+        "Approvals",
+        "ATEX, IECEx, PESO Certified"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_btf_20",
+    "category": "confined",
+    "name": "Udyogi BTF-20 8\" (200mm) Explosion-Proof Axial Metal Blower",
+    "brand": "Udyogi Vent In Out",
+    "img": "assets/products/sgbi/btf_20.png",
+    "cert": "Ex d IIB T4 Gb · 883 CFM (25 m³/min) · 1/3 HP",
+    "price": 24500,
+    "rating": 4.9,
+    "reviews": 33,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Flameproof 8-inch axial ventilator engineered to purge hazardous explosive gases from manholes, tanks and confined spaces.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Vent In Out"
+      ],
+      [
+        "Model Number",
+        "BTF-20"
+      ],
+      [
+        "Fan Diameter",
+        "8 Inch / 200 mm"
+      ],
+      [
+        "Hazardous Rating",
+        "Ex d IIB T4 Gb (Explosion-Proof & Flameproof)"
+      ],
+      [
+        "Motor Power",
+        "1/3 HP (2800 RPM)"
+      ],
+      [
+        "Air Delivery Capacity",
+        "883 CFM (25 m³/min)"
+      ],
+      [
+        "Casing",
+        "Heavy High-Tensile Steel Housing with Anti-Static Powder Coating"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_fl_20_ex",
+    "category": "confined",
+    "name": "Udyogi FL-20 EX 8\" (200mm) Antistatic Flexible Ducting (5m)",
+    "brand": "Udyogi Vent In Out",
+    "img": "assets/products/sgbi/fl_20_ex.png",
+    "cert": "Flame Retardant · Conductive Carbon Antistatic",
+    "price": 6800,
+    "rating": 4.9,
+    "reviews": 24,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Conductive antistatic flexible hose with grounding wire safely dissipates static electricity while venting hazardous gas chambers.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Vent In Out"
+      ],
+      [
+        "Model Number",
+        "FL-20 EX"
+      ],
+      [
+        "Diameter",
+        "8 Inch / 200 mm"
+      ],
+      [
+        "Length",
+        "5 Metres (Couplable for Longer Runs)"
+      ],
+      [
+        "Static Dissipation",
+        "Integrated Conductive Grounding Clamp Dissipates Static Sparking"
+      ],
+      [
+        "Temperature Range",
+        "-53°C to 121°C (-65°F to 250°F)"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_btf_30",
+    "category": "confined",
+    "name": "Udyogi BTF-30 12\" (300mm) Explosion-Proof Axial Metal Blower",
+    "brand": "Udyogi Vent In Out",
+    "img": "assets/products/sgbi/btf_30.png",
+    "cert": "Ex d IIB T4 Gb · 2295 CFM (65 m³/min) · 3/4 HP",
+    "price": 34500,
+    "rating": 5.0,
+    "reviews": 41,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "High-power 12\" flameproof ventilator moving 2295 CFM of fresh air into deep sewers, chemical reactors and ship hulls.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Vent In Out"
+      ],
+      [
+        "Model Number",
+        "BTF-30"
+      ],
+      [
+        "Fan Diameter",
+        "12 Inch / 300 mm"
+      ],
+      [
+        "Explosion-Proof Rating",
+        "Ex d IIB T4 Gb"
+      ],
+      [
+        "Motor Power",
+        "3/4 HP (2800 RPM)"
+      ],
+      [
+        "Air Flow Volume",
+        "2295 CFM (65 m³/min)"
+      ],
+      [
+        "Application",
+        "Chemical Reactors, Oil Tank De-gassing, Sewer Entry"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_btf_40",
+    "category": "confined",
+    "name": "Udyogi BTF-40 16\" (400mm) Explosion-Proof Axial Metal Blower",
+    "brand": "Udyogi Vent In Out",
+    "img": "assets/products/sgbi/btf_40.png",
+    "cert": "Ex d IIB T4 Gb · 3700 CFM (120 m³/min) · 1.5 HP",
+    "price": 48000,
+    "rating": 5.0,
+    "reviews": 19,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Heavy 16-inch explosion-proof blower delivering 3700 CFM massive ventilation for large storage tank turnarounds.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Vent In Out"
+      ],
+      [
+        "Model Number",
+        "BTF-40"
+      ],
+      [
+        "Size",
+        "16 Inch / 400 mm"
+      ],
+      [
+        "Classification",
+        "Ex d IIB T4 Gb"
+      ],
+      [
+        "Motor",
+        "1.5 HP Heavy Duty Industrial Motor (2800 RPM)"
+      ],
+      [
+        "Airflow",
+        "3700 CFM (120 m³/min)"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_btf_60",
+    "category": "confined",
+    "name": "Udyogi BTF-60 24\" (600mm) Explosion-Proof Axial Metal Blower",
+    "brand": "Udyogi Vent In Out",
+    "img": "assets/products/sgbi/btf_60.png",
+    "cert": "Ex d IIB T4 Gb · 8475 CFM (240 m³/min) · 3.0 HP",
+    "price": 76000,
+    "rating": 5.0,
+    "reviews": 15,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Giant 24\" flameproof ventilator pushing 8475 CFM of air for refinery shutdown ventilation and tunnel purging.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Vent In Out"
+      ],
+      [
+        "Model Number",
+        "BTF-60"
+      ],
+      [
+        "Fan Diameter",
+        "24 Inch / 600 mm"
+      ],
+      [
+        "Explosion Proof",
+        "Ex d IIB T4 Gb"
+      ],
+      [
+        "Motor",
+        "3.0 HP High-Efficiency Motor (1400 RPM)"
+      ],
+      [
+        "Air Flow Volume",
+        "8475 CFM (240 m³/min)"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_ctf_20",
+    "category": "confined",
+    "name": "Udyogi CTF-20 8\" (200mm) Industrial Axial Metal Blower",
+    "brand": "Udyogi Vent In Out",
+    "img": "assets/products/sgbi/ctf_20.png",
+    "cert": "CE Certified · 883 CFM · 1/3 HP",
+    "price": 12500,
+    "rating": 4.8,
+    "reviews": 45,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Standard industrial 8-inch portable axial blower for workshop fresh air supply, welding fume extraction and cable pit maintenance.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Vent In Out"
+      ],
+      [
+        "Model Number",
+        "CTF-20"
+      ],
+      [
+        "Fan Diameter",
+        "8 Inch / 200 mm"
+      ],
+      [
+        "Motor",
+        "1/3 HP (2800 RPM) Single Phase 220V"
+      ],
+      [
+        "Free Air Capacity",
+        "883 CFM (25 m³/min)"
+      ],
+      [
+        "Standard",
+        "CE Certified"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_fl_20",
+    "category": "confined",
+    "name": "Udyogi FL-20 8\" (200mm) Heavy-Duty Flexible Ducting (5m)",
+    "brand": "Udyogi Vent In Out",
+    "img": "assets/products/sgbi/fl_20.png",
+    "cert": "Industrial Grade Reinforced PVC",
+    "price": 3800,
+    "rating": 4.8,
+    "reviews": 39,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Orange heavy-duty PVC flexible ducting with spring steel wire reinforcement and end cinch straps for 8\" blowers.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Vent In Out"
+      ],
+      [
+        "Model Number",
+        "FL-20"
+      ],
+      [
+        "Diameter",
+        "8 Inch / 200 mm"
+      ],
+      [
+        "Length",
+        "5 Metres (Retractable)"
+      ],
+      [
+        "Construction",
+        "Tear-Resistant PVC Fabric with Spring Steel Wire Helix"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_ctf_30",
+    "category": "confined",
+    "name": "Udyogi CTF-30 12\" (300mm) Industrial Axial Metal Blower",
+    "brand": "Udyogi Vent In Out",
+    "img": "assets/products/sgbi/ctf_30.png",
+    "cert": "CE Certified · 2295 CFM · 1/3 HP",
+    "price": 18500,
+    "rating": 4.9,
+    "reviews": 36,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "12-inch high-velocity metal blower moving 2295 CFM for basement construction, duct purging and manhole ventilation.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Vent In Out"
+      ],
+      [
+        "Model Number",
+        "CTF-30"
+      ],
+      [
+        "Size",
+        "12 Inch / 300 mm"
+      ],
+      [
+        "Motor",
+        "1/3 HP (2800 RPM)"
+      ],
+      [
+        "Air Delivery",
+        "2295 CFM (65 m³/min)"
+      ],
+      [
+        "Standard",
+        "CE Certified"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_ctf_40",
+    "category": "confined",
+    "name": "Udyogi CTF-40 16\" (400mm) Industrial Axial Metal Blower",
+    "brand": "Udyogi Vent In Out",
+    "img": "assets/products/sgbi/ctf_40.png",
+    "cert": "CE Certified · 3700 CFM · 1.5 HP",
+    "price": 28500,
+    "rating": 4.9,
+    "reviews": 22,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "16-inch high-output metal ventilator delivering 3700 CFM for plant maintenance and ship building.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Vent In Out"
+      ],
+      [
+        "Model Number",
+        "CTF-40"
+      ],
+      [
+        "Diameter",
+        "16 Inch / 400 mm"
+      ],
+      [
+        "Motor",
+        "1.5 HP Industrial Motor (2800 RPM)"
+      ],
+      [
+        "Capacity",
+        "3700 CFM (120 m³/min)"
+      ],
+      [
+        "Standard",
+        "CE Certified"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_ctf_60",
+    "category": "confined",
+    "name": "Udyogi CTF-60 24\" (600mm) Mobile Axial Blower on Wheels",
+    "brand": "Udyogi Vent In Out",
+    "img": "assets/products/sgbi/ctf_60.png",
+    "cert": "CE Certified · 8475 CFM · Heavy Duty Cart",
+    "price": 54000,
+    "rating": 5.0,
+    "reviews": 18,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Mobile wheeled 24-inch industrial axial blower delivering 8475 CFM with 360° tilt cradle for immense cooling and ventilation.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Vent In Out"
+      ],
+      [
+        "Model Number",
+        "CTF-60"
+      ],
+      [
+        "Diameter",
+        "24 Inch / 600 mm"
+      ],
+      [
+        "Mobile Frame",
+        "Heavy Tubular Steel Wheel Cart with Locking Swivel Casters"
+      ],
+      [
+        "Motor",
+        "3.0 HP (1400 RPM)"
+      ],
+      [
+        "Air Output",
+        "8475 CFM (240 m³/min)"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_trident_headlamp",
+    "category": "misc",
+    "name": "Udyogi Trident Multi-Purpose LED Helmet Headlamp",
+    "brand": "Udyogi",
+    "img": "assets/products/sgbi/trident_headlamp.png",
+    "cert": "CE · UKCA · SGS Approved",
+    "price": 2450,
+    "rating": 4.8,
+    "reviews": 42,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Hands-free helmet headlamp featuring 80-lumen C4 LED center beam and 3 peripheral LEDs for both close-up inspection and long-distance focus.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model",
+        "Trident LED Headlamp"
+      ],
+      [
+        "Lighting Modes",
+        "3-Way: 80 Lumen Center Beam + 3 White Flood LEDs"
+      ],
+      [
+        "Switch",
+        "Glove-Friendly Push-Button Switch"
+      ],
+      [
+        "Battery Indicator",
+        "Low-Level Battery Life Indicator"
+      ],
+      [
+        "Standards",
+        "CE, UKCA, SGS Approved"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_dualie_flashlight",
+    "category": "misc",
+    "name": "Udyogi Dualie Intrinsically Safe LED Flashlight",
+    "brand": "Udyogi",
+    "img": "assets/products/sgbi/dualie_flashlight.png",
+    "cert": "ATEX Ex · MSHA · IPX7 Waterproof",
+    "price": 3850,
+    "rating": 5.0,
+    "reviews": 36,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Intrinsically safe dual-beam torch featuring forward distance spot beam and downward floor flood beam to prevent tripping.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model",
+        "Dualie"
+      ],
+      [
+        "Intrinsic Safety",
+        "ATEX Ex Approved for Hazardous Zone 0 / 1, MSHA Certified"
+      ],
+      [
+        "Water & Impact",
+        "IPX7 Waterproof (1m for 30 Mins) & 2-Metre Drop Tested"
+      ],
+      [
+        "Dual Beam",
+        "Simultaneous Forward Spot + Downward Path Flood Beam"
+      ],
+      [
+        "Housing",
+        "Corrosion-Proof Chemical Resistant Engineered Polymer"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_fire_vulcan_lantern",
+    "category": "misc",
+    "name": "Udyogi Fire Vulcan Rechargeable Firefighter LED Lantern",
+    "brand": "Udyogi",
+    "img": "assets/products/sgbi/fire_vulcan_lantern.png",
+    "cert": "NFPA Compliant · Floats in Water · Fast Charge",
+    "price": 16500,
+    "rating": 5.0,
+    "reviews": 24,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Lightweight firefighting search lantern that floats in water with ultra-bright blue taillight LEDs for partner tracking in dense smoke.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model",
+        "Fire Vulcan"
+      ],
+      [
+        "Buoyancy",
+        "Buoyant Waterproof Design (Floats Face-Up in Water)"
+      ],
+      [
+        "Smoke Navigation",
+        "High-Intensity Piercing Beam + Dual Rear Blue Taillight LEDs"
+      ],
+      [
+        "Battery",
+        "Fast Rechargeable Lithium-Ion (5 Hours Full Charge)"
+      ],
+      [
+        "Compliance",
+        "NFPA 1901-14.1.10.2 Requirements"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_survivor_right_angle",
+    "category": "misc",
+    "name": "Udyogi Survivor Firefighter's Right Angle Smoke-Cutter Light",
+    "brand": "Udyogi",
+    "img": "assets/products/sgbi/survivor_right_angle.png",
+    "cert": "NFPA · MSHA · ATEX · IPX4 Water Resistant",
+    "price": 9800,
+    "rating": 5.0,
+    "reviews": 31,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Chest-clip right-angle flashlight with custom optic smoke-piercing beam, 2m impact resistance and spring-loaded clip.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model",
+        "Survivor Right Angle Light"
+      ],
+      [
+        "Optic System",
+        "Deep-Dish Parabolic Reflector Pierces Heavy Black Smoke"
+      ],
+      [
+        "Attachment",
+        "Heavy-Duty Spring-Loaded Clip for Turnout Gear / BA Harness"
+      ],
+      [
+        "Impact Resistance",
+        "2-Metre Drop Tested Polycarbonate Body with Silicone Bezel"
+      ],
+      [
+        "Approvals",
+        "NFPA, MSHA, ATEX Certified"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_oxygo_kit",
+    "category": "misc",
+    "name": "Udyogi Oxygo Portable Oxygen Therapy Kit",
+    "brand": "Udyogi Oxygo",
+    "img": "assets/products/sgbi/oxygo_kit.png",
+    "cert": "PESO Approved · 45% Lighter Aluminum Alloy",
+    "price": 11800,
+    "rating": 4.9,
+    "reviews": 38,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Complete portable medical oxygen kit with rust-free aluminum cylinder, click-style flow regulator, mask and backpack carry case.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Oxygo"
+      ],
+      [
+        "Cylinder Material",
+        "Rust-Free Seamless Medical Aluminum Alloy (45% Lighter than Steel)"
+      ],
+      [
+        "Regulator",
+        "Finger-Operated Precision Oxygen Flow Regulator with Contents Gauge"
+      ],
+      [
+        "Accessories",
+        "Adult Oxygen Mask, Nasal Cannula, Refill Adapter & Padded Backpack"
+      ],
+      [
+        "Approvals",
+        "PESO Certified Medical Gas Equipment"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_ambu_oval_plus",
+    "category": "misc",
+    "name": "Udyogi Ambu Oval Plus Silicone Reusable Resuscitator (Ambu Bag)",
+    "brand": "Udyogi Ambu",
+    "img": "assets/products/sgbi/ambu_oval_plus.png",
+    "cert": "CE Medical Device · Autoclavable 134°C · MR Conditional",
+    "price": 3950,
+    "rating": 5.0,
+    "reviews": 47,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Autoclavable medical-grade silicone manual resuscitator bag with pressure-relief valve and single-shutter patient valve.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi Ambu"
+      ],
+      [
+        "Model",
+        "Ambu Oval Plus"
+      ],
+      [
+        "Material",
+        "100% Medical Grade Liquid Silicone (Latex-Free)"
+      ],
+      [
+        "Sterilization",
+        "Fully Autoclavable at 134°C (273.2°F) for Repeated Hospital Use"
+      ],
+      [
+        "Safety Valve",
+        "Integrated 40 cmH2O Pressure Relief Valve"
+      ],
+      [
+        "Compatibility",
+        "MR Conditional (Safe for MRI Environments)"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_practi_man_plus",
+    "category": "misc",
+    "name": "Udyogi Practi-Man Plus Electronic CPR Training Manikin",
+    "brand": "Udyogi",
+    "img": "assets/products/sgbi/practi_man_plus.png",
+    "cert": "AHA 2020 Compliant · Wireless CPR Feedback Monitor",
+    "price": 22500,
+    "rating": 4.9,
+    "reviews": 23,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "2-in-1 adult and child CPR training manikin with wireless Bluetooth electronic feedback monitor measuring depth and rate in real time.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model",
+        "Practi-Man Plus"
+      ],
+      [
+        "2-in-1 Dual Function",
+        "Single Selector Switch Converts Instantly between Adult & Child CPR Modes"
+      ],
+      [
+        "Wireless Feedback",
+        "AHA 2020 Compliant Wireless Monitor Displays Compression Rate & Depth Feedback"
+      ],
+      [
+        "Hygiene System",
+        "Valve System with Non-Rebreathing Lung Bag & Functional Nose"
+      ],
+      [
+        "Weight",
+        "Lightweight 4.85 lbs with Heavy Carrying Bag Mat"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_smarty_saver_aed",
+    "category": "misc",
+    "name": "Udyogi Smarty Saver Automated External Defibrillator (AED)",
+    "brand": "Udyogi",
+    "img": "assets/products/sgbi/smarty_saver_aed.png",
+    "cert": "CE Medical · Fully Automatic · Voice Prompt Guidance",
+    "price": 89000,
+    "rating": 5.0,
+    "reviews": 19,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Fully automatic life-saving AED with spoken voice prompts, metronome pacing and universal pre-connected adult/pediatric electrode pads.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model",
+        "Smarty Saver AED"
+      ],
+      [
+        "Operation",
+        "Fully Automatic Shock Delivery with Spoken Hindi/English Audio Guidance"
+      ],
+      [
+        "CPR Coaching",
+        "Built-in Audio-Visual Metronome Guides Rescuer Through Optimal Compression Rhythm"
+      ],
+      [
+        "Universal Pads",
+        "Universal Pre-Connected Electrodes for Both Adult & Pediatric Patients"
+      ],
+      [
+        "Portability",
+        "Compact, Lightweight with Ergonomic Folding Handle"
+      ],
+      [
+        "Approvals",
+        "CE Certified Life Support Equipment"
       ]
     ]
   }
