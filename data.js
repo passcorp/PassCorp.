@@ -6,7 +6,7 @@
    "Export JSON" in the CMS to back up your content to a file.
 ========================================================= */
 
-const STORAGE_KEY = "passCorpContent_v10";
+const STORAGE_KEY = "passCorpContent_v11";
 
 
 /* =========================================================
@@ -12136,6 +12136,1982 @@ const DEFAULT_CONTENT = {
       [
         "Typical Application",
         "Machine Tool Operation, Auto Ancillary Units, Maintenance & Fabrication"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_porous",
+    "category": "shoes",
+    "name": "Udyogi Edge Porous Single Density PU Safety Shoes",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_porous.png",
+    "cert": "IS 15298 Part 2 · Antistatic",
+    "price": 1250,
+    "rating": 4.8,
+    "reviews": 34,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Single density PU derby safety shoes crafted from breathable, lightweight microfiber with 200J impact steel toe.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE POROUS"
+      ],
+      [
+        "Design Type",
+        "Derby / Design A (Low Ankle)"
+      ],
+      [
+        "Upper Material",
+        "Premium Water-Resistant Microfiber (Vegan)"
+      ],
+      [
+        "Sole Construction",
+        "DPP Single Density Polyurethane (PU)"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 200J Impact Resistance"
+      ],
+      [
+        "Slip Resistance",
+        "SRA Certified"
+      ],
+      [
+        "Insock",
+        "Fabric Laminated Foam for All-Day Cushioning"
+      ],
+      [
+        "Special Features",
+        "Antistatic Protection, Lightweight, High Abrasion Resistance"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_comfort",
+    "category": "shoes",
+    "name": "Udyogi Edge Comfort Microfiber Safety Shoes",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_comfort.png",
+    "cert": "IS 15298 Part 2 · BIS Certified",
+    "price": 1280,
+    "rating": 4.7,
+    "reviews": 29,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Derby design microfiber safety shoe with perforated EVA insock and padded collar for long industrial shifts.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE COMFORT"
+      ],
+      [
+        "Design Type",
+        "Derby / Design A (Low Ankle)"
+      ],
+      [
+        "Upper Material",
+        "Lightweight Microfiber"
+      ],
+      [
+        "Sole",
+        "Single Density PU Sole"
+      ],
+      [
+        "Toe Protection",
+        "Steel Toe Cap 200 Joules"
+      ],
+      [
+        "Slip Rating",
+        "SRA"
+      ],
+      [
+        "Insock",
+        "Fabric Laminated Perforated EVA"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_lss",
+    "category": "shoes",
+    "name": "Udyogi Edge LSS Ladies Ergonomic Safety Shoes",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_lss.png",
+    "cert": "IS 15298 Part 2 · BIS Certified",
+    "price": 1320,
+    "rating": 4.9,
+    "reviews": 22,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Specially engineered ergonomic fit for women professionals with velcro strap closure and lightweight microfiber upper.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE LSS (LADIES SHOES)"
+      ],
+      [
+        "Design Type",
+        "Derby Design A with Quick-Fasten Strap"
+      ],
+      [
+        "Upper Material",
+        "Microfiber (Vegan & Environment-Friendly)"
+      ],
+      [
+        "Sole",
+        "Single Density PU"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 200J"
+      ],
+      [
+        "Slip Resistance",
+        "SRA"
+      ],
+      [
+        "Insock",
+        "Fabric Laminated Perforated EVA"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_mf_ex",
+    "category": "shoes",
+    "name": "Udyogi Edge MF EX Reflector Safety Shoes (Black/Brown)",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_mf_ex.png",
+    "cert": "IS 15298 Part 2 · Antistatic",
+    "price": 1350,
+    "rating": 4.8,
+    "reviews": 41,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Microfiber safety shoe with 3M reflective accents for low-light visibility and extra comfort PU insole.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE MF EX"
+      ],
+      [
+        "Design Type",
+        "Derby / Design A"
+      ],
+      [
+        "Upper",
+        "Microfiber with High-Visibility Reflector Accents"
+      ],
+      [
+        "Sole",
+        "Single Density PU"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 200J"
+      ],
+      [
+        "Slip Resistance",
+        "SRA"
+      ],
+      [
+        "Insock",
+        "Extra Comfort PU Cushion"
+      ],
+      [
+        "Available Colors",
+        "Black & Brown"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2, Antistatic"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_elect",
+    "category": "shoes",
+    "name": "Udyogi Edge Elect 15kV Electrical Hazard Metal-Free Shoes",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_elect.png",
+    "cert": "IS 15298 Part 2 · ASTM F2413-18 (15kV ESR)",
+    "price": 1750,
+    "rating": 5.0,
+    "reviews": 36,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Metal-free 15kV electrical hazard protection shoes with 200J composite toe and ASTM F2413-18 certified insulating sole.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE ELECT"
+      ],
+      [
+        "Design Type",
+        "Derby / Design A (Metal-Free Construction)"
+      ],
+      [
+        "Upper Material",
+        "Premium Non-Conductive Microfiber"
+      ],
+      [
+        "Sole",
+        "Single Density PU Non-Conductive Sole"
+      ],
+      [
+        "Toe Cap",
+        "Composite Toe 200J (Completely Metal-Free)"
+      ],
+      [
+        "Electrical Rating",
+        "15kV Tested Sole in Dry Condition as per ASTM F2413-18"
+      ],
+      [
+        "Slip Resistance",
+        "SRA"
+      ],
+      [
+        "Insock",
+        "Perforated EVA Shock Absorbing Insole"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2, ESR 15kV Certified"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_mf_slipon",
+    "category": "shoes",
+    "name": "Udyogi Edge MF Slipon Composite Toe Metal-Free Shoes",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_mf_slipon.png",
+    "cert": "IS 15298 Part 2 · Antistatic · Metal-Free",
+    "price": 1420,
+    "rating": 4.8,
+    "reviews": 28,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Lace-free slip-on microfiber safety shoe with elastic side gussets, composite toe cap and antistatic rating.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE MF SLIPON"
+      ],
+      [
+        "Design Type",
+        "Derby / Design A (Slip-on Ergonomic Cut)"
+      ],
+      [
+        "Upper",
+        "Microfiber Easy-Clean Upper"
+      ],
+      [
+        "Sole",
+        "Single Density PU"
+      ],
+      [
+        "Toe Cap",
+        "Composite Toe 200J (Metal-Free)"
+      ],
+      [
+        "Slip Resistance",
+        "SRA"
+      ],
+      [
+        "Insock",
+        "Fabric Laminated EVA 3mm"
+      ],
+      [
+        "Special Features",
+        "Antistatic, 100% Metal-Free, Airport-Friendly"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_lite",
+    "category": "shoes",
+    "name": "Udyogi Edge Lite Featherweight Microfiber Safety Shoes",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_lite.png",
+    "cert": "IS 15298 Part 2 / Part 3 · BIS",
+    "price": 1180,
+    "rating": 4.7,
+    "reviews": 33,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Featherweight industrial shoe with flexible PU sole, contrast dual-stitch construction and breathable lining.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE LITE"
+      ],
+      [
+        "Design Type",
+        "Derby / Design A"
+      ],
+      [
+        "Upper",
+        "Lightweight Microfiber"
+      ],
+      [
+        "Sole",
+        "Single Density PU"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 100J / 200J"
+      ],
+      [
+        "Slip Resistance",
+        "SRA"
+      ],
+      [
+        "Insock",
+        "Fabric Laminated EVA 3mm"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2 / Part 3"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_tango_ex",
+    "category": "shoes",
+    "name": "Udyogi Tango EX Heavy-Duty Microfiber Safety Shoes",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/tango_ex.png",
+    "cert": "IS 15298 Part 2 / Part 3 · BIS",
+    "price": 1150,
+    "rating": 4.7,
+    "reviews": 45,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "High-durability grain textured microfiber safety shoe with oil and acid resistant single density PU sole.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "TANGO EX"
+      ],
+      [
+        "Design Type",
+        "Derby / Design A"
+      ],
+      [
+        "Upper",
+        "Textured Microfiber Synthetic Grain"
+      ],
+      [
+        "Sole",
+        "Single Density PU (Oil & Acid Resistant)"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 200J / 100J"
+      ],
+      [
+        "Slip Resistance",
+        "SRA"
+      ],
+      [
+        "Insock",
+        "Fabric Laminated EVA 3mm"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2 / Part 3"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_knit_red",
+    "category": "shoes",
+    "name": "Udyogi Edge Knit (Red) Ultra-Breathable Safety Sneakers",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_knit_red.png",
+    "cert": "IS 15298 Part 2 · BIS Certified",
+    "price": 1490,
+    "rating": 4.9,
+    "reviews": 38,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Modern sport safety sneakers featuring engineered knitted air-mesh upper in dynamic red/black with 200J steel toe.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE KNIT(RED)"
+      ],
+      [
+        "Design Type",
+        "Derby / Design A (Athletic Safety Sneaker)"
+      ],
+      [
+        "Upper",
+        "Engineered Breathable Knitted Textile Upper (Red/Black)"
+      ],
+      [
+        "Sole",
+        "Single Density PU Lightweight Outsole"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 200J"
+      ],
+      [
+        "Slip Rating",
+        "SRA"
+      ],
+      [
+        "Insock",
+        "Perforated EVA Air-Cushion Insole"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_volt",
+    "category": "shoes",
+    "name": "Udyogi Edge Volt 18kV High Ankle Electrical Safety Boots",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_volt.png",
+    "cert": "IS 15298 Part 2 · ASTM F2413-18 (18kV ESR) · Metal-Free",
+    "price": 2250,
+    "rating": 5.0,
+    "reviews": 44,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "High ankle electrical safety boots certified for 18kV dielectric resistance, composite toe cap and SRC slip rating.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE VOLT"
+      ],
+      [
+        "Design Type",
+        "High Ankle / Design B (Full Ankle Support)"
+      ],
+      [
+        "Upper Material",
+        "Water-Resistant Non-Conductive Microfiber"
+      ],
+      [
+        "Sole Construction",
+        "DPP Double Density Polyurethane (PU/PU)"
+      ],
+      [
+        "Toe Cap",
+        "Composite Toe 200J (Completely Metal-Free)"
+      ],
+      [
+        "Electrical Properties",
+        "18kV Tested Sole in Dry Condition as per ASTM F2413-18"
+      ],
+      [
+        "Slip Resistance Level",
+        "SRC (Ceramic Tile + Steel Floor Certified)"
+      ],
+      [
+        "Insock",
+        "Extra Comfort PU Moulded Ergonomic Insole"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2, ESR 18kV Metal-Free"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_dd",
+    "category": "shoes",
+    "name": "Udyogi Edge DD Double Density PU/PU Safety Shoes",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_dd.png",
+    "cert": "IS 15298 Part 2 · SRC · Antistatic",
+    "price": 1480,
+    "rating": 4.8,
+    "reviews": 51,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Double density PU/PU sole offering superior shock absorption, antistatic discharge and SRC slip resistance.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE DD"
+      ],
+      [
+        "Design Type",
+        "Derby / Design A (Low Ankle)"
+      ],
+      [
+        "Upper",
+        "Microfiber Upper (Water & Chemical Splash Resistant)"
+      ],
+      [
+        "Sole",
+        "Double Density PU/PU (Soft Midsole + Tough Outsole)"
+      ],
+      [
+        "Slip Resistance",
+        "SRC (Highest European / Indian Rating)"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 200J"
+      ],
+      [
+        "Insock",
+        "Fabric Laminated Perforated EVA"
+      ],
+      [
+        "Available Colors",
+        "Black & Brown"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2, Antistatic"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_dd_ak",
+    "category": "shoes",
+    "name": "Udyogi Edge DD AK High Ankle Double Density Safety Boots",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_dd_ak.png",
+    "cert": "IS 15298 Part 2 · SRC · Antistatic",
+    "price": 1650,
+    "rating": 4.9,
+    "reviews": 47,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "High ankle padded boot with double density PU/PU sole, SRC slip rating and antistatic properties for heavy industries.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE DD AK"
+      ],
+      [
+        "Design Type",
+        "High Ankle / Design B (Protects Ankle Joint & Tendons)"
+      ],
+      [
+        "Upper",
+        "Durable Microfiber Upper"
+      ],
+      [
+        "Sole",
+        "Double Density PU/PU"
+      ],
+      [
+        "Slip Resistance",
+        "SRC"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 200J"
+      ],
+      [
+        "Insock",
+        "Fabric Laminated Perforated EVA"
+      ],
+      [
+        "Available Colors",
+        "Black & Brown"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2, Antistatic"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_hike",
+    "category": "shoes",
+    "name": "Udyogi Edge Hike Double Density Reflector Shoes",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_hike.png",
+    "cert": "IS 15298 Part 2 · SRC · Antistatic",
+    "price": 1550,
+    "rating": 4.8,
+    "reviews": 32,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Tough outdoor & warehouse derby shoe with double density PU/PU sole, safety reflector and cushioned PU foam insole.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE HIKE"
+      ],
+      [
+        "Design Type",
+        "Derby / Design A"
+      ],
+      [
+        "Upper",
+        "Microfiber with Hi-Vis Reflector Strip"
+      ],
+      [
+        "Sole",
+        "Double Density PU/PU"
+      ],
+      [
+        "Slip Resistance",
+        "SRC"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 200J"
+      ],
+      [
+        "Insock",
+        "Fabric Laminated PU Foam"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2, Antistatic"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_trek",
+    "category": "shoes",
+    "name": "Udyogi Edge Trek Dual-Tone Double Density Safety Shoes",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_trek.png",
+    "cert": "IS 15298 Part 2 · SRC · Antistatic",
+    "price": 1580,
+    "rating": 4.8,
+    "reviews": 27,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Distinctive two-tone grey/black microfiber safety shoe with SRC double density sole and reflective heel insert.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE TREK"
+      ],
+      [
+        "Design Type",
+        "Derby / Design A"
+      ],
+      [
+        "Upper",
+        "Grey & Black Microfiber Composite with Reflector"
+      ],
+      [
+        "Sole",
+        "Double Density PU/PU"
+      ],
+      [
+        "Slip Resistance",
+        "SRC"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 200J"
+      ],
+      [
+        "Insock",
+        "Fabric Laminated PU Foam"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2, Antistatic"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_active",
+    "category": "shoes",
+    "name": "Udyogi Edge Active Sporty Double Density Safety Shoes",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_active.png",
+    "cert": "IS 15298 Part 2 · SRC · Antistatic",
+    "price": 1590,
+    "rating": 4.9,
+    "reviews": 31,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Ergonomic athletic derby with 3-stripe reflector branding, double density shock absorbing PU sole and 200J steel toe.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE ACTIVE"
+      ],
+      [
+        "Design Type",
+        "Derby / Design A"
+      ],
+      [
+        "Upper",
+        "Microfiber with Dual-Reflector Side Stripes"
+      ],
+      [
+        "Sole",
+        "Double Density PU/PU"
+      ],
+      [
+        "Slip Resistance",
+        "SRC"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 200J"
+      ],
+      [
+        "Insock",
+        "Fabric Laminated PU Foam"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2, Antistatic"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_urban_brown",
+    "category": "shoes",
+    "name": "Udyogi Edge Urban (Brown) Metal-Free Executive Safety Shoes",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_urban_brown.png",
+    "cert": "IS 15298 Part 2 · SRC · Metal-Free · Antistatic",
+    "price": 1720,
+    "rating": 5.0,
+    "reviews": 39,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Executive brown microfiber derby shoes with composite toe cap, beige midsole, antistatic and 100% metal-free rating.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE URBAN(BROWN)"
+      ],
+      [
+        "Design Type",
+        "Derby / Design A (Executive Finish)"
+      ],
+      [
+        "Upper",
+        "Rich Brown Microfiber Leather Alternative"
+      ],
+      [
+        "Sole",
+        "Double Density PU/PU with Contrast Midsole"
+      ],
+      [
+        "Slip Resistance",
+        "SRC"
+      ],
+      [
+        "Toe Cap",
+        "Composite Toe 200J (Completely Metal-Free)"
+      ],
+      [
+        "Insock",
+        "Extra Comfort PU Insole"
+      ],
+      [
+        "Special Features",
+        "Antistatic, Metal-Free, Executive Wear"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_tango_dd",
+    "category": "shoes",
+    "name": "Udyogi Tango DD Double Density PU/PU Safety Shoes",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/tango_dd.png",
+    "cert": "IS 15298 Part 2 · SRC Certified",
+    "price": 1380,
+    "rating": 4.7,
+    "reviews": 42,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "High-traction double density PU/PU industrial derby shoe with textured upper and 200J steel toe protection.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "TANGO DD"
+      ],
+      [
+        "Design Type",
+        "Derby / Design A"
+      ],
+      [
+        "Upper",
+        "Microfiber Textured Grain Upper"
+      ],
+      [
+        "Sole",
+        "Double Density PU/PU"
+      ],
+      [
+        "Slip Resistance",
+        "SRC"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 200J"
+      ],
+      [
+        "Insock",
+        "Fabric Laminated EVA 3mm"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_sprint",
+    "category": "shoes",
+    "name": "Udyogi Edge Sprint Knitted TPU DIP Double Density Shoes",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_sprint.png",
+    "cert": "IS 15298 (Part-2):2016 · SRC · Antistatic",
+    "price": 1890,
+    "rating": 5.0,
+    "reviews": 48,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Direct Injection Process (DIP) safety sneakers with knitted upper, TPU print reinforcing cage, composite toe and SRC sole.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE SPRINT"
+      ],
+      [
+        "Design Type",
+        "Derby / Design A (Direct Injection Process)"
+      ],
+      [
+        "Upper",
+        "High-Tensile Knitted Upper with TPU Protective Film"
+      ],
+      [
+        "Sole",
+        "DIP Double Density PU Sole (Supreme Bonding Strength)"
+      ],
+      [
+        "Slip Resistance Level",
+        "SRC"
+      ],
+      [
+        "Toe Cap",
+        "Composite Toe 200J (Lightweight & Thermal Insulated)"
+      ],
+      [
+        "Insock",
+        "Extra Comfort PU Moulded Ergonomic Cup Insole"
+      ],
+      [
+        "Standard",
+        "IS 15298 (PART-2):2016, Antistatic"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_rapid",
+    "category": "shoes",
+    "name": "Udyogi Edge Rapid Nubuck Finish High Ankle Boots",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_rapid.png",
+    "cert": "IS 15298 (Part-2):2016 · SRC · Metal-Free · Antistatic",
+    "price": 2100,
+    "rating": 5.0,
+    "reviews": 37,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Premium wheat/tan nubuck finish high ankle boots with DIP double density PU sole, composite toe and antistatic certification.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE RAPID"
+      ],
+      [
+        "Design Type",
+        "High Ankle / Design B (Nubuck Wheat Boot)"
+      ],
+      [
+        "Upper",
+        "Microfiber Nubuck Finish (Water Repellent & Breathable)"
+      ],
+      [
+        "Sole",
+        "DIP Double Density PU"
+      ],
+      [
+        "Slip Resistance Level",
+        "SRC"
+      ],
+      [
+        "Toe Cap",
+        "Composite Toe 200J (100% Metal-Free)"
+      ],
+      [
+        "Insock",
+        "Extra Comfort PU Moulded Insole"
+      ],
+      [
+        "Special Features",
+        "Antistatic, Metal-Free, Ankle Collar Padding"
+      ],
+      [
+        "Standard",
+        "IS 15298 (PART-2):2016"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_esd",
+    "category": "shoes",
+    "name": "Udyogi Edge ESD Certified Electro-Static Dissipative Shoes",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_esd.png",
+    "cert": "IS 15298 Part 2 · ESD Certified (0.1 to 100 M Ohm)",
+    "price": 1780,
+    "rating": 4.9,
+    "reviews": 29,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Specialized ESD safety shoes ensuring 0.1 to 100 Mega Ohm electrical resistance for electronics, semiconductor and cleanroom safety.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE ESD"
+      ],
+      [
+        "Design Type",
+        "Derby / Design A"
+      ],
+      [
+        "Upper",
+        "Conductive-Treated Microfiber Upper"
+      ],
+      [
+        "Sole",
+        "DIP Double Density PU/PU Conductive Outsole"
+      ],
+      [
+        "Slip Resistance Level",
+        "SRC"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 200J"
+      ],
+      [
+        "Insock",
+        "Perforated Antistatic / ESD EVA Insole"
+      ],
+      [
+        "Electrical Properties",
+        "ESD Resistance: 0.1 to 100 M Ohm (Prevents Static Explosions & Component Damage)"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2, ESD Certified"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_thunder",
+    "category": "shoes",
+    "name": "Udyogi Edge Thunder High Ankle DIP Double Density Boots",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_thunder.png",
+    "cert": "IS 15298 Part 2 · SRC · Antistatic",
+    "price": 1850,
+    "rating": 4.9,
+    "reviews": 35,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Rugged high-ankle construction boot with high-visibility reflector piping, DIP double density PU/PU sole and 200J composite toe.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE THUNDER"
+      ],
+      [
+        "Design Type",
+        "High Ankle / Design B"
+      ],
+      [
+        "Upper",
+        "Microfiber with Dual Reflective Piping Accents"
+      ],
+      [
+        "Sole",
+        "DIP Double Density PU/PU Sole"
+      ],
+      [
+        "Slip Resistance",
+        "SRC"
+      ],
+      [
+        "Toe Cap",
+        "Composite Toe 200J"
+      ],
+      [
+        "Insock",
+        "Extra Comfort PU Insole"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2, Antistatic"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_honor",
+    "category": "shoes",
+    "name": "Udyogi Edge Honor Moccasin Slip-On Metal-Free Shoes",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_honor.png",
+    "cert": "IS 15298 Part 2 · SRC · Metal-Free · Antistatic",
+    "price": 1620,
+    "rating": 4.8,
+    "reviews": 24,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Moccasin slip-on safety shoe with rich dark brown microfiber upper, composite toe cap and DIP double density sole.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE HONOR"
+      ],
+      [
+        "Design Type",
+        "Moccasin / Design A (Slip-On Executive Style)"
+      ],
+      [
+        "Upper",
+        "Smooth Dark Brown Microfiber"
+      ],
+      [
+        "Sole",
+        "DIP Double Density PU/PU"
+      ],
+      [
+        "Slip Resistance",
+        "SRC"
+      ],
+      [
+        "Toe Cap",
+        "Composite Toe 200J (Metal-Free)"
+      ],
+      [
+        "Insock",
+        "Extra Comfort PU Insole"
+      ],
+      [
+        "Special Features",
+        "Antistatic, Metal-Free, Quick Slip-On Elastic Collar"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_aero",
+    "category": "shoes",
+    "name": "Udyogi Edge Aero Suede Microfiber Metal-Free Shoes",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_aero.png",
+    "cert": "IS 15298 Part 2 · SRC · Metal-Free · Antistatic",
+    "price": 1820,
+    "rating": 4.9,
+    "reviews": 33,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Suede microfiber athletic safety sneaker with high-vis orange collar lining, reflector piping, composite toe and DIP sole.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE AERO"
+      ],
+      [
+        "Design Type",
+        "Derby / Design A (Sport Safety Sneaker)"
+      ],
+      [
+        "Upper",
+        "Black Suede Microfiber with Orange Accents & Reflectors"
+      ],
+      [
+        "Sole",
+        "DIP Double Density PU/PU"
+      ],
+      [
+        "Slip Resistance",
+        "SRC"
+      ],
+      [
+        "Toe Cap",
+        "Composite Toe 200J (Metal-Free)"
+      ],
+      [
+        "Insock",
+        "Extra Comfort PU Shock Absorber"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2, Antistatic, Metal-Free"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_marshal",
+    "category": "shoes",
+    "name": "Udyogi Edge Marshal Derby Microfiber Reflector Shoes",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_marshal.png",
+    "cert": "IS 15298 Part 2 · SRC · Antistatic",
+    "price": 1580,
+    "rating": 4.8,
+    "reviews": 29,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Sporty red-trimmed microfiber safety shoe with DIP double density PU/PU sole, 200J steel toe and antistatic protection.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE MARSHAL"
+      ],
+      [
+        "Design Type",
+        "Derby / Design A"
+      ],
+      [
+        "Upper",
+        "Black Microfiber with Sport Red Collar & Contrast Stitching"
+      ],
+      [
+        "Sole",
+        "DIP Double Density PU/PU"
+      ],
+      [
+        "Slip Resistance",
+        "SRC"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 200J"
+      ],
+      [
+        "Insock",
+        "Extra Comfort PU"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2, Antistatic"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_chelsea",
+    "category": "shoes",
+    "name": "Udyogi Edge Chelsea Elastic Sided High Ankle Boots",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_chelsea.png",
+    "cert": "IS 15298 Part 2 · SRC · Metal-Free · Antistatic",
+    "price": 1950,
+    "rating": 5.0,
+    "reviews": 41,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Dealer / Chelsea style safety boot with heavy-duty elastic side gussets, composite toe cap, metal-free and antistatic.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE CHELSEA"
+      ],
+      [
+        "Design Type",
+        "High Ankle / Design B (Chelsea Dealer Boot)"
+      ],
+      [
+        "Upper",
+        "Premium Full-Grain Textured Microfiber with Elastic Gusset"
+      ],
+      [
+        "Sole",
+        "DIP Double Density PU/PU"
+      ],
+      [
+        "Slip Resistance",
+        "SRC"
+      ],
+      [
+        "Toe Cap",
+        "Composite Toe 200J (Completely Metal-Free)"
+      ],
+      [
+        "Insock",
+        "Extra Comfort PU Moulded Cushion"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2, Antistatic, Metal-Free"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_pride",
+    "category": "shoes",
+    "name": "Udyogi Edge Pride Microfiber DIP Double Density Shoes",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_pride.png",
+    "cert": "IS 15298 Part 2 · SRC · Antistatic",
+    "price": 1520,
+    "rating": 4.7,
+    "reviews": 26,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Microfiber safety shoe with silver reflective collar accent, DIP double density PU/PU sole and 200J steel toe cap.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE PRIDE"
+      ],
+      [
+        "Design Type",
+        "Derby / Design A"
+      ],
+      [
+        "Upper",
+        "Microfiber with Silver Reflector Collar Insert"
+      ],
+      [
+        "Sole",
+        "DIP Double Density PU/PU"
+      ],
+      [
+        "Slip Resistance",
+        "SRC"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 200J"
+      ],
+      [
+        "Insock",
+        "Extra Comfort PU"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2, Antistatic"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_master",
+    "category": "shoes",
+    "name": "Udyogi Edge Master High Ankle Industrial Safety Boots",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_master.png",
+    "cert": "IS 15298 Part 2 · SRC · Antistatic",
+    "price": 1750,
+    "rating": 4.8,
+    "reviews": 36,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Full high-ankle industrial microfiber boot with ribbed ankle padding, DIP double density PU/PU sole and steel toe.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE MASTER"
+      ],
+      [
+        "Design Type",
+        "High Ankle / Design B (Heavy Construction Safety)"
+      ],
+      [
+        "Upper",
+        "Microfiber with Ribbed Ankle Support"
+      ],
+      [
+        "Sole",
+        "DIP Double Density PU/PU"
+      ],
+      [
+        "Slip Resistance",
+        "SRC"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 200J"
+      ],
+      [
+        "Insock",
+        "Extra Comfort PU"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2, Antistatic"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_hummer",
+    "category": "shoes",
+    "name": "Udyogi Edge Hummer Suede Microfiber Heavy Duty Shoes",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_hummer.png",
+    "cert": "IS 15298 Part 2 · SRC · Antistatic",
+    "price": 1790,
+    "rating": 4.9,
+    "reviews": 31,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Rugged suede microfiber derby with padded orange collar, reflector accents and heavy-duty DIP double density PU/PU sole.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE HUMMER"
+      ],
+      [
+        "Design Type",
+        "Derby / Design A"
+      ],
+      [
+        "Upper",
+        "Black Suede Microfiber with Safety Orange Collar & Reflectors"
+      ],
+      [
+        "Sole",
+        "DIP Double Density PU/PU"
+      ],
+      [
+        "Slip Resistance",
+        "SRC"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 200J"
+      ],
+      [
+        "Insock",
+        "Extra Comfort PU Insole"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2, Antistatic"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_edge_rigger",
+    "category": "shoes",
+    "name": "Udyogi Edge Rigger Half Knee Pull-On Safety Boots",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/edge_rigger.png",
+    "cert": "IS 15298 Part 2 · SRC · Antistatic",
+    "price": 2450,
+    "rating": 5.0,
+    "reviews": 23,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Half knee-height pull-on rigger boot in water-resistant microfiber with pull loops, composite toe 200J and DIP SRC sole.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "EDGE RIGGER"
+      ],
+      [
+        "Design Type",
+        "Half Knee Boot / Design C (Rigger Boot with Side Pull Loops)"
+      ],
+      [
+        "Upper",
+        "Water-Resistant Full Microfiber Shaft & Foot"
+      ],
+      [
+        "Sole",
+        "DIP Double Density PU/PU"
+      ],
+      [
+        "Slip Resistance",
+        "SRC"
+      ],
+      [
+        "Toe Cap",
+        "Composite Toe 200J"
+      ],
+      [
+        "Insock",
+        "Extra Comfort PU"
+      ],
+      [
+        "Application",
+        "Rigging, Oil & Gas Platforms, Shipyards, Heavy Mining"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 2, Antistatic"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_tango_impact",
+    "category": "shoes",
+    "name": "Udyogi Tango Impact Single Density PVC Safety Shoes",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/tango_impact.png",
+    "cert": "IS 15298 Part 3 · BIS Certified",
+    "price": 650,
+    "rating": 4.6,
+    "reviews": 54,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Economical industrial PVC safety shoes with synthetic upper, padded orange collar and 100J steel toe protection.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "TANGO IMPACT"
+      ],
+      [
+        "Design Type",
+        "Derby / Design A"
+      ],
+      [
+        "Upper",
+        "Synthetic Grain Finish with Orange Collar"
+      ],
+      [
+        "Sole",
+        "Single Density High-Grade PVC Sole"
+      ],
+      [
+        "Slip Resistance",
+        "SRA"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 100J"
+      ],
+      [
+        "Insock",
+        "Fabric Laminated EVA"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 3"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_uforce_1010",
+    "category": "shoes",
+    "name": "Udyogi Uforce 1010 Low Ankle PVC Safety Shoes",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/uforce_1010.png",
+    "cert": "IS 15298 Part 3 · BIS Certified",
+    "price": 580,
+    "rating": 4.6,
+    "reviews": 62,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Standard industrial worker safety shoe with synthetic upper, single density PVC sole and 100J impact steel toe.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "UFORCE 1010"
+      ],
+      [
+        "Design Type",
+        "Derby / Design A (Low Ankle)"
+      ],
+      [
+        "Upper",
+        "Synthetic Leather Finish"
+      ],
+      [
+        "Sole",
+        "Single Density PVC Outsole"
+      ],
+      [
+        "Slip Resistance",
+        "SRA"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 100J"
+      ],
+      [
+        "Insock",
+        "Fabric Laminated EVA"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 3"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_uforce_1020",
+    "category": "shoes",
+    "name": "Udyogi Uforce 1020 High Ankle PVC Safety Boots",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/uforce_1020.png",
+    "cert": "IS 15298 Part 3 · BIS Certified",
+    "price": 690,
+    "rating": 4.7,
+    "reviews": 58,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "High ankle ankle-support PVC safety boot with padded collar, steel toe 100J and 3mm EVA insock for general industry.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "UFORCE 1020"
+      ],
+      [
+        "Design Type",
+        "High Ankle / Design B"
+      ],
+      [
+        "Upper",
+        "Synthetic Heavy-Duty Upper"
+      ],
+      [
+        "Sole",
+        "Single Density PVC Sole"
+      ],
+      [
+        "Slip Resistance",
+        "SRA"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 100J"
+      ],
+      [
+        "Insock",
+        "Fabric Laminated EVA 3mm"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 3"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_uforce_2010",
+    "category": "shoes",
+    "name": "Udyogi Uforce 2010 Double Density PVC Low Ankle Shoes",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/uforce_2010.png",
+    "cert": "IS 15298 Part 3 · SRA Certified",
+    "price": 720,
+    "rating": 4.7,
+    "reviews": 39,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "Double density dual-color PVC sole for longer tread wear and extra durability with synthetic upper and steel toe.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "UFORCE 2010"
+      ],
+      [
+        "Design Type",
+        "Derby / Design A"
+      ],
+      [
+        "Upper",
+        "Synthetic Heavy Grain"
+      ],
+      [
+        "Sole",
+        "Double Density PVC Sole (Dual-Color Outsole)"
+      ],
+      [
+        "Slip Resistance",
+        "SRA"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 100J"
+      ],
+      [
+        "Insock",
+        "Fabric Laminated EVA 3mm"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 3"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_uforce_2020",
+    "category": "shoes",
+    "name": "Udyogi Uforce 2020 Double Density PVC High Ankle Boots",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/uforce_2020.png",
+    "cert": "IS 15298 Part 3 · SRA Certified",
+    "price": 790,
+    "rating": 4.8,
+    "reviews": 44,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "High ankle boot with dual-density beige/black PVC sole, padded ankle cushion, steel toe 100J and 3mm EVA insock.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "UFORCE 2020"
+      ],
+      [
+        "Design Type",
+        "High Ankle / Design B"
+      ],
+      [
+        "Upper",
+        "Synthetic Upper with Padded Ankle Collar"
+      ],
+      [
+        "Sole",
+        "Double Density PVC"
+      ],
+      [
+        "Slip Resistance",
+        "SRA"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 100J"
+      ],
+      [
+        "Insock",
+        "Fabric Laminated EVA 3mm"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 3"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_tango_pvc_ankle",
+    "category": "shoes",
+    "name": "Udyogi Tango PVC High Ankle Dual-Color Safety Boots",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/tango_pvc_ankle.png",
+    "cert": "IS 15298 Part 3 · BIS Certified",
+    "price": 695,
+    "rating": 4.7,
+    "reviews": 36,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "High ankle waterproof boot with soft PVC flexible upper and hard orange PVC deep-cleated outsole for mud & water.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "TANGO PVC ANKLE BOOT"
+      ],
+      [
+        "Design Type",
+        "High Ankle / Design B"
+      ],
+      [
+        "Upper",
+        "Soft Pliable PVC Upper (Black)"
+      ],
+      [
+        "Sole",
+        "Hard PVC Sole with Deep Cleats (High-Vis Orange)"
+      ],
+      [
+        "Slip Resistance",
+        "SRA"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 100J"
+      ],
+      [
+        "Insock",
+        "Fabric Laminated EVA"
+      ],
+      [
+        "Application",
+        "Wet Construction, Drainage, Agriculture, Monsoon Work"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 3"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_galaxy_ankle",
+    "category": "shoes",
+    "name": "Udyogi Galaxy PVC High Ankle Waterproof Boots",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/galaxy_ankle.png",
+    "cert": "Industrial Standard · 100J Steel Toe",
+    "price": 620,
+    "rating": 4.6,
+    "reviews": 31,
+    "bestseller": false,
+    "stock": "in",
+    "desc": "One-piece moulded waterproof PVC ankle boot with ribbed toe bumper and non-slip lug sole.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "GALAXY ANKLE BOOT"
+      ],
+      [
+        "Design Type",
+        "High Ankle / Design B (Moulded Waterproof Construction)"
+      ],
+      [
+        "Upper",
+        "Seamless Waterproof PVC"
+      ],
+      [
+        "Sole",
+        "Single Density PVC Non-Slip Sole"
+      ],
+      [
+        "Slip Resistance",
+        "SRA"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 100J"
+      ],
+      [
+        "Insock",
+        "Fabric Laminated EVA"
+      ],
+      [
+        "Application",
+        "Water Treatment, Chemical Wash, Construction, Municipal Sanitation"
+      ]
+    ]
+  },
+  {
+    "id": "udyogi_rockmaster",
+    "category": "shoes",
+    "name": "Udyogi Rockmaster Knee-Height Steel Toe PVC Gumboots",
+    "brand": "Udyogi",
+    "img": "assets/products/shoes/rockmaster.png",
+    "cert": "IS 15298 Part 3 · BIS Certified Gumboot",
+    "price": 890,
+    "rating": 4.9,
+    "reviews": 67,
+    "bestseller": true,
+    "stock": "in",
+    "desc": "Heavy-duty full knee-height industrial PVC gumboot with steel toe cap 100J and double density cleated outsole.",
+    "specs": [
+      [
+        "Brand / Make",
+        "Udyogi"
+      ],
+      [
+        "Model Name",
+        "ROCKMASTER"
+      ],
+      [
+        "Design Type",
+        "Knee Height / Design D (Full Length Industrial Gumboot)"
+      ],
+      [
+        "Upper",
+        "Heavy-Duty 100% Waterproof PVC Shaft"
+      ],
+      [
+        "Sole",
+        "Double Density PVC Sole with Grey Heavy Cleat Lug"
+      ],
+      [
+        "Slip Resistance",
+        "SRA"
+      ],
+      [
+        "Toe Cap",
+        "Steel Toe 100J"
+      ],
+      [
+        "Application",
+        "Mining, Heavy Excavation, Chemical Refineries, Flood & Monsoon Works, Civil Works"
+      ],
+      [
+        "Standard",
+        "IS 15298 Part 3"
       ]
     ]
   }
