@@ -1,5 +1,5 @@
 {
-  "version": "2026.1",
+  "version": "2026.09.02.v10",
   "lastUpdated": "2026-09-01T10:25:25.058Z",
   "updatedBy": "PASS CORP. Unified 3-Way Cloud",
   "catalogContent": {
@@ -8969,6 +8969,3118 @@
           [
             "Typical Application",
             "Chemical Plants, Petrochemical Refineries, ETP Zones, Helipads & Storage Yards"
+          ]
+        ]
+      },
+      {
+        "id": "arc_flash_8cal_kit",
+        "category": "electrical",
+        "name": "ARC Knight Pro 8 Cal Arc Flash Kit",
+        "brand": "Udyogi",
+        "img": "assets/products/electrical/arc_flash_8cal_kit.png",
+        "cert": "ASTM F1506 · NFPA 70E · EN 1149 · EN ISO 11612 · IEC 61482",
+        "price": 14999,
+        "rating": 4.8,
+        "reviews": 18,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Complete 8 Cal/cm² (PPE CAT 2) Arc Flash protective kit including jacket, trousers, gloves, balaclava, Class E helmet, visor with bracket and heavy-duty storage bag.",
+        "specs": [
+          [
+            "Make / Brand",
+            "Udyogi / ARC Knight Pro"
+          ],
+          [
+            "Model Code",
+            "AKP180RBK8I"
+          ],
+          [
+            "Arc Rating (ATPV)",
+            "8 Cal/cm² (NFPA 70E PPE Category 2)"
+          ],
+          [
+            "Fabric Construction",
+            "100% Inherent Fire Resistant (IFR)"
+          ],
+          [
+            "Fiber Composition",
+            "Modacrylic, Para-Aramid, Meta-Aramid, Nylon, Anti-static"
+          ],
+          [
+            "Fabric Weight",
+            "180 G/m² (Lightweight & Breathable)"
+          ],
+          [
+            "Color",
+            "Royal Blue"
+          ],
+          [
+            "Available Sizes",
+            "S, M, L, XL, XXL, XXXL"
+          ],
+          [
+            "Kit Contents",
+            "ARC Jacket (AKP180RBJ8I), Trouser (AKP180RBT8I), Glove (AKP180RBG8I), Balaclava (AKP200NBB8I), Visor with Bracket (ECO ARC 1), Class E Electra Helmet, Storage Bag"
+          ],
+          [
+            "Compliance Standards",
+            "ASTM F1506, EN 1149, EN ISO 11612, IEC 61482, NFPA 70E, OEKO-TEX Standard 100, UL Certified"
+          ],
+          [
+            "Typical Application",
+            "HT Substations, Switchgear Panels, Power Distribution, Transformer Maintenance & Industrial Electrical Rooms"
+          ]
+        ]
+      },
+      {
+        "id": "arc_flash_12cal_kit",
+        "category": "electrical",
+        "name": "ARC Knight Pro 12 Cal Arc Flash Kit",
+        "brand": "Udyogi",
+        "img": "assets/products/electrical/arc_flash_12cal_kit.png",
+        "cert": "ASTM F1506 · NFPA 70E · EN ISO 11612 · IEC 61482",
+        "price": 18499,
+        "rating": 4.9,
+        "reviews": 24,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "12 Cal/cm² (PPE CAT 2) Arc Flash Kit with navy blue jacket, trousers, balaclava, gloves, Class E Electra helmet, ECO ARC 2-18HT visor & carry bag.",
+        "specs": [
+          [
+            "Make / Brand",
+            "Udyogi / ARC Knight Pro"
+          ],
+          [
+            "Model Code",
+            "AKP240NBK12I"
+          ],
+          [
+            "Arc Rating (ATPV)",
+            "12 Cal/cm² (NFPA 70E PPE Category 2)"
+          ],
+          [
+            "Fabric Construction",
+            "100% Inherent Fire Resistant (IFR)"
+          ],
+          [
+            "Fiber Composition",
+            "Modacrylic, Para-Aramid, Meta-Aramid, Nylon, Anti-static"
+          ],
+          [
+            "Fabric Weight",
+            "240 G/m²"
+          ],
+          [
+            "Color",
+            "Navy Blue"
+          ],
+          [
+            "Available Sizes",
+            "S, M, L, XL, XXL, XXXL"
+          ],
+          [
+            "Kit Contents",
+            "ARC Jacket (AKP240NBJ12I), Trouser (AKP240NBT12I), Glove (AKP240NBG12I), Balaclava (AKP240NBB12I), Visor with Bracket (ECO ARC 2-18HT), Class E Helmet (ELECTRA), Carry Bag"
+          ],
+          [
+            "Compliance Standards",
+            "ASTM F1506, EN 1149, EN ISO 11612, IEC 61482, NFPA 70E, OEKO-TEX Standard 100, UL"
+          ],
+          [
+            "Typical Application",
+            "HT Panels, MCC Rooms, Industrial Utility Switchgear, Data Center Power Infrastructure"
+          ]
+        ]
+      },
+      {
+        "id": "arc_flash_20cal_kit",
+        "category": "electrical",
+        "name": "ARC Knight Pro 20 Cal Arc Flash Kit",
+        "brand": "Udyogi",
+        "img": "assets/products/electrical/arc_flash_20cal_kit.png",
+        "cert": "ASTM F1506 · NFPA 70E · EN ISO 11612 · IEC 61482",
+        "price": 22999,
+        "rating": 4.7,
+        "reviews": 14,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "20 Cal/cm² Pronex™ blended high-performance Arc Flash protective suit with jacket, trousers, balaclava, gloves, helmet, visor and bag.",
+        "specs": [
+          [
+            "Make / Brand",
+            "Udyogi / ARC Knight Pro"
+          ],
+          [
+            "Model Code",
+            "AKP270NBK20I"
+          ],
+          [
+            "Arc Rating (ATPV)",
+            "20 Cal/cm² (NFPA 70E PPE Category 2)"
+          ],
+          [
+            "Fabric Construction",
+            "100% Inherent Fire Resistant (IFR)"
+          ],
+          [
+            "Composition",
+            "Pronex™ Blended Fabric"
+          ],
+          [
+            "Fabric Weight",
+            "270 G/m²"
+          ],
+          [
+            "Color",
+            "Navy Blue"
+          ],
+          [
+            "Available Sizes",
+            "S, M, L, XL, XXL, XXXL"
+          ],
+          [
+            "Kit Contents",
+            "ARC Jacket (AKP270NBJ20I), Trouser (AKP270NBT20I), Glove (AKP270NBG20I), Balaclava (AKP240NBB12I), Visor with Bracket (ECO ARC 2-18HT), Class E Helmet (ELECTRA), Carrying Bag"
+          ],
+          [
+            "Certifications",
+            "ASTM F1506, EN 1149, EN ISO 11612, IEC 61482, NFPA 70E, OEKO-TEX 100, UL"
+          ],
+          [
+            "Typical Application",
+            "Automotive Assembly Line Panels, Power Plant Switchboards, High Current Busbars"
+          ]
+        ]
+      },
+      {
+        "id": "arc_flash_25cal_kit",
+        "category": "electrical",
+        "name": "ARC Knight Pro 25 Cal Arc Flash Kit with Hood",
+        "brand": "Udyogi",
+        "img": "assets/products/electrical/arc_flash_25cal_kit.png",
+        "cert": "ASTM F1506 · NFPA 70E PPE CAT 3 · EN ISO 11612",
+        "price": 28499,
+        "rating": 4.9,
+        "reviews": 16,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "25 Cal/cm² (PPE Category 3) Arc Flash Kit with full arc flash hood, Paulson IM22 visor, jacket, trouser, gloves and Class E helmet.",
+        "specs": [
+          [
+            "Make / Brand",
+            "Udyogi / ARC Knight Pro"
+          ],
+          [
+            "Model Code",
+            "AKP360RBK25I2"
+          ],
+          [
+            "Arc Rating (ATPV)",
+            "25 Cal/cm² (NFPA 70E PPE Category 3)"
+          ],
+          [
+            "Fabric Construction",
+            "100% Inherent Fire Resistant (IFR)"
+          ],
+          [
+            "Composition",
+            "Shell & Liner: Modacrylic, Para-Aramid, Meta-Aramid, Nylon, Anti-static"
+          ],
+          [
+            "Assembled Weight",
+            "360 G/m²"
+          ],
+          [
+            "Color",
+            "Royal Blue"
+          ],
+          [
+            "Sizes",
+            "S, M, L, XL, XXL, XXXL"
+          ],
+          [
+            "Kit Contents",
+            "ARC Jacket (AKP360RBJ25I2), Trouser (AKP360RBT25I2), Glove (AKP360RBG25I2), Full ARC Hood (AKP360RBH25I2), Visor with Bracket (IM22-AFA-40-V-HTS), Class E Helmet, Bag"
+          ],
+          [
+            "Certifications",
+            "ASTM F1506, EN 1149, EN ISO 11612, IEC 61482, NFPA 70E, OEKO-TEX 100, UL"
+          ],
+          [
+            "Typical Application",
+            "Heavy Engineering, Power Transmission Lines, 11kV/33kV Substation Switching"
+          ]
+        ]
+      },
+      {
+        "id": "arc_flash_33cal_kit",
+        "category": "electrical",
+        "name": "ARC Knight Pro 33 Cal Arc Flash Kit with Bib & Hood",
+        "brand": "Udyogi",
+        "img": "assets/products/electrical/arc_flash_33cal_kit.png",
+        "cert": "ASTM F1506 · NFPA 70E PPE CAT 3 · EN ISO 11612",
+        "price": 34999,
+        "rating": 4.8,
+        "reviews": 12,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "33 Cal/cm² (PPE CAT 3) high-risk electrical safety suit with jacket, protective bib overall, arc hood with visor, gloves & helmet.",
+        "specs": [
+          [
+            "Make / Brand",
+            "Udyogi / ARC Knight Pro"
+          ],
+          [
+            "Model Code",
+            "AKP360RBK33I2"
+          ],
+          [
+            "Arc Rating (ATPV)",
+            "33 Cal/cm² (NFPA 70E PPE Category 3)"
+          ],
+          [
+            "Fabric Construction",
+            "100% Inherent Fire Resistant"
+          ],
+          [
+            "Composition",
+            "Blend of Modacrylic with Para-Aramid, Meta-Aramid, Nylon & Antistatic"
+          ],
+          [
+            "Assembled Weight",
+            "360 G/m²"
+          ],
+          [
+            "Color",
+            "Royal Blue"
+          ],
+          [
+            "Sizes",
+            "S, M, L, XL, XXL, XXXL"
+          ],
+          [
+            "Kit Contents",
+            "ARC Jacket (AKP360RBJ33I2), ARC Bib Overall (AKP360RBT33I2), ARC Glove (AKP360RBG33I2), Full ARC Hood (AKP360RBH33I2), Visor with Bracket (IM22-AFA-40-V-HTS), Class E Helmet, Carry Bag"
+          ],
+          [
+            "Certifications",
+            "ASTM F1506, EN 1149, EN ISO 11612, IEC 61482, NFPA 70E, OEKO-TEX 100"
+          ],
+          [
+            "Typical Application",
+            "Chemical Plant Transformers, Steel Mill Heavy Arc Furnaces, 33kV Switchyards"
+          ]
+        ]
+      },
+      {
+        "id": "arc_flash_40cal_kit",
+        "category": "electrical",
+        "name": "ARC Knight Pro 40 Cal Arc Flash Kit (Multi-Layer)",
+        "brand": "Udyogi",
+        "img": "assets/products/electrical/arc_flash_40cal_kit.png",
+        "cert": "ASTM F1506 · NFPA 70E PPE CAT 4 · IEC 61482",
+        "price": 42999,
+        "rating": 5.0,
+        "reviews": 29,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Maximum protection 40 Cal/cm² (PPE Category 4) multi-layer Arc Flash Kit for severe flash hazards with jacket, bib, hood, visor, gloves and Class E helmet.",
+        "specs": [
+          [
+            "Make / Brand",
+            "Udyogi / ARC Knight Pro"
+          ],
+          [
+            "Model Code",
+            "AKP490NBK40I3"
+          ],
+          [
+            "Arc Rating (ATPV)",
+            "40 Cal/cm² (NFPA 70E PPE Category 4 - Maximum Level)"
+          ],
+          [
+            "Fabric Construction",
+            "3-Layer 100% Inherent Fire Resistant System"
+          ],
+          [
+            "Layer Composition",
+            "Outer: Modacrylic/Para-aramid/Meta-aramid/Nylon/Anti-static | Middle: Meta-aramid | Inner: Meta-aramid & Lenzing FR"
+          ],
+          [
+            "Assembled Weight",
+            "490 G/m²"
+          ],
+          [
+            "Color",
+            "Navy Blue"
+          ],
+          [
+            "Sizes",
+            "S, M, L, XL, XXL, XXXL"
+          ],
+          [
+            "Kit Contents",
+            "ARC Jacket (AKP490NBJ40I3), ARC Bib Overall (AKP490NBBC40I3), ARC Glove (AKP490NBG40I3), ARC Hood (AKP490NBH40I3), Visor with Bracket (IM22-AFA-40-V-HTS), Class E Helmet, Heavy Duty Bag"
+          ],
+          [
+            "Certifications",
+            "ASTM F1506, EN 1149, EN ISO 11612, IEC 61482, NFPA 70E, OEKO-TEX 100, UL Listed"
+          ],
+          [
+            "Typical Application",
+            "High Energy Industrial Substations, Utility Grids, Heavy Manufacturing Switchboards, Oil Refineries"
+          ]
+        ]
+      },
+      {
+        "id": "arc_flash_40cal_uniq_kit",
+        "category": "electrical",
+        "name": "ARC Knight Pro 40 Cal Uni-Q Ultra-Lightweight Kit",
+        "brand": "Udyogi",
+        "img": "assets/products/electrical/arc_flash_40cal_uniq_kit.png",
+        "cert": "ASTM F1506 · NFPA 70E PPE CAT 4 · ELIM · IEC 61482",
+        "price": 48999,
+        "rating": 5.0,
+        "reviews": 22,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Next-gen 40 Cal/cm² Uni-Q kit weighing only 320 G/m² (over 35% lighter than conventional suits) with membrane-based ePTEE barrier.",
+        "specs": [
+          [
+            "Make / Brand",
+            "Udyogi / ARC Knight Pro"
+          ],
+          [
+            "Model Code",
+            "AKP320NBK40I3"
+          ],
+          [
+            "Arc Rating (ATPV)",
+            "40 Cal/cm² (NFPA 70E PPE Category 4)"
+          ],
+          [
+            "Fabric Construction",
+            "Next-Gen Ultra-Lightweight 100% Inherent Fire Resistant"
+          ],
+          [
+            "Advanced Layering",
+            "Outer: Knitted 100% Polyamide IFR | Middle: Membrane based on ePTEE | Inner: Viscose/Aramid/Anti-static Laminated"
+          ],
+          [
+            "Assembled Weight",
+            "320 G/m² (Lightest 40 Cal Suit in Class)"
+          ],
+          [
+            "Color",
+            "Navy Blue"
+          ],
+          [
+            "Sizes",
+            "S, M, L, XL, XXL, XXXL"
+          ],
+          [
+            "Kit Contents",
+            "ARC Jacket (AKP320NBJ40I3), BIB Overall (AKP320NBBC40I3), ARC Glove (AKP320NBG40I3), ARC Hood (AKP320NBH40I3), Visor with Bracket (IM22-AFA-40-V-HTS), Class E Helmet, Bag"
+          ],
+          [
+            "Certifications",
+            "ASTM F1506, ELIM, EN 1149, EN ISO 11612, IEC 61482, NFPA 70E, OEKO-TEX 100"
+          ],
+          [
+            "Typical Application",
+            "High-Mobility Maintenance, Tropical / High Temperature Plants, Premier Data Centers, EV Battery Manufacturing"
+          ]
+        ]
+      },
+      {
+        "id": "arc_flash_12cal_tshirt",
+        "category": "electrical",
+        "name": "ARC Knight Pro 12 Cal Inherent FR T-Shirt",
+        "brand": "Udyogi",
+        "img": "assets/products/electrical/arc_flash_12cal_tshirt.png",
+        "cert": "ASTM F1506 · NFPA 70E · EN 1149 · EN ISO 11612",
+        "price": 3499,
+        "rating": 4.6,
+        "reviews": 11,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "12 Cal/cm² Inherent fire resistant daily workwear T-shirt with high-visibility reflective shoulder tapes.",
+        "specs": [
+          [
+            "Make / Brand",
+            "Udyogi / ARC Knight Pro"
+          ],
+          [
+            "Model Code",
+            "AKP240TS12I"
+          ],
+          [
+            "Arc Rating",
+            "12 Cal/cm²"
+          ],
+          [
+            "Fabric",
+            "100% Inherent Fire Resistant (IFR)"
+          ],
+          [
+            "Composition",
+            "Modacrylic, Cotton, Para-Aramid, Polyamide, Anti-static"
+          ],
+          [
+            "Weight",
+            "240 G/m²"
+          ],
+          [
+            "Color",
+            "Navy Blue with High-Vis Reflective Tapes"
+          ],
+          [
+            "Sizes",
+            "S, M, L, XL, XXL, XXXL"
+          ],
+          [
+            "Standards",
+            "ASTM F1506, EN 1149, EN ISO 11612, NFPA 70E, OEKO-TEX 100"
+          ]
+        ]
+      },
+      {
+        "id": "arc_flash_12cal_balaclava",
+        "category": "electrical",
+        "name": "ARC Knight Pro 12 Cal Arc Flash Balaclava Hood",
+        "brand": "Udyogi",
+        "img": "assets/products/electrical/arc_flash_12cal_balaclava.png",
+        "cert": "ASTM F1506 · NFPA 70E · EN ISO 11612",
+        "price": 1899,
+        "rating": 4.7,
+        "reviews": 19,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "12 Cal/cm² inherent fire resistant balaclava head and neck protector for electrical engineers and line workers.",
+        "specs": [
+          [
+            "Make / Brand",
+            "Udyogi / ARC Knight Pro"
+          ],
+          [
+            "Model Code",
+            "AKP240NBB12I"
+          ],
+          [
+            "Arc Rating",
+            "12 Cal/cm²"
+          ],
+          [
+            "Fabric",
+            "100% Inherent Fire Resistant Knit"
+          ],
+          [
+            "Composition",
+            "Modacrylic, Cotton, Para-Aramid, Polyamide, Antistatic"
+          ],
+          [
+            "Weight",
+            "240 G/m²"
+          ],
+          [
+            "Color",
+            "Navy Blue"
+          ],
+          [
+            "Standards",
+            "ASTM F1506, EN 1149, EN ISO 11612, NFPA 70E, OEKO-TEX 100"
+          ]
+        ]
+      },
+      {
+        "id": "arc_faceshield_10cal_eco",
+        "category": "electrical",
+        "name": "Paulson 10 Cal Arc Flash Face Shield (ECO ARC-1)",
+        "brand": "Paulson / Udyogi",
+        "img": "assets/products/electrical/arc_faceshield_10cal_eco.png",
+        "cert": "ASTM F2178 · NFPA 70E · ANSI Z87.1",
+        "price": 4999,
+        "rating": 4.8,
+        "reviews": 15,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "10 Cal/cm² Paulson International polycarbonate arc face shield with ergonomic chin protector and anti-fog coating.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Paulson International / Udyogi"
+          ],
+          [
+            "Model",
+            "ECO ARC-1"
+          ],
+          [
+            "Arc Rating",
+            "10 Cal/cm²"
+          ],
+          [
+            "Window Material",
+            "Optical Grade Polycarbonate, Nylon Frame"
+          ],
+          [
+            "Window Dimensions",
+            "25.4 x 50.8 x 0.09 cm (10\" x 20\" x 0.035\")"
+          ],
+          [
+            "Special Features",
+            "Ergonomic Chin Protector, Anti-Fog Coating"
+          ],
+          [
+            "Weight",
+            "227 g (8 oz)"
+          ],
+          [
+            "Standards",
+            "ASTM F2178, NFPA 70E, ANSI Z87.1"
+          ]
+        ]
+      },
+      {
+        "id": "arc_faceshield_12cal_amp1",
+        "category": "electrical",
+        "name": "Paulson 12 Cal Face Shield with Transparent Chin Protector",
+        "brand": "Paulson / Udyogi",
+        "img": "assets/products/electrical/arc_faceshield_12cal_amp1.png",
+        "cert": "ASTM F2178 · NFPA 70E · ANSI Z87.1 · CE",
+        "price": 6499,
+        "rating": 4.9,
+        "reviews": 21,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "12 Cal/cm² high transparency HT™ polycarbonate face shield with transparent chin protector for enhanced downward visibility.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Paulson International / Udyogi"
+          ],
+          [
+            "Model",
+            "AMP1-12-HTS"
+          ],
+          [
+            "Arc Rating",
+            "12 Cal/cm²"
+          ],
+          [
+            "Material",
+            "Polycarbonate, Nylon"
+          ],
+          [
+            "Window Dimensions",
+            "18.42 x 50.8 x 0.15 cm (7.25\" x 20\" x 0.06\")"
+          ],
+          [
+            "Special Features",
+            "Ergonomic Transparent Chin Guard for Unobstructed Floor Visibility"
+          ],
+          [
+            "Weight",
+            "318 g (11.23 oz)"
+          ],
+          [
+            "Standards",
+            "ASTM F2178, NFPA 70E, ANSI Z87.1, CE"
+          ]
+        ]
+      },
+      {
+        "id": "arc_faceshield_18cal_eco2",
+        "category": "electrical",
+        "name": "Paulson 18 Cal Arc Flash Face Shield (Eco Arc-2-18HT)",
+        "brand": "Paulson / Udyogi",
+        "img": "assets/products/electrical/arc_faceshield_18cal_eco2.png",
+        "cert": "ASTM F2178 · NFPA 70E · ANSI Z87.1",
+        "price": 7899,
+        "rating": 4.8,
+        "reviews": 14,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "18 Cal/cm² heavy-duty arc shield with ergonomic chin protector and anti-fog coating.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Paulson International / Udyogi"
+          ],
+          [
+            "Model",
+            "Eco Arc-2-18HT"
+          ],
+          [
+            "Arc Rating",
+            "18 Cal/cm²"
+          ],
+          [
+            "Window Material",
+            "Polycarbonate, Nylon"
+          ],
+          [
+            "Window Dimensions",
+            "25.4 x 50.8 x 0.09 cm (10\" x 20\" x 0.035\")"
+          ],
+          [
+            "Features",
+            "Ergonomic Chin Protector, Anti-Fog Coating"
+          ],
+          [
+            "Weight",
+            "227 g (8 oz)"
+          ],
+          [
+            "Certifications",
+            "ASTM F2178, NFPA 70E, ANSI Z87.1"
+          ]
+        ]
+      },
+      {
+        "id": "arc_visor_40cal_im22",
+        "category": "electrical",
+        "name": "Paulson 40 Cal HT™ Replacement Arc Visor for Hoods",
+        "brand": "Paulson / Udyogi",
+        "img": "assets/products/electrical/arc_visor_40cal_im22.png",
+        "cert": "ASTM F2178 · NFPA 70E · ANSI Z87.1 · EN 166",
+        "price": 9499,
+        "rating": 5.0,
+        "reviews": 17,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "40 Cal/cm² premium anti-fog coated Highly Transparent (HT™) arc visor with velcro perimeter designed for arc flash hoods.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Paulson International / Udyogi"
+          ],
+          [
+            "Model",
+            "IM22-AFA-40-V-HTS"
+          ],
+          [
+            "Arc Rating",
+            "40 Cal/cm²"
+          ],
+          [
+            "Material",
+            "Optical Grade Polycarbonate"
+          ],
+          [
+            "Dimensions",
+            "25.4 x 50.8 x 0.15 cm (10\" x 20\" x 0.06\")"
+          ],
+          [
+            "Features",
+            "Premium Anti-Fog Coating, Highly Transparent (HT™), Velcro Border Attachment for Hoods"
+          ],
+          [
+            "Weight",
+            "204 g (7.2 oz)"
+          ],
+          [
+            "Standards",
+            "ASTM F2178, NFPA 70E, ANSI Z87.1, EN 166"
+          ]
+        ]
+      },
+      {
+        "id": "arc_hood_40cal_3p40h",
+        "category": "electrical",
+        "name": "Paulson 3Phase® 40 Cal Lift-Front Arc Hood System",
+        "brand": "Paulson / Udyogi",
+        "img": "assets/products/electrical/arc_hood_40cal_3p40h.png",
+        "cert": "ASTM F2178 · NFPA 70E · ANSI Z87.1 · EN 166",
+        "price": 12999,
+        "rating": 4.9,
+        "reviews": 13,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "40 Cal/cm² lift-front hood system allowing workers to flip up the visor for ventilation without removing the helmet.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Paulson International / Udyogi"
+          ],
+          [
+            "Model",
+            "3P40-H 3Phase®"
+          ],
+          [
+            "Arc Rating",
+            "40 Cal/cm²"
+          ],
+          [
+            "Material",
+            "Polycarbonate & Nylon Structure"
+          ],
+          [
+            "Window Dimensions",
+            "54 x 21 x 0.23 cm (26.26\" x 8.27\" x 0.09\")"
+          ],
+          [
+            "Features",
+            "Lift-Front Mechanism for Instant Fresh Air / Standby Ventilation, Designed to be Worn with Shrouds"
+          ],
+          [
+            "Weight",
+            "499 g (17.6 oz)"
+          ],
+          [
+            "Certifications",
+            "ASTM F2178, NFPA 70E, ANSI Z87.1, EN 166"
+          ]
+        ]
+      },
+      {
+        "id": "arc_visor_75cal_im22",
+        "category": "electrical",
+        "name": "Paulson 75 / 100 Cal High-Energy Arc Visor",
+        "brand": "Paulson / Udyogi",
+        "img": "assets/products/electrical/arc_visor_75cal_im22.png",
+        "cert": "ASTM F2178 · NFPA 70E · ANSI Z87.1 · EN 166",
+        "price": 14499,
+        "rating": 5.0,
+        "reviews": 8,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "Ultra high-energy 75 Cal / 100 Cal protective visor for severe arc flash exposure in transmission grids and industrial smelters.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Paulson International / Udyogi"
+          ],
+          [
+            "Model",
+            "IM22-AFA2-75-V-HT (Also available in 100 Cal)"
+          ],
+          [
+            "Arc Rating",
+            "75 Cal/cm² (100 Cal Available)"
+          ],
+          [
+            "Material",
+            "High-Density Polycarbonate"
+          ],
+          [
+            "Dimensions",
+            "25.4 x 50.8 x 0.15 cm (10\" x 20\" x 0.06\")"
+          ],
+          [
+            "Special Features",
+            "Premium Anti-Fog Coating, Highly Transparent (HT™) Arc Shield, Velcro Pattern for Hoods"
+          ],
+          [
+            "Weight",
+            "272 g (9.6 oz)"
+          ],
+          [
+            "Certifications",
+            "ASTM F2178, NFPA 70E, ANSI Z87.1, EN 166"
+          ]
+        ]
+      },
+      {
+        "id": "arc_bracket_cb2_hd",
+        "category": "electrical",
+        "name": "Paulson CB2-HD Slotted Cap Bracket",
+        "brand": "Paulson / Udyogi",
+        "img": "assets/products/electrical/arc_bracket_cb2_hd.png",
+        "cert": "ANSI Z87.1 · EN 166 Dielectric Rated",
+        "price": 1850,
+        "rating": 4.7,
+        "reviews": 12,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "Dielectric low profile cap bracket with adjustable pivots and slotted cap adapters with cam locks.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Paulson International / Udyogi"
+          ],
+          [
+            "Model",
+            "CB2-HD"
+          ],
+          [
+            "Material",
+            "High-Grade Nylon"
+          ],
+          [
+            "Features",
+            "Low Profile Cap Bracket, Adjustable Pivots, Slotted Cap Adapters, Secure Cam Locks"
+          ],
+          [
+            "Rating",
+            "Dielectric & High Temperature Utility Rated"
+          ],
+          [
+            "Weight",
+            "85 g (3 oz)"
+          ],
+          [
+            "Standards",
+            "ANSI Z87.1, EN 166"
+          ]
+        ]
+      },
+      {
+        "id": "arc_bracket_cb6_hd",
+        "category": "electrical",
+        "name": "Paulson CB6-HD Universal Cap Bracket with Strap",
+        "brand": "Paulson / Udyogi",
+        "img": "assets/products/electrical/arc_bracket_cb6_hd.png",
+        "cert": "ANSI Z87.1 · EN 166 Dielectric Rated",
+        "price": 1950,
+        "rating": 4.8,
+        "reviews": 10,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "Universal cap bracket with elastomeric strap attachment fitting both slotted and unslotted safety helmets.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Paulson International / Udyogi"
+          ],
+          [
+            "Model",
+            "CB6-HD"
+          ],
+          [
+            "Material",
+            "Heavy-Duty Dielectric Nylon"
+          ],
+          [
+            "Features",
+            "Adjustable Pivots, Elastomeric Strap Attachment, Fits Slotted and Unslotted Hard Hats"
+          ],
+          [
+            "Weight",
+            "99 g (3.5 oz)"
+          ],
+          [
+            "Standards",
+            "ANSI Z87.1, EN 166"
+          ]
+        ]
+      },
+      {
+        "id": "arc_vent_av0",
+        "category": "electrical",
+        "name": "Paulson Arc Vent™ System (AV-O)",
+        "brand": "Paulson / Udyogi",
+        "img": "assets/products/electrical/arc_vent_av0.png",
+        "cert": "NFPA 70E Tested Up to 100 Cal/cm²",
+        "price": 1250,
+        "rating": 4.6,
+        "reviews": 9,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "Octagonal 4.5\" flame retardant elastomer ventilation unit for sewing into arc flash hoods and suits.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Paulson International / Udyogi"
+          ],
+          [
+            "Model",
+            "AV-O"
+          ],
+          [
+            "Material",
+            "Flame Retardant Elastomer"
+          ],
+          [
+            "Dimensions",
+            "4.5\" (11.4 cm) Diameter Octagonal"
+          ],
+          [
+            "Rating",
+            "ATPV Tested Up to 100 Cal/cm²"
+          ],
+          [
+            "Weight",
+            "45 g (1.6 oz)"
+          ],
+          [
+            "Standard",
+            "NFPA 70E"
+          ]
+        ]
+      },
+      {
+        "id": "linepro_class_00_gloves",
+        "category": "electrical",
+        "name": "Linepro Class 00 Electrical Insulating Gloves (500V AC / 750V DC)",
+        "brand": "Linepro / DPL / Udyogi",
+        "img": "assets/products/electrical/linepro_class_00_gloves.png",
+        "cert": "IEC 60903:2014 · EN 60903:2003 · ASTM F2675 · CE · NFPA 70E",
+        "price": 2200,
+        "rating": 4.9,
+        "reviews": 38,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Natural rubber electrical insulating gloves tested to 2.5 kV for live working up to 500V AC / 750V DC with 8.4 cal/cm² arc rating.",
+        "specs": [
+          [
+            "Make / Brand",
+            "DPL / Linepro / Udyogi"
+          ],
+          [
+            "Class",
+            "Class 00"
+          ],
+          [
+            "Working Voltage",
+            "500 Volts AC / 750 Volts DC Max"
+          ],
+          [
+            "Proof Test Voltage",
+            "2.5 kV AC"
+          ],
+          [
+            "Arc Flash ATPV Value",
+            "8.4 Cal/cm² (APC 1)"
+          ],
+          [
+            "Material",
+            "Natural Latex Rubber"
+          ],
+          [
+            "Sizes",
+            "7 to 12"
+          ],
+          [
+            "Color",
+            "Red"
+          ],
+          [
+            "Category Resistance",
+            "A (Acid), C (Very Low Temp), Z (Ozone)"
+          ],
+          [
+            "Standards",
+            "IEC 60903:2014, EN 60903:2003, ASTM F2675, NFPA 70E, CE"
+          ],
+          [
+            "Typical Application",
+            "Control Panels, Low Voltage Distribution, EV Charging Stations, Electronics Service"
+          ]
+        ]
+      },
+      {
+        "id": "linepro_class_0_gloves",
+        "category": "electrical",
+        "name": "Linepro Class 0 Electrical Insulating Gloves (1000V AC / 1500V DC)",
+        "brand": "Linepro / DPL / Udyogi",
+        "img": "assets/products/electrical/linepro_class_0_gloves.png",
+        "cert": "IEC 60903:2014 · EN 60903:2003 · ASTM F2675 · CE",
+        "price": 2600,
+        "rating": 4.9,
+        "reviews": 42,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Class 0 electrical gloves tested to 5 kV AC for working voltages up to 1000V AC / 1500V DC with 8.5 cal/cm² arc flash resistance.",
+        "specs": [
+          [
+            "Make / Brand",
+            "DPL / Linepro / Udyogi"
+          ],
+          [
+            "Class",
+            "Class 0"
+          ],
+          [
+            "Working Voltage",
+            "1,000 Volts AC / 1,500 Volts DC Max"
+          ],
+          [
+            "Proof Test Voltage",
+            "5.0 kV AC"
+          ],
+          [
+            "Arc Flash ATPV",
+            "8.5 Cal/cm² (APC II)"
+          ],
+          [
+            "Material",
+            "Natural Rubber"
+          ],
+          [
+            "Sizes",
+            "7 to 12"
+          ],
+          [
+            "Color",
+            "Red"
+          ],
+          [
+            "Resistance Category",
+            "A, C, Z"
+          ],
+          [
+            "Certifications",
+            "IEC 60903:2014, EN 60903:2003, ASTM F2675, NFPA 70E, CE"
+          ],
+          [
+            "Typical Application",
+            "LT Switchgear, Factory Mains Distribution, Inverters, Motor Terminals"
+          ]
+        ]
+      },
+      {
+        "id": "linepro_class_1_gloves",
+        "category": "electrical",
+        "name": "Linepro Class 1 High Voltage Electrical Gloves (7.5kV AC / 11.25kV DC)",
+        "brand": "Linepro / DPL / Udyogi",
+        "img": "assets/products/electrical/linepro_class_1_gloves.png",
+        "cert": "IEC 60903:2014 · EN 60903:2003 · ASTM F2675 · CE",
+        "price": 3800,
+        "rating": 4.8,
+        "reviews": 25,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "High-voltage Class 1 rubber gloves tested to 10 kV AC for operating lines up to 7,500V AC / 11,250V DC.",
+        "specs": [
+          [
+            "Make / Brand",
+            "DPL / Linepro / Udyogi"
+          ],
+          [
+            "Class",
+            "Class 1"
+          ],
+          [
+            "Working Voltage",
+            "7,500 Volts AC / 11,250 Volts DC Max"
+          ],
+          [
+            "Proof Test Voltage",
+            "10 kV AC"
+          ],
+          [
+            "Arc Flash ATPV",
+            "10.6 Cal/cm² (APC II)"
+          ],
+          [
+            "Material",
+            "Natural Rubber"
+          ],
+          [
+            "Sizes",
+            "7 to 12"
+          ],
+          [
+            "Color",
+            "Red"
+          ],
+          [
+            "Category Resistance",
+            "R (Acid, Oil, Ozone Resistance), C (Very Low Temp)"
+          ],
+          [
+            "Standards",
+            "IEC 60903:2014, EN 60903:2003, ASTM F2675, NFPA 70E, CE"
+          ]
+        ]
+      },
+      {
+        "id": "linepro_class_2_gloves",
+        "category": "electrical",
+        "name": "Linepro Class 2 High Voltage Gloves (17kV AC / 25.5kV DC)",
+        "brand": "Linepro / DPL / Udyogi",
+        "img": "assets/products/electrical/linepro_class_2_gloves.png",
+        "cert": "IEC 60903:2014 · EN 60903:2003 · ASTM F2675 · CE",
+        "price": 4900,
+        "rating": 4.9,
+        "reviews": 31,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "17kV AC working voltage Class 2 electrical gloves tested to 20 kV AC with 21 cal/cm² ATPV protection.",
+        "specs": [
+          [
+            "Make / Brand",
+            "DPL / Linepro / Udyogi"
+          ],
+          [
+            "Class",
+            "Class 2"
+          ],
+          [
+            "Working Voltage",
+            "17,000 Volts AC / 25,500 Volts DC Max"
+          ],
+          [
+            "Proof Test Voltage",
+            "20 kV AC"
+          ],
+          [
+            "Arc Flash ATPV",
+            "21 Cal/cm² (APC II)"
+          ],
+          [
+            "Material",
+            "Natural Rubber"
+          ],
+          [
+            "Sizes",
+            "7 to 12"
+          ],
+          [
+            "Color",
+            "Red"
+          ],
+          [
+            "Category Resistance",
+            "R, C"
+          ],
+          [
+            "Standards",
+            "IEC 60903:2014, EN 60903:2003, ASTM F2675, NFPA 70E, CE"
+          ],
+          [
+            "Typical Application",
+            "11kV Industrial Substations, Transformer Tappings, Disconnect Switches"
+          ]
+        ]
+      },
+      {
+        "id": "linepro_class_3_gloves",
+        "category": "electrical",
+        "name": "Linepro Class 3 Extra High Voltage Gloves (26.5kV AC / 39.75kV DC)",
+        "brand": "Linepro / DPL / Udyogi",
+        "img": "assets/products/electrical/linepro_class_3_gloves.png",
+        "cert": "IEC 60903:2014 · EN 60903:2003 · ASTM F2675 · CE",
+        "price": 6500,
+        "rating": 4.8,
+        "reviews": 19,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "Extra high-voltage Class 3 rubber gloves tested to 30 kV AC for operating lines up to 26,500V AC / 39,750V DC with 40.5 cal/cm² arc protection.",
+        "specs": [
+          [
+            "Make / Brand",
+            "DPL / Linepro / Udyogi"
+          ],
+          [
+            "Class",
+            "Class 3"
+          ],
+          [
+            "Working Voltage",
+            "26,500 Volts AC / 39,750 Volts DC Max"
+          ],
+          [
+            "Proof Test Voltage",
+            "30 kV AC"
+          ],
+          [
+            "Arc Flash ATPV",
+            "40.5 Cal/cm² (APC II)"
+          ],
+          [
+            "Material",
+            "Natural Rubber"
+          ],
+          [
+            "Sizes",
+            "7 to 12"
+          ],
+          [
+            "Color",
+            "Red"
+          ],
+          [
+            "Category",
+            "R, C"
+          ],
+          [
+            "Standards",
+            "IEC 60903:2014, EN 60903:2003, ASTM F2675, NFPA 70E, CE"
+          ],
+          [
+            "Typical Application",
+            "22kV/33kV Distribution Lines, Railway Traction, Power Transmission Substations"
+          ]
+        ]
+      },
+      {
+        "id": "linepro_class_4_gloves",
+        "category": "electrical",
+        "name": "Linepro Class 4 Maximum Voltage Insulating Gloves (36kV AC / 54kV DC)",
+        "brand": "Linepro / DPL / Udyogi",
+        "img": "assets/products/electrical/linepro_class_4_gloves.png",
+        "cert": "IEC 60903:2014 · EN 60903:2003 · ASTM F2675 · CE",
+        "price": 8200,
+        "rating": 5.0,
+        "reviews": 14,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Class 4 maximum working voltage gloves tested to 40 kV AC for operation up to 36,000V AC / 54,000V DC with 36.2 cal/cm² arc flash resistance.",
+        "specs": [
+          [
+            "Make / Brand",
+            "DPL / Linepro / Udyogi"
+          ],
+          [
+            "Class",
+            "Class 4 (Highest Voltage Class)"
+          ],
+          [
+            "Working Voltage",
+            "36,000 Volts AC / 54,000 Volts DC Max"
+          ],
+          [
+            "Proof Test Voltage",
+            "40 kV AC"
+          ],
+          [
+            "Arc Flash ATPV",
+            "36.2 Cal/cm² (APC II)"
+          ],
+          [
+            "Material",
+            "Natural Rubber"
+          ],
+          [
+            "Sizes",
+            "7 to 12"
+          ],
+          [
+            "Color",
+            "Red"
+          ],
+          [
+            "Category",
+            "R, C"
+          ],
+          [
+            "Standards",
+            "IEC 60903:2014, EN 60903:2003, ASTM F2675, NFPA 70E, CE"
+          ],
+          [
+            "Typical Application",
+            "33kV Switchyards, Grid Substations, Power Generation Facilities"
+          ]
+        ]
+      },
+      {
+        "id": "evpro_class_00_gloves",
+        "category": "electrical",
+        "name": "EV Pro Class 00 Electric Vehicle Insulating Gloves (500V AC / 750V DC)",
+        "brand": "EV Pro / DPL / Udyogi",
+        "img": "assets/products/electrical/evpro_class_00_gloves.png",
+        "cert": "IEC 60903:2014 · EN 388:2016+A1:2018 · ASTM F2675 · CE",
+        "price": 2800,
+        "rating": 4.9,
+        "reviews": 33,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Specifically engineered for Electric Vehicle (EV) assembly, battery pack servicing, and automotive high-voltage safety.",
+        "specs": [
+          [
+            "Make / Brand",
+            "DPL / EV Pro / Udyogi"
+          ],
+          [
+            "Application",
+            "Electric Vehicle (EV) & Battery Safety"
+          ],
+          [
+            "Class",
+            "Class 00"
+          ],
+          [
+            "Working Voltage",
+            "500 Volts AC / 750 Volts DC Max"
+          ],
+          [
+            "Test Voltage",
+            "2.5 kV AC / 10 kV DC"
+          ],
+          [
+            "Mechanical Protection",
+            "EN 388:2016 + A1:2018"
+          ],
+          [
+            "Arc Flash Class",
+            "APC 1"
+          ],
+          [
+            "Sizes",
+            "6 to 10½"
+          ],
+          [
+            "Standards",
+            "IEC 60903:2014, EN 60903:2003, ASTM F2675, NFPA 70E, CE"
+          ],
+          [
+            "Typical Application",
+            "EV Car/Bus Manufacturing, Lithium-Ion Battery Pack Handling, EV Charging Station Installation"
+          ]
+        ]
+      },
+      {
+        "id": "evpro_class_0_gloves",
+        "category": "electrical",
+        "name": "EV Pro Class 0 Electric Vehicle High-Voltage Gloves (1000V AC / 1500V DC)",
+        "brand": "EV Pro / DPL / Udyogi",
+        "img": "assets/products/electrical/evpro_class_0_gloves.png",
+        "cert": "IEC 60903:2014 · EN 388:2016+A1:2018 · ASTM F2675 · CE",
+        "price": 3400,
+        "rating": 4.9,
+        "reviews": 28,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "1000V AC / 1500V DC rated EV gloves for high-voltage DC busbars and 800V fast-charging architecture in electric buses, trucks and passenger cars.",
+        "specs": [
+          [
+            "Make / Brand",
+            "DPL / EV Pro / Udyogi"
+          ],
+          [
+            "Application",
+            "Electric Vehicle (EV) 800V Architecture & Heavy Powertrains"
+          ],
+          [
+            "Class",
+            "Class 0"
+          ],
+          [
+            "Working Voltage",
+            "1,000 Volts AC / 1,500 Volts DC Max"
+          ],
+          [
+            "Test Voltage",
+            "5 kV AC / 20 kV DC"
+          ],
+          [
+            "Mechanical Protection",
+            "EN 388:2016 + A1:2018"
+          ],
+          [
+            "Arc Flash Class",
+            "APC 1"
+          ],
+          [
+            "Sizes",
+            "6 to 10½"
+          ],
+          [
+            "Standards",
+            "IEC 60903:2014, EN 60903:2003, ASTM F2675, NFPA 70E, CE"
+          ],
+          [
+            "Typical Application",
+            "High Voltage EV Powertrain, Heavy Commercial EV Battery Swapping, DC Fast Chargers"
+          ]
+        ]
+      },
+      {
+        "id": "tp12ec_rescue_stick_45kv",
+        "category": "electrical",
+        "name": "SFE TP12EC Insulated High Voltage Rescue Stick with Hook (45 kV)",
+        "brand": "SFE / ESP / Udyogi",
+        "img": "assets/products/electrical/tp12ec_rescue_stick_45kv.png",
+        "cert": "EN 50508:2009 · 45 kV Dielectric Tested",
+        "price": 8999,
+        "rating": 4.8,
+        "reviews": 15,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "1.77m (5.8 ft) insulated rescue hook pole tested to 45 kV for safe victim retrieval during electrical shock incidents without risk to the rescuer.",
+        "specs": [
+          [
+            "Brand / Make",
+            "SFE / ESP / Udyogi"
+          ],
+          [
+            "Model Code",
+            "TP12EC"
+          ],
+          [
+            "Operating Voltage",
+            "45 kV"
+          ],
+          [
+            "Pole Material",
+            "Resin Polyester and High-Grade Glass Fiber Tube"
+          ],
+          [
+            "Hook Construction",
+            "Coated Heat-Treated Body Rescue Steel Tube (18 x 1.5 cm)"
+          ],
+          [
+            "Overall Length",
+            "1.77 m (5.8 ft) with Hook"
+          ],
+          [
+            "Protected Area Opening",
+            "600 mm (23.62 inch) Body Hook Opening"
+          ],
+          [
+            "Weight",
+            "1.35 Kg (Lightweight & Rapid Deployment)"
+          ],
+          [
+            "Color",
+            "High Visibility Safety Yellow"
+          ],
+          [
+            "Standard",
+            "EN 50508:2009"
+          ],
+          [
+            "Includes",
+            "U-Shaped Insulated Hook & Heavy-Duty Wall Mounting Bracket"
+          ],
+          [
+            "Typical Application",
+            "Substations, Control Rooms, Battery Charging Rooms, High-Voltage Testing Labs"
+          ]
+        ]
+      },
+      {
+        "id": "tp1290kv_rescue_stick_90kv",
+        "category": "electrical",
+        "name": "SFE TP1290KV High Voltage Insulated Rescue Stick with Hook (90 kV)",
+        "brand": "SFE / ESP / Udyogi",
+        "img": "assets/products/electrical/tp1290kv_rescue_stick_90kv.png",
+        "cert": "EN 50508:2009 · 90 kV Extra High Voltage Tested",
+        "price": 11999,
+        "rating": 5.0,
+        "reviews": 11,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "2.29m (7.5 ft) extra high voltage rescue hook tested to 90 kV with safety hand guard for high capacity utility switchyards.",
+        "specs": [
+          [
+            "Brand / Make",
+            "SFE / ESP / Udyogi"
+          ],
+          [
+            "Model Code",
+            "TP1290KV"
+          ],
+          [
+            "Operating Voltage",
+            "90 kV"
+          ],
+          [
+            "Pole Material",
+            "Resin Polyester and Reinforced Glass Fiber Tube"
+          ],
+          [
+            "Hook Construction",
+            "Coated Heat-Treated Body Rescue Steel Tube (18 x 1.5 cm)"
+          ],
+          [
+            "Overall Length",
+            "2.29 m (7.5 ft) with Hook"
+          ],
+          [
+            "Protected Area Opening",
+            "600 mm (23.62 inch) Body Hook"
+          ],
+          [
+            "Weight",
+            "1.7 Kg"
+          ],
+          [
+            "Color",
+            "High Visibility Safety Yellow"
+          ],
+          [
+            "Safety Features",
+            "Dielectric Hand Guard Ring & U-Shaped Insulated Hook"
+          ],
+          [
+            "Standard",
+            "EN 50508:2009"
+          ],
+          [
+            "Typical Application",
+            "66kV / 132kV / 220kV Extra High Voltage Switchyards and Transmission Substations"
+          ]
+        ]
+      },
+      {
+        "id": "harvik_dielectric_boot_20kv",
+        "category": "electrical",
+        "name": "Harvik Dielectric High Voltage Insulating Safety Boots (20 kV)",
+        "brand": "Harvik",
+        "img": "assets/products/electrical/harvik_dielectric_boot_20kv.png",
+        "cert": "EN ISO 20345 · EN 50321 Class 0 · ASTM F2413-11 EH · CSA",
+        "price": 6899,
+        "rating": 4.9,
+        "reviews": 34,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Vulcanized rubber dielectric boot with 200J epoxy coated steel toe cap, 5kV wet test, 20kV electrical hazard protection and SRA slip resistance.",
+        "specs": [
+          [
+            "Make / Brand",
+            "Harvik"
+          ],
+          [
+            "Model",
+            "Harvik Dielectric Safety Boot"
+          ],
+          [
+            "Voltage Rating",
+            "5 kV Tested (Wet Condition), 20 kV Electrical Hazard (EH)"
+          ],
+          [
+            "Toe Cap",
+            "200J Epoxy Coated Steel Toe Cap (Anti-Corrosion, EN ISO 20345)"
+          ],
+          [
+            "Upper Construction",
+            "Waterproof Electrically Verified Reinforced Vulcanized Rubber"
+          ],
+          [
+            "Sole Construction",
+            "Vulcanized Rubber Sole, Cleated Traction (VSV / SNV Pattern)"
+          ],
+          [
+            "Slip Resistance",
+            "SRA Slip Resistant, Oil & Heat Resistant (HRO)"
+          ],
+          [
+            "Lining Material",
+            "Polyester Grade for Electrical Insulation"
+          ],
+          [
+            "Color",
+            "Yellow / Green High Visibility"
+          ],
+          [
+            "Certifications",
+            "CE 0321, EN ISO 20345:2011 SB E FO HRO SRA, EN 50321:1999 Class 0, AS/NZS 2210.3:2009, CSA, ASTM F2413-11 M I/75 C/75 EH"
+          ],
+          [
+            "Typical Application",
+            "Live Line Working, Rail Traction, High Voltage Substations, Electrical Utilities"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_crc_101_a",
+        "category": "gloves",
+        "name": "Udyogi CRC-101 A Blue Crinkle Latex Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/crc_101_a.png",
+        "cert": "EN 388:2016 (2241X) · CE",
+        "price": 110,
+        "rating": 4.8,
+        "reviews": 32,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "10-gauge seamless polycotton liner with blue crinkle latex palm coating for superior grip, dexterity and all-weather durability.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "CRC-101 A"
+          ],
+          [
+            "Liner",
+            "10-Gauge Seamless Grey Polycotton Liner"
+          ],
+          [
+            "Coating Material",
+            "Blue Natural Latex (Crinkle Finish)"
+          ],
+          [
+            "Coating Coverage",
+            "Palm & Finger Coated"
+          ],
+          [
+            "Available Size",
+            "Size 9 (L)"
+          ],
+          [
+            "Weight",
+            "85 g per pair"
+          ],
+          [
+            "Mechanical Rating",
+            "EN 388:2016 (2241X)"
+          ],
+          [
+            "Typical Application",
+            "Construction, Material Handling, Glass Logistics, Warehousing & General Maintenance"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_crc_101_yo",
+        "category": "gloves",
+        "name": "Udyogi CRC-101 (Y/O) High-Vis Orange Latex Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/crc_101_yo.png",
+        "cert": "EN 388:2016 (2241X) · CE",
+        "price": 115,
+        "rating": 4.7,
+        "reviews": 26,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "High-visibility 10-gauge yellow polycotton liner with orange latex crinkle palm coating for enhanced signaling and safety.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "CRC-101 (Y/O)"
+          ],
+          [
+            "Liner",
+            "10-Gauge Seamless Yellow Polycotton Liner"
+          ],
+          [
+            "Coating Material",
+            "High-Vis Orange Crinkle Latex"
+          ],
+          [
+            "Available Size",
+            "Size 9"
+          ],
+          [
+            "Weight",
+            "85 g per pair"
+          ],
+          [
+            "Standards",
+            "EN 388:2016 (2241X), CE"
+          ],
+          [
+            "Typical Application",
+            "Highway Maintenance, Scaffolding, Cargo Handling, Loading/Unloading"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_drc_105",
+        "category": "gloves",
+        "name": "Udyogi DRC 105 Heavy-Duty 5-Ply Green Latex Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/drc_105.png",
+        "cert": "EN 388:2016 (3243) · CE",
+        "price": 135,
+        "rating": 4.9,
+        "reviews": 38,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Heavy-duty 10-gauge yellow polycotton liner with 5-ply thread and green natural rubber latex crinkle coating for maximum tear resistance.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "DRC 105"
+          ],
+          [
+            "Liner",
+            "10-Gauge Yellow Polycotton with 5-Ply Thread (Reinforced)"
+          ],
+          [
+            "Coating",
+            "Green Natural Rubber Latex Crinkled Coating"
+          ],
+          [
+            "Weight",
+            "95 g per pair"
+          ],
+          [
+            "Available Size",
+            "Size 9"
+          ],
+          [
+            "Mechanical Performance",
+            "EN 388:2016 (3243)"
+          ],
+          [
+            "Typical Application",
+            "Bricklaying, Concrete Handling, Metal Fabrication, Quarrying & Heavy Logistics"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_nrc_1310_rb",
+        "category": "gloves",
+        "name": "Udyogi NRC-1310 RB Black Crinkle Latex Coated Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/nrc_1310_rb.png",
+        "cert": "EN 388:2016 (3131X) · CE",
+        "price": 95,
+        "rating": 4.6,
+        "reviews": 19,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "13-gauge red polyester liner with black natural rubber latex crinkled palm coating. Ultra-lightweight (50g) and agile.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "NRC-1310 RB"
+          ],
+          [
+            "Liner",
+            "13-Gauge Red Color Polyester Liner"
+          ],
+          [
+            "Coating",
+            "Black Natural Rubber Latex Crinkled Finish"
+          ],
+          [
+            "Weight",
+            "50 g per pair (Lightweight)"
+          ],
+          [
+            "Available Size",
+            "Size 9"
+          ],
+          [
+            "Standard",
+            "EN 388:2016 (3131X)"
+          ],
+          [
+            "Typical Application",
+            "Automotive Parts Assembly, Small Component Sorting, Light Manufacturing"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_nnc_1310",
+        "category": "gloves",
+        "name": "Udyogi NNC-1310 Flat Nitrile Palm Coated Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/nnc_1310.png",
+        "cert": "EN 388:2016 (4131X) · CE",
+        "price": 85,
+        "rating": 4.8,
+        "reviews": 44,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "13-gauge white polyester liner with grey flat nitrile palm coating offering high abrasion resistance and oil repellency.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "NNC-1310"
+          ],
+          [
+            "Liner",
+            "13-Gauge White Polyester Liner"
+          ],
+          [
+            "Coating",
+            "Grey Color Flat Nitrile Palm Coated"
+          ],
+          [
+            "Weight",
+            "40 g per pair"
+          ],
+          [
+            "Size",
+            "Size 9"
+          ],
+          [
+            "Standard",
+            "EN 388:2016 (4131X)"
+          ],
+          [
+            "Typical Application",
+            "Oily Parts Handling, Machine Shops, Light Press Operation, Packaging"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_nnc_bb",
+        "category": "gloves",
+        "name": "Udyogi NNC BB All-Black Nitrile Palm Coated Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/nnc_bb.png",
+        "cert": "EN 388:2016 (4131X) · CE",
+        "price": 85,
+        "rating": 4.8,
+        "reviews": 36,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "All-black 13-gauge polyester liner with black flat nitrile coating that hides grease and dirt for longer operational life.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "NNC BB"
+          ],
+          [
+            "Liner",
+            "13-Gauge Black Polyester Liner"
+          ],
+          [
+            "Coating",
+            "Black Flat Nitrile Palm Coated"
+          ],
+          [
+            "Weight",
+            "40 g per pair"
+          ],
+          [
+            "Size",
+            "Size 9"
+          ],
+          [
+            "Standard",
+            "EN 388:2016 (4131X)"
+          ],
+          [
+            "Typical Application",
+            "Automotive Service, Garage Maintenance, CNC Machining, Industrial Assembly"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_ndjs2",
+        "category": "gloves",
+        "name": "Udyogi NDJS2 Fully Coated Blue Nitrile Heavy Duty Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/ndjs2.png",
+        "cert": "EN 388:2016 (4222) · CE",
+        "price": 175,
+        "rating": 4.9,
+        "reviews": 27,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Full-dip blue nitrile cotton jersey glove with reinforced safety cuff for oil, water and heavy puncture/extrusion resistance.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "NDJS2"
+          ],
+          [
+            "Liner",
+            "Cotton Jersey Fabric with Stiff Safety Cuff"
+          ],
+          [
+            "Coating",
+            "Blue Heavy Nitrile (Fully Coated 360°)"
+          ],
+          [
+            "Weight",
+            "110 g per pair"
+          ],
+          [
+            "Size",
+            "Size 8"
+          ],
+          [
+            "Performance Rating",
+            "EN 388:2016 (4222)"
+          ],
+          [
+            "Typical Application",
+            "Foundries, Metal Scrap Handling, Oil Drum Handling, Heavy Stamping & Machinery Maintenance"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_upn3",
+        "category": "gloves",
+        "name": "Udyogi UPN3 Polyester/Lycra Mixed U3 Nitrile Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/upn3.png",
+        "cert": "EN 388:2016 (4131A) · CE",
+        "price": 120,
+        "rating": 4.7,
+        "reviews": 21,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "13-gauge polyester and Lycra mixed U3 liner with black flat nitrile palm coating providing skin-fit ergonomics and fatigue reduction.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "UPN3"
+          ],
+          [
+            "Liner",
+            "13-Gauge Polyester / Lycra Blend U3 Seamless Liner"
+          ],
+          [
+            "Coating",
+            "Black Flat Nitrile Palm Coating"
+          ],
+          [
+            "Weight",
+            "56 g per pair"
+          ],
+          [
+            "Size",
+            "Size 9"
+          ],
+          [
+            "Standard",
+            "EN 388:2016 (4131A)"
+          ],
+          [
+            "Typical Application",
+            "Precision Assembly, Quality Control, White Goods Assembly, Power Tool Handling"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_nnc_plus",
+        "category": "gloves",
+        "name": "Udyogi NNC PLUS Double-Dip Nitrile Grip Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/nnc_plus.png",
+        "cert": "EN 388:2016 (4131X) · CE",
+        "price": 95,
+        "rating": 4.8,
+        "reviews": 18,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "Double-dipped 13-gauge white polyester liner with grey flat nitrile coating offering extended abrasion cycles.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "NNC PLUS"
+          ],
+          [
+            "Liner",
+            "13-Gauge White Polyester (Double Dip Processing)"
+          ],
+          [
+            "Coating",
+            "Grey Flat Nitrile Palm Coated with Superior Grip Technology"
+          ],
+          [
+            "Weight",
+            "44 g per pair"
+          ],
+          [
+            "Size",
+            "Size 9"
+          ],
+          [
+            "Standard",
+            "EN 388:2016 (4131X)"
+          ],
+          [
+            "Typical Application",
+            "Automotive Component Assembly, General Handling, Warehousing"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_u_grip",
+        "category": "gloves",
+        "name": "Udyogi U-GRIP Fully Coated Oil-Repellent Nitrile Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/u_grip.png",
+        "cert": "EN 388:2016 (4131X) · CE",
+        "price": 130,
+        "rating": 4.8,
+        "reviews": 23,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "13-gauge seamless polyester glove fully encapsulated in black nitrile for complete liquid barrier and oil repellence.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "U-GRIP"
+          ],
+          [
+            "Liner",
+            "13-Gauge Seamless Polyester Liner"
+          ],
+          [
+            "Coating",
+            "Black Nitrile (Fully Coated 360°)"
+          ],
+          [
+            "Weight",
+            "60 g per pair"
+          ],
+          [
+            "Size",
+            "Size 9"
+          ],
+          [
+            "Standard",
+            "EN 388:2016 (4131X)"
+          ],
+          [
+            "Typical Application",
+            "Coolant-Soaked Machining, Oily Sheet Stamping, Plumbing, Petrochemical Maintenance"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_npu_b",
+        "category": "gloves",
+        "name": "Udyogi NPU-B Black PU Coated Assembly Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/npu_b.png",
+        "cert": "EN 388:2016 (4131X) · CE",
+        "price": 65,
+        "rating": 4.8,
+        "reviews": 56,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Ultra-light (23g) 13-gauge seamless black polyester glove with black polyurethane palm coating for maximum tactile sensitivity.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "NPU-B"
+          ],
+          [
+            "Liner",
+            "13-Gauge Seamless Black Polyester Liner"
+          ],
+          [
+            "Coating",
+            "Black Polyurethane (PU) Palm Coated"
+          ],
+          [
+            "Weight",
+            "23 g per pair (Ultra-Light)"
+          ],
+          [
+            "Available Sizes",
+            "Sizes 8 & 9"
+          ],
+          [
+            "Standard",
+            "EN 388:2016 (4131X)"
+          ],
+          [
+            "Typical Application",
+            "Electronics Assembly, Inspection, Automotive Wiring, Cleanroom & Small Parts Picking"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_npu_g",
+        "category": "gloves",
+        "name": "Udyogi NPU-G Grey PU Coated Precision Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/npu_g.png",
+        "cert": "EN 388:2016 (4131X) · CE",
+        "price": 65,
+        "rating": 4.8,
+        "reviews": 42,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "13-gauge grey polyester liner with grey PU coating. Clean, non-linting, and ideal for dry delicate assembly.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "NPU-G"
+          ],
+          [
+            "Liner",
+            "13-Gauge Seamless Grey Polyester Liner"
+          ],
+          [
+            "Coating",
+            "Grey Polyurethane (PU) Palm Coated"
+          ],
+          [
+            "Weight",
+            "40 g per pair"
+          ],
+          [
+            "Available Sizes",
+            "Sizes 8 & 9"
+          ],
+          [
+            "Standard",
+            "EN 388:2016 (4131X)"
+          ],
+          [
+            "Typical Application",
+            "Dry Component Handling, Light Precision Assembly, Instrument Manufacturing"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_npu_w",
+        "category": "gloves",
+        "name": "Udyogi NPU-W White PU Coated Automotive Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/npu_w.png",
+        "cert": "EN 388:2016 (4131X) · CE",
+        "price": 65,
+        "rating": 4.7,
+        "reviews": 31,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "13-gauge white polyester liner with white PU coating designed for automotive paint shops, white goods and pharmaceutical packing.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "NPU-W"
+          ],
+          [
+            "Liner",
+            "13-Gauge Seamless White Polyester Liner"
+          ],
+          [
+            "Coating",
+            "White Polyurethane (PU) Palm Coated"
+          ],
+          [
+            "Weight",
+            "40 g per pair"
+          ],
+          [
+            "Available Sizes",
+            "Sizes 8 & 9"
+          ],
+          [
+            "Standard",
+            "EN 388:2016 (4131X)"
+          ],
+          [
+            "Typical Application",
+            "Automotive Final Inspection, Paint Shops, Pharmaceutical Clean Rooms, Food Packaging"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_esd_pu",
+        "category": "gloves",
+        "name": "Udyogi ESD PU Anti-Static Carbon Fiber Knitted Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/esd_pu.png",
+        "cert": "EN 388:2016 (0130) · CE · ESD Certified",
+        "price": 95,
+        "rating": 4.9,
+        "reviews": 29,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "13-gauge polyester interlock liner with continuous conductive carbon fiber filament and smooth PU fingertip coating for static discharge prevention.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "ESD PU"
+          ],
+          [
+            "Liner",
+            "13-Gauge Polyester Interlock Liner with Conductive Carbon Fiber"
+          ],
+          [
+            "Coating",
+            "Smooth Polyurethane (PU) Coated on Fingertips Only"
+          ],
+          [
+            "Length",
+            "10\" (250mm)"
+          ],
+          [
+            "Weight",
+            "22 g per pair (Ultra-Lightweight)"
+          ],
+          [
+            "Size",
+            "Size 9"
+          ],
+          [
+            "Standard",
+            "EN 388:2016 (0130), Anti-Static / ESD Safe"
+          ],
+          [
+            "Typical Application",
+            "PCB Assembly, Semiconductor Manufacturing, Mobile Phone Assembly, Electronics Repair"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_hpu_3",
+        "category": "gloves",
+        "name": "Udyogi HPU-3 Cut Level 3 UHMWPE PU Coated Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/hpu_3.png",
+        "cert": "EN 388:2016 (4342C) · CE",
+        "price": 195,
+        "rating": 4.8,
+        "reviews": 25,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "13-gauge seamless salt-and-pepper UHMWPE cut-resistant liner with grey PU palm coating offering high dexterity and Cut Level 3/C protection.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "HPU-3"
+          ],
+          [
+            "Liner",
+            "13-Gauge Seamless Salt-Pepper UHMWPE Cut-Resistant Yarn"
+          ],
+          [
+            "Coating",
+            "Grey Polyurethane (PU) Palm Coated"
+          ],
+          [
+            "Cut Resistance",
+            "Cut Level 3 / TDM Level C"
+          ],
+          [
+            "Available Sizes",
+            "Sizes 7, 8 & 9"
+          ],
+          [
+            "Standard",
+            "EN 388:2016 (4342C)"
+          ],
+          [
+            "Typical Application",
+            "Sheet Metal Trimming, Glass Cutting, Plastic Extrusion, Machinery Maintenance"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_hpu_5",
+        "category": "gloves",
+        "name": "Udyogi HPU-5 Cut Level 5 / Level D UHMWPE PU Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/hpu_5.png",
+        "cert": "EN 388:2016 (4543D) · CE",
+        "price": 260,
+        "rating": 4.9,
+        "reviews": 37,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Maximum Cut Level 5 / TDM Level D protection with 13-gauge UHMWPE liner and grey PU coating for sharp blade and steel edge protection.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "HPU-5"
+          ],
+          [
+            "Liner",
+            "13-Gauge Seamless Salt-Pepper UHMWPE Cut 5 Liner"
+          ],
+          [
+            "Coating",
+            "Grey Polyurethane (PU) Palm Coated"
+          ],
+          [
+            "Cut Rating",
+            "Cut Level 5 / TDM Level D (4543D)"
+          ],
+          [
+            "Available Sizes",
+            "Sizes 7, 8 & 9"
+          ],
+          [
+            "Standard",
+            "EN 388:2016 (4543D)"
+          ],
+          [
+            "Typical Application",
+            "Metal Stamping, Press Brake Work, Automotive Body Shop, Glass Glazing & Installation"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_drc_cut_5",
+        "category": "gloves",
+        "name": "Udyogi DRC CUT 5 Crinkled Latex Cut Level 5 Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/drc_cut_5.png",
+        "cert": "EN 388:2016 (4542C) · CE",
+        "price": 295,
+        "rating": 4.9,
+        "reviews": 31,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "13-gauge UHMWPE cut level 5/C liner with crinkled blue latex palm coating delivering extraordinary wet grip on slippery sharp steel sheets.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "DRC CUT 5"
+          ],
+          [
+            "Liner",
+            "13-Gauge Salt-Pepper UHMWPE Cut Resistant Liner"
+          ],
+          [
+            "Coating",
+            "Crinkled Blue Natural Rubber Latex Palm Coating"
+          ],
+          [
+            "Cut Rating",
+            "Cut Level 5 / ISO Cut Level C"
+          ],
+          [
+            "Available Sizes",
+            "Sizes 8, 9 & 10"
+          ],
+          [
+            "Standard",
+            "EN 388:2016 (4542C)"
+          ],
+          [
+            "Typical Application",
+            "Wet Glass Handling, Sharp Metal Cutting, Roofing, Construction & Recycling"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_h5101",
+        "category": "gloves",
+        "name": "Udyogi H5101 3/4th Double Sandy Nitrile Cut 5 Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/h5101.png",
+        "cert": "EN 388:2016 (4544D) · CE",
+        "price": 380,
+        "rating": 5.0,
+        "reviews": 29,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "HPPE cut level 5 interlock glove with 3/4th double nitrile dip and heavy sandy nitrile palm finish for oily press shops and metal deburring.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "H5101"
+          ],
+          [
+            "Liner",
+            "HPPE Cut Level 5 Seamless Interlock Knit"
+          ],
+          [
+            "Coating",
+            "3/4th Double Dip Nitrile + Sandy Finish Outer Palm"
+          ],
+          [
+            "Cut Rating",
+            "Cut Level 5 / TDM Level D (4544D)"
+          ],
+          [
+            "Available Sizes",
+            "Sizes 9 & 10"
+          ],
+          [
+            "Standard",
+            "EN 388:2016 (4544D)"
+          ],
+          [
+            "Typical Application",
+            "Automotive Press Line, Heavy Machinery Maintenance, CNC Milling, Oil-Coated Metal Deburring"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_hnr5",
+        "category": "gloves",
+        "name": "Udyogi HNR5 HPPE + Glass Fiber Composite Nitrile Cut Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/hnr5.png",
+        "cert": "EN 388:2016 (4543D) · CE",
+        "price": 310,
+        "rating": 4.8,
+        "reviews": 22,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "13-gauge HPPE + glass fiber composite liner with black flat nitrile palm coating. High cut resistance (TDM Level D) with smooth dexterity.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "HNR5"
+          ],
+          [
+            "Liner",
+            "13-Gauge HPPE + Glass Fiber Engineering Composite"
+          ],
+          [
+            "Coating",
+            "Black Flat Nitrile Palm Coating"
+          ],
+          [
+            "Cut Level",
+            "TDM Cut Level D"
+          ],
+          [
+            "Available Sizes",
+            "Sizes 8 & 9"
+          ],
+          [
+            "Standard",
+            "EN 388:2016 (4543D)"
+          ],
+          [
+            "Typical Application",
+            "Appliance Assembly, Sheet Metal Forming, Automotive Tier-1 Manufacturing"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_hp5",
+        "category": "gloves",
+        "name": "Udyogi HP5 Uncoated Cut Resistance Level 5 Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/hp5.png",
+        "cert": "EN 388:2016 (454XD) · CE",
+        "price": 240,
+        "rating": 4.7,
+        "reviews": 16,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "Uncoated engineering-grade composite yarn glove with Cut Level 5 protection. Highly breathable, ambidextrous and washable.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "HP5"
+          ],
+          [
+            "Liner",
+            "Engineering-Grade Composite Yarn (HPPE)"
+          ],
+          [
+            "Coating",
+            "Uncoated (Maximum Air Permeability)"
+          ],
+          [
+            "Cut Rating",
+            "Cut Level 5 / TDM Level D"
+          ],
+          [
+            "Size",
+            "Size 9"
+          ],
+          [
+            "Standard",
+            "EN 388:2016 (454XD)"
+          ],
+          [
+            "Typical Application",
+            "Meat Processing, Food Prep, Paper Mills, Under-Glove Protective Liner"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_tpr_9004",
+        "category": "gloves",
+        "name": "Udyogi TPR 9004 Heavy-Duty Impact + Cut Level 5 Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/tpr_9004.png",
+        "cert": "EN 388:2016 (4544DP) · CE · Impact Certified",
+        "price": 750,
+        "rating": 5.0,
+        "reviews": 38,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "13-gauge HPPE Cut Level 5 shell with red sandy nitrile palm, molded TPR impact armor across knuckles and fingers, and reinforced thumb crotch.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "TPR 9004"
+          ],
+          [
+            "Shell Construction",
+            "13-Gauge Seamless HPPE Shell (Cut Level 5)"
+          ],
+          [
+            "Palm Coating",
+            "Red Sandy Nitrile Coating for Extreme Oily Grip"
+          ],
+          [
+            "Impact Protection",
+            "Molded TPR (Thermo-Plastic Rubber) on Knuckles & Full Finger Length"
+          ],
+          [
+            "Thumb Crotch",
+            "Reinforced Thumb Crotch Patch for Extra Wear Life"
+          ],
+          [
+            "Closure",
+            "Hook-and-Loop Velcro Wrist Closure for Custom Fit"
+          ],
+          [
+            "Available Sizes",
+            "Sizes 9 & 10"
+          ],
+          [
+            "Standards",
+            "EN 388:2016 (4544DP) with Impact Certification 'P'"
+          ],
+          [
+            "Typical Application",
+            "Oil & Gas Drilling, Mining, Heavy Rigging, Demolition, Heavy Equipment Maintenance"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_chain_mesh",
+        "category": "gloves",
+        "name": "Udyogi 304L Stainless Steel Chain Mesh Cut Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/chain_mesh.png",
+        "cert": "EN 1082-1 · CE · Food Grade Certified",
+        "price": 2850,
+        "rating": 5.0,
+        "reviews": 24,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Industrial 304L stainless steel welded wire ring mesh for complete knife blade and serrated cut protection with reversible ambidextrous design.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "CHAIN MESH"
+          ],
+          [
+            "Material",
+            "Durable Stainless Steel 304L Wire Mesh Rings"
+          ],
+          [
+            "Design",
+            "Reversible Ambidextrous Use (Fits Left or Right Hand)"
+          ],
+          [
+            "Wrist Closure",
+            "Adjustable Wrist Strap Secured by 4 Metal Snaps"
+          ],
+          [
+            "Size Identification",
+            "Color-Coded Bands for Easy Sizing"
+          ],
+          [
+            "Standards",
+            "EN 1082-1, Food Grade Hygiene Certified"
+          ],
+          [
+            "Typical Application",
+            "Meat Carving, Industrial Cutting Machines, Textile Cutting, Plastic Slitting"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_pib12",
+        "category": "gloves",
+        "name": "Udyogi PIB12 12\" Heavy-Duty PVC Chemical Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/pib12.png",
+        "cert": "EN 388:2016 (4131) · EN ISO 374-1:2016 (AJLK) · CE",
+        "price": 240,
+        "rating": 4.8,
+        "reviews": 33,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "12\" (300mm) triple-dipped PVC coated gloves with cotton interlock liner and sandy palm finish for chemical, acid and alkali handling.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "PIB12"
+          ],
+          [
+            "Liner",
+            "Heavy-Duty Cotton Interlock Liner"
+          ],
+          [
+            "Coating Material",
+            "Blue Triple-Dipped PVC Coating"
+          ],
+          [
+            "Finish",
+            "Sandy Finish on Palm and Fingers for Enhanced Wet Grip"
+          ],
+          [
+            "Length",
+            "12\" (300 mm)"
+          ],
+          [
+            "Palm Thickness",
+            "1.7 mm Heavy-Duty Barrier"
+          ],
+          [
+            "Certifications",
+            "EN 388:2016 (4131), EN ISO 374-1:2016 Type A (AJLK)"
+          ],
+          [
+            "Chemical Resistance",
+            "A (Methanol), J (n-Heptane), L (Sulfuric Acid 96%), K (Sodium Hydroxide 40%)"
+          ],
+          [
+            "Typical Application",
+            "Chemical Processing, Electroplating, Degreasing, Acid Wash, Waste Water Treatment"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_ksg_1830",
+        "category": "gloves",
+        "name": "Udyogi KSG-1830 18-Gauge Chemical Gauntlet Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/ksg_1830.png",
+        "cert": "EN 388:2016 (4121X) · EN ISO 374-1 (AJLK) · EN 407 (X1XXXX) · CE",
+        "price": 340,
+        "rating": 4.9,
+        "reviews": 21,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "18-gauge ultra-dexterous nylon chemical gauntlet (300mm length) with dual-color green/black sandy grip and contact heat resistance up to 100°C.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "KSG-1830"
+          ],
+          [
+            "Liner",
+            "18-Gauge Seamless Knit Nylon Liner (Supreme Flexibility)"
+          ],
+          [
+            "Coating",
+            "Dual Tone Green/Black with Sandy Finish Grip"
+          ],
+          [
+            "Cuff / Length",
+            "Gauntlet Cuff, Length: 300 mm"
+          ],
+          [
+            "Available Size",
+            "Size 9"
+          ],
+          [
+            "Certifications",
+            "EN 388:2016 (4121X), EN ISO 374-1:2016 (AJLK), EN ISO 374-5:2016 (PASS Virus/Bacteria), EN 407:2004 (X1XXXX Contact Heat)"
+          ],
+          [
+            "Typical Application",
+            "Petrochemical Refineries, Chemical Tank Cleaning, Hot Liquid Immersion, Lab Maintenance"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_pib14",
+        "category": "gloves",
+        "name": "Udyogi PIB14 14\" Heavy-Duty PVC Chemical Gloves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/pib14.png",
+        "cert": "EN 388:2016 (4131) · EN ISO 374-1:2016 (AJLK) · CE",
+        "price": 290,
+        "rating": 4.8,
+        "reviews": 28,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "14\" (350mm) extended forearm PVC chemical gloves with triple dip sandy finish for dipping tanks and deep drum handling.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "PIB14"
+          ],
+          [
+            "Liner",
+            "Heavy-Duty Cotton Interlock Liner"
+          ],
+          [
+            "Coating",
+            "Triple-Dipped Blue PVC with Sandy Grip Finish"
+          ],
+          [
+            "Length",
+            "14\" (350 mm Extended Forearm Protection)"
+          ],
+          [
+            "Palm Thickness",
+            "1.7 mm"
+          ],
+          [
+            "Standards",
+            "EN 388:2016 (4131), EN ISO 374-1:2016 (AJLK)"
+          ],
+          [
+            "Typical Application",
+            "Chemical Dipping Tanks, Automotive Degreasing, Galvanizing Plants, Battery Manufacturing"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_pib_24",
+        "category": "gloves",
+        "name": "Udyogi PIB 24 Full-Arm 24\" PVC Chemical Sleeves",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/pib_24.png",
+        "cert": "EN 388:2016 (4131) · EN ISO 374-1:2016 (AJLK) · CE",
+        "price": 490,
+        "rating": 4.9,
+        "reviews": 17,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "24\" (600mm) full shoulder-length heavy PVC gauntlet with elasticated top cuff for complete arm immersion and splash safety.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "PIB 24"
+          ],
+          [
+            "Liner",
+            "Cotton Interlock Liner with Elasticated Arm Top"
+          ],
+          [
+            "Coating",
+            "Triple-Dipped PVC with Sandy Finish on Palm and Fingers"
+          ],
+          [
+            "Length",
+            "24\" (600 mm Shoulder-Length)"
+          ],
+          [
+            "Palm Thickness",
+            "1.7 mm"
+          ],
+          [
+            "Standards",
+            "EN 388:2016 (4131), EN ISO 374-1:2016 (AJLK)"
+          ],
+          [
+            "Typical Application",
+            "Deep Chemical Immersion, Effluent Treatment Plants (ETP), Acid Tank Maintenance, Agrochemical Mixing"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_armguard_velcro",
+        "category": "gloves",
+        "name": "Udyogi 18\" Cut Level 5 HPPE Armguard Sleeve with Velcro",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/armguard_velcro.png",
+        "cert": "EN 388:2016 (3542C) · CE",
+        "price": 320,
+        "rating": 4.9,
+        "reviews": 35,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "18\" (450mm) Cut Level 5 HPPE and spandex protective sleeve with adjustable bicep velcro strapping and thumbhole design.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "ARMGUARD WITH VELCRO"
+          ],
+          [
+            "Material",
+            "13-Gauge HPPE and Spandex Liner"
+          ],
+          [
+            "Cut Resistance",
+            "Cut Level 5 / TDM Level C (3542C)"
+          ],
+          [
+            "Dimensions",
+            "Length: 18\" (450 mm), Width: 4.6\""
+          ],
+          [
+            "Features",
+            "Adjustable Velcro Bicep Strap to Prevent Slippage, Available With/Without Thumbhole Design"
+          ],
+          [
+            "Standard",
+            "EN 388:2016 (3542C)"
+          ],
+          [
+            "Typical Application",
+            "Automotive Assembly Line, Stamping Plants, Glass Manufacturing, Sheet Metal Handling"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_pdsbb7045",
+        "category": "gloves",
+        "name": "Udyogi PDSBB7045 7-Gauge Blue Dotted Gloves (45g)",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/pdsbb7045.png",
+        "cert": "Industrial Standard · Udyogi Tested",
+        "price": 28,
+        "rating": 4.6,
+        "reviews": 48,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "7-gauge blue cotton knitted glove with single-side blue PVC dotting for high-friction grip in light packaging.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "PDSBB7045"
+          ],
+          [
+            "Liner",
+            "7-Gauge Blue Cotton Knitted Liner"
+          ],
+          [
+            "Dotting",
+            "Single-Side High-Grip Blue PVC Dots with UDYOGI Marking"
+          ],
+          [
+            "Weight",
+            "45 g per pair"
+          ],
+          [
+            "Typical Application",
+            "Warehouse Sorting, Packaging, Light Assembly, Loading & Unloading"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_pdsbb1060",
+        "category": "gloves",
+        "name": "Udyogi PDSBB1060 10-Gauge Blue Dotted Gloves (60g)",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/pdsbb1060.png",
+        "cert": "Industrial Standard · Udyogi Tested",
+        "price": 35,
+        "rating": 4.7,
+        "reviews": 39,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "10-gauge fine knit blue liner with blue PVC dotted palm. Weighs 60g for balanced comfort and tear resistance.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "PDSBB1060"
+          ],
+          [
+            "Liner",
+            "10-Gauge Fine Knit Blue Liner"
+          ],
+          [
+            "Dotting",
+            "Single-Side Blue Dotted Grip with UDYOGI Branding"
+          ],
+          [
+            "Weight",
+            "60 g per pair"
+          ],
+          [
+            "Typical Application",
+            "Carton Packing, Logistics, Material Handling, Light Engineering"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_pdswb7070",
+        "category": "gloves",
+        "name": "Udyogi PDSWB7070 7-Gauge White Dotted Gloves (70g)",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/pdswb7070.png",
+        "cert": "Industrial Standard · Udyogi Tested",
+        "price": 38,
+        "rating": 4.8,
+        "reviews": 52,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "7-gauge natural white cotton glove with dense blue PVC dots for general industrial material handling.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "PDSWB7070"
+          ],
+          [
+            "Liner",
+            "7-Gauge Bleached White Cotton Knitted Liner"
+          ],
+          [
+            "Dotting",
+            "Single-Side Blue Dotted High-Friction Grip"
+          ],
+          [
+            "Weight",
+            "70 g per pair"
+          ],
+          [
+            "Typical Application",
+            "Agriculture, General Industrial Handling, Construction Labor, Packaging"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_pdsbb7080",
+        "category": "gloves",
+        "name": "Udyogi PDSBB7080 7-Gauge Heavy Blue Dotted Gloves (80g)",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/pdsbb7080.png",
+        "cert": "Industrial Standard · Udyogi Tested",
+        "price": 42,
+        "rating": 4.9,
+        "reviews": 46,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Heavy-duty 80g 7-gauge blue knitted glove with heavy PVC dots for maximum durability in logistics and cargo handling.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "PDSBB7080"
+          ],
+          [
+            "Liner",
+            "7-Gauge Heavy Blue Cotton Liner"
+          ],
+          [
+            "Dotting",
+            "Heavy Density Single-Side Blue PVC Dots"
+          ],
+          [
+            "Weight",
+            "80 g per pair (Heavy-Duty Construction)"
+          ],
+          [
+            "Typical Application",
+            "Steel Yard Handling, Heavy Cargo Freight, Warehousing, Pallet Moving"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_pdsgb1062",
+        "category": "gloves",
+        "name": "Udyogi PDSGB1062 10-Gauge Grey Dotted Knitted Gloves (62g)",
+        "brand": "Udyogi",
+        "img": "assets/products/gloves/pdsgb1062.png",
+        "cert": "Industrial Standard · Udyogi Tested",
+        "price": 36,
+        "rating": 4.7,
+        "reviews": 27,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "10-gauge grey knitted liner (dirt-camouflaging) with blue PVC dotting for maintenance and machine shops.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Code",
+            "PDSGB1062"
+          ],
+          [
+            "Liner",
+            "10-Gauge Grey Knitted Polycotton Liner"
+          ],
+          [
+            "Dotting",
+            "Single-Side Blue Dotted Grip with UDYOGI Marking"
+          ],
+          [
+            "Weight",
+            "62 g per pair"
+          ],
+          [
+            "Typical Application",
+            "Machine Tool Operation, Auto Ancillary Units, Maintenance & Fabrication"
           ]
         ]
       }

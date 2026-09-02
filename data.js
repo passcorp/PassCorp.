@@ -12226,8 +12226,14 @@ const PassCloudDB = {
         }
         const cloudDb = JSON.parse(rawJson);
 
-        // Sync catalogContent (Products & Categories)
+        // Sync catalogContent (Products & Categories) safely without dropping newly added items
         if (cloudDb.catalogContent && Array.isArray(cloudDb.catalogContent.products) && cloudDb.catalogContent.products.length > 0) {
+          const pMap = {};
+          if (CONTENT && Array.isArray(CONTENT.products)) {
+            CONTENT.products.forEach(p => { if (p && p.id) pMap[p.id] = p; });
+          }
+          cloudDb.catalogContent.products.forEach(p => { if (p && p.id) pMap[p.id] = p; });
+          cloudDb.catalogContent.products = Object.values(pMap);
           CONTENT = cloudDb.catalogContent;
           try { localStorage.setItem(STORAGE_KEY, JSON.stringify(CONTENT)); } catch(e){}
         }
