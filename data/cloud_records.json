@@ -1,5 +1,5 @@
 {
-  "version": "2026.09.03.v13",
+  "version": "2026.09.03.v14",
   "lastUpdated": "2026-09-01T10:25:25.058Z",
   "updatedBy": "PASS CORP. Unified 3-Way Cloud",
   "catalogContent": {
@@ -16369,6 +16369,586 @@
           [
             "Compliance",
             "OSHA 1910.1200 Hazard Communication"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_shower_6220_gi",
+        "category": "misc",
+        "name": "Udyogi 6220 GI Combination Safety Shower Cum Eyewash",
+        "brand": "Udyogi",
+        "img": "assets/products/showers/shower_6220_gi.png",
+        "cert": "IS 10592:2018 · ANSI Z358.1 Compliant",
+        "price": 12500,
+        "rating": 4.9,
+        "reviews": 38,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Floor-mounted combination safety shower and eye/face wash station operated independently by pull rod and push plate.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Number",
+            "6220 GI"
+          ],
+          [
+            "Piping Construction",
+            "Heavy-Duty Galvanized Iron (GI) with Anti-Corrosion Safety Green Powder Coating"
+          ],
+          [
+            "Bowl & Shower Head",
+            "High-Visibility Yellow ABS Plastic (Impermeable to Acids, Alkalis & Solvents)"
+          ],
+          [
+            "Activation Method",
+            "Hand Pull Rod (Drench Shower) & Hand Push Plate (Eyewash)"
+          ],
+          [
+            "Water Flow Rate",
+            "Drench Shower: 76 LPM | Eye/Face Wash: 12 LPM"
+          ],
+          [
+            "Operating Pressure",
+            "2 to 3 Kg/cm²"
+          ],
+          [
+            "Atomiser Sprinklers",
+            "Twin Aerated Spray Heads with Pop-Off Dust Covers"
+          ],
+          [
+            "Standard",
+            "IS 10592:2018, ANSI Z358.1"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_shower_6220_ss",
+        "category": "misc",
+        "name": "Udyogi 6220 SS 304 Stainless Steel Safety Shower Cum Eyewash",
+        "brand": "Udyogi",
+        "img": "assets/products/showers/shower_6220_ss.png",
+        "cert": "IS 10592:2018 · ANSI Z358.1 · SS 304",
+        "price": 21500,
+        "rating": 5.0,
+        "reviews": 42,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "All stainless steel 304 safety shower and eyewash unit engineered for chemical plants, offshore platforms and cleanrooms.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Number",
+            "6220 SS"
+          ],
+          [
+            "Material Specification",
+            "100% Stainless Steel Grade 304 (Also Available in SS 316 / 316L)"
+          ],
+          [
+            "Receptor Bowl & Head",
+            "Stainless Steel 304 Mirror Polished Bowl & Drench Shower Head"
+          ],
+          [
+            "Flow Rates",
+            "Overhead Shower: 76 Litres/Min | Eyewash: 12 Litres/Min"
+          ],
+          [
+            "Operating Pressure",
+            "2 to 3 Kg/cm²"
+          ],
+          [
+            "Corrosion Rating",
+            "Maximum Resistance to Coastal Salt Spray & Aggressive Chemical Fumes"
+          ],
+          [
+            "Standard",
+            "IS 10592:2018, ANSI Z358.1"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_shower_6250_gi",
+        "category": "misc",
+        "name": "Udyogi 6250 GI Safety Shower Cum Eyewash with Foot Pedal",
+        "brand": "Udyogi",
+        "img": "assets/products/showers/shower_6250_gi.png",
+        "cert": "IS 10592:2018 · Dual Foot & Hand Operation",
+        "price": 14800,
+        "rating": 4.9,
+        "reviews": 35,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Combination safety station featuring foot pedal activation in addition to hand push lever for hands-free emergency flushing.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Number",
+            "6250 GI"
+          ],
+          [
+            "Activation System",
+            "Dual Mode: Foot Pedal OR Hand Push Plate for Eyewash; Rigid Pull Rod for Shower"
+          ],
+          [
+            "Pipe Material",
+            "ISI Marked GI Pipe with Tough Safety Green Polyurethane Coating"
+          ],
+          [
+            "Shower & Bowl",
+            "High-Impact Resistant ABS Yellow Components"
+          ],
+          [
+            "Flow Rates",
+            "Shower: 76 LPM | Eyewash: 12 LPM"
+          ],
+          [
+            "Standard",
+            "IS 10592:2018"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_shower_6250_ss",
+        "category": "misc",
+        "name": "Udyogi 6250 SS 304 Safety Shower with Foot Pedal",
+        "brand": "Udyogi",
+        "img": "assets/products/showers/shower_6250_ss.png",
+        "cert": "IS 10592:2018 · ANSI Z358.1 · All SS 304",
+        "price": 24500,
+        "rating": 5.0,
+        "reviews": 29,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Premium stainless steel 304 drench shower cum eyewash with integrated foot pedal linkage for pharmaceutical and refinery use.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Number",
+            "6250 SS"
+          ],
+          [
+            "Construction",
+            "Entire Unit, Pedals, Valves and Piping in Stainless Steel 304"
+          ],
+          [
+            "Eyewash Operation",
+            "Hands-Free Foot Pedal + Hand Push Plate"
+          ],
+          [
+            "Shower Operation",
+            "Triangular Pull Rod with Stay-Open Ball Valve"
+          ],
+          [
+            "Flow Performance",
+            "Shower 76 LPM, Eyewash 12 LPM at 2-3 Kg/cm² Pressure"
+          ],
+          [
+            "Standard",
+            "IS 10592:2018, ANSI Z358.1"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_eyewash_4220_gi",
+        "category": "misc",
+        "name": "Udyogi 4220 GI Pedestal Eye/Face Wash Fountain (Push Lever)",
+        "brand": "Udyogi",
+        "img": "assets/products/showers/eyewash_4220_gi.png",
+        "cert": "IS 10592:2018 · BIS Certified",
+        "price": 5800,
+        "rating": 4.8,
+        "reviews": 44,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Pedestal mounted eyewash fountain with yellow ABS receptor bowl, soft-flow aerated twin spray heads and stay-open push plate.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Number",
+            "4220 GI"
+          ],
+          [
+            "Mounting Type",
+            "Free-Standing Pedestal Floor Mounted"
+          ],
+          [
+            "Bowl Material",
+            "Corrosion-Resistant Yellow ABS Plastic Bowl"
+          ],
+          [
+            "Pipe Material",
+            "Heavy Galvanized Steel Pipe with Green Epoxy Coat"
+          ],
+          [
+            "Water Flow Rate",
+            "12 Litres per Minute"
+          ],
+          [
+            "Operating Pressure",
+            "2 to 3 Kg/cm²"
+          ],
+          [
+            "Standard",
+            "IS 10592:2018"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_eyewash_4220_ss",
+        "category": "misc",
+        "name": "Udyogi 4220 SS 304 Pedestal Eye/Face Wash Fountain",
+        "brand": "Udyogi",
+        "img": "assets/products/showers/eyewash_4220_ss.png",
+        "cert": "IS 10592:2018 · All SS 304",
+        "price": 9800,
+        "rating": 4.9,
+        "reviews": 31,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "Full stainless steel 304 pedestal eye and face wash fountain designed for high-hygiene pharmaceutical, dairy and chemical labs.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Number",
+            "4220 SS"
+          ],
+          [
+            "Material",
+            "Complete Stainless Steel 304 (Also in SS 316 / 316L)"
+          ],
+          [
+            "Bowl",
+            "Stainless Steel 304 Circular Receptor Bowl"
+          ],
+          [
+            "Activation",
+            "Push Plate with 1/2\" Stay-Open Chrome Plated Brass Ball Valve"
+          ],
+          [
+            "Water Delivery",
+            "12 LPM Non-Injurious Aerated Stream"
+          ],
+          [
+            "Standard",
+            "IS 10592:2018"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_eyewash_4710_gi",
+        "category": "misc",
+        "name": "Udyogi 4710 GI Eye/Face Wash with Push Plate & Foot Pedal",
+        "brand": "Udyogi",
+        "img": "assets/products/showers/eyewash_4710_gi.png",
+        "cert": "IS 10592:1982 / IS 10592:2018",
+        "price": 7200,
+        "rating": 4.9,
+        "reviews": 36,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Pedestal eyewash fountain with foot pedal activation allows workers suffering eye contamination to activate water instantly with foot.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Number",
+            "4710 GI"
+          ],
+          [
+            "Activation",
+            "Dual Hand Push Plate & Ergonomic Foot Pedal"
+          ],
+          [
+            "Piping",
+            "ISI Marked GI Pipe with Green Anti-Corrosion Finish"
+          ],
+          [
+            "Bowl",
+            "ABS Yellow Acid/Alkali Resistant Receptor Bowl"
+          ],
+          [
+            "Flow Rate",
+            "12 Litres / Minute"
+          ],
+          [
+            "Standard",
+            "IS 10592:1982 & IS 10592:2018"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_eyewash_4710_ss",
+        "category": "misc",
+        "name": "Udyogi 4710 SS 304 Eye/Face Wash with Hand & Foot Pedal",
+        "brand": "Udyogi",
+        "img": "assets/products/showers/eyewash_4710_ss.png",
+        "cert": "IS 10592:2018 · All SS 304",
+        "price": 12200,
+        "rating": 5.0,
+        "reviews": 27,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "Heavy-gauge stainless steel 304 pedestal eyewash with foot pedal operation for aggressive industrial environments.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Number",
+            "4710 SS"
+          ],
+          [
+            "Material",
+            "100% Stainless Steel 304 Pipes, Pedals, Bowl & Sprinklers"
+          ],
+          [
+            "Activation",
+            "Foot Pedal & Hand Push Lever Linkage"
+          ],
+          [
+            "Water Flow",
+            "12 LPM Constant Flow at 2-3 Kg/cm²"
+          ],
+          [
+            "Standard",
+            "IS 10592:2018"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_eyewash_4810_gi",
+        "category": "misc",
+        "name": "Udyogi 4810 GI Wall Mounted Laboratory Eye/Face Wash",
+        "brand": "Udyogi",
+        "img": "assets/products/showers/eyewash_4810_gi.png",
+        "cert": "IS 10592:2018 · Wall Mounted",
+        "price": 4600,
+        "rating": 4.8,
+        "reviews": 33,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Compact wall-mounted eyewash unit engineered for school laboratories, testing labs and battery charging stations where floor space is limited.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Number",
+            "4810 GI"
+          ],
+          [
+            "Mounting",
+            "Heavy-Duty Wall Mounting Bracket with GI Arm"
+          ],
+          [
+            "Receptor Bowl",
+            "High-Visibility Yellow ABS Plastic Bowl"
+          ],
+          [
+            "Activation",
+            "High-Visibility Flag Push Handle"
+          ],
+          [
+            "Discharge",
+            "12 LPM Soft Dual Water Jet"
+          ],
+          [
+            "Standard",
+            "IS 10592:2018"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_eyewash_4810_ss",
+        "category": "misc",
+        "name": "Udyogi 4810 SS 304 Wall Mounted Stainless Steel Eyewash",
+        "brand": "Udyogi",
+        "img": "assets/products/showers/eyewash_4810_ss.png",
+        "cert": "IS 10592:2018 · All SS 304",
+        "price": 7800,
+        "rating": 4.9,
+        "reviews": 25,
+        "bestseller": false,
+        "stock": "in",
+        "desc": "Wall-mounted stainless steel 304 eyewash fountain with circular receptor bowl, twin spray heads and wall anchor plate.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Number",
+            "4810 SS"
+          ],
+          [
+            "Construction",
+            "Stainless Steel 304 Bowl, Arm & Wall Bracket"
+          ],
+          [
+            "Activation",
+            "Stay-Open Stainless Steel Push Handle"
+          ],
+          [
+            "Water Flow Rate",
+            "12 LPM at 2-3 Kg/cm²"
+          ],
+          [
+            "Standard",
+            "IS 10592:2018"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_eyewash_ew500",
+        "category": "misc",
+        "name": "Udyogi EW-500 Wall Mounted Emergency Eyewash Bottle (500ml)",
+        "brand": "Udyogi",
+        "img": "assets/products/showers/eyewash_ew500.png",
+        "cert": "Immediate First Aid Dispenser",
+        "price": 650,
+        "rating": 4.7,
+        "reviews": 49,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "500ml portable squeeze bottle with ergonomic eyecup and drain tube for immediate eye irrigation at the point of chemical splash.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Number",
+            "EW-500"
+          ],
+          [
+            "Bottle Capacity",
+            "500 ml"
+          ],
+          [
+            "Design",
+            "Flexible Squeeze Bottle with Ergonomically Contoured Eyecup"
+          ],
+          [
+            "Drainage",
+            "Integral Air-Vent Tube Prevents Contaminated Fluid Backflow"
+          ],
+          [
+            "Mounting",
+            "Snap-In Wall Mounting Bracket Included"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_eyewash_ew3501",
+        "category": "misc",
+        "name": "Udyogi EW3501 34-Litre Gravity-Operated Portable Eyewash",
+        "brand": "Udyogi",
+        "img": "assets/products/showers/eyewash_ew3501.png",
+        "cert": "BIS 10592 - 2018 (Fig : 3) · ANSI Z358.1 (15 Min Flush)",
+        "price": 8900,
+        "rating": 5.0,
+        "reviews": 56,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "Self-contained 34-litre gravity-fed portable eyewash providing full 15 minutes of continuous flushing without plumbed water connection.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Number",
+            "EW3501"
+          ],
+          [
+            "Tank Capacity",
+            "34 Litres (Large Reservoir)"
+          ],
+          [
+            "Flushing Duration",
+            "Provides Continuous Flushing Fluid for 15 Full Minutes"
+          ],
+          [
+            "Material Construction",
+            "Heavy-Duty High Density Polyethylene (HDPE) in Safety Green & Yellow"
+          ],
+          [
+            "Operation",
+            "One-Motion Pull Down Yellow Manifold Starts Flushing Instantly"
+          ],
+          [
+            "Mounting Options",
+            "Wall Mountable with Heavy Bracket or Benchtop Self-Standing"
+          ],
+          [
+            "Standard",
+            "BIS 10592 - 2018 (Fig : 3), ANSI Z358.1 Compliant"
+          ]
+        ]
+      },
+      {
+        "id": "udyogi_cabinet_shower_7050_ss",
+        "category": "misc",
+        "name": "Udyogi 7050 SS Enclosed Stainless Steel Decontamination Booth",
+        "brand": "Udyogi",
+        "img": "assets/products/showers/cabinet_shower_7050_ss.png",
+        "cert": "IS 10592:2018 · ANSI Z358.1 · SS 304 Enclosed",
+        "price": 85000,
+        "rating": 5.0,
+        "reviews": 12,
+        "bestseller": true,
+        "stock": "in",
+        "desc": "3-sided stainless steel 304 walk-in cubicle booth with privacy curtain, overhead drench shower and eyewash to contain chemical spray.",
+        "specs": [
+          [
+            "Brand / Make",
+            "Udyogi"
+          ],
+          [
+            "Model Number",
+            "7050 SS"
+          ],
+          [
+            "Enclosure Material",
+            "3-Sided Heavy Stainless Steel 304 Sheet Metal Enclosure"
+          ],
+          [
+            "Privacy Curtain",
+            "Heavy Chemical-Resistant Strip / Full Privacy Curtain Included"
+          ],
+          [
+            "Fittings",
+            "Overhead Drench Shower Head + Built-In Eye/Face Wash Fountain"
+          ],
+          [
+            "Water Drainage",
+            "Base Pan Connects to Effluent Treatment Drainage"
+          ],
+          [
+            "Standard",
+            "IS 10592:2018, ANSI Z358.1"
           ]
         ]
       }
