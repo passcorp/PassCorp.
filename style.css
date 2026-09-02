@@ -334,3 +334,158 @@ svg.ic{display:inline-block;vertical-align:middle;}
   .trust-inner{grid-template-columns:1fr;}
   .header-actions .whatsapp-pill{padding:7px 12px;font-size:12px;}
 }
+
+/* =========================================================
+   BRAND COMPARISON MATRIX & BENCHMARK STYLES
+   ========================================================= */
+
+/* Product Card Compare Button */
+.product-media{position:relative;}
+.compare-card-btn{position:absolute;bottom:8px;right:8px;z-index:3;background:rgba(255,255,255,0.92);backdrop-filter:blur(4px);border:1px solid var(--line);border-radius:14px;padding:3px 8px;font-size:11px;font-weight:600;color:var(--ink);cursor:pointer;transition:all .2s ease;box-shadow:0 2px 6px rgba(0,0,0,0.08);}
+.compare-card-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+.compare-card-btn.is-active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 2px 8px rgba(18,41,125,0.25);}
+
+/* Home Page Matrix Promo Banner */
+.matrix-promo-banner{background:linear-gradient(135deg, #0a1f44 0%, #12297D 60%, #1c3d9c 100%);border-radius:12px;padding:32px 36px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:30px;cursor:pointer;box-shadow:0 12px 32px rgba(10,31,68,0.16);transition:transform .3s ease,box-shadow .3s ease;max-width:1180px;margin:0 auto;}
+.matrix-promo-banner:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(10,31,68,0.22);}
+.matrix-promo-tag{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:1.5px;color:#f59e0b;font-weight:700;text-transform:uppercase;display:inline-block;margin-bottom:8px;}
+.matrix-promo-title{font-size:26px;font-weight:700;color:#ffffff;line-height:1.2;}
+.matrix-promo-desc{font-size:14px;color:#cbd5e1;margin-top:8px;max-width:680px;line-height:1.5;}
+.matrix-promo-chips{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;}
+.matrix-promo-chips span{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);padding:4px 10px;border-radius:20px;font-size:12px;color:#e2e8f0;}
+.matrix-promo-action button{box-shadow:0 4px 14px rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.2);}
+
+/* Matrix Page Layout */
+.matrix-page{background:var(--bg);min-height:90vh;padding-bottom:60px;}
+.matrix-hero{background:linear-gradient(135deg, #07152e 0%, #0c2340 70%, #163670 100%);color:#fff;padding:48px 24px 40px;border-bottom:1px solid rgba(255,255,255,0.1);}
+.matrix-hero-inner{max-width:1240px;margin:0 auto;}
+.matrix-top-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(245,158,11,0.18);border:1px solid rgba(245,158,11,0.4);color:#fbbf24;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.5px;padding:4px 12px;border-radius:20px;margin-bottom:12px;}
+.matrix-hero-title{font-size:36px;font-weight:700;color:#fff;line-height:1.15;letter-spacing:-.5px;}
+.matrix-hero-subtitle{font-size:15px;color:#94a3b8;margin-top:10px;max-width:760px;line-height:1.5;}
+
+.matrix-content-wrap{max-width:1240px;margin:0 auto;padding:24px 20px;}
+
+/* Category Navigator */
+.matrix-cat-nav{display:flex;gap:8px;overflow-x:auto;padding-bottom:12px;margin-bottom:20px;scrollbar-width:thin;}
+.matrix-cat-btn{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:10px;white-space:nowrap;transition:all .2s ease;box-shadow:0 1px 3px rgba(0,0,0,0.04);}
+.matrix-cat-btn:hover{border-color:var(--accent);background:var(--accent-tint);}
+.matrix-cat-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 4px 12px rgba(18,41,125,0.25);}
+.matrix-cat-emoji{font-size:16px;}
+.matrix-cat-label{font-size:13px;font-weight:600;}
+.matrix-cat-badge{background:rgba(0,0,0,0.06);padding:2px 7px;border-radius:10px;font-size:11px;font-weight:700;color:inherit;}
+.matrix-cat-btn.active .matrix-cat-badge{background:rgba(255,255,255,0.25);color:#fff;}
+
+/* Toolbar Card */
+.matrix-toolbar-card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:18px;box-shadow:0 1px 4px rgba(0,0,0,0.04);}
+.matrix-selection-counter{font-size:15px;color:var(--ink);}
+.matrix-selection-counter b{color:var(--accent);font-weight:700;}
+.matrix-hint{font-size:12px;color:var(--ink-muted);margin-top:2px;}
+.matrix-toolbar-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.btn-ghost.is-active{background:var(--warn-tint);color:var(--warn);border-color:var(--warn);}
+
+/* Quick Add Drawer */
+.matrix-add-drawer{background:#f1f5f9;border:1px dashed #cbd5e1;border-radius:10px;padding:14px 18px;margin-bottom:20px;}
+.matrix-add-header{display:flex;align-items:baseline;gap:8px;margin-bottom:10px;}
+.matrix-add-title{font-size:13px;font-weight:700;color:var(--ink);}
+.matrix-add-sub{font-size:12px;color:var(--ink-muted);}
+.matrix-add-chips{display:flex;gap:8px;flex-wrap:wrap;}
+.matrix-add-chip{background:#fff;border:1px solid #cbd5e1;border-radius:20px;padding:5px 12px;display:inline-flex;align-items:center;gap:8px;cursor:pointer;transition:all .15s ease;font-size:12px;}
+.matrix-add-chip:hover{border-color:var(--accent);background:var(--accent-tint);color:var(--accent);}
+.chip-brand{font-weight:700;color:var(--accent-dark);}
+.chip-name{color:var(--ink);}
+.chip-price{font-family:'IBM Plex Mono',monospace;color:var(--ink-muted);font-size:11px;}
+.chip-plus{background:var(--accent-tint);color:var(--accent);width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;}
+
+/* Comparison Table Container */
+.matrix-table-container{background:#fff;border:1px solid var(--line);border-radius:12px;overflow-x:auto;box-shadow:0 4px 20px rgba(0,0,0,0.05);margin-bottom:28px;}
+.matrix-table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px;table-layout:fixed;}
+.matrix-table th,.matrix-table td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:14px 18px;vertical-align:top;text-align:left;}
+.matrix-table th:last-child,.matrix-table td:last-child{border-right:none;}
+
+/* Table Columns */
+.matrix-feature-col{width:260px;background:#f8fafc;position:sticky;left:0;z-index:10;box-shadow:2px 0 6px rgba(0,0,0,0.03);}
+.matrix-header-info .matrix-col-title{font-size:15px;font-weight:700;color:var(--ink);display:block;}
+.matrix-header-info .matrix-col-desc{font-size:11px;color:var(--ink-muted);font-weight:400;margin-top:2px;}
+.matrix-prod-col{min-width:240px;width:calc((100% - 260px)/3);background:#fff;position:relative;}
+
+/* Card Header inside Table */
+.matrix-card-header{display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;padding-top:10px;}
+.matrix-remove-btn{position:absolute;top:0;right:0;width:24px;height:24px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink-muted);font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s ease;}
+.matrix-remove-btn:hover{background:var(--danger);color:#fff;border-color:var(--danger);}
+.matrix-badge-best{background:#fef3c7;color:#92400e;border:1px solid #fde68a;font-size:10px;font-weight:700;padding:2px 8px;border-radius:12px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px;}
+.matrix-badge-corp{background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;font-size:10px;font-weight:700;padding:2px 8px;border-radius:12px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px;}
+
+.matrix-img-wrap{width:130px;height:130px;display:flex;align-items:center;justify-content:center;background:#fff;border-radius:8px;margin-bottom:10px;cursor:pointer;}
+.matrix-prod-img{max-width:100%;max-height:100%;object-fit:contain;transition:transform .2s ease;}
+.matrix-img-wrap:hover .matrix-prod-img{transform:scale(1.06);}
+.matrix-prod-fallback{font-size:42px;}
+
+.matrix-prod-brand{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ink-muted);}
+.matrix-prod-title{font-size:15px;font-weight:700;color:var(--ink);margin:4px 0 2px;cursor:pointer;line-height:1.25;}
+.matrix-prod-title:hover{color:var(--accent);}
+.matrix-prod-cert{font-size:11px;color:var(--accent);font-weight:600;}
+
+.matrix-price-row{margin:10px 0;display:flex;flex-direction:column;align-items:center;}
+.matrix-price{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:700;color:var(--accent-dark);}
+.matrix-price-note{font-size:10px;color:var(--ink-faint);}
+
+.matrix-actions-row{width:100%;display:flex;flex-direction:column;gap:6px;margin-top:6px;}
+
+/* Table Rows & Labels */
+.matrix-feature-label{background:#f8fafc;position:sticky;left:0;z-index:5;box-shadow:2px 0 6px rgba(0,0,0,0.03);}
+.matrix-feature-label b{font-size:13px;color:var(--ink);display:block;}
+.matrix-feature-sub{font-size:11px;color:var(--ink-muted);margin-top:2px;}
+
+.matrix-section-divider td{background:#edf2f7;padding:10px 18px;border-top:1px solid #cbd5e1;border-bottom:1px solid #cbd5e1;}
+.matrix-section-title{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#1e293b;}
+
+.matrix-val-cell{background:#fff;line-height:1.5;color:#334155;font-size:13px;}
+.matrix-summary-tr .matrix-verdict-cell{background:#faf5ff;border-left:3px solid #8b5cf6;font-size:12px;line-height:1.45;}
+.matrix-val-text{display:block;}
+
+/* Differential Highlight Mode */
+.matrix-diff-highlight .matrix-feature-label{background:#fffbeb;border-left:4px solid #f59e0b;}
+.matrix-val-diff{background:#fefce8;color:#854d0e;font-weight:500;}
+
+/* Stock Tag */
+.matrix-stock-tag{display:inline-block;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:700;}
+.matrix-stock-tag.tag-in{background:var(--success-tint);color:var(--success);}
+.matrix-stock-tag.tag-out{background:var(--warn-tint);color:var(--warn);}
+
+/* Corporate Consultation Card */
+.matrix-consult-card{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;box-shadow:0 2px 10px rgba(0,0,0,0.03);}
+.matrix-consult-tag{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:1.2px;color:var(--accent);font-weight:700;text-transform:uppercase;margin-bottom:4px;display:block;}
+.matrix-consult-title{font-size:20px;font-weight:700;color:var(--ink);}
+.matrix-consult-text{font-size:14px;color:var(--ink-muted);margin-top:6px;max-width:680px;line-height:1.5;}
+.matrix-consult-right{display:flex;align-items:center;gap:12px;}
+
+/* Print / PDF Styles */
+@media print {
+  .header,.top-strip,.footer,.mobile-bottom-bar,.matrix-hero .breadcrumb,.matrix-cat-nav,.matrix-toolbar-card,.matrix-add-drawer,.matrix-actions-row,.matrix-remove-btn,.matrix-consult-card{display:none !important;}
+  body{background:#fff;padding:0;margin:0;font-size:11px;}
+  .matrix-page{padding:0;}
+  .matrix-hero{background:#fff !important;color:#000 !important;padding:10px 0 20px;border-bottom:2px solid #0c2340;}
+  .matrix-hero-title{color:#0c2340 !important;font-size:20px;}
+  .matrix-hero-subtitle{color:#555 !important;font-size:11px;}
+  .matrix-top-badge{border:1px solid #0c2340;color:#0c2340;background:#fff;}
+  .matrix-content-wrap{padding:0;}
+  .matrix-table-container{border:1px solid #000;box-shadow:none;}
+  .matrix-table th,.matrix-table td{padding:8px 10px;font-size:11px;border-color:#ccc;}
+  .matrix-feature-col,.matrix-feature-label{position:static;box-shadow:none;background:#f0f0f0 !important;}
+  .matrix-img-wrap{height:80px;width:80px;}
+}
+
+@media (max-width:768px){
+  .matrix-promo-banner{flex-direction:column;padding:24px 20px;align-items:flex-start;}
+  .matrix-promo-action{width:100%;}
+  .matrix-promo-action button{width:100%;justify-content:center;}
+  .matrix-hero-title{font-size:26px;}
+  .matrix-toolbar-card{flex-direction:column;align-items:flex-start;gap:12px;}
+  .matrix-toolbar-right{width:100%;}
+  .matrix-toolbar-right button{flex:1;justify-content:center;}
+  .matrix-feature-col{width:160px;}
+  .matrix-prod-col{min-width:200px;}
+  .matrix-consult-card{flex-direction:column;align-items:flex-start;}
+  .matrix-consult-right{width:100%;flex-direction:column;}
+  .matrix-consult-right a,.matrix-consult-right button{width:100%;justify-content:center;}
+}

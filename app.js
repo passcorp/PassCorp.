@@ -5,7 +5,7 @@
 ========================================================= */
 
 const STATE = {
-  view: "home",           // home | shop | product | brands | about | contact
+  view: "home",           // home | shop | product | brands | about | contact | compare
   activeCategory: "all",
   activeBrand: "all",
   sort: "featured",
@@ -15,7 +15,10 @@ const STATE = {
   scrolled: false,
   rfqOpen: false,
   rfqItems: [],
-  mobileMenuOpen: false
+  mobileMenuOpen: false,
+  compareCategory: "shoes",
+  compareSelected: [],
+  compareHighlightDiff: false
 };
 
 function showToast(msg){
@@ -31,6 +34,98 @@ const Actions = {
   goBrands(){ STATE.view = "brands"; STATE.mobileMenuOpen = false; window.scrollTo(0,0); render(); },
   goAbout(){ STATE.view = "about"; STATE.mobileMenuOpen = false; window.scrollTo(0,0); render(); },
   goContact(){ STATE.view = "contact"; STATE.mobileMenuOpen = false; window.scrollTo(0,0); render(); },
+  goCompare(cat, productIds){
+    STATE.view = "compare";
+    STATE.mobileMenuOpen = false;
+    if (cat) STATE.compareCategory = cat;
+    if (productIds && productIds.length) {
+      STATE.compareSelected = productIds.slice(0,4);
+    } else if (!STATE.compareSelected || !STATE.compareSelected.length) {
+      const cProducts = CONTENT.products.filter(p => p.category === STATE.compareCategory);
+      STATE.compareSelected = cProducts.slice(0, 3).map(p => p.id);
+    }
+    window.scrollTo(0,0);
+    render();
+  },
+  setCompareCategory(cat){
+    STATE.compareCategory = cat;
+    const cProducts = CONTENT.products.filter(p => p.category === cat);
+    STATE.compareSelected = cProducts.slice(0, 3).map(p => p.id);
+    render();
+  },
+  toggleCompareProduct(id, cat){
+    if (cat && cat !== STATE.compareCategory) {
+      STATE.compareCategory = cat;
+      STATE.compareSelected = [id];
+      showToast("Switched comparison category to " + (findCategory(cat)?.name || cat));
+      render();
+      return;
+    }
+    if (!STATE.compareSelected) STATE.compareSelected = [];
+    const idx = STATE.compareSelected.indexOf(id);
+    if (idx > -1) {
+      if (STATE.compareSelected.length <= 1) {
+        showToast("Minimum 1 model required in comparison.");
+        return;
+      }
+      STATE.compareSelected.splice(idx, 1);
+      showToast("Removed from comparison.");
+    } else {
+      if (STATE.compareSelected.length >= 4) {
+        showToast("Maximum 4 models can be compared side-by-side.");
+        return;
+      }
+      STATE.compareSelected.push(id);
+      showToast("Added to comparison tray!");
+    }
+    render();
+  },
+  toggleCompareHighlight(){
+    STATE.compareHighlightDiff = !STATE.compareHighlightDiff;
+    render();
+  },
+  addCompareToRFQ(){
+    const prods = (STATE.compareSelected || []).map(id => findProduct(id)).filter(Boolean);
+    if (!prods.length) {
+      showToast("No models selected to request quote for.");
+      return;
+    }
+    prods.forEach(p => {
+      if (!STATE.rfqItems.some(i => i.id === p.id)) {
+        const cat = findCategory(p.category);
+        STATE.rfqItems.push({
+          id: p.id,
+          catId: p.category,
+          catName: cat ? `${cat.emoji} ${cat.name}` : p.category,
+          desc: `${p.name} (Brand: ${p.brand}${p.cert ? ' · ' + p.cert : ''})`,
+          qty: 20
+        });
+      }
+    });
+    STATE.rfqOpen = true;
+    showToast(`Added ${prods.length} compared models to Instant RFQ!`);
+    render();
+  },
+  shareCompareWhatsApp(){
+    const prods = (STATE.compareSelected || []).map(id => findProduct(id)).filter(Boolean);
+    if (!prods.length) return;
+    const cat = findCategory(STATE.compareCategory);
+    let msg = `*PASS CORP. — BRAND COMPARISON MATRIX* ⚖️\n`;
+    msg += `*Category:* ${cat ? cat.name : STATE.compareCategory}\n`;
+    msg += `*Benchmarking ${prods.length} Certified Industrial Models:*\n\n`;
+    prods.forEach((p, idx) => {
+      msg += `${idx + 1}. *${p.brand} — ${p.name}*\n`;
+      msg += `   • Standard: ${p.cert || 'IS / EN Certified'}\n`;
+      msg += `   • Indicative Rate: ₹${p.price}\n`;
+    });
+    msg += `\n*View Live Technical Comparison:* https://passcorp.in/compare.html?cat=${STATE.compareCategory}&ids=${prods.map(p => p.id).join(",")}\n`;
+    msg += `\n*PASS CORP.* | Chikhali MIDC, Pune | Ph: +91 97 6767 2497`;
+    const url = "https://wa.me/919767672497?text=" + encodeURIComponent(msg);
+    window.open(url, "_blank");
+  },
+  printCompare(){
+    window.print();
+  },
   toggleMobileMenu(){ STATE.mobileMenuOpen = !STATE.mobileMenuOpen; render(); },
   closeMobileMenu(){ STATE.mobileMenuOpen = false; render(); },
   setCategory(cat){ STATE.activeCategory = cat; render(); },
@@ -176,12 +271,17 @@ function productCard(p, revealDelay){
     ? `<img src="${esc(p.img)}" alt="${esc(p.name)}" class="product-img" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" /><div class="product-icon-circle" style="display:none">${cat.emoji}</div>`
     : `<div class="product-icon-circle">${cat.emoji}</div>`;
 
+  const isCompared = (STATE.compareSelected || []).includes(p.id);
+
   return `
     <div class="product-card reveal" style="--reveal-delay:${revealDelay||0}ms" onclick="A.openProduct('${p.id}')">
       <div class="product-media">
         ${mediaHtml}
         ${p.bestseller ? '<span class="best-tag">Popular</span>' : ''}
         ${p.cert ? `<span class="cert-chip">${esc((p.cert||"").split(",")[0].split("/")[0])}</span>` : ''}
+        <button class="compare-card-btn${isCompared ? ' is-active' : ''}" onclick="event.stopPropagation(); A.toggleCompareProduct('${p.id}', '${p.category}')" title="Benchmark side-by-side in Brand Matrix">
+          ${isCompared ? '✓ In Matrix' : '⚖️ Compare'}
+        </button>
       </div>
       <div class="product-body">
         <p class="product-cat">${esc(p.brand)}</p>
@@ -211,6 +311,7 @@ function renderHeader(){
             <button class="nav-link${STATE.view==="about"?" active":""}" onclick="A.goAbout()">About us</button>
             <button class="nav-link${STATE.view==="shop"?" active":""}" onclick="A.goShop('all')">Full Catalogue</button>
             <button class="nav-link${STATE.view==="brands"?" active":""}" onclick="A.goBrands()">Brands</button>
+            <button class="nav-link${STATE.view==="compare"?" active":""}" onclick="A.goCompare()" title="Brand & Technical Comparison Matrix">⚖️ Compare Brands</button>
             <button class="nav-link" onclick="A.openRFQ()">Instant RFQ ${STATE.rfqItems.length ? `<span class="rfq-count-badge">${STATE.rfqItems.length}</span>` : ''}</button>
             <button class="nav-link${STATE.view==="contact"?" active":""}" onclick="A.goContact()">Contact us</button>
           </nav>
@@ -225,6 +326,7 @@ function renderHeader(){
         <button class="mobile-nav-link${STATE.view==="about"?" active":""}" onclick="A.goAbout()"><span>🏢 About PASS CORP.</span> ${icon("chevronRight",14)}</button>
         <button class="mobile-nav-link${STATE.view==="shop"?" active":""}" onclick="A.goShop('all')"><span>🛡️ Full Catalogue (186+ Products)</span> ${icon("chevronRight",14)}</button>
         <button class="mobile-nav-link${STATE.view==="brands"?" active":""}" onclick="A.goBrands()"><span>⭐ Authorised Brands</span> ${icon("chevronRight",14)}</button>
+        <button class="mobile-nav-link${STATE.view==="compare"?" active":""}" onclick="A.goCompare()"><span>⚖️ Compare Brands (Brand Matrix)</span> ${icon("chevronRight",14)}</button>
         <button class="mobile-nav-link" onclick="A.openRFQ();A.closeMobileMenu()"><span>⚡ Instant RFQ Engine</span> ${STATE.rfqItems.length ? `<span class="rfq-count-badge">${STATE.rfqItems.length}</span>` : icon("chevronRight",14)}</button>
         <button class="mobile-nav-link${STATE.view==="contact"?" active":""}" onclick="A.goContact()"><span>📞 Contact & Location</span> ${icon("chevronRight",14)}</button>
         <div style="padding-top:12px;margin-top:8px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px">
@@ -261,6 +363,7 @@ function renderFooter(){
           <h3>Company</h3>
           <a onclick="A.goAbout()">About us</a>
           <a onclick="A.goBrands()">Authorised brands</a>
+          <a onclick="A.goCompare()">⚖️ Brand Comparison Matrix</a>
           <a onclick="A.goContact()">Bulk orders</a>
         </div>
         <div>
@@ -273,6 +376,7 @@ function renderFooter(){
       <div class="footer-bottom">
         <span>© 2026 Pass Corp.</span>
         <div style="display:inline-flex;align-items:center;gap:18px;">
+          <a onclick="A.goCompare()" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer">⚖️ Compare Matrix</a>
           <a href="invotor.html?v=5" target="_blank" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer">${icon("box",13)} Invotor</a>
           <a href="quotation.html?secure=1" target="_blank" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer">${icon("box",13)} Quotor</a>
           <a href="admin.html" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer">${icon("settings",13)} Manage content</a>
@@ -321,6 +425,26 @@ function renderHome(){
             <div class="category-icon">${c.emoji}</div>
             <p>${esc(c.name)}</p><p>${esc(c.blurb)}</p>
           </button>`).join("")}
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0;padding-bottom:16px">
+      <div class="matrix-promo-banner reveal" onclick="A.goCompare('shoes')">
+        <div class="matrix-promo-info">
+          <span class="matrix-promo-tag">NEW: INDUSTRIAL BENCHMARK</span>
+          <h2 class="matrix-promo-title">⚖️ Brand & Technical Comparison Matrix</h2>
+          <p class="matrix-promo-desc">Compare Karam, Udyogi, Hillson, Wild Bull, Honeywell & 3M side-by-side. Analyze IS/EN standards, toe ratings, impact strength and pricing before procuring for your factory.</p>
+          <div class="matrix-promo-chips">
+            <span>🛡️ Safety Shoes (Wild Bull vs Perf vs Hillson)</span>
+            <span>⛑️ Helmets (Karam vs Udyogi 7000)</span>
+            <span>🦺 Harnesses & Gloves</span>
+          </div>
+        </div>
+        <div class="matrix-promo-action">
+          <button class="btn-primary" style="background:#0C1B5C;white-space:nowrap" onclick="event.stopPropagation(); A.goCompare('shoes')">
+            Launch Comparison Matrix ${icon("arrowRight",16)}
+          </button>
+        </div>
       </div>
     </section>
 
@@ -405,6 +529,7 @@ function renderProductDetail(){
         <div class="enquire-row" style="display:flex;gap:10px;flex-wrap:wrap">
           <button class="btn-primary" style="background:#0C1B5C" onclick="A.openRFQ('${p.id}', 20)">⚡ Request Official RFQ</button>
           <button class="btn-secondary" onclick="A.addToRFQ('${p.id}', 10)">+ Add to RFQ List</button>
+          <button class="btn-secondary" onclick="A.goCompare('${p.category}', ['${p.id}'])" title="Compare with other brands in Brand Matrix">⚖️ Compare with other brands</button>
           <a class="whatsapp-pill" style="border-radius:6px;padding:12px 18px" href="${whatsappHref('Hi PASS CORP, I would like an official quotation for: ' + p.name)}" target="_blank" rel="noopener">${icon("chat",16)} Quick WhatsApp</a>
         </div>
         <p class="admin-note">Prices and availability are indicative and confirmed at the time of order/quotation. Contact us directly on WhatsApp or call.</p>
@@ -613,6 +738,343 @@ function renderBrands(){
   `;
 }
 
+/* ---------------- BRAND COMPARISON MATRIX RENDERER ---------------- */
+function renderBrandMatrix(){
+  const categoriesWithProducts = CONTENT.categories.filter(c => CONTENT.products.some(p => p.category === c.id));
+  const activeCat = findCategory(STATE.compareCategory) || categoriesWithProducts[0] || { id: "shoes", name: "Safety Shoes", emoji: "🥾" };
+  const catProducts = CONTENT.products.filter(p => p.category === STATE.compareCategory);
+
+  if (!STATE.compareSelected || !STATE.compareSelected.length){
+    STATE.compareSelected = catProducts.slice(0, 3).map(p => p.id);
+  }
+  
+  // Clean list of products currently selected
+  let selectedProducts = STATE.compareSelected.map(id => findProduct(id)).filter(Boolean);
+  if (!selectedProducts.length && catProducts.length) {
+    STATE.compareSelected = catProducts.slice(0, Math.min(3, catProducts.length)).map(p => p.id);
+    selectedProducts = STATE.compareSelected.map(id => findProduct(id)).filter(Boolean);
+  }
+  const unselectedProducts = catProducts.filter(p => !STATE.compareSelected.includes(p.id));
+
+  // Helper to extract spec cleanly from specs array
+  function getVal(p, patterns){
+    if (!p) return "—";
+    if (patterns.includes("price")) return fmt(p.price);
+    if (patterns.includes("cert")) return p.cert || "Standard Compliant";
+    if (patterns.includes("brand")) return p.brand || "PASS";
+    if (patterns.includes("rating")) return `${p.rating} ★ (${p.reviews} reviews)`;
+    if (!p.specs) return "—";
+    for (const pat of patterns){
+      const match = p.specs.find(s => s[0].toLowerCase().includes(pat.toLowerCase()));
+      if (match && match[1]) return match[1];
+    }
+    return "—";
+  }
+
+  // Define structured benchmark attributes based on category
+  let benchmarkRows = [];
+  if (STATE.compareCategory === "shoes") {
+    benchmarkRows = [
+      { section: "Safety Standards & Compliance" },
+      { label: "BIS / IS Standard", keys: ["Safety Standard", "Standard", "cert"], hint: "Mandatory compliance for factory safety audits" },
+      { label: "International Norms", keys: ["EN", "ISO", "Standard"], hint: "European CE / EN ISO 20345 compliance" },
+      { label: "Toe Protection Impact", keys: ["Toe", "Toe Protection"], hint: "Resistance to falling heavy objects (200 Joules)" },
+      { section: "Physical Build & Materials" },
+      { label: "Upper Material", keys: ["Upper", "Material", "Upper Material"], hint: "Breathability, durability & flex resistance" },
+      { label: "Sole Construction", keys: ["Sole", "Sole Construction"], hint: "Single density vs Double density PU injection" },
+      { label: "Slip Resistance", keys: ["Slip", "Slip Resistance", "SRC"], hint: "SRC / SRA oil & chemical resistance rating" },
+      { label: "Lining & Comfort", keys: ["Lining", "Lining & Comfort", "Insole"], hint: "Sweat absorption & anti-fatigue padding" },
+      { section: "Application & Recommendation" },
+      { label: "Ideal Work Environment", keys: ["Typical Application", "Application", "Industry"], hint: "Recommended industrial site conditions" },
+      { label: "Available Sizes", keys: ["Sizes", "Available Sizes"], hint: "Standard Indian / UK sizing scale" }
+    ];
+  } else if (STATE.compareCategory === "head") {
+    benchmarkRows = [
+      { section: "Safety Standards & Compliance" },
+      { label: "BIS / IS Standard", keys: ["Safety Standard", "Standard", "cert"], hint: "IS 2925 Industrial Safety Helmet" },
+      { label: "International Norms", keys: ["EN 397", "EN", "Standard"], hint: "European standard for industrial hard hats" },
+      { label: "Electrical Insulation", keys: ["Electrical", "Electrical Resistance", "Insulation"], hint: "Tested dielectric strength (Class E up to 20kV)" },
+      { section: "Physical Build & Materials" },
+      { label: "Shell Material", keys: ["Shell", "Shell Material", "Material"], hint: "High-density virgin polymer vs ABS" },
+      { label: "Cradle & Suspension", keys: ["Suspension", "Cradle", "Headband"], hint: "Textile webbing with fast-turn ratchet" },
+      { label: "Accessory Compatibility", keys: ["Accessory", "Accessory Slots"], hint: "30mm universal slots for ear muffs & visors" },
+      { section: "Application & Recommendation" },
+      { label: "Ideal Work Environment", keys: ["Typical Application", "Application"], hint: "Construction, Stamping, Fabrication & Power" }
+    ];
+  } else if (STATE.compareCategory === "fall") {
+    benchmarkRows = [
+      { section: "Safety Standards & Compliance" },
+      { label: "Safety Standard", keys: ["Standard", "Safety Standard", "cert"], hint: "IS 3521 / EN 361 Fall Arrest Standards" },
+      { label: "Breaking Strength", keys: ["Breaking", "Strength", "Breaking strength"], hint: "Minimum static tensile strength rating" },
+      { section: "Hardware & Design" },
+      { label: "Attachment Points", keys: ["Attachment", "D-Ring", "Fall arrest attachment points"], hint: "Dorsal D-Ring and Sternal safety loops" },
+      { label: "Webbing Material", keys: ["Webbing", "Material"], hint: "Synthetic virgin high-tenacity polyester" },
+      { label: "Strap Configuration", keys: ["Configuration", "Straps"], hint: "Shoulder, chest, and dual thigh adjusters" },
+      { section: "Application & Recommendation" },
+      { label: "Ideal Work Environment", keys: ["Application", "Typical Application"], hint: "Tower work, scaffolding, high-rise fabrication" }
+    ];
+  } else if (STATE.compareCategory === "gloves") {
+    benchmarkRows = [
+      { section: "Safety Standards & Compliance" },
+      { label: "EN 388 Mechanical Rating", keys: ["Standard", "EN 388", "cert"], hint: "Abrasion, Cut, Tear & Puncture test score" },
+      { section: "Material & Grip" },
+      { label: "Base Fabric / Liner", keys: ["Material", "Liner", "Lining"], hint: "HPPE, Cotton, Kevlar or Seamless Nylon" },
+      { label: "Palm Coating", keys: ["Coating", "Palm", "Grip"], hint: "PU, Nitrile, Latex or PVC dotted" },
+      { section: "Application & Recommendation" },
+      { label: "Ideal Work Environment", keys: ["Typical Application", "Application"], hint: "Sheet metal handling, glass, machining, chemical" }
+    ];
+  } else {
+    benchmarkRows = [
+      { section: "Standards & Compliance" },
+      { label: "Certified Standard", keys: ["Standard", "Safety Standard", "cert"], hint: "Official BIS / CE / EN / ANSI compliance" },
+      { section: "Build Specifications" },
+      { label: "Primary Material / Feature", keys: ["Material", "Features", "Shell", "Webbing", "Lens"], hint: "Core construction and protective design" },
+      { label: "Protection Rating", keys: ["Rating", "Protection", "Coating", "Strength", "Filtration"], hint: "Protective classification or resistance" },
+      { section: "Application & Usage" },
+      { label: "Recommended Industry", keys: ["Typical Application", "Application"], hint: "Engineered site and factory requirements" }
+    ];
+  }
+
+  const minPrice = Math.min(...selectedProducts.map(p => p.price || 99999));
+
+  return `
+    <div class="matrix-page">
+      <div class="matrix-hero reveal">
+        <div class="matrix-hero-inner">
+          <div class="breadcrumb" onclick="A.goHome()" style="margin-bottom:12px;color:rgba(255,255,255,0.8);cursor:pointer">
+            ${icon("arrowLeft", 14)} Back to Home
+          </div>
+          <div class="matrix-top-badge">⚖️ PASS CORP. B2B TECHNICAL SPEC BENCHMARK</div>
+          <h1 class="matrix-hero-title">Industrial Safety Brand Comparison Matrix</h1>
+          <p class="matrix-hero-subtitle">Compare certified PPE side-by-side across leading brands (Karam, Udyogi, Hillson, Wild Bull, Honeywell, 3M) on IS/EN standards, technical materials, and Pune MIDC supply rates.</p>
+        </div>
+      </div>
+
+      <div class="matrix-content-wrap">
+        <!-- Category Navigator -->
+        <div class="matrix-cat-nav reveal">
+          ${categoriesWithProducts.map(c => `
+            <button class="matrix-cat-btn${c.id === STATE.compareCategory ? ' active' : ''}" onclick="A.setCompareCategory('${c.id}')">
+              <span class="matrix-cat-emoji">${c.emoji}</span>
+              <span class="matrix-cat-label">${esc(c.name)}</span>
+              <span class="matrix-cat-badge">${CONTENT.products.filter(p => p.category === c.id).length}</span>
+            </button>
+          `).join("")}
+        </div>
+
+        <!-- Action Toolbar & Tray Status -->
+        <div class="matrix-toolbar-card reveal">
+          <div class="matrix-toolbar-left">
+            <div class="matrix-selection-counter">
+              Comparing <b>${selectedProducts.length} of 4</b> models in <b>${esc(activeCat.name)}</b>
+            </div>
+            <p class="matrix-hint">Select up to 4 models from the quick-add drawer below to benchmark side-by-side.</p>
+          </div>
+          <div class="matrix-toolbar-right">
+            <button class="btn-ghost${STATE.compareHighlightDiff ? ' is-active' : ''}" onclick="A.toggleCompareHighlight()" title="Highlight rows where values differ">
+              ${STATE.compareHighlightDiff ? '✓ Highlighting Differences' : '🔍 Highlight Differences'}
+            </button>
+            <button class="btn-ghost" onclick="A.shareCompareWhatsApp()" title="Share comparison summary on WhatsApp">
+              ${icon("chat", 14)} WhatsApp Summary
+            </button>
+            <button class="btn-ghost" onclick="A.printCompare()" title="Print official A4 comparison sheet">
+              ${icon("download", 14)} Print / PDF
+            </button>
+            <button class="btn-primary btn-sm" onclick="A.addCompareToRFQ()">
+              ⚡ Request RFQ for All (${selectedProducts.length})
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick-Add / Swap Drawer -->
+        ${unselectedProducts.length ? `
+          <div class="matrix-add-drawer reveal">
+            <div class="matrix-add-header">
+              <span class="matrix-add-title">➕ Add more ${esc(activeCat.name)} models to compare:</span>
+              <span class="matrix-add-sub">(${unselectedProducts.length} more available in catalog)</span>
+            </div>
+            <div class="matrix-add-chips">
+              ${unselectedProducts.slice(0, 12).map(p => `
+                <button class="matrix-add-chip" onclick="A.toggleCompareProduct('${p.id}', '${p.category}')" title="Click to add to comparison">
+                  <span class="chip-brand">${esc(p.brand)}</span>
+                  <span class="chip-name">${esc(p.name)}</span>
+                  <span class="chip-price">${fmt(p.price)}</span>
+                  <span class="chip-plus">+</span>
+                </button>
+              `).join("")}
+            </div>
+          </div>
+        ` : ''}
+
+        <!-- Side-by-Side Comparison Grid -->
+        <div class="matrix-table-container reveal">
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th class="matrix-feature-col">
+                  <div class="matrix-header-info">
+                    <span class="matrix-col-title">Specifications & Features</span>
+                    <span class="matrix-col-desc">Side-by-side technical benchmark</span>
+                  </div>
+                </th>
+                ${selectedProducts.map(p => {
+                  const isBestValue = p.price === minPrice;
+                  const cat = findCategory(p.category) || { emoji: "🛡️" };
+                  const imgHtml = p.img 
+                    ? `<img src="${esc(p.img)}" alt="${esc(p.name)}" class="matrix-prod-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" /><div class="matrix-prod-fallback" style="display:none">${cat.emoji}</div>`
+                    : `<div class="matrix-prod-fallback">${cat.emoji}</div>`;
+                  
+                  return `
+                    <th class="matrix-prod-col">
+                      <div class="matrix-card-header">
+                        ${selectedProducts.length > 1 ? `
+                          <button class="matrix-remove-btn" onclick="A.toggleCompareProduct('${p.id}')" title="Remove from comparison">✕</button>
+                        ` : ''}
+                        ${isBestValue ? `<span class="matrix-badge-best">🏆 Best Value</span>` : `<span class="matrix-badge-corp">🛡️ Certified</span>`}
+                        
+                        <div class="matrix-img-wrap" onclick="A.openProduct('${p.id}')">
+                          ${imgHtml}
+                        </div>
+
+                        <div class="matrix-prod-brand">${esc(p.brand)}</div>
+                        <div class="matrix-prod-title" onclick="A.openProduct('${p.id}')">${esc(p.name)}</div>
+                        <div class="matrix-prod-cert">${esc(p.cert || 'IS / EN Standard')}</div>
+
+                        <div class="matrix-price-row">
+                          <span class="matrix-price">${fmt(p.price)}</span>
+                          <span class="matrix-price-note">indicative / unit</span>
+                        </div>
+
+                        <div class="matrix-actions-row">
+                          <button class="btn-primary btn-sm" style="width:100%;justify-content:center" onclick="A.openRFQ('${p.id}', 20)">
+                            ⚡ Request RFQ
+                          </button>
+                          <a class="whatsapp-pill" style="padding:6px 12px;font-size:12px;border-radius:4px;width:100%;justify-content:center" href="${whatsappHref('Hi PASS CORP, I want quotation for ' + p.brand + ' ' + p.name)}" target="_blank" rel="noopener">
+                            ${icon("chat", 13)} WhatsApp
+                          </a>
+                        </div>
+                      </div>
+                    </th>
+                  `;
+                }).join("")}
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Executive Summary Row -->
+              <tr class="matrix-summary-tr">
+                <td class="matrix-feature-label">
+                  <b>PASS CORP. Verdict</b>
+                  <div class="matrix-feature-sub">Procurement advice</div>
+                </td>
+                ${selectedProducts.map(p => {
+                  const isBestValue = p.price === minPrice;
+                  let verdict = "⭐ Industrial Standard — Balanced durability and compliance for manufacturing plants.";
+                  if (isBestValue) {
+                    verdict = "🏆 Best Budget ROI — Economical choice meeting all statutory IS/EN compliance at lowest initial cost.";
+                  } else if (p.rating >= 4.5 || (p.price > minPrice * 1.3)) {
+                    verdict = "🛡️ Heavy-Duty Workhorse — Premium material grade, superior ergonomic comfort & longer operating life.";
+                  }
+                  return `<td class="matrix-val-cell matrix-verdict-cell">${verdict}</td>`;
+                }).join("")}
+              </tr>
+
+              <!-- Dynamic Benchmark Rows -->
+              ${benchmarkRows.map(row => {
+                if (row.section) {
+                  return `
+                    <tr class="matrix-section-divider">
+                      <td colspan="${selectedProducts.length + 1}">
+                        <span class="matrix-section-title">${esc(row.section)}</span>
+                      </td>
+                    </tr>
+                  `;
+                }
+
+                const values = selectedProducts.map(p => getVal(p, row.keys));
+                const allSame = values.every(v => v.toLowerCase().trim() === values[0].toLowerCase().trim());
+                const highlightClass = (STATE.compareHighlightDiff && !allSame) ? ' matrix-diff-highlight' : '';
+
+                return `
+                  <tr class="${highlightClass}">
+                    <td class="matrix-feature-label">
+                      <b>${esc(row.label)}</b>
+                      ${row.hint ? `<div class="matrix-feature-sub">${esc(row.hint)}</div>` : ''}
+                    </td>
+                    ${values.map((v) => `
+                      <td class="matrix-val-cell${STATE.compareHighlightDiff && !allSame ? ' matrix-val-diff' : ''}">
+                        <span class="matrix-val-text">${esc(v)}</span>
+                      </td>
+                    `).join("")}
+                  </tr>
+                `;
+              }).join("")}
+
+              <!-- Commercial Terms Row -->
+              <tr class="matrix-section-divider">
+                <td colspan="${selectedProducts.length + 1}">
+                  <span class="matrix-section-title">Commercial & Logistics (Pune / PCMC)</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="matrix-feature-label">
+                  <b>Godown Availability</b>
+                  <div class="matrix-feature-sub">Talawade / Chikhali Depot</div>
+                </td>
+                ${selectedProducts.map(p => `
+                  <td class="matrix-val-cell">
+                    <span class="matrix-stock-tag ${p.stock === 'out' ? 'tag-out' : 'tag-in'}">
+                      ${p.stock === 'out' ? 'Made to Order (2-4 Days)' : '✓ Ready Stock (Same Day Dispatch)'}
+                    </span>
+                  </td>
+                `).join("")}
+              </tr>
+              <tr>
+                <td class="matrix-feature-label">
+                  <b>Packaging & MOQs</b>
+                  <div class="matrix-feature-sub">Standard carton / lot</div>
+                </td>
+                ${selectedProducts.map(() => `
+                  <td class="matrix-val-cell">
+                    Bulk Master Carton (Sample pair/pcs available for approval)
+                  </td>
+                `).join("")}
+              </tr>
+              <tr>
+                <td class="matrix-feature-label">
+                  <b>Test Certificates (TDS)</b>
+                  <div class="matrix-feature-sub">Factory safety audits</div>
+                </td>
+                ${selectedProducts.map(() => `
+                  <td class="matrix-val-cell">
+                    ✓ Official Manufacturer Batch Test Certificate + PASS Corp Dealership Invoice
+                  </td>
+                `).join("")}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Corporate Assistance Card -->
+        <div class="matrix-consult-card reveal">
+          <div class="matrix-consult-left">
+            <span class="matrix-consult-tag">NEED A CUSTOM RATE CONTRACT OR SAMPLE?</span>
+            <h3 class="matrix-consult-title">Need on-site trial or customized logo printing?</h3>
+            <p class="matrix-consult-text">PASS CORP. provides sample pairs, fitment trials, and official rate contracts for industrial plants in Bhosari, Chakan, Talegaon, and Ranjangaon MIDC.</p>
+          </div>
+          <div class="matrix-consult-right">
+            <a class="whatsapp-pill" style="padding:12px 20px;font-size:14px;border-radius:6px" href="${whatsappHref('Hi PASS CORP, I need samples and rate contract for our plant.')}" target="_blank" rel="noopener">
+              ${icon("chat", 16)} Speak to Safety Engineer
+            </a>
+            <button class="btn-secondary" style="background:#fff" onclick="A.openRFQ()">
+              ⚡ Submit Bulk RFQ
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 /* ---------------- INSTANT RFQ ENGINE MODAL ---------------- */
 function renderRFQModal(){
   if (!STATE.rfqOpen) return "";
@@ -741,6 +1203,7 @@ function pageBody(){
     case "home": return renderHome();
     case "shop": return renderShop();
     case "brands": return renderBrands();
+    case "compare": return renderBrandMatrix();
     case "about": return renderAbout();
     case "contact": return renderContact();
     case "product": return renderProductDetail();
@@ -800,6 +1263,22 @@ window.addEventListener("storage", (e) => {
 });
 
 CONTENT = loadContent();
+
+// Deep-linking / Standalone Compare page check
+if (typeof window !== "undefined") {
+  const urlParams = new URLSearchParams(window.location.search);
+  const path = window.location.pathname || "";
+  if (window.__FORCE_VIEW__ === "compare" || path.includes("compare.html") || urlParams.get("view") === "compare" || window.location.hash === "#compare") {
+    STATE.view = "compare";
+  }
+  if (urlParams.get("cat")) {
+    STATE.compareCategory = urlParams.get("cat");
+  }
+  if (urlParams.get("ids")) {
+    STATE.compareSelected = urlParams.get("ids").split(",").map(s => s.trim()).filter(Boolean);
+  }
+}
+
 render();
 
 if (typeof PassCloudDB !== 'undefined') {
