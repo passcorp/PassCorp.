@@ -1,6 +1,6 @@
 {
   "app": "PASS_CORP_INVOTOR_PRIME",
-  "lastUpdated": "2026-09-01T10:06:16.629Z",
+  "lastUpdated": "2026-09-05T16:34:03.510Z",
   "data": {
     "settings": {
       "compName": "PASS CORP.",
@@ -37,6 +37,16 @@
     "vouchers": [],
     "vendors": []
   },
-  "buyers": [],
+  "buyers": [
+    {
+      "company": "ABC Corp",
+      "name": "ABC Corp",
+      "person": "XYZ Sir",
+      "address": "Plot no. ETC ETC ETC ETC ETC ETC ETC ETC",
+      "phone": "9876543210",
+      "gst": "Unregistered",
+      "pos": "Maharashtra (Code: 27)"
+    }
+  ],
   "stock": []
 }
