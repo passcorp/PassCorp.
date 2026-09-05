@@ -3338,98 +3338,72 @@ class PassInvotorERP {
 
     const isInterState = (p.pos && !p.pos.toLowerCase().includes('maharashtra') && !p.pos.includes('27') && !p.pos.toLowerCase().includes('mh'));
 
-    // Subtotal Row under items
-    if (totalTaxable > 0) {
+    // 1. Discount Row (if any)
+    if (p.discount > 0) {
       itemsRowsHtml += `
-        <tr class="tally-item-line" style="border-top: 1px solid #000;">
-          <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-          <td class="text-right" style="border-top: 1px solid #000; font-weight: bold; font-size: 9.5px; padding-top: 3px; padding-bottom: 3px;">${totalTaxable.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
+        <tr class="tally-tax-line">
+          <td></td>
+          <td class="text-right" style="padding-right: 14px;"><span style="font-style: italic; font-weight: bold; font-size: 9.5px; color: #dc2626;">Discount</span></td>
+          <td></td><td></td><td></td><td></td><td></td>
+          <td class="text-right" style="font-weight: bold; color: #dc2626;">-${p.discount.toFixed(2)}</td>
         </tr>
       `;
     }
 
-    // Tax Ledger lines (CGST / SGST / IGST)
-    if (isTaxDoc && (totalTax > 0 || totalTaxable > 0)) {
-      const taxRates = Object.values(hsnMap).map(g => g.gstRate);
-      const uniqueRates = [...new Set(taxRates)];
+    // 2. Freight Charges Row (if any)
+    if (p.freight > 0) {
+      itemsRowsHtml += `
+        <tr class="tally-tax-line">
+          <td></td>
+          <td class="text-right" style="padding-right: 14px;"><span style="font-style: italic; font-weight: bold; font-size: 9.5px;">Freight Charges</span></td>
+          <td></td><td></td><td></td><td></td><td></td>
+          <td class="text-right" style="font-weight: bold;">+${p.freight.toFixed(2)}</td>
+        </tr>
+      `;
+    }
 
+    // 3. Tax Ledger Rows (Cgst / Sgst / Igst directly under items)
+    if (isTaxDoc && (totalTax > 0 || totalTaxable > 0)) {
       if (isInterState) {
-        const rateLabel = uniqueRates.length === 1 ? ` @ ${uniqueRates[0].toFixed(2)}%` : '';
-        const singleRate = uniqueRates.length === 1 ? uniqueRates[0] : 18;
         itemsRowsHtml += `
           <tr class="tally-tax-line">
             <td></td>
-            <td class="text-left" style="padding-left: 18px;"><span style="font-style: italic; font-weight: bold; font-size: 9px;">Output IGST${rateLabel}</span></td>
-            <td></td>
-            <td></td>
-            <td class="text-right">${singleRate}</td>
-            <td class="text-center">%</td>
-            <td></td>
+            <td class="text-right" style="padding-right: 14px;"><span style="font-style: italic; font-weight: bold; font-size: 9.5px;">Igst</span></td>
+            <td></td><td></td><td></td><td></td><td></td>
             <td class="text-right" style="font-weight: bold;">${totalTax.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
           </tr>
         `;
       } else {
         const halfTax = (totalTax / 2);
-        const singleRate = uniqueRates.length === 1 ? (uniqueRates[0] / 2) : 9;
-        const rateLabel = uniqueRates.length === 1 ? ` @ ${singleRate.toFixed(2)}%` : '';
         itemsRowsHtml += `
           <tr class="tally-tax-line">
             <td></td>
-            <td class="text-left" style="padding-left: 18px;"><span style="font-style: italic; font-weight: bold; font-size: 9px;">Output CGST${rateLabel}</span></td>
-            <td></td>
-            <td></td>
-            <td class="text-right">${singleRate}</td>
-            <td class="text-center">%</td>
-            <td></td>
+            <td class="text-right" style="padding-right: 14px;"><span style="font-style: italic; font-weight: bold; font-size: 9.5px;">Cgst</span></td>
+            <td></td><td></td><td></td><td></td><td></td>
             <td class="text-right" style="font-weight: bold;">${halfTax.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
           </tr>
           <tr class="tally-tax-line">
             <td></td>
-            <td class="text-left" style="padding-left: 18px;"><span style="font-style: italic; font-weight: bold; font-size: 9px;">Output SGST${rateLabel}</span></td>
-            <td></td>
-            <td></td>
-            <td class="text-right">${singleRate}</td>
-            <td class="text-center">%</td>
-            <td></td>
+            <td class="text-right" style="padding-right: 14px;"><span style="font-style: italic; font-weight: bold; font-size: 9.5px;">Sgst</span></td>
+            <td></td><td></td><td></td><td></td><td></td>
             <td class="text-right" style="font-weight: bold;">${halfTax.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
           </tr>
         `;
       }
     }
 
-    if (p.discount > 0) {
-      itemsRowsHtml += `
-        <tr class="tally-tax-line">
-          <td></td>
-          <td class="text-right" style="padding-right: 14px;"><span style="font-style: italic; color: #dc2626; font-size: 9px;">Less: Discount</span></td>
-          <td></td><td></td><td></td><td></td><td></td>
-          <td class="text-right" style="color: #dc2626;">-${p.discount.toFixed(2)}</td>
-        </tr>
-      `;
-    }
-
-    if (p.freight > 0) {
-      itemsRowsHtml += `
-        <tr class="tally-tax-line">
-          <td></td>
-          <td class="text-right" style="padding-right: 14px;"><span style="font-style: italic; font-size: 9px;">Add: Freight Charges</span></td>
-          <td></td><td></td><td></td><td></td><td></td>
-          <td class="text-right">+${p.freight.toFixed(2)}</td>
-        </tr>
-      `;
-    }
-
     const rawGrandTotal = Math.max(0, totalTaxable + totalTax - p.discount + p.freight);
     const grandTotal = Math.round(rawGrandTotal);
     const roundOff = (grandTotal - rawGrandTotal).toFixed(2);
 
+    // 4. Round Off Row
     if (parseFloat(roundOff) !== 0) {
       itemsRowsHtml += `
         <tr class="tally-tax-line">
           <td></td>
-          <td class="text-right" style="padding-right: 14px;"><span style="font-style: italic; font-weight: bold; font-size: 9px;">ROUND OFF</span></td>
+          <td class="text-right" style="padding-right: 14px;"><span style="font-style: italic; font-weight: bold; font-size: 9.5px;">Round Off</span></td>
           <td></td><td></td><td></td><td></td><td></td>
-          <td class="text-right" style="font-weight: bold;">${roundOff >= 0 ? '+' : ''}${roundOff}</td>
+          <td class="text-right" style="font-weight: bold;">${roundOff}</td>
         </tr>
       `;
     }
