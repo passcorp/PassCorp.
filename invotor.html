@@ -1244,21 +1244,36 @@ body {
                     <option value="90 Days Credit">90 Days Credit (+90 Days from Bill Date)</option>
                   </select>
                 </div>
-                <div class="form-group" style="grid-column: span 2; background: #f0fdf4; border: 1.2px dashed #86efac; border-radius: 6px; padding: 7px 10px;">
+                <div class="form-group" style="grid-column: span 2; background: #f0fdf4; border: 1.2px dashed #86efac; border-radius: 6px; padding: 8px 10px;">
                   <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;">
                     <label style="font-weight: 700; color: #14532d; margin-bottom: 0; cursor: pointer; display: flex; align-items: center; gap: 6px;">
-                      <input type="checkbox" id="billEnableDigitalSign" onchange="erp.renderLiveInvoicePreview()" style="accent-color: #16a34a; cursor: pointer; width: 15px; height: 15px;" />
-                      <span>🖋️ Include Digital Signature &amp; Stamp (for Soft Copy / Email)</span>
+                      <input type="checkbox" id="billEnableDigitalSign" onchange="erp.toggleDigitalSignFields(this.checked); erp.renderLiveInvoicePreview();" style="accent-color: #16a34a; cursor: pointer; width: 15px; height: 15px;" />
+                      <span>🖋️ Include Digital Signature (DSC Green Checkmark Token Style)</span>
                     </label>
                     <div style="display: flex; gap: 6px; align-items: center;">
                       <input type="file" id="quickSignFile" accept="image/*" style="display:none;" onchange="erp.handleSignatureUpload(event)" />
-                      <button type="button" class="btn btn-sm" onclick="document.getElementById('quickSignFile').click()" style="background: #ffffff; border: 1px solid #86efac; color: #166534; font-weight: 700; font-size: 11px; padding: 3px 8px;" title="Upload stamp or signature PNG/JPG">📁 Upload Sign/Stamp</button>
-                      <button type="button" id="quickRemoveSignBtn" class="btn btn-sm" onclick="erp.removeSignature()" style="display:none; background: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; font-weight: 700; font-size: 11px; padding: 3px 6px;" title="Remove Signature">✕</button>
+                      <button type="button" class="btn btn-sm" onclick="document.getElementById('quickSignFile').click()" style="background: #ffffff; border: 1px solid #86efac; color: #166534; font-weight: 700; font-size: 11px; padding: 3px 8px;" title="Optional: Upload stamp or signature image PNG/JPG">📁 Add Stamp/Img</button>
+                      <button type="button" id="quickRemoveSignBtn" class="btn btn-sm" onclick="erp.removeSignature()" style="display:none; background: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; font-weight: 700; font-size: 11px; padding: 3px 6px;" title="Remove Signature Image">✕</button>
                     </div>
                   </div>
                   <div style="font-size: 10px; color: #166534; margin-left: 21px; margin-top: 2px;">
-                    Uncheck for physical print &amp; pen signing. Check to attach digital stamp &amp; signature for PDF email/WhatsApp.
+                    Uncheck for manual pen signing on physical print. Check for Adobe DSC style green-check signed PDF.
                     <span id="quickSignStatus" style="font-weight: bold; margin-left: 4px;"></span>
+                  </div>
+                  <!-- Inline DSC parameters -->
+                  <div id="dscParamsRow" style="display: none; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #bbf7d0; display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); gap: 8px;">
+                    <div>
+                      <label style="font-size: 10px; font-weight: 700; color: #166534;">Signer Name:</label>
+                      <input type="text" id="billSignerName" class="form-control" style="font-size: 11px; padding: 3px 6px; height: 28px;" value="PAWAN SHARMA" placeholder="Signer Name" oninput="erp.renderLiveInvoicePreview()" />
+                    </div>
+                    <div>
+                      <label style="font-size: 10px; font-weight: 700; color: #166534;">Reason:</label>
+                      <input type="text" id="billSignReason" class="form-control" style="font-size: 11px; padding: 3px 6px; height: 28px;" value="I Approve" placeholder="e.g. I Approve" oninput="erp.renderLiveInvoicePreview()" />
+                    </div>
+                    <div>
+                      <label style="font-size: 10px; font-weight: 700; color: #166534;">Location:</label>
+                      <input type="text" id="billSignLocation" class="form-control" style="font-size: 11px; padding: 3px 6px; height: 28px;" value="Pune, Maharashtra" placeholder="e.g. Pune" oninput="erp.renderLiveInvoicePreview()" />
+                    </div>
                   </div>
                 </div>
                 <div class="form-group" style="grid-column: span 2; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 5px; padding: 6px 10px;">
@@ -2557,6 +2572,9 @@ class PassInvotorERP {
         invoicePrefix: "PC/2026-27/",
         nextInvoiceNo: 1,
         signatureImg: "",
+        signerName: "PAWAN SHARMA",
+        signReason: "I Approve",
+        signLocation: "Pune, Maharashtra",
         capital: 500000,
         fixedAssets: 150000,
         bankBalance: 350000,
@@ -2726,6 +2744,24 @@ class PassInvotorERP {
     this.renderLiveInvoicePreview();
   }
 
+  toggleDigitalSignFields(checked) {
+    const row = document.getElementById('dscParamsRow');
+    if (row) row.style.display = checked ? 'grid' : 'none';
+  }
+
+  formatDscTimestamp(isoDate) {
+    const d = new Date();
+    const pad = (n) => String(n).padStart(2, '0');
+    let datePart = '';
+    if (isoDate && isoDate.includes('-')) {
+      datePart = isoDate.replace(/-/g, '.');
+    } else {
+      datePart = `${d.getFullYear()}.${pad(d.getMonth()+1)}.${pad(d.getDate())}`;
+    }
+    const timePart = `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+    return `${datePart} ${timePart} +05:30`;
+  }
+
   handleSignatureUpload(event) {
     const file = event.target.files && event.target.files[0];
     if (!file) return;
@@ -2736,7 +2772,10 @@ class PassInvotorERP {
       this.data.settings.signatureImg = dataUrl;
       if (document.getElementById('cfgSignatureUrl')) document.getElementById('cfgSignatureUrl').value = dataUrl;
       if (document.getElementById('mCompSign')) document.getElementById('mCompSign').value = dataUrl;
-      if (document.getElementById('billEnableDigitalSign')) document.getElementById('billEnableDigitalSign').checked = true;
+      if (document.getElementById('billEnableDigitalSign')) {
+        document.getElementById('billEnableDigitalSign').checked = true;
+        this.toggleDigitalSignFields(true);
+      }
       this.saveState();
       this.syncSettingsFields();
       this.renderLiveInvoicePreview();
@@ -3388,6 +3427,9 @@ class PassInvotorERP {
 
     const isEInvoice = document.getElementById('billEnableEInvoice') ? document.getElementById('billEnableEInvoice').checked : (this.currentInvoice.isEInvoice || false);
     const isDigitalSign = document.getElementById('billEnableDigitalSign') ? document.getElementById('billEnableDigitalSign').checked : (this.currentInvoice.isDigitalSign || false);
+    const signerName = document.getElementById('billSignerName') ? document.getElementById('billSignerName').value : (this.data.settings.signerName || 'PAWAN SHARMA');
+    const signReason = document.getElementById('billSignReason') ? document.getElementById('billSignReason').value : (this.data.settings.signReason || 'I Approve');
+    const signLocation = document.getElementById('billSignLocation') ? document.getElementById('billSignLocation').value : (this.data.settings.signLocation || 'Pune, Maharashtra');
 
     copyBadges.forEach(badgeLabel => {
       const sheetHtml = this.generateSingleA4SheetHtml({
@@ -3397,6 +3439,7 @@ class PassInvotorERP {
         poRef, poDate, deliveryNote, deliveryNoteDate, refNoDate, otherRef,
         transport, destination, vehicleNo, ewayBillNo, termsOfDelivery,
         irn, ackNo, ackDate, isEInvoice, isDigitalSign,
+        signerName, signReason, signLocation,
         pos, discount, freight, items: this.currentInvoice.items
       });
       const wrap = document.createElement('div');
@@ -3957,19 +4000,22 @@ class PassInvotorERP {
             <!-- 3. RIGHT: AUTHORISED SIGNATORY -->
             <div class="tally-sign-col">
               <div style="font-size: 8.8px; font-weight: bold; text-align: right;">for <span style="text-transform: uppercase;">${p.s.compName || p.s.name || 'PASS CORP.'}</span></div>
-              <div class="tally-sign-area" style="display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; min-height: 38px;">
-                ${p.isDigitalSign ? (
-                  p.s.signatureImg ? `
-                    <img src="${p.s.signatureImg}" alt="Digital Signature" style="max-height: 38px; max-width: 130px; object-fit: contain; margin-bottom: 1px;" />
-                    <div style="font-size: 7px; color: #166534; font-weight: 700; line-height: 1; letter-spacing: 0.2px;">✓ Digitally Signed</div>
-                  ` : `
-                    <div style="border: 1px dashed #166534; background: #f0fdf4; border-radius: 4px; padding: 2px 5px; text-align: right; margin-bottom: 2px;">
-                      <div style="font-size: 7.5px; font-weight: 800; color: #166534; line-height: 1.1;">✓ DIGITALLY SIGNED</div>
-                      <div style="font-size: 7px; color: #1e293b; font-weight: 600;">for ${p.s.compName || 'PASS CORP.'}</div>
-                      <div style="font-size: 6.5px; color: #64748b;">${p.invDate || ''} | Authenticated</div>
+              <div class="tally-sign-area" style="display: flex; flex-direction: column; justify-content: center; align-items: flex-end; min-height: 40px; position: relative;">
+                ${p.isDigitalSign ? `
+                  <div style="position: relative; display: inline-flex; align-items: center; justify-content: flex-end; text-align: left; padding: 1px 2px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; min-width: 175px;">
+                    <!-- Adobe DSC Style Green Tickmark -->
+                    <svg style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; pointer-events: none; z-index: 1;" viewBox="0 0 100 100" fill="none">
+                      <path d="M14 52 L36 78 L90 18" stroke="#16a34a" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" opacity="0.95" />
+                    </svg>
+                    ${p.s.signatureImg ? `<img src="${p.s.signatureImg}" alt="Stamp" style="max-height: 38px; max-width: 75px; object-fit: contain; margin-right: 6px; position: relative; z-index: 2;" />` : ''}
+                    <div style="position: relative; z-index: 2; font-size: 7.8px; line-height: 1.25; color: #000000;">
+                      <div>Digitally signed by <strong style="text-transform: uppercase;">${p.signerName || p.s.signerName || 'PAWAN SHARMA'}</strong></div>
+                      <div>Date: ${this.formatDscTimestamp(p.invDate)}</div>
+                      <div>Reason: ${p.signReason || p.s.signReason || 'I Approve'}</div>
+                      <div>Location: ${p.signLocation || p.s.signLocation || 'Pune'}</div>
                     </div>
-                  `
-                ) : ''}
+                  </div>
+                ` : ''}
               </div>
               <div style="font-size: 8.5px; font-weight: bold; text-align: right; padding-top: 2px;">Authorised Signatory</div>
             </div>
