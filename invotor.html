@@ -1244,6 +1244,23 @@ body {
                     <option value="90 Days Credit">90 Days Credit (+90 Days from Bill Date)</option>
                   </select>
                 </div>
+                <div class="form-group" style="grid-column: span 2; background: #f0fdf4; border: 1.2px dashed #86efac; border-radius: 6px; padding: 7px 10px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;">
+                    <label style="font-weight: 700; color: #14532d; margin-bottom: 0; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+                      <input type="checkbox" id="billEnableDigitalSign" onchange="erp.renderLiveInvoicePreview()" style="accent-color: #16a34a; cursor: pointer; width: 15px; height: 15px;" />
+                      <span>🖋️ Include Digital Signature &amp; Stamp (for Soft Copy / Email)</span>
+                    </label>
+                    <div style="display: flex; gap: 6px; align-items: center;">
+                      <input type="file" id="quickSignFile" accept="image/*" style="display:none;" onchange="erp.handleSignatureUpload(event)" />
+                      <button type="button" class="btn btn-sm" onclick="document.getElementById('quickSignFile').click()" style="background: #ffffff; border: 1px solid #86efac; color: #166534; font-weight: 700; font-size: 11px; padding: 3px 8px;" title="Upload stamp or signature PNG/JPG">📁 Upload Sign/Stamp</button>
+                      <button type="button" id="quickRemoveSignBtn" class="btn btn-sm" onclick="erp.removeSignature()" style="display:none; background: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; font-weight: 700; font-size: 11px; padding: 3px 6px;" title="Remove Signature">✕</button>
+                    </div>
+                  </div>
+                  <div style="font-size: 10px; color: #166534; margin-left: 21px; margin-top: 2px;">
+                    Uncheck for physical print &amp; pen signing. Check to attach digital stamp &amp; signature for PDF email/WhatsApp.
+                    <span id="quickSignStatus" style="font-weight: bold; margin-left: 4px;"></span>
+                  </div>
+                </div>
                 <div class="form-group" style="grid-column: span 2; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 5px; padding: 6px 10px;">
                   <label style="font-weight: 700; color: #1e293b; margin-bottom: 0; cursor: pointer; display: flex; align-items: center; gap: 6px;">
                     <input type="checkbox" id="billEnableEInvoice" onchange="erp.renderLiveInvoicePreview()" style="accent-color: #2563eb; cursor: pointer;" />
@@ -1701,6 +1718,16 @@ body {
             </div>
           </div>
           <div class="form-group" style="grid-column: span 2;">
+            <label>Authorised Digital Signature &amp; Stamp (PNG / JPG transparent image)</label>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <input type="text" id="cfgSignatureUrl" class="form-control" placeholder="Signature image URL or uploaded data" oninput="erp.handleSignatureUrlChange(this.value)" />
+              <input type="file" id="cfgSignatureFile" accept="image/*" style="display:none;" onchange="erp.handleSignatureUpload(event)" />
+              <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('cfgSignatureFile').click()" style="white-space: nowrap; font-weight: 600; padding: 7px 12px;">📁 Upload Sign</button>
+              <button type="button" id="cfgRemoveSignBtn" class="btn btn-outline btn-sm" onclick="erp.removeSignature()" style="white-space: nowrap; font-weight: 600; padding: 7px 12px; color: #dc2626; display: none;">✕ Remove</button>
+            </div>
+            <div id="cfgSignaturePreview" style="margin-top: 6px; display: none;"></div>
+          </div>
+          <div class="form-group" style="grid-column: span 2;">
             <label>Office Address</label>
             <input type="text" id="cfgAddress" class="form-control" value="Dehu Alandi Road, Chikhali, Pune - 411062, Maharashtra, India" />
           </div>
@@ -1777,6 +1804,14 @@ body {
             <input type="text" id="mCompLogo" class="form-control" placeholder="https://passcorp.in/assets/logo.png" />
             <input type="file" id="mCompLogoFile" accept="image/*" style="display:none;" onchange="erp.handleModalLogoFileChange(event)" />
             <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('mCompLogoFile').click()" style="white-space: nowrap; font-weight: 600; padding: 7px 12px;">📁 Upload Logo</button>
+          </div>
+        </div>
+        <div class="form-group" style="grid-column: span 2;">
+          <label>Authorised Digital Signature &amp; Stamp (PNG / JPG transparent image)</label>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <input type="text" id="mCompSign" class="form-control" placeholder="Signature image URL or uploaded data" />
+            <input type="file" id="mCompSignFile" accept="image/*" style="display:none;" onchange="erp.handleModalSignFileChange(event)" />
+            <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('mCompSignFile').click()" style="white-space: nowrap; font-weight: 600; padding: 7px 12px;">📁 Upload Sign</button>
           </div>
         </div>
         <div class="form-group" style="grid-column: span 2;">
@@ -2521,6 +2556,7 @@ class PassInvotorERP {
         nextDcNo: 1,
         invoicePrefix: "PC/2026-27/",
         nextInvoiceNo: 1,
+        signatureImg: "",
         capital: 500000,
         fixedAssets: 150000,
         bankBalance: 350000,
@@ -2621,6 +2657,7 @@ class PassInvotorERP {
     if (document.getElementById('cfgCompName')) document.getElementById('cfgCompName').value = s.compName;
     if (document.getElementById('cfgCompTagline')) document.getElementById('cfgCompTagline').value = s.compTagline;
     if (document.getElementById('cfgLogoUrl')) document.getElementById('cfgLogoUrl').value = s.logo || 'https://passcorp.in/assets/logo.png';
+    if (document.getElementById('cfgSignatureUrl')) document.getElementById('cfgSignatureUrl').value = s.signatureImg || '';
     if (document.getElementById('cfgAddress')) document.getElementById('cfgAddress').value = s.address;
     if (document.getElementById('cfgMobile')) document.getElementById('cfgMobile').value = s.phone;
     if (document.getElementById('cfgEmail')) document.getElementById('cfgEmail').value = s.email;
@@ -2632,6 +2669,26 @@ class PassInvotorERP {
     if (document.getElementById('cfgBranch')) document.getElementById('cfgBranch').value = s.branch;
     if (document.getElementById('cfgPrefix')) document.getElementById('cfgPrefix').value = s.invoicePrefix;
     if (document.getElementById('cfgNextNo')) document.getElementById('cfgNextNo').value = s.nextInvoiceNo;
+
+    const signPreview = document.getElementById('cfgSignaturePreview');
+    const cfgRemoveSignBtn = document.getElementById('cfgRemoveSignBtn');
+    const quickRemoveSignBtn = document.getElementById('quickRemoveSignBtn');
+    const quickSignStatus = document.getElementById('quickSignStatus');
+    
+    if (s.signatureImg) {
+      if (signPreview) {
+        signPreview.style.display = 'block';
+        signPreview.innerHTML = `<span style="font-size: 11px; font-weight: bold; color: #166534;">Preview:</span> <img src="${s.signatureImg}" style="max-height: 40px; border: 1px dashed #86efac; border-radius: 4px; padding: 2px; vertical-align: middle; margin-left: 6px;" />`;
+      }
+      if (cfgRemoveSignBtn) cfgRemoveSignBtn.style.display = 'inline-block';
+      if (quickRemoveSignBtn) quickRemoveSignBtn.style.display = 'inline-block';
+      if (quickSignStatus) quickSignStatus.textContent = '✓ Saved stamp/signature active';
+    } else {
+      if (signPreview) { signPreview.style.display = 'none'; signPreview.innerHTML = ''; }
+      if (cfgRemoveSignBtn) cfgRemoveSignBtn.style.display = 'none';
+      if (quickRemoveSignBtn) quickRemoveSignBtn.style.display = 'none';
+      if (quickSignStatus) quickSignStatus.textContent = '';
+    }
   }
 
   handleLogoFileChange(event) {
@@ -2669,11 +2726,62 @@ class PassInvotorERP {
     this.renderLiveInvoicePreview();
   }
 
+  handleSignatureUpload(event) {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const dataUrl = e.target.result;
+      if (!this.data.settings) this.data.settings = {};
+      this.data.settings.signatureImg = dataUrl;
+      if (document.getElementById('cfgSignatureUrl')) document.getElementById('cfgSignatureUrl').value = dataUrl;
+      if (document.getElementById('mCompSign')) document.getElementById('mCompSign').value = dataUrl;
+      if (document.getElementById('billEnableDigitalSign')) document.getElementById('billEnableDigitalSign').checked = true;
+      this.saveState();
+      this.syncSettingsFields();
+      this.renderLiveInvoicePreview();
+      alert('✅ Digital Signature & Stamp image saved and enabled!');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  handleModalSignFileChange(event) {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const dataUrl = e.target.result;
+      if (document.getElementById('mCompSign')) document.getElementById('mCompSign').value = dataUrl;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  handleSignatureUrlChange(val) {
+    if (!this.data.settings) this.data.settings = {};
+    this.data.settings.signatureImg = (val || '').trim();
+    this.saveState();
+    this.syncSettingsFields();
+    this.renderLiveInvoicePreview();
+  }
+
+  removeSignature() {
+    if (!confirm('Are you sure you want to remove the saved digital signature/stamp?')) return;
+    if (!this.data.settings) this.data.settings = {};
+    this.data.settings.signatureImg = '';
+    if (document.getElementById('cfgSignatureUrl')) document.getElementById('cfgSignatureUrl').value = '';
+    if (document.getElementById('mCompSign')) document.getElementById('mCompSign').value = '';
+    this.saveState();
+    this.syncSettingsFields();
+    this.renderLiveInvoicePreview();
+    alert('🗑️ Digital Signature removed. Blank area will be left for manual pen signing.');
+  }
+
   openCompanyProfileModal() {
     const s = this.data.settings;
     document.getElementById('mCompName').value = s.compName;
     document.getElementById('mCompTagline').value = s.compTagline;
     if (document.getElementById('mCompLogo')) document.getElementById('mCompLogo').value = s.logo || 'https://passcorp.in/assets/logo.png';
+    if (document.getElementById('mCompSign')) document.getElementById('mCompSign').value = s.signatureImg || '';
     document.getElementById('mCompAddress').value = s.address;
     document.getElementById('mCompPhone').value = s.phone;
     document.getElementById('mCompEmail').value = s.email;
@@ -2693,6 +2801,7 @@ class PassInvotorERP {
     s.compName = document.getElementById('mCompName').value.trim() || "PASS CORP.";
     s.compTagline = document.getElementById('mCompTagline').value.trim() || "PRECISION | ASSURANCE | SAFETY | SOLUTION";
     if (document.getElementById('mCompLogo')) s.logo = document.getElementById('mCompLogo').value.trim() || "https://passcorp.in/assets/logo.png";
+    if (document.getElementById('mCompSign')) s.signatureImg = document.getElementById('mCompSign').value.trim();
     s.address = document.getElementById('mCompAddress').value.trim();
     s.phone = document.getElementById('mCompPhone').value.trim();
     s.email = document.getElementById('mCompEmail').value.trim();
@@ -3278,6 +3387,7 @@ class PassInvotorERP {
     container.innerHTML = '';
 
     const isEInvoice = document.getElementById('billEnableEInvoice') ? document.getElementById('billEnableEInvoice').checked : (this.currentInvoice.isEInvoice || false);
+    const isDigitalSign = document.getElementById('billEnableDigitalSign') ? document.getElementById('billEnableDigitalSign').checked : (this.currentInvoice.isDigitalSign || false);
 
     copyBadges.forEach(badgeLabel => {
       const sheetHtml = this.generateSingleA4SheetHtml({
@@ -3286,7 +3396,7 @@ class PassInvotorERP {
         shipCompany, shipPerson, shipAddr, shipPhone, shipGst,
         poRef, poDate, deliveryNote, deliveryNoteDate, refNoDate, otherRef,
         transport, destination, vehicleNo, ewayBillNo, termsOfDelivery,
-        irn, ackNo, ackDate, isEInvoice,
+        irn, ackNo, ackDate, isEInvoice, isDigitalSign,
         pos, discount, freight, items: this.currentInvoice.items
       });
       const wrap = document.createElement('div');
@@ -3847,7 +3957,20 @@ class PassInvotorERP {
             <!-- 3. RIGHT: AUTHORISED SIGNATORY -->
             <div class="tally-sign-col">
               <div style="font-size: 8.8px; font-weight: bold; text-align: right;">for <span style="text-transform: uppercase;">${p.s.compName || p.s.name || 'PASS CORP.'}</span></div>
-              <div class="tally-sign-area"></div>
+              <div class="tally-sign-area" style="display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; min-height: 38px;">
+                ${p.isDigitalSign ? (
+                  p.s.signatureImg ? `
+                    <img src="${p.s.signatureImg}" alt="Digital Signature" style="max-height: 38px; max-width: 130px; object-fit: contain; margin-bottom: 1px;" />
+                    <div style="font-size: 7px; color: #166534; font-weight: 700; line-height: 1; letter-spacing: 0.2px;">✓ Digitally Signed</div>
+                  ` : `
+                    <div style="border: 1px dashed #166534; background: #f0fdf4; border-radius: 4px; padding: 2px 5px; text-align: right; margin-bottom: 2px;">
+                      <div style="font-size: 7.5px; font-weight: 800; color: #166534; line-height: 1.1;">✓ DIGITALLY SIGNED</div>
+                      <div style="font-size: 7px; color: #1e293b; font-weight: 600;">for ${p.s.compName || 'PASS CORP.'}</div>
+                      <div style="font-size: 6.5px; color: #64748b;">${p.invDate || ''} | Authenticated</div>
+                    </div>
+                  `
+                ) : ''}
+              </div>
               <div style="font-size: 8.5px; font-weight: bold; text-align: right; padding-top: 2px;">Authorised Signatory</div>
             </div>
 
@@ -4613,6 +4736,7 @@ class PassInvotorERP {
     s.compName = document.getElementById('cfgCompName').value.trim() || "PASS CORP.";
     s.compTagline = document.getElementById('cfgCompTagline').value.trim() || "PRECISION | ASSURANCE | SAFETY | SOLUTION";
     if (document.getElementById('cfgLogoUrl')) s.logo = document.getElementById('cfgLogoUrl').value.trim() || "https://passcorp.in/assets/logo.png";
+    if (document.getElementById('cfgSignatureUrl')) s.signatureImg = document.getElementById('cfgSignatureUrl').value.trim();
     s.address = document.getElementById('cfgAddress').value.trim();
     s.phone = document.getElementById('cfgMobile').value.trim();
     s.email = document.getElementById('cfgEmail').value.trim();
