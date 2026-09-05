@@ -3610,7 +3610,7 @@ class PassInvotorERP {
                     <div style="font-weight: bold; font-size: 10px; margin-top: 1px;">${p.invNo}</div>
                   </td>
                   <td style="width: 50%;">
-                    <div style="color: #333;">Dated</div>
+                    <div style="color: #333;">${p.docType === 'DELIVERY CHALLAN' ? 'Challan Date' : 'Invoice Date'}</div>
                     <div style="font-weight: bold; font-size: 10px; margin-top: 1px;">${this.formatTallyDate(p.invDate)}</div>
                   </td>
                 </tr>
@@ -3640,7 +3640,7 @@ class PassInvotorERP {
                     <div style="font-weight: 500;">${p.poRef || ''}</div>
                   </td>
                   <td>
-                    <div style="color: #333;">Dated</div>
+                    <div style="color: #333;">PO Date</div>
                     <div style="font-weight: 500;">${p.poDate ? this.formatTallyDate(p.poDate) : ''}</div>
                   </td>
                 </tr>
