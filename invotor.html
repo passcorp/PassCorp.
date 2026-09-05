@@ -1175,8 +1175,12 @@ body {
                   <input type="text" id="billDestination" class="form-control" placeholder="e.g. Chakan / Pune" oninput="erp.renderLiveInvoicePreview()" />
                 </div>
                 <div class="form-group">
-                  <label>Dispatch Doc No. / Vehicle</label>
-                  <input type="text" id="billVehicleNo" class="form-control" placeholder="e.g. MH 14 EM 2026 / LR 401" oninput="erp.renderLiveInvoicePreview()" />
+                  <label>Bill of Lading / LR-RR No.</label>
+                  <input type="text" id="billLrNo" class="form-control" placeholder="e.g. LR/2026/894" oninput="erp.renderLiveInvoicePreview()" />
+                </div>
+                <div class="form-group">
+                  <label>Motor Vehicle No.</label>
+                  <input type="text" id="billVehicleNo" class="form-control" placeholder="e.g. MH 14 EM 2026" oninput="erp.renderLiveInvoicePreview()" />
                 </div>
                 <div class="form-group">
                   <label>E-Way Bill No.</label>
@@ -3265,7 +3269,7 @@ class PassInvotorERP {
     let totalQty = 0;
     let totalTaxable = 0;
     let totalTax = 0;
-    let primaryUnit = 'Nos.';
+    let primaryUnit = 'PCS';
 
     let itemsRowsHtml = '';
     const hsnMap = {};
@@ -3304,11 +3308,11 @@ class PassInvotorERP {
             ${item.desc ? `<div style="font-size: 8.5px; color: #333; margin-top: 1px; white-space: pre-line;">${item.desc}</div>` : ''}
           </td>
           <td class="text-center" style="font-size: 9px;">${item.hsn || '6506'}</td>
-          <td class="text-right" style="font-weight: bold;">${qty} ${item.unit || 'Nos.'}</td>
+          <td class="text-right" style="font-weight: bold;">${qty} ${item.unit || 'PCS'}</td>
           <td class="text-right">${rate.toFixed(2)}</td>
-          <td class="text-center">${item.unit || 'Nos.'}</td>
+          <td class="text-center">${item.unit || 'PCS'}</td>
           <td class="text-right">${item.disc ? item.disc + '%' : ''}</td>
-          <td class="text-right" style="font-weight: bold;">${taxable.toFixed(2)}</td>
+          <td class="text-right" style="font-weight: bold;">${taxable.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
         </tr>
       `;
     });
@@ -3330,36 +3334,60 @@ class PassInvotorERP {
 
     const isInterState = (p.pos && !p.pos.toLowerCase().includes('maharashtra') && !p.pos.includes('27') && !p.pos.toLowerCase().includes('mh'));
 
+    // Subtotal Row under items
+    if (totalTaxable > 0) {
+      itemsRowsHtml += `
+        <tr class="tally-item-line" style="border-top: 1px solid #000;">
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+          <td class="text-right" style="border-top: 1px solid #000; font-weight: bold; font-size: 9.5px; padding-top: 3px; padding-bottom: 3px;">${totalTaxable.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
+        </tr>
+      `;
+    }
+
     // Tax Ledger lines (CGST / SGST / IGST)
     if (isTaxDoc && (totalTax > 0 || totalTaxable > 0)) {
       const taxRates = Object.values(hsnMap).map(g => g.gstRate);
       const uniqueRates = [...new Set(taxRates)];
 
       if (isInterState) {
-        const rateLabel = uniqueRates.length === 1 ? ` @ ${uniqueRates[0]}%` : '';
+        const rateLabel = uniqueRates.length === 1 ? ` @ ${uniqueRates[0].toFixed(2)}%` : '';
+        const singleRate = uniqueRates.length === 1 ? uniqueRates[0] : 18;
         itemsRowsHtml += `
           <tr class="tally-tax-line">
             <td></td>
-            <td class="text-right" style="padding-right: 14px;"><span style="font-style: italic; font-weight: bold; font-size: 9px;">Output IGST${rateLabel}</span></td>
-            <td></td><td></td><td></td><td></td><td></td>
-            <td class="text-right" style="font-weight: bold;">${totalTax.toFixed(2)}</td>
+            <td class="text-left" style="padding-left: 18px;"><span style="font-style: italic; font-weight: bold; font-size: 9px;">Output IGST${rateLabel}</span></td>
+            <td></td>
+            <td></td>
+            <td class="text-right">${singleRate}</td>
+            <td class="text-center">%</td>
+            <td></td>
+            <td class="text-right" style="font-weight: bold;">${totalTax.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
           </tr>
         `;
       } else {
-        const halfTax = (totalTax / 2).toFixed(2);
-        const rateLabel = uniqueRates.length === 1 ? ` @ ${(uniqueRates[0] / 2).toFixed(1).replace('.0', '')}%` : '';
+        const halfTax = (totalTax / 2);
+        const singleRate = uniqueRates.length === 1 ? (uniqueRates[0] / 2) : 9;
+        const rateLabel = uniqueRates.length === 1 ? ` @ ${singleRate.toFixed(2)}%` : '';
         itemsRowsHtml += `
           <tr class="tally-tax-line">
             <td></td>
-            <td class="text-right" style="padding-right: 14px;"><span style="font-style: italic; font-weight: bold; font-size: 9px;">Output CGST${rateLabel}</span></td>
-            <td></td><td></td><td></td><td></td><td></td>
-            <td class="text-right" style="font-weight: bold;">${halfTax}</td>
+            <td class="text-left" style="padding-left: 18px;"><span style="font-style: italic; font-weight: bold; font-size: 9px;">Output CGST${rateLabel}</span></td>
+            <td></td>
+            <td></td>
+            <td class="text-right">${singleRate}</td>
+            <td class="text-center">%</td>
+            <td></td>
+            <td class="text-right" style="font-weight: bold;">${halfTax.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
           </tr>
           <tr class="tally-tax-line">
             <td></td>
-            <td class="text-right" style="padding-right: 14px;"><span style="font-style: italic; font-weight: bold; font-size: 9px;">Output SGST${rateLabel}</span></td>
-            <td></td><td></td><td></td><td></td><td></td>
-            <td class="text-right" style="font-weight: bold;">${halfTax}</td>
+            <td class="text-left" style="padding-left: 18px;"><span style="font-style: italic; font-weight: bold; font-size: 9px;">Output SGST${rateLabel}</span></td>
+            <td></td>
+            <td></td>
+            <td class="text-right">${singleRate}</td>
+            <td class="text-center">%</td>
+            <td></td>
+            <td class="text-right" style="font-weight: bold;">${halfTax.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
           </tr>
         `;
       }
@@ -3395,9 +3423,9 @@ class PassInvotorERP {
       itemsRowsHtml += `
         <tr class="tally-tax-line">
           <td></td>
-          <td class="text-right" style="padding-right: 14px;"><span style="font-style: italic; font-size: 9px;">Round Off</span></td>
+          <td class="text-right" style="padding-right: 14px;"><span style="font-style: italic; font-weight: bold; font-size: 9px;">ROUND OFF</span></td>
           <td></td><td></td><td></td><td></td><td></td>
-          <td class="text-right">${roundOff >= 0 ? '+' : ''}${roundOff}</td>
+          <td class="text-right" style="font-weight: bold;">${roundOff >= 0 ? '+' : ''}${roundOff}</td>
         </tr>
       `;
     }
@@ -3415,32 +3443,56 @@ class PassInvotorERP {
     if (hsnKeys.length > 0) {
       hsnKeys.forEach(hsn => {
         const g = hsnMap[hsn];
-        const halfRate = (g.gstRate / 2).toFixed(1).replace('.0', '');
-        const halfAmt = (g.taxAmt / 2);
-        gstSummaryRowsHtml += `
-          <tr>
-            <td style="font-weight: bold; text-align: center;">${g.hsn}</td>
-            <td style="text-align: right;">${g.taxable.toFixed(2)}</td>
-            <td style="text-align: center;">${halfRate}%</td>
-            <td style="text-align: right;">${halfAmt.toFixed(2)}</td>
-            <td style="text-align: center;">${halfRate}%</td>
-            <td style="text-align: right;">${halfAmt.toFixed(2)}</td>
-            <td style="text-align: right; font-weight: bold;">${g.taxAmt.toFixed(2)}</td>
-          </tr>
-        `;
+        if (isInterState) {
+          gstSummaryRowsHtml += `
+            <tr>
+              <td style="font-weight: bold; text-align: center;">${g.hsn}</td>
+              <td style="text-align: right;">${g.taxable.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
+              <td style="text-align: center;">${g.gstRate}%</td>
+              <td style="text-align: right;">${g.taxAmt.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
+              <td style="text-align: right; font-weight: bold;">${g.taxAmt.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
+            </tr>
+          `;
+        } else {
+          const halfRate = (g.gstRate / 2).toFixed(1).replace('.0', '');
+          const halfAmt = (g.taxAmt / 2);
+          gstSummaryRowsHtml += `
+            <tr>
+              <td style="font-weight: bold; text-align: center;">${g.hsn}</td>
+              <td style="text-align: right;">${g.taxable.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
+              <td style="text-align: center;">${halfRate}%</td>
+              <td style="text-align: right;">${halfAmt.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
+              <td style="text-align: center;">${halfRate}%</td>
+              <td style="text-align: right;">${halfAmt.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
+              <td style="text-align: right; font-weight: bold;">${g.taxAmt.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
+            </tr>
+          `;
+        }
       });
     } else {
-      gstSummaryRowsHtml = `
-        <tr>
-          <td style="font-weight: bold; text-align: center;">6506</td>
-          <td style="text-align: right;">0.00</td>
-          <td style="text-align: center;">9%</td>
-          <td style="text-align: right;">0.00</td>
-          <td style="text-align: center;">9%</td>
-          <td style="text-align: right;">0.00</td>
-          <td style="text-align: right; font-weight: bold;">0.00</td>
-        </tr>
-      `;
+      if (isInterState) {
+        gstSummaryRowsHtml = `
+          <tr>
+            <td style="font-weight: bold; text-align: center;">6506</td>
+            <td style="text-align: right;">0.00</td>
+            <td style="text-align: center;">18%</td>
+            <td style="text-align: right;">0.00</td>
+            <td style="text-align: right; font-weight: bold;">0.00</td>
+          </tr>
+        `;
+      } else {
+        gstSummaryRowsHtml = `
+          <tr>
+            <td style="font-weight: bold; text-align: center;">6506</td>
+            <td style="text-align: right;">0.00</td>
+            <td style="text-align: center;">9%</td>
+            <td style="text-align: right;">0.00</td>
+            <td style="text-align: center;">9%</td>
+            <td style="text-align: right;">0.00</td>
+            <td style="text-align: right; font-weight: bold;">0.00</td>
+          </tr>
+        `;
+      }
     }
 
     const docDisplayTitle = p.docType === 'DELIVERY CHALLAN' ? 'Delivery Challan' : (p.docType === 'BILL OF SUPPLY' ? 'Bill of Supply' : 'Tax Invoice');
@@ -3467,8 +3519,8 @@ class PassInvotorERP {
           <!-- LEFT: IRN & ACK DETAILS -->
           <div class="tally-irn-block">
             ${p.docType === 'TAX INVOICE' ? `
-              <div style="display: flex; gap: 4px;"><span style="font-weight: bold; width: 44px;">IRN</span><span>:</span> <span style="font-family: 'IBM Plex Mono', monospace; font-size: 7.8px; word-break: break-all; max-width: 420px;">${p.irn || 'fef1df90406b928db26a62f816debc9bb5256d9375e60dc4226653cc23a8c595'}</span></div>
-              <div style="display: flex; gap: 4px; margin-top: 2px;"><span style="font-weight: bold; width: 44px;">Ack No.</span><span>:</span> <span style="font-family: 'IBM Plex Mono', monospace; font-weight: bold; font-size: 8.5px;">${p.ackNo || '112010036563310'}</span></div>
+              <div style="display: flex; gap: 4px;"><span style="font-weight: bold; width: 44px;">IRN</span><span>:</span> <span style="font-family: 'IBM Plex Mono', monospace; font-size: 7.8px; word-break: break-all; max-width: 420px;">${p.irn || 'fe315ca18d5a6126d061104715ec76217864c2883814dc0af9252f69e2e64c80'}</span></div>
+              <div style="display: flex; gap: 4px; margin-top: 2px;"><span style="font-weight: bold; width: 44px;">Ack No.</span><span>:</span> <span style="font-family: 'IBM Plex Mono', monospace; font-weight: bold; font-size: 8.5px;">${p.ackNo || '122214695897343'}</span></div>
               <div style="display: flex; gap: 4px; margin-top: 2px;"><span style="font-weight: bold; width: 44px;">Ack Date</span><span>:</span> <span style="font-size: 8.5px;">${p.ackDate || this.formatTallyDate(p.invDate)}</span></div>
             ` : `
               <div style="font-size: 10px; font-weight: bold; color: #000; padding-top: 4px;">${p.badgeLabel}</div>
@@ -3524,44 +3576,47 @@ class PassInvotorERP {
             <!-- LEFT COLUMN: SUPPLIER, CONSIGNEE, BUYER -->
             <div class="tally-party-col">
               
-              <!-- SUPPLIER / COMPANY -->
-              <div class="tally-party-subbox" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
-                <div style="flex: 1;">
-                  <div style="font-weight: bold; font-size: 11px; text-transform: uppercase;">${p.s.compName || p.s.name || 'PASS CORP.'}, Pune</div>
-                  ${p.s.compTagline ? `<div style="font-size: 7.8px; color: #dc2626; font-weight: 700; letter-spacing: 0.3px; margin-top: 1px; margin-bottom: 2px;">${p.s.compTagline}</div>` : ''}
-                  <div style="font-size: 8.8px; margin-top: 1px;">${p.s.address || 'Dehu Alandi Road, Chikhali, Pune - 411062, Maharashtra'}</div>
-                  <div style="font-size: 8.8px; margin-top: 1px;"><span style="font-weight: bold;">GSTIN/UIN:</span> ${p.s.gstin || '27AALCP4218P1Z6'}</div>
-                  <div style="font-size: 8.8px; margin-top: 1px;"><span style="font-weight: bold;">State Name :</span> Maharashtra, Code : 27</div>
-                  <div style="font-size: 8.5px; margin-top: 1px;"><span style="font-weight: bold;">Contact :</span> ${p.s.phone || '+91 97676 72497'} | ${p.s.email || 'passcorppune@gmail.com'}</div>
+              <!-- SUPPLIER / COMPANY (LOGO ON LEFT, DETAILS ON RIGHT) -->
+              <div class="tally-party-subbox" style="display: flex; gap: 8px; align-items: stretch; padding: 4px 6px;">
+                <div style="width: 80px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #cbd5e1; border-radius: 3px; padding: 3px;">
+                  <img src="${compLogoUrl}" alt="Logo" style="max-height: 60px; max-width: 74px; object-fit: contain; display: block;" onerror="this.src='https://passcorp.in/assets/logo.png'" />
                 </div>
-                ${(compLogoUrl && compLogoUrl !== 'none') ? `
-                  <div style="text-align: right; flex-shrink: 0; padding-left: 4px; padding-top: 1px;">
-                    <img src="${compLogoUrl}" alt="PASS CORP." style="max-height: 48px; max-width: 90px; object-fit: contain; display: block;" onerror="this.style.display='none'" />
-                  </div>
-                ` : ''}
+                <div style="flex: 1; min-width: 0; font-size: 8.8px; line-height: 1.35;">
+                  <div style="font-weight: bold; font-size: 11px; text-transform: uppercase; color: #000;">${p.s.compName || p.s.name || 'PASS CORP.'}</div>
+                  ${p.s.compTagline ? `<div style="font-size: 7.8px; color: #dc2626; font-weight: 700; letter-spacing: 0.3px; margin-top: 1px;">${p.s.compTagline}</div>` : ''}
+                  <div style="margin-top: 1px;">${p.s.address || 'Dehu Alandi Road, Chikhali, Pune - 411062, Maharashtra, India'}</div>
+                  <div style="margin-top: 1px;"><span style="font-weight: bold;">GSTIN/UIN:</span> ${p.s.gstin || '27AALCP4218P1Z6'}</div>
+                  <div style="margin-top: 1px;"><span style="font-weight: bold;">State Name :</span> Maharashtra, Code : 27</div>
+                  <div style="margin-top: 1px;"><span style="font-weight: bold;">Contact :</span> ${p.s.phone || '+91 97676 72497'}</div>
+                  <div style="margin-top: 1px;"><span style="font-weight: bold;">E-Mail :</span> ${p.s.email || 'sales@passcorp.in / passcorppune@gmail.com'}</div>
+                </div>
               </div>
 
-              <!-- CONSIGNEE (SHIP TO) -->
-              <div class="tally-party-subbox">
-                <div style="font-size: 8.5px; color: #333;">Consignee (Ship to)</div>
-                <div style="font-weight: bold; font-size: 10px; text-transform: uppercase; margin-top: 1px;">${p.shipCompany || p.custCompany || '-'}</div>
-                <div style="font-size: 8.8px; margin-top: 1px;">${p.shipAddr || p.custAddr || '-'}</div>
-                <div style="font-size: 8.8px; margin-top: 1px;"><span style="font-weight: bold;">GSTIN/UIN</span> &nbsp;&nbsp;: ${p.shipGst || p.custGst || 'Unregistered'}</div>
-                <div style="font-size: 8.8px; margin-top: 1px;"><span style="font-weight: bold;">State Name</span> &nbsp;: ${p.pos || 'Maharashtra, Code : 27'}</div>
-              </div>
+              <!-- CONSIGNEE (SHIP TO) - Shown if different from Buyer -->
+              ${(p.shipCompany && p.shipCompany !== p.custCompany) ? `
+                <div class="tally-party-subbox" style="padding: 4px 6px; font-size: 8.8px; line-height: 1.35;">
+                  <div style="font-size: 8.5px; color: #333;">Consignee (Ship to)</div>
+                  <div style="font-weight: bold; font-size: 10px; text-transform: uppercase; margin-top: 1px; color: #000;">${p.shipCompany}</div>
+                  <div style="margin-top: 1px;">${p.shipAddr || '-'}</div>
+                  ${p.shipPhone ? `<div style="margin-top: 1px;"><span style="font-weight: bold;">CONTACT :</span> ${p.shipPhone}</div>` : ''}
+                  <div style="margin-top: 1px;"><span style="font-weight: bold;">GSTIN/UIN</span> &nbsp;&nbsp;: ${p.shipGst || 'Unregistered'}</div>
+                  <div style="margin-top: 1px;"><span style="font-weight: bold;">State Name</span> &nbsp;: ${p.pos || 'Maharashtra, Code : 27'}</div>
+                </div>
+              ` : ''}
 
               <!-- BUYER (BILL TO) -->
-              <div class="tally-party-subbox">
+              <div class="tally-party-subbox" style="padding: 4px 6px; font-size: 8.8px; line-height: 1.35; flex: 1;">
                 <div style="font-size: 8.5px; color: #333;">Buyer (Bill to)</div>
-                <div style="font-weight: bold; font-size: 10px; text-transform: uppercase; margin-top: 1px;">${p.custCompany || '-'}</div>
-                <div style="font-size: 8.8px; margin-top: 1px;">${p.custAddr || '-'}</div>
-                <div style="font-size: 8.8px; margin-top: 1px;"><span style="font-weight: bold;">GSTIN/UIN</span> &nbsp;&nbsp;: ${p.custGst || 'Unregistered'}</div>
-                <div style="font-size: 8.8px; margin-top: 1px;"><span style="font-weight: bold;">State Name</span> &nbsp;: ${p.pos || 'Maharashtra, Code : 27'}</div>
+                <div style="font-weight: bold; font-size: 10.5px; text-transform: uppercase; margin-top: 1px; color: #000;">${p.custCompany || '-'}</div>
+                <div style="margin-top: 1px;">${p.custAddr || '-'}</div>
+                ${p.custPhone ? `<div style="margin-top: 1px;"><span style="font-weight: bold;">CONTACT :</span> ${p.custPhone}</div>` : ''}
+                <div style="margin-top: 1px;"><span style="font-weight: bold;">GSTIN/UIN</span> &nbsp;&nbsp;: ${p.custGst || 'Unregistered'}</div>
+                <div style="margin-top: 1px;"><span style="font-weight: bold;">State Name</span> &nbsp;: ${p.pos || 'Maharashtra, Code : 27'}</div>
               </div>
 
             </div>
 
-            <!-- RIGHT COLUMN: 7 STACKED TALLY DISPATCH ROWS -->
+            <!-- RIGHT COLUMN: 8 STACKED TALLY DISPATCH ROWS -->
             <div class="tally-dispatch-col">
               <table class="tally-dispatch-table">
                 <tr>
@@ -3607,7 +3662,7 @@ class PassInvotorERP {
                 <tr>
                   <td>
                     <div style="color: #333;">Dispatch Doc No.</div>
-                    <div style="font-weight: 500;">${p.dispatchDocNo || p.ewayBillNo || p.vehicleNo || ''}</div>
+                    <div style="font-weight: 500;">${p.dispatchDocNo || p.ewayBillNo || ''}</div>
                   </td>
                   <td>
                     <div style="color: #333;">Delivery Note Date</div>
@@ -3617,11 +3672,21 @@ class PassInvotorERP {
                 <tr>
                   <td>
                     <div style="color: #333;">Dispatched through</div>
-                    <div style="font-weight: 500;">${p.transport || 'Direct Delivery / Surface'}${p.vehicleNo ? ` (${p.vehicleNo})` : ''}</div>
+                    <div style="font-weight: 500;">${p.transport || 'Direct Delivery / Surface'}</div>
                   </td>
                   <td>
                     <div style="color: #333;">Destination</div>
                     <div style="font-weight: 500;">${p.destination || p.pos || 'Maharashtra'}</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="color: #333;">Bill of Lading/LR-RR No.</div>
+                    <div style="font-weight: 500;">${p.lrNo || ''}</div>
+                  </td>
+                  <td>
+                    <div style="color: #333;">Motor Vehicle No.</div>
+                    <div style="font-weight: bold; font-size: 9.5px; color: #000;">${p.vehicleNo || ''}</div>
                   </td>
                 </tr>
                 <tr>
@@ -3638,14 +3703,14 @@ class PassInvotorERP {
           <!-- ITEMS TABLE (CLASSIC TALLY COLUMNS) -->
           <table class="tally-items-table">
             <colgroup>
-              <col style="width: 32px;" />
+              <col style="width: 28px;" />
               <col style="width: auto;" />
-              <col style="width: 55px;" />
+              <col style="width: 60px;" />
               <col style="width: 65px;" />
               <col style="width: 60px;" />
               <col style="width: 35px;" />
               <col style="width: 45px;" />
-              <col style="width: 80px;" />
+              <col style="width: 85px;" />
             </colgroup>
             <thead>
               <tr>
@@ -3676,7 +3741,7 @@ class PassInvotorERP {
           <div class="tally-amount-words-box">
             <div>
               <div style="color: #333; font-size: 8.5px;">Amount Chargeable (in words)</div>
-              <div style="font-weight: bold; font-size: 10px; margin-top: 1px;">Indian Rupee ${this.numberToIndianWords(grandTotal)} Only</div>
+              <div style="font-weight: bold; font-size: 10px; margin-top: 1px;">INR ${this.numberToIndianWords(grandTotal)} Only</div>
             </div>
             <div style="font-size: 9px; font-weight: bold; font-style: italic;">E. & O.E</div>
           </div>
@@ -3685,58 +3750,73 @@ class PassInvotorERP {
           <div class="tally-hsn-box">
             <table class="tally-hsn-table">
               <thead>
-                <tr style="font-weight: bold;">
-                  <th rowspan="2" style="vertical-align: middle;">HSN/SAC</th>
-                  <th rowspan="2" style="vertical-align: middle;">Taxable<br>Value</th>
-                  <th colspan="2">Central Tax</th>
-                  <th colspan="2">State Tax</th>
-                  <th rowspan="2" style="vertical-align: middle;">Total<br>Tax Amount</th>
-                </tr>
-                <tr style="font-weight: bold;">
-                  <th>Rate</th>
-                  <th>Amount</th>
-                  <th>Rate</th>
-                  <th>Amount</th>
-                </tr>
+                ${isInterState ? `
+                  <tr style="font-weight: bold;">
+                    <th rowspan="2" style="vertical-align: middle;">HSN/SAC</th>
+                    <th rowspan="2" style="vertical-align: middle;">Taxable<br>Value</th>
+                    <th colspan="2">Integrated Tax</th>
+                    <th rowspan="2" style="vertical-align: middle;">Total<br>Tax Amount</th>
+                  </tr>
+                  <tr style="font-weight: bold;">
+                    <th>Rate</th>
+                    <th>Amount</th>
+                  </tr>
+                ` : `
+                  <tr style="font-weight: bold;">
+                    <th rowspan="2" style="vertical-align: middle;">HSN/SAC</th>
+                    <th rowspan="2" style="vertical-align: middle;">Taxable<br>Value</th>
+                    <th colspan="2">Central Tax</th>
+                    <th colspan="2">State Tax</th>
+                    <th rowspan="2" style="vertical-align: middle;">Total<br>Tax Amount</th>
+                  </tr>
+                  <tr style="font-weight: bold;">
+                    <th>Rate</th>
+                    <th>Amount</th>
+                    <th>Rate</th>
+                    <th>Amount</th>
+                  </tr>
+                `}
               </thead>
               <tbody>
                 ${gstSummaryRowsHtml}
                 <tr style="font-weight: bold;">
                   <td style="text-align: right; padding-right: 6px;">Total</td>
-                  <td style="text-align: right;">${totalTaxable.toFixed(2)}</td>
-                  <td></td>
-                  <td style="text-align: right;">${(totalTax / 2).toFixed(2)}</td>
-                  <td></td>
-                  <td style="text-align: right;">${(totalTax / 2).toFixed(2)}</td>
-                  <td style="text-align: right;">${totalTax.toFixed(2)}</td>
+                  <td style="text-align: right;">${totalTaxable.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
+                  ${isInterState ? `
+                    <td></td>
+                    <td style="text-align: right;">${totalTax.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
+                  ` : `
+                    <td></td>
+                    <td style="text-align: right;">${(totalTax / 2).toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
+                    <td></td>
+                    <td style="text-align: right;">${(totalTax / 2).toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
+                  `}
+                  <td style="text-align: right;">${totalTax.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
                 </tr>
               </tbody>
             </table>
-            <div style="font-size: 8.8px; margin-top: 3px;"><span style="color: #333;">Tax Amount (in words) :</span> <span style="font-weight: bold;">Indian Rupee ${totalTax > 0 ? this.numberToIndianWords(Math.round(totalTax)) : 'Zero'} Only</span></div>
+            <div style="font-size: 8.8px; margin-top: 4px;"><span style="color: #333;">Tax Amount (in words) :</span> <span style="font-weight: bold;">INR ${totalTax > 0 ? this.numberToIndianWords(totalTax) : 'Zero'} Only</span></div>
+            <div style="font-size: 8.8px; margin-top: 2px;"><span style="color: #333;">Company's PAN</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span style="font-weight: bold; font-family: monospace;">${p.s.pan || 'AALCP4218P'}</span></div>
           </div>
 
           <!-- DECLARATION & SIGNATURE BLOCK -->
           <div class="tally-footer-grid">
             
-            <!-- LEFT: DECLARATION & BANK DETAILS -->
+            <!-- LEFT: DECLARATION -->
             <div class="tally-declaration-col">
               <div>
                 <div style="font-weight: bold; text-decoration: underline; margin-bottom: 2px;">Declaration</div>
-                <div style="line-height: 1.3; color: #222; font-size: 8px;">
+                <div style="line-height: 1.35; color: #222; font-size: 8px;">
                   We declare that this invoice shows the actual price of the goods described and that all particulars are true and correct.
                 </div>
-              </div>
-              <div style="margin-top: 4px; font-size: 7.8px; color: #333; line-height: 1.25; border-top: 1px dashed #bbb; padding-top: 2px;">
-                <span style="font-weight: bold;">Company's Bank Details</span><br>
-                Bank Name: <strong>${p.s.bankName || 'HDFC Bank Ltd.'}</strong> &nbsp;|&nbsp; A/c No: <strong>${p.s.accountNo || '50200064219970'}</strong><br>
-                Branch & IFS: <strong>${p.s.branch || 'Chikhali'} & ${p.s.ifsc || 'HDFC0001234'}</strong>
               </div>
             </div>
 
             <!-- RIGHT: SIGNATURE -->
             <div class="tally-sign-col">
-              <div style="font-size: 9px; font-weight: bold;">for ${p.s.name || 'PASS CORP.'}</div>
-              <div style="margin-top: 32px; font-size: 8.8px; font-weight: bold;">Authorised Signatory</div>
+              <div style="font-size: 8.8px; font-weight: bold; text-align: right;">for <span style="text-transform: uppercase;">${p.s.compName || p.s.name || 'PASS CORP.'}</span></div>
+              <div class="tally-sign-area"></div>
+              <div style="font-size: 8.5px; font-weight: bold; text-align: right; padding-top: 2px;">Authorised Signatory</div>
             </div>
 
           </div>
@@ -4555,8 +4635,10 @@ class PassInvotorERP {
   }
 
   numberToIndianWords(num) {
-    num = Math.round(Math.abs(Number(num) || 0));
-    if (num === 0) return 'Zero';
+    const val = Math.abs(Number(num) || 0);
+    const whole = Math.floor(val);
+    const paise = Math.round((val - whole) * 100);
+
     const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
     const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
     const convert = (n) => {
@@ -4568,7 +4650,17 @@ class PassInvotorERP {
       if (n < 10000000) return convert(Math.floor(n / 100000)) + ' Lakh' + (n % 100000 !== 0 ? ' ' + convert(n % 100000) : '');
       return convert(Math.floor(n / 10000000)) + ' Crore' + (n % 10000000 !== 0 ? ' ' + convert(n % 10000000) : '');
     };
-    return convert(num).trim();
+
+    let words = whole === 0 ? (paise > 0 ? '' : 'Zero') : convert(whole).trim();
+    if (paise > 0) {
+      const paiseWords = convert(paise).trim();
+      if (words) {
+        words += ' and ' + paiseWords + ' paise';
+      } else {
+        words = paiseWords + ' paise';
+      }
+    }
+    return words || 'Zero';
   }
 
   numberToWords(n) {
