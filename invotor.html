@@ -626,6 +626,10 @@ body {
   justify-content: space-between;
   text-align: right;
 }
+.tally-sign-area {
+  min-height: 48px;
+  flex: 1;
+}
 .tally-bottom-note {
   text-align: center;
   font-size: 8.5px;
@@ -3801,11 +3805,20 @@ class PassInvotorERP {
           <!-- DECLARATION & SIGNATURE BLOCK -->
           <div class="tally-footer-grid">
             
-            <!-- LEFT: DECLARATION -->
+            <!-- LEFT: BANK DETAILS & DECLARATION -->
             <div class="tally-declaration-col">
+              <div style="margin-bottom: 3px; padding-bottom: 3px; border-bottom: 1px dashed #000;">
+                <div style="font-weight: bold; text-decoration: underline; font-size: 8.5px; margin-bottom: 2px;">Company's Bank Details</div>
+                <div style="font-size: 8px; line-height: 1.35;">
+                  <div><span style="color: #333; display: inline-block; width: 95px;">Bank Name</span>: <span style="font-weight: bold;">${p.s.bankName || 'HDFC Bank Ltd.'}</span></div>
+                  <div><span style="color: #333; display: inline-block; width: 95px;">A/c No.</span>: <span style="font-weight: bold; font-family: monospace;">${p.s.accountNo || '50200085432190'}</span></div>
+                  <div><span style="color: #333; display: inline-block; width: 95px;">Branch & IFS Code</span>: <span style="font-weight: bold;">${p.s.branch || 'Chikhali Branch, Pune'} & ${p.s.ifsc || 'HDFC0001234'}</span></div>
+                </div>
+              </div>
+
               <div>
-                <div style="font-weight: bold; text-decoration: underline; margin-bottom: 2px;">Declaration</div>
-                <div style="line-height: 1.35; color: #222; font-size: 8px;">
+                <div style="font-weight: bold; text-decoration: underline; margin-bottom: 1px; font-size: 8px;">Declaration</div>
+                <div style="line-height: 1.3; color: #222; font-size: 7.8px;">
                   We declare that this invoice shows the actual price of the goods described and that all particulars are true and correct.
                 </div>
               </div>
