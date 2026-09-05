@@ -605,11 +605,11 @@ body {
   padding: 2px 3px;
 }
 
-/* Declaration & Signature Block */
+/* Declaration & Signature Block (3 Columns: Bank/Declaration, Receiving Signatory, Authorised Signatory) */
 .tally-footer-grid {
   display: grid;
-  grid-template-columns: 1.12fr 1fr;
-  min-height: 80px;
+  grid-template-columns: 1.15fr 0.85fr 1fr;
+  min-height: 85px;
 }
 .tally-declaration-col {
   padding: 3px 6px;
@@ -619,6 +619,14 @@ body {
   justify-content: space-between;
   font-size: 8px;
 }
+.tally-receiver-col {
+  padding: 3px 6px;
+  border-right: 1px solid #000000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+}
 .tally-sign-col {
   padding: 3px 6px;
   display: flex;
@@ -627,7 +635,7 @@ body {
   text-align: right;
 }
 .tally-sign-area {
-  min-height: 48px;
+  min-height: 44px;
   flex: 1;
 }
 .tally-bottom-note {
@@ -3776,10 +3784,10 @@ class PassInvotorERP {
             <div style="font-size: 8.8px; margin-top: 2px;"><span style="color: #333;">Company's PAN</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span style="font-weight: bold; font-family: monospace;">${p.s.pan || 'AALCP4218P'}</span></div>
           </div>
 
-          <!-- DECLARATION & SIGNATURE BLOCK -->
+          <!-- DECLARATION & SIGNATURE BLOCK (3 COLUMNS) -->
           <div class="tally-footer-grid">
             
-            <!-- LEFT: BANK DETAILS & DECLARATION -->
+            <!-- 1. LEFT: BANK DETAILS & DECLARATION -->
             <div class="tally-declaration-col">
               <div style="margin-bottom: 3px; padding-bottom: 3px; border-bottom: 1px dashed #000;">
                 <div style="font-weight: bold; text-decoration: underline; font-size: 8.5px; margin-bottom: 2px;">Company's Bank Details</div>
@@ -3798,7 +3806,14 @@ class PassInvotorERP {
               </div>
             </div>
 
-            <!-- RIGHT: SIGNATURE -->
+            <!-- 2. MIDDLE: RECEIVING SIGNATORY -->
+            <div class="tally-receiver-col">
+              <div style="font-size: 8.5px; font-weight: bold; color: #000; text-align: center;">Customer / Receiver's Seal</div>
+              <div class="tally-sign-area"></div>
+              <div style="font-size: 8.5px; font-weight: bold; text-align: center; padding-top: 2px;">Receiving Signatory</div>
+            </div>
+
+            <!-- 3. RIGHT: AUTHORISED SIGNATORY -->
             <div class="tally-sign-col">
               <div style="font-size: 8.8px; font-weight: bold; text-align: right;">for <span style="text-transform: uppercase;">${p.s.compName || p.s.name || 'PASS CORP.'}</span></div>
               <div class="tally-sign-area"></div>
