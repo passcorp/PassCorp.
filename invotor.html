@@ -526,12 +526,17 @@ body {
   border-bottom: none;
 }
 
-/* Items Table */
+/* Items Table Container & Table */
+.tally-table-wrapper {
+  flex: 1;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+}
 .tally-items-table {
   width: 100%;
   border-collapse: collapse;
   flex: 1;
-  height: 100%;
 }
 .tally-items-table th {
   border-top: none;
@@ -586,7 +591,7 @@ body {
 .tally-total-row td:first-child { border-left: none; }
 .tally-total-row td:last-child { border-right: none; }
 
-/* Amount in words & HSN tables */
+/* Amount in words & HSN tables (Fixed Shrink=0) */
 .tally-amount-words-box {
   border-bottom: 1px solid #000000;
   padding: 2.5px 5px;
@@ -594,10 +599,12 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  flex-shrink: 0;
 }
 .tally-hsn-box {
   border-bottom: 1px solid #000000;
   padding: 2.5px 5px;
+  flex-shrink: 0;
 }
 .tally-hsn-table {
   width: 100%;
@@ -616,6 +623,7 @@ body {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr 1fr;
   min-height: 72px;
+  flex-shrink: 0;
 }
 .tally-declaration-col {
   padding: 2.5px 5px;
@@ -3706,41 +3714,43 @@ class PassInvotorERP {
           </div>
 
           <!-- ITEMS TABLE (CLASSIC TALLY COLUMNS) -->
-          <table class="tally-items-table">
-            <colgroup>
-              <col style="width: 28px;" />
-              <col style="width: auto;" />
-              <col style="width: 60px;" />
-              <col style="width: 65px;" />
-              <col style="width: 60px;" />
-              <col style="width: 35px;" />
-              <col style="width: 45px;" />
-              <col style="width: 85px;" />
-            </colgroup>
-            <thead>
-              <tr>
-                <th>Sl<br>No.</th>
-                <th style="text-align: left; padding-left: 6px;">Description of Goods</th>
-                <th>HSN/SAC</th>
-                <th style="text-align: right;">Quantity</th>
-                <th style="text-align: right;">Rate</th>
-                <th>per</th>
-                <th style="text-align: right;">Disc. %</th>
-                <th style="text-align: right; padding-right: 6px;">Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${itemsRowsHtml}
-              <tr class="tally-total-row">
-                <td colspan="3" class="text-right" style="padding-right: 8px;">Total</td>
-                <td class="text-right" style="font-weight: bold;">${totalQty} ${primaryUnit}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="text-right" style="font-weight: bold; font-size: 10.5px; padding-right: 6px;">₹ ${grandTotal.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="tally-table-wrapper">
+            <table class="tally-items-table">
+              <colgroup>
+                <col style="width: 28px;" />
+                <col style="width: auto;" />
+                <col style="width: 60px;" />
+                <col style="width: 65px;" />
+                <col style="width: 60px;" />
+                <col style="width: 35px;" />
+                <col style="width: 45px;" />
+                <col style="width: 85px;" />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>Sl<br>No.</th>
+                  <th style="text-align: left; padding-left: 6px;">Description of Goods</th>
+                  <th>HSN/SAC</th>
+                  <th style="text-align: right;">Quantity</th>
+                  <th style="text-align: right;">Rate</th>
+                  <th>per</th>
+                  <th style="text-align: right;">Disc. %</th>
+                  <th style="text-align: right; padding-right: 6px;">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${itemsRowsHtml}
+                <tr class="tally-total-row">
+                  <td colspan="3" class="text-right" style="padding-right: 8px;">Total</td>
+                  <td class="text-right" style="font-weight: bold;">${totalQty} ${primaryUnit}</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="text-right" style="font-weight: bold; font-size: 10.5px; padding-right: 6px;">₹ ${grandTotal.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
           <!-- AMOUNT CHARGEABLE IN WORDS (WITH E. & O.E) -->
           <div class="tally-amount-words-box">
