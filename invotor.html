@@ -1244,6 +1244,13 @@ body {
                     <option value="90 Days Credit">90 Days Credit (+90 Days from Bill Date)</option>
                   </select>
                 </div>
+                <div class="form-group" style="grid-column: span 2; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 5px; padding: 6px 10px;">
+                  <label style="font-weight: 700; color: #1e293b; margin-bottom: 0; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+                    <input type="checkbox" id="billEnableEInvoice" onchange="erp.renderLiveInvoicePreview()" style="accent-color: #2563eb; cursor: pointer;" />
+                    <span>Govt. e-Invoice Details (IRN, Ack No. &amp; QR Code)</span>
+                  </label>
+                  <div style="font-size: 10px; color: #64748b; margin-left: 22px;">Enable when required for official Govt. IRP e-invoices (Turnover &gt; ₹5 Cr).</div>
+                </div>
               </div>
             </div>
 
@@ -3270,6 +3277,8 @@ class PassInvotorERP {
     if (!container) return;
     container.innerHTML = '';
 
+    const isEInvoice = document.getElementById('billEnableEInvoice') ? document.getElementById('billEnableEInvoice').checked : (this.currentInvoice.isEInvoice || false);
+
     copyBadges.forEach(badgeLabel => {
       const sheetHtml = this.generateSingleA4SheetHtml({
         s, docType, invNo, invDate, dueDate, badgeLabel, payTerms, 
@@ -3277,7 +3286,7 @@ class PassInvotorERP {
         shipCompany, shipPerson, shipAddr, shipPhone, shipGst,
         poRef, poDate, deliveryNote, deliveryNoteDate, refNoDate, otherRef,
         transport, destination, vehicleNo, ewayBillNo, termsOfDelivery,
-        irn, ackNo, ackDate,
+        irn, ackNo, ackDate, isEInvoice,
         pos, discount, freight, items: this.currentInvoice.items
       });
       const wrap = document.createElement('div');
@@ -3526,45 +3535,34 @@ class PassInvotorERP {
     return `
       <div class="a4-sheet">
         
-        <!-- 1. TOP HEADER (CENTER TITLE, LEFT IRN/ACK, RIGHT E-INVOICE QR CODE) -->
-        <div class="tally-doc-title">${docDisplayTitle}</div>
-
-        <div class="tally-top-bar">
-          <!-- LEFT: IRN & ACK DETAILS -->
-          <div class="tally-irn-block">
-            ${p.docType === 'TAX INVOICE' ? `
+        <!-- 1. TOP HEADER (CENTER TITLE & COPY BADGE, OPTIONAL E-INVOICE BAR) -->
+        ${p.isEInvoice ? `
+          <div class="tally-doc-title">${docDisplayTitle}</div>
+          <div class="tally-top-bar">
+            <!-- LEFT: IRN & ACK DETAILS -->
+            <div class="tally-irn-block">
               <div style="display: flex; gap: 4px;"><span style="font-weight: bold; width: 44px;">IRN</span><span>:</span> <span style="font-family: 'IBM Plex Mono', monospace; font-size: 7.8px; word-break: break-all; max-width: 420px;">${p.irn || 'fe315ca18d5a6126d061104715ec76217864c2883814dc0af9252f69e2e64c80'}</span></div>
               <div style="display: flex; gap: 4px; margin-top: 2px;"><span style="font-weight: bold; width: 44px;">Ack No.</span><span>:</span> <span style="font-family: 'IBM Plex Mono', monospace; font-weight: bold; font-size: 8.5px;">${p.ackNo || '122214695897343'}</span></div>
               <div style="display: flex; gap: 4px; margin-top: 2px;"><span style="font-weight: bold; width: 44px;">Ack Date</span><span>:</span> <span style="font-size: 8.5px;">${p.ackDate || this.formatTallyDate(p.invDate)}</span></div>
-            ` : `
-              <div style="font-size: 10px; font-weight: bold; color: #000; padding-top: 4px;">${p.badgeLabel}</div>
-            `}
-          </div>
+            </div>
 
-          <!-- RIGHT: e-INVOICE TITLE & QR CODE -->
-          <div class="tally-qr-box">
-            ${p.docType === 'TAX INVOICE' ? `
+            <!-- RIGHT: e-INVOICE TITLE & QR CODE -->
+            <div class="tally-qr-box">
               <div class="tally-qr-label">e-Invoice</div>
-              <div class="tally-qr-canvas-holder" data-qr="${encodeURIComponent(qrDataPayload)}" style="width: 72px; height: 72px; background: #ffffff; display: flex; align-items: center; justify-content: center;">
-                <svg width="72" height="72" viewBox="0 0 100 100" style="display:block;">
-                  <!-- Authentic High-Density 2D Matrix e-Invoice QR Layout -->
+              <div class="tally-qr-canvas-holder" data-qr="${encodeURIComponent(qrDataPayload)}" style="width: 60px; height: 60px; background: #ffffff; display: flex; align-items: center; justify-content: center;">
+                <svg width="60" height="60" viewBox="0 0 100 100" style="display:block;">
                   <rect width="100" height="100" fill="#ffffff" />
-                  <!-- Corner Finder Pattern Top-Left -->
                   <rect x="5" y="5" width="26" height="26" fill="#000000" />
                   <rect x="9" y="9" width="18" height="18" fill="#ffffff" />
                   <rect x="13" y="13" width="10" height="10" fill="#000000" />
-                  <!-- Corner Finder Pattern Top-Right -->
                   <rect x="69" y="5" width="26" height="26" fill="#000000" />
                   <rect x="73" y="9" width="18" height="18" fill="#ffffff" />
                   <rect x="77" y="13" width="10" height="10" fill="#000000" />
-                  <!-- Corner Finder Pattern Bottom-Left -->
                   <rect x="5" y="69" width="26" height="26" fill="#000000" />
                   <rect x="9" y="73" width="18" height="18" fill="#ffffff" />
                   <rect x="13" y="77" width="10" height="10" fill="#000000" />
-                  <!-- Timing patterns -->
                   <rect x="35" y="9" width="4" height="4" fill="#000000" /><rect x="43" y="9" width="4" height="4" fill="#000000" /><rect x="51" y="9" width="4" height="4" fill="#000000" /><rect x="59" y="9" width="4" height="4" fill="#000000" />
                   <rect x="9" y="35" width="4" height="4" fill="#000000" /><rect x="9" y="43" width="4" height="4" fill="#000000" /><rect x="9" y="51" width="4" height="4" fill="#000000" /><rect x="9" y="59" width="4" height="4" fill="#000000" />
-                  <!-- Data matrix blocks -->
                   <rect x="35" y="20" width="8" height="4" fill="#000000" /><rect x="47" y="20" width="12" height="4" fill="#000000" />
                   <rect x="35" y="28" width="4" height="8" fill="#000000" /><rect x="47" y="28" width="8" height="8" fill="#000000" /><rect x="59" y="28" width="6" height="4" fill="#000000" />
                   <rect x="35" y="40" width="12" height="4" fill="#000000" /><rect x="51" y="40" width="8" height="4" fill="#000000" /><rect x="63" y="40" width="8" height="8" fill="#000000" /><rect x="75" y="40" width="16" height="4" fill="#000000" />
@@ -3575,11 +3573,14 @@ class PassInvotorERP {
                   <rect x="35" y="92" width="16" height="4" fill="#000000" /><rect x="55" y="92" width="8" height="4" fill="#000000" /><rect x="67" y="92" width="12" height="4" fill="#000000" /><rect x="83" y="92" width="8" height="4" fill="#000000" />
                 </svg>
               </div>
-            ` : `
-              <div style="font-size: 9px; font-weight: bold; border: 1px solid #000; padding: 2px 6px; margin-top: 4px;">${p.badgeLabel}</div>
-            `}
+            </div>
           </div>
-        </div>
+        ` : `
+          <div style="text-align: center; margin-bottom: 5px;">
+            <div class="tally-doc-title" style="margin-bottom: 0;">${docDisplayTitle}</div>
+            <div style="font-size: 8.8px; font-weight: bold; color: #1e293b; text-transform: uppercase; letter-spacing: 0.5px;">(${p.badgeLabel})</div>
+          </div>
+        `}
 
         <!-- 2. MAIN TALLY BOX (OUTER BORDER) -->
         <div class="tally-box-outer">
