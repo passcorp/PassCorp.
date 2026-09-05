@@ -1011,8 +1011,8 @@ body {
           <div class="form-group">
             <label>Document Title</label>
             <select id="billDocType" class="form-control" onchange="erp.handleDocTypeChange(this.value)">
-              <option value="BILL OF SUPPLY" selected>Non-GST (Bill of Supply)</option>
-              <option value="TAX INVOICE">GST (Tax Invoice)</option>
+              <option value="TAX INVOICE" selected>GST (Tax Invoice)</option>
+              <option value="BILL OF SUPPLY">Non-GST (Bill of Supply)</option>
               <option value="DELIVERY CHALLAN">Delivery Challan (Gate Pass)</option>
             </select>
           </div>
@@ -1642,6 +1642,14 @@ body {
             <input type="text" id="cfgCompTagline" class="form-control" value="PRECISION | ASSURANCE | SAFETY | SOLUTION" />
           </div>
           <div class="form-group" style="grid-column: span 2;">
+            <label>Company Logo (URL or Upload Image)</label>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <input type="text" id="cfgLogoUrl" class="form-control" value="https://passcorp.in/assets/logo.png" placeholder="https://passcorp.in/assets/logo.png" oninput="erp.handleLogoUrlChange(this.value)" />
+              <input type="file" id="cfgLogoFile" accept="image/*" style="display:none;" onchange="erp.handleLogoFileChange(event)" />
+              <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('cfgLogoFile').click()" style="white-space: nowrap; font-weight: 600; padding: 7px 12px;">📁 Upload Logo</button>
+            </div>
+          </div>
+          <div class="form-group" style="grid-column: span 2;">
             <label>Office Address</label>
             <input type="text" id="cfgAddress" class="form-control" value="Dehu Alandi Road, Chikhali, Pune - 411062, Maharashtra, India" />
           </div>
@@ -1711,6 +1719,14 @@ body {
         <div class="form-group" style="grid-column: span 2;">
           <label>Tagline (In Red)</label>
           <input type="text" id="mCompTagline" class="form-control" />
+        </div>
+        <div class="form-group" style="grid-column: span 2;">
+          <label>Company Logo (URL or Upload Image)</label>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <input type="text" id="mCompLogo" class="form-control" placeholder="https://passcorp.in/assets/logo.png" />
+            <input type="file" id="mCompLogoFile" accept="image/*" style="display:none;" onchange="erp.handleModalLogoFileChange(event)" />
+            <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('mCompLogoFile').click()" style="white-space: nowrap; font-weight: 600; padding: 7px 12px;">📁 Upload Logo</button>
+          </div>
         </div>
         <div class="form-group" style="grid-column: span 2;">
           <label>Office Address</label>
@@ -2435,12 +2451,13 @@ class PassInvotorERP {
       settings: {
         compName: "PASS CORP.",
         compTagline: "PRECISION | ASSURANCE | SAFETY | SOLUTION",
+        logo: "https://passcorp.in/assets/logo.png",
         address: "Dehu Alandi Road, Chikhali, Pune - 411062, Maharashtra, India",
         phone: "+91 97676 72497",
         email: "sales@passcorp.in / passcorpsafety@gmail.com",
-        gstMode: "unregistered",
-        gstin: "Unregistered (Non-GST Bill of Supply)",
-        pan: "AALFP8680C",
+        gstMode: "registered",
+        gstin: "27AALCP4218P1Z6",
+        pan: "AALCP4218P",
         bankName: "HDFC Bank Ltd.",
         accountNo: "50200085432190",
         ifsc: "HDFC0001234",
@@ -2451,7 +2468,7 @@ class PassInvotorERP {
         nextNonGstNo: 1,
         dcPrefix: "DC/2026-27/",
         nextDcNo: 1,
-        invoicePrefix: "PC01",
+        invoicePrefix: "PC/2026-27/",
         nextInvoiceNo: 1,
         capital: 500000,
         fixedAssets: 150000,
@@ -2552,6 +2569,7 @@ class PassInvotorERP {
     }
     if (document.getElementById('cfgCompName')) document.getElementById('cfgCompName').value = s.compName;
     if (document.getElementById('cfgCompTagline')) document.getElementById('cfgCompTagline').value = s.compTagline;
+    if (document.getElementById('cfgLogoUrl')) document.getElementById('cfgLogoUrl').value = s.logo || 'https://passcorp.in/assets/logo.png';
     if (document.getElementById('cfgAddress')) document.getElementById('cfgAddress').value = s.address;
     if (document.getElementById('cfgMobile')) document.getElementById('cfgMobile').value = s.phone;
     if (document.getElementById('cfgEmail')) document.getElementById('cfgEmail').value = s.email;
@@ -2565,10 +2583,46 @@ class PassInvotorERP {
     if (document.getElementById('cfgNextNo')) document.getElementById('cfgNextNo').value = s.nextInvoiceNo;
   }
 
+  handleLogoFileChange(event) {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const dataUrl = e.target.result;
+      if (!this.data.settings) this.data.settings = {};
+      this.data.settings.logo = dataUrl;
+      if (document.getElementById('cfgLogoUrl')) document.getElementById('cfgLogoUrl').value = dataUrl;
+      if (document.getElementById('mCompLogo')) document.getElementById('mCompLogo').value = dataUrl;
+      this.saveState();
+      this.renderLiveInvoicePreview();
+      alert('✅ Company Logo updated successfully!');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  handleModalLogoFileChange(event) {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const dataUrl = e.target.result;
+      if (document.getElementById('mCompLogo')) document.getElementById('mCompLogo').value = dataUrl;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  handleLogoUrlChange(val) {
+    if (!this.data.settings) this.data.settings = {};
+    this.data.settings.logo = (val || '').trim();
+    this.saveState();
+    this.renderLiveInvoicePreview();
+  }
+
   openCompanyProfileModal() {
     const s = this.data.settings;
     document.getElementById('mCompName').value = s.compName;
     document.getElementById('mCompTagline').value = s.compTagline;
+    if (document.getElementById('mCompLogo')) document.getElementById('mCompLogo').value = s.logo || 'https://passcorp.in/assets/logo.png';
     document.getElementById('mCompAddress').value = s.address;
     document.getElementById('mCompPhone').value = s.phone;
     document.getElementById('mCompEmail').value = s.email;
@@ -2587,6 +2641,7 @@ class PassInvotorERP {
     const s = this.data.settings;
     s.compName = document.getElementById('mCompName').value.trim() || "PASS CORP.";
     s.compTagline = document.getElementById('mCompTagline').value.trim() || "PRECISION | ASSURANCE | SAFETY | SOLUTION";
+    if (document.getElementById('mCompLogo')) s.logo = document.getElementById('mCompLogo').value.trim() || "https://passcorp.in/assets/logo.png";
     s.address = document.getElementById('mCompAddress').value.trim();
     s.phone = document.getElementById('mCompPhone').value.trim();
     s.email = document.getElementById('mCompEmail').value.trim();
@@ -2596,7 +2651,7 @@ class PassInvotorERP {
     s.accountNo = document.getElementById('mAccountNo').value.trim();
     s.ifsc = document.getElementById('mIfsc').value.trim();
     s.branch = document.getElementById('mBranch').value.trim();
-    s.invoicePrefix = document.getElementById('mPrefix').value.trim() || "PS/2026-27/";
+    s.invoicePrefix = document.getElementById('mPrefix').value.trim() || "PC/2026-27/";
     s.nextInvoiceNo = parseInt(document.getElementById('mNextNo').value) || 1;
 
     this.saveState();
@@ -3028,13 +3083,13 @@ class PassInvotorERP {
     this.renderLiveInvoicePreview();
   }
 
-  createEmptyInvoice(docType = 'BILL OF SUPPLY') {
+  createEmptyInvoice(docType = 'TAX INVOICE') {
     const today = new Date().toISOString().split('T')[0];
     const terms = 'As Agreed';
     const initDueDate = this.calculateDueDateFromTerms(today, terms);
     return {
-      docType: docType,
-      invoiceNo: this.getNextInvoiceNumber(docType),
+      docType: docType || 'TAX INVOICE',
+      invoiceNo: this.getNextInvoiceNumber(docType || 'TAX INVOICE'),
       date: today,
       dueDate: initDueDate,
       copyOption: 'all_three',
@@ -3070,8 +3125,8 @@ class PassInvotorERP {
   }
 
   newInvoice() {
-    const currentDocType = document.getElementById('billDocType') ? document.getElementById('billDocType').value : (this.currentInvoice ? this.currentInvoice.docType : 'BILL OF SUPPLY');
-    this.currentInvoice = this.createEmptyInvoice(currentDocType);
+    const currentDocType = document.getElementById('billDocType') ? document.getElementById('billDocType').value : (this.currentInvoice ? this.currentInvoice.docType : 'TAX INVOICE');
+    this.currentInvoice = this.createEmptyInvoice(currentDocType || 'TAX INVOICE');
     if (document.getElementById('billInvoiceNo')) {
       document.getElementById('billInvoiceNo').value = this.currentInvoice.invoiceNo;
     }
@@ -3215,12 +3270,21 @@ class PassInvotorERP {
     let itemsRowsHtml = '';
     const hsnMap = {};
 
-    p.items.forEach((item, idx) => {
-      const taxable = item.qty * item.rate;
-      const gstRate = p.docType === 'TAX INVOICE' ? (item.gstRate || 18) : 0;
+    const isTaxDoc = (p.docType === 'TAX INVOICE' || !p.docType || p.docType.includes('TAX') || p.docType.includes('GST'));
+
+    (p.items || []).forEach((item, idx) => {
+      const qty = parseFloat(item.qty) || 0;
+      const rate = parseFloat(item.rate) || 0;
+      const taxable = qty * rate;
+      let rawGst = item.gstRate;
+      if (rawGst === undefined || rawGst === null || rawGst === '') {
+        rawGst = 18;
+      }
+      const itemGstRate = parseFloat(rawGst) || 0;
+      const gstRate = isTaxDoc ? itemGstRate : 0;
       const taxAmt = (taxable * gstRate) / 100;
 
-      totalQty += item.qty;
+      totalQty += qty;
       totalTaxable += taxable;
       totalTax += taxAmt;
       if (item.unit) primaryUnit = item.unit;
@@ -3240,8 +3304,8 @@ class PassInvotorERP {
             ${item.desc ? `<div style="font-size: 8.5px; color: #333; margin-top: 1px; white-space: pre-line;">${item.desc}</div>` : ''}
           </td>
           <td class="text-center" style="font-size: 9px;">${item.hsn || '6506'}</td>
-          <td class="text-right" style="font-weight: bold;">${item.qty} ${item.unit || 'Nos.'}</td>
-          <td class="text-right">${item.rate.toFixed(2)}</td>
+          <td class="text-right" style="font-weight: bold;">${qty} ${item.unit || 'Nos.'}</td>
+          <td class="text-right">${rate.toFixed(2)}</td>
           <td class="text-center">${item.unit || 'Nos.'}</td>
           <td class="text-right">${item.disc ? item.disc + '%' : ''}</td>
           <td class="text-right" style="font-weight: bold;">${taxable.toFixed(2)}</td>
@@ -3264,23 +3328,41 @@ class PassInvotorERP {
       `;
     }
 
-    // Ledger lines (CGST / SGST / Discount / Freight / Round Off)
-    if (p.docType === 'TAX INVOICE' && totalTax > 0) {
-      const halfTax = (totalTax / 2).toFixed(2);
-      itemsRowsHtml += `
-        <tr class="tally-tax-line">
-          <td></td>
-          <td class="text-right" style="padding-right: 14px;"><span style="font-style: italic; font-weight: bold; font-size: 9px;">CGST</span></td>
-          <td></td><td></td><td></td><td></td><td></td>
-          <td class="text-right" style="font-weight: bold;">${halfTax}</td>
-        </tr>
-        <tr class="tally-tax-line">
-          <td></td>
-          <td class="text-right" style="padding-right: 14px;"><span style="font-style: italic; font-weight: bold; font-size: 9px;">SGST</span></td>
-          <td></td><td></td><td></td><td></td><td></td>
-          <td class="text-right" style="font-weight: bold;">${halfTax}</td>
-        </tr>
-      `;
+    const isInterState = (p.pos && !p.pos.toLowerCase().includes('maharashtra') && !p.pos.includes('27') && !p.pos.toLowerCase().includes('mh'));
+
+    // Tax Ledger lines (CGST / SGST / IGST)
+    if (isTaxDoc && (totalTax > 0 || totalTaxable > 0)) {
+      const taxRates = Object.values(hsnMap).map(g => g.gstRate);
+      const uniqueRates = [...new Set(taxRates)];
+
+      if (isInterState) {
+        const rateLabel = uniqueRates.length === 1 ? ` @ ${uniqueRates[0]}%` : '';
+        itemsRowsHtml += `
+          <tr class="tally-tax-line">
+            <td></td>
+            <td class="text-right" style="padding-right: 14px;"><span style="font-style: italic; font-weight: bold; font-size: 9px;">Output IGST${rateLabel}</span></td>
+            <td></td><td></td><td></td><td></td><td></td>
+            <td class="text-right" style="font-weight: bold;">${totalTax.toFixed(2)}</td>
+          </tr>
+        `;
+      } else {
+        const halfTax = (totalTax / 2).toFixed(2);
+        const rateLabel = uniqueRates.length === 1 ? ` @ ${(uniqueRates[0] / 2).toFixed(1).replace('.0', '')}%` : '';
+        itemsRowsHtml += `
+          <tr class="tally-tax-line">
+            <td></td>
+            <td class="text-right" style="padding-right: 14px;"><span style="font-style: italic; font-weight: bold; font-size: 9px;">Output CGST${rateLabel}</span></td>
+            <td></td><td></td><td></td><td></td><td></td>
+            <td class="text-right" style="font-weight: bold;">${halfTax}</td>
+          </tr>
+          <tr class="tally-tax-line">
+            <td></td>
+            <td class="text-right" style="padding-right: 14px;"><span style="font-style: italic; font-weight: bold; font-size: 9px;">Output SGST${rateLabel}</span></td>
+            <td></td><td></td><td></td><td></td><td></td>
+            <td class="text-right" style="font-weight: bold;">${halfTax}</td>
+          </tr>
+        `;
+      }
     }
 
     if (p.discount > 0) {
@@ -3329,22 +3411,37 @@ class PassInvotorERP {
 
     // HSN Analysis rows
     let gstSummaryRowsHtml = '';
-    Object.keys(hsnMap).forEach(hsn => {
-      const g = hsnMap[hsn];
-      const halfRate = (g.gstRate / 2).toFixed(1).replace('.0', '');
-      const halfAmt = (g.taxAmt / 2);
-      gstSummaryRowsHtml += `
+    const hsnKeys = Object.keys(hsnMap);
+    if (hsnKeys.length > 0) {
+      hsnKeys.forEach(hsn => {
+        const g = hsnMap[hsn];
+        const halfRate = (g.gstRate / 2).toFixed(1).replace('.0', '');
+        const halfAmt = (g.taxAmt / 2);
+        gstSummaryRowsHtml += `
+          <tr>
+            <td style="font-weight: bold; text-align: center;">${g.hsn}</td>
+            <td style="text-align: right;">${g.taxable.toFixed(2)}</td>
+            <td style="text-align: center;">${halfRate}%</td>
+            <td style="text-align: right;">${halfAmt.toFixed(2)}</td>
+            <td style="text-align: center;">${halfRate}%</td>
+            <td style="text-align: right;">${halfAmt.toFixed(2)}</td>
+            <td style="text-align: right; font-weight: bold;">${g.taxAmt.toFixed(2)}</td>
+          </tr>
+        `;
+      });
+    } else {
+      gstSummaryRowsHtml = `
         <tr>
-          <td style="font-weight: bold; text-align: center;">${g.hsn}</td>
-          <td style="text-align: right;">${g.taxable.toFixed(2)}</td>
-          <td style="text-align: center;">${halfRate}%</td>
-          <td style="text-align: right;">${halfAmt.toFixed(2)}</td>
-          <td style="text-align: center;">${halfRate}%</td>
-          <td style="text-align: right;">${halfAmt.toFixed(2)}</td>
-          <td style="text-align: right; font-weight: bold;">${g.taxAmt.toFixed(2)}</td>
+          <td style="font-weight: bold; text-align: center;">6506</td>
+          <td style="text-align: right;">0.00</td>
+          <td style="text-align: center;">9%</td>
+          <td style="text-align: right;">0.00</td>
+          <td style="text-align: center;">9%</td>
+          <td style="text-align: right;">0.00</td>
+          <td style="text-align: right; font-weight: bold;">0.00</td>
         </tr>
       `;
-    });
+    }
 
     const docDisplayTitle = p.docType === 'DELIVERY CHALLAN' ? 'Delivery Challan' : (p.docType === 'BILL OF SUPPLY' ? 'Bill of Supply' : 'Tax Invoice');
 
@@ -3357,6 +3454,8 @@ class PassInvotorERP {
       TotInvVal: grandTotal,
       ItemCnt: p.items.length
     });
+
+    const compLogoUrl = p.s.logo || 'https://passcorp.in/assets/logo.png';
 
     return `
       <div class="a4-sheet">
@@ -3426,11 +3525,20 @@ class PassInvotorERP {
             <div class="tally-party-col">
               
               <!-- SUPPLIER / COMPANY -->
-              <div class="tally-party-subbox">
-                <div style="font-weight: bold; font-size: 10.5px; text-transform: uppercase;">${p.s.name || 'PASS CORP.'}, Pune</div>
-                <div style="font-size: 9px; margin-top: 1px;">${p.s.address || 'Dehu Alandi Road, Chikhali, Pune - 411062, Maharashtra'}</div>
-                <div style="font-size: 9px; margin-top: 1px;"><span style="font-weight: bold;">GSTIN/UIN:</span> ${p.s.gstin || '27AALCP4218P1Z6'}</div>
-                <div style="font-size: 9px; margin-top: 1px;"><span style="font-weight: bold;">State Name :</span> Maharashtra, Code : 27</div>
+              <div class="tally-party-subbox" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
+                <div style="flex: 1;">
+                  <div style="font-weight: bold; font-size: 11px; text-transform: uppercase;">${p.s.compName || p.s.name || 'PASS CORP.'}, Pune</div>
+                  ${p.s.compTagline ? `<div style="font-size: 7.8px; color: #dc2626; font-weight: 700; letter-spacing: 0.3px; margin-top: 1px; margin-bottom: 2px;">${p.s.compTagline}</div>` : ''}
+                  <div style="font-size: 8.8px; margin-top: 1px;">${p.s.address || 'Dehu Alandi Road, Chikhali, Pune - 411062, Maharashtra'}</div>
+                  <div style="font-size: 8.8px; margin-top: 1px;"><span style="font-weight: bold;">GSTIN/UIN:</span> ${p.s.gstin || '27AALCP4218P1Z6'}</div>
+                  <div style="font-size: 8.8px; margin-top: 1px;"><span style="font-weight: bold;">State Name :</span> Maharashtra, Code : 27</div>
+                  <div style="font-size: 8.5px; margin-top: 1px;"><span style="font-weight: bold;">Contact :</span> ${p.s.phone || '+91 97676 72497'} | ${p.s.email || 'passcorppune@gmail.com'}</div>
+                </div>
+                ${(compLogoUrl && compLogoUrl !== 'none') ? `
+                  <div style="text-align: right; flex-shrink: 0; padding-left: 4px; padding-top: 1px;">
+                    <img src="${compLogoUrl}" alt="PASS CORP." style="max-height: 48px; max-width: 90px; object-fit: contain; display: block;" onerror="this.style.display='none'" />
+                  </div>
+                ` : ''}
               </div>
 
               <!-- CONSIGNEE (SHIP TO) -->
@@ -3918,9 +4026,9 @@ class PassInvotorERP {
         qty: 1,
         rate: p.price,
         taxable: p.price,
-        gstRate: 0,
-        taxAmt: 0,
-        total: p.price
+        gstRate: (p.gstRate !== undefined && p.gstRate !== null) ? p.gstRate : 18,
+        taxAmt: ((p.price || 0) * ((p.gstRate !== undefined && p.gstRate !== null) ? p.gstRate : 18)) / 100,
+        total: (p.price || 0) * (1 + (((p.gstRate !== undefined && p.gstRate !== null) ? p.gstRate : 18) / 100))
       });
     }
     this.closeModal('productPickerModal');
@@ -3930,16 +4038,29 @@ class PassInvotorERP {
 
   saveInvoice() {
     const custName = document.getElementById('billCustomerName').value || 'Customer';
-    const subtotal = this.currentInvoice.items.reduce((s, it) => s + (it.qty * it.rate), 0);
+    const docType = document.getElementById('billDocType').value;
+    const isTaxDoc = (docType === 'TAX INVOICE' || !docType || docType.includes('TAX') || docType.includes('GST'));
+
+    let totalTaxable = 0;
+    let totalTax = 0;
+    this.currentInvoice.items.forEach(it => {
+      const taxable = (parseFloat(it.qty) || 0) * (parseFloat(it.rate) || 0);
+      const gstRate = isTaxDoc ? ((it.gstRate !== undefined && it.gstRate !== null && it.gstRate !== '') ? parseFloat(it.gstRate) : 18) : 0;
+      const taxAmt = (taxable * gstRate) / 100;
+      totalTaxable += taxable;
+      totalTax += taxAmt;
+    });
+
     const discount = parseFloat(document.getElementById('billDiscount').value) || 0;
     const freight = parseFloat(document.getElementById('billFreight').value) || 0;
-    const grandTotal = Math.max(0, subtotal - discount + freight);
+    const rawGrandTotal = Math.max(0, totalTaxable + totalTax - discount + freight);
+    const grandTotal = Math.round(rawGrandTotal);
     const advance = parseFloat(document.getElementById('billAdvancePaid') ? document.getElementById('billAdvancePaid').value : 0) || 0;
     const balanceDue = Math.max(0, grandTotal - advance);
 
     const inv = {
       id: 'inv_' + Date.now(),
-      docType: document.getElementById('billDocType').value,
+      docType: docType,
       invoiceNo: document.getElementById('billInvoiceNo').value,
       date: document.getElementById('billDate').value,
       dueDate: document.getElementById('billDueDate') ? document.getElementById('billDueDate').value : '',
@@ -3960,7 +4081,8 @@ class PassInvotorERP {
       ewayBillNo: document.getElementById('billEwayBillNo') ? document.getElementById('billEwayBillNo').value : '',
       placeOfSupply: document.getElementById('billPlaceOfSupply').value,
       items: JSON.parse(JSON.stringify(this.currentInvoice.items)),
-      subtotal: subtotal,
+      subtotal: totalTaxable,
+      taxAmount: totalTax,
       discount: discount,
       freight: freight,
       grandTotal: grandTotal,
@@ -4378,6 +4500,7 @@ class PassInvotorERP {
     const s = this.data.settings;
     s.compName = document.getElementById('cfgCompName').value.trim() || "PASS CORP.";
     s.compTagline = document.getElementById('cfgCompTagline').value.trim() || "PRECISION | ASSURANCE | SAFETY | SOLUTION";
+    if (document.getElementById('cfgLogoUrl')) s.logo = document.getElementById('cfgLogoUrl').value.trim() || "https://passcorp.in/assets/logo.png";
     s.address = document.getElementById('cfgAddress').value.trim();
     s.phone = document.getElementById('cfgMobile').value.trim();
     s.email = document.getElementById('cfgEmail').value.trim();
@@ -4387,10 +4510,11 @@ class PassInvotorERP {
     s.accountNo = document.getElementById('cfgAccountNo').value.trim();
     s.ifsc = document.getElementById('cfgIfsc').value.trim();
     s.branch = document.getElementById('cfgBranch').value.trim();
-    s.invoicePrefix = document.getElementById('cfgPrefix').value.trim() || "PS/2026-27/";
+    s.invoicePrefix = document.getElementById('cfgPrefix').value.trim() || "PC/2026-27/";
     s.nextInvoiceNo = parseInt(document.getElementById('cfgNextNo').value) || 1;
 
     this.saveState();
+    this.syncSettingsFields();
     alert('✅ Setup saved permanently!');
     this.renderLiveInvoicePreview();
   }
