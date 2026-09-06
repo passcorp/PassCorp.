@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<title>PASS CORP. Enterprise Suite | Quotor & Invotor</title>
+<link rel="icon" type="image/png" href="https://passcorp.in/assets/favicon-96x96.png" />
+<link rel="manifest" href="manifest_suite.json" />
+<meta name="theme-color" content="#0c2340" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="PASS Suite" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@700;800&family=IBM+Plex+Mono:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pass-navy: #0c2340;
+  --pass-navy-dark: #071526;
+  --pass-blue: #1e3a8a;
+  --pass-red: #c81e1e;
+  --accent-blue: #2563eb;
+  --success-green: #10b981;
+  --line: #334155;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--pass-navy-dark);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* TOP UNIFIED SUITE HEADER */
+.suite-top-bar {
+  background: linear-gradient(180deg, #0c2340 0%, #081628 100%);
+  border-bottom: 2px solid #1e293b;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 14px;
+  flex-shrink: 0;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.suite-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.suite-logo {
+  height: 32px;
+  max-width: 90px;
+  object-fit: contain;
+  background: #ffffff;
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+
+.suite-title-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.suite-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+}
+
+.suite-tag {
+  font-size: 8.5px;
+  font-weight: 800;
+  color: #f87171;
+  letter-spacing: 0.8px;
+}
+
+/* MAIN APP TABS */
+.suite-tabs-wrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(15, 23, 42, 0.8);
+  padding: 3px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.suite-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: #94a3b8;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  user-select: none;
+}
+
+.suite-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f1f5f9;
+}
+
+.suite-tab-btn.active {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+}
+
+.suite-tab-btn.active.invotor-tab {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+}
+
+.suite-tab-badge {
+  font-size: 9.5px;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+/* SUITE RIGHT ACTIONS */
+.suite-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-suite-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #f1f5f9;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.btn-suite-action:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.btn-suite-install {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-color: #10b981;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
+}
+
+/* APP VIEWPORT CONTAINER */
+.suite-viewport-container {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.suite-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: none;
+}
+
+.suite-frame.active {
+  display: block;
+}
+
+/* MODAL STYLES */
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.modal-backdrop.open { display: flex; }
+.modal-box {
+  background: #ffffff;
+  color: #0f172a;
+  border-radius: 10px;
+  width: 92%;
+  max-width: 580px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  border: 1px solid #cbd5e1;
+}
+.modal-header {
+  background: #0c2340;
+  color: #ffffff;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 800;
+  font-size: 14px;
+}
+.modal-body { padding: 18px; }
+.modal-footer {
+  padding: 12px 16px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.btn {
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-outline { background: #ffffff; border-color: #cbd5e1; color: #334155; }
+.btn-blue { background: #2563eb; color: #ffffff; }
+.btn-green { background: #10b981; color: #ffffff; }
+</style>
+</head>
+<body>
+
+<!-- TOP UNIFIED SUITE HEADER -->
+<header class="suite-top-bar">
+  <div class="suite-brand" onclick="switchAppTab('invotor')">
+    <img src="https://passcorp.in/assets/logo.png" alt="PASS CORP." class="suite-logo" onerror="this.style.display='none'" />
+    <div class="suite-title-box">
+      <span class="suite-name">PASS CORP. SUITE</span>
+      <span class="suite-tag">PRECISION | ASSURANCE | SAFETY | SOLUTION</span>
+    </div>
+  </div>
+
+  <!-- MAIN SUITE SWITCHER TABS -->
+  <nav class="suite-tabs-wrap">
+    <button class="suite-tab-btn active invotor-tab" id="tabBtnInvotor" onclick="switchAppTab('invotor')">
+      <span>🧾</span>
+      <span>INVOTOR (Tax Invoice &amp; ERP)</span>
+      <span class="suite-tab-badge">Prime</span>
+    </button>
+    <button class="suite-tab-btn" id="tabBtnQuotor" onclick="switchAppTab('quotor')">
+      <span>⚡</span>
+      <span>QUOTOR (Quotation Generator)</span>
+      <span class="suite-tab-badge">382+ Items</span>
+    </button>
+  </nav>
+
+  <!-- RIGHT ACTION BUTTONS -->
+  <div class="suite-actions">
+    <button class="btn-suite-action btn-suite-install" id="btnSuiteInstall" onclick="openSuiteInstallModal()" title="Install Complete Suite as Desktop App (Windows &amp; Mac)">
+      <span>💻</span>
+      <span>Install Desktop App</span>
+    </button>
+    <a href="https://passcorp.in" target="_blank" class="btn-suite-action" title="Open Main Storefront Website">
+      <span>🌐</span>
+      <span>Website</span>
+    </a>
+  </div>
+</header>
+
+<!-- EMBEDDED DUAL-VIEWPORT CONTAINERS -->
+<main class="suite-viewport-container">
+  <iframe src="invotor.html?suite=1" id="frameInvotor" class="suite-frame active" title="Invotor ERP &amp; Billing"></iframe>
+  <iframe src="quotation.html?secure=1&amp;suite=1" id="frameQuotor" class="suite-frame" title="Quotor Enterprise Quotation"></iframe>
+</main>
+
+<!-- DESKTOP APP INSTALLATION MODAL -->
+<div class="modal-backdrop" id="suiteInstallModal">
+  <div class="modal-box">
+    <div class="modal-header" style="background: linear-gradient(135deg, #0c2340 0%, #1e3a8a 100%);">
+      <span>💻 PASS CORP. Unified Suite — Desktop Software</span>
+      <button class="btn btn-outline btn-sm" style="background: transparent; color: #fff; border: none; font-size: 14px;" onclick="closeSuiteInstallModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="text-align: center; margin-bottom: 16px;">
+        <img src="assets/logo.png" alt="PASS CORP Logo" style="max-height: 48px; object-fit: contain; margin-bottom: 6px;" />
+        <div style="font-size: 15px; font-weight: 800; color: #0c2340;">PASS CORP. Enterprise Desktop Software</div>
+        <div style="font-size: 11.5px; color: #64748b;">Unified Quotor (Quotation) + Invotor (Tax Invoice &amp; ERP) running in a single native window.</div>
+      </div>
+
+      <!-- METHOD 1: 1-CLICK PWA INSTALL -->
+      <div style="background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 8px; padding: 14px; margin-bottom: 14px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <div style="font-weight: 800; color: #166534; font-size: 13.5px; display: flex; align-items: center; gap: 6px;">
+            <span>⚡</span> 1-Click Desktop App Install (PWA)
+          </div>
+          <span style="background: #22c55e; color: #ffffff; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 12px;">Recommended</span>
+        </div>
+        <div style="font-size: 11.5px; color: #15803d; line-height: 1.4; margin-bottom: 10px;">
+          Installs <strong>PASS CORP Suite</strong> directly to your <strong>Windows Start Menu &amp; Desktop</strong> or <strong>macOS Applications &amp; Dock</strong>.
+        </div>
+        <button type="button" class="btn btn-green" style="width: 100%; font-weight: 800; padding: 10px; font-size: 13px; justify-content: center;" onclick="triggerSuitePwaInstall()">
+          📥 Install PASS CORP Suite Desktop App
+        </button>
+      </div>
+
+      <!-- METHOD 2: DIRECT OS PACKAGES -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+        <!-- WINDOWS -->
+        <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="font-size: 26px; margin-bottom: 4px;">🪟</div>
+            <div style="font-weight: 800; font-size: 13px; color: #0c2340; margin-bottom: 2px;">Windows Software</div>
+            <div style="font-size: 10.5px; color: #64748b; margin-bottom: 10px;">Standalone launcher for Windows 10 &amp; 11.</div>
+          </div>
+          <a href="downloads/PASS_CORP_Suite_Windows.bat" download="PASS_CORP_Suite_Windows.bat" class="btn btn-outline btn-sm" style="font-weight: 700; font-size: 11.5px; text-decoration: none; justify-content: center; border-color: #2563eb; color: #2563eb;">
+            ⬇️ Download for Windows (.bat)
+          </a>
+        </div>
+
+        <!-- MACOS -->
+        <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="font-size: 26px; margin-bottom: 4px;">🍎</div>
+            <div style="font-weight: 800; font-size: 13px; color: #0c2340; margin-bottom: 2px;">macOS Software</div>
+            <div style="font-size: 10.5px; color: #64748b; margin-bottom: 10px;">Native App bundle for macOS (Apple Silicon &amp; Intel).</div>
+          </div>
+          <a href="downloads/PASS_CORP_Suite_macOS.zip" download="PASS_CORP_Suite_macOS.zip" class="btn btn-outline btn-sm" style="font-weight: 700; font-size: 11.5px; text-decoration: none; justify-content: center; border-color: #0c2340; color: #0c2340;">
+            ⬇️ Download for Mac (.zip)
+          </a>
+        </div>
+      </div>
+
+      <!-- OFFLINE NOTICE -->
+      <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 8px 12px; font-size: 11px; color: #1e40af; display: flex; align-items: center; gap: 8px;">
+        <span>🔒</span>
+        <span><strong>100% Offline Capability:</strong> All quotations, invoices, catalog, and customers remain saved on your computer.</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeSuiteInstallModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentSuiteTab = 'invotor';
+
+function switchAppTab(tabName) {
+  currentSuiteTab = tabName;
+  const btnInvotor = document.getElementById('tabBtnInvotor');
+  const btnQuotor = document.getElementById('tabBtnQuotor');
+  const frameInvotor = document.getElementById('frameInvotor');
+  const frameQuotor = document.getElementById('frameQuotor');
+
+  if (tabName === 'invotor') {
+    btnInvotor.className = 'suite-tab-btn active invotor-tab';
+    btnQuotor.className = 'suite-tab-btn';
+    frameInvotor.className = 'suite-frame active';
+    frameQuotor.className = 'suite-frame';
+  } else {
+    btnQuotor.className = 'suite-tab-btn active';
+    btnInvotor.className = 'suite-tab-btn';
+    frameQuotor.className = 'suite-frame active';
+    frameInvotor.className = 'suite-frame';
+  }
+}
+
+function openSuiteInstallModal() {
+  document.getElementById('suiteInstallModal').classList.add('open');
+}
+
+function closeSuiteInstallModal() {
+  document.getElementById('suiteInstallModal').classList.remove('open');
+}
+
+// PWA Support
+let suiteDeferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  suiteDeferredPrompt = e;
+});
+
+function triggerSuitePwaInstall() {
+  if (suiteDeferredPrompt) {
+    suiteDeferredPrompt.prompt();
+    suiteDeferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        closeSuiteInstallModal();
+      }
+      suiteDeferredPrompt = null;
+    });
+  } else {
+    alert('ℹ️ To install PASS CORP Suite on Windows / Mac:
+
+1. In Chrome / Edge: Click the Install icon (🖥️ / ➕) in the right side of the address bar.
+2. Or download the Standalone Windows (.bat) or macOS (.zip) software packages below!');
+  }
+}
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch(() => {});
+}
+</script>
+
+</body>
+</html>
