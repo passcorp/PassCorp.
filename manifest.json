@@ -1,0 +1,26 @@
+{
+  "name": "PASS CORP. Invotor ERP & Invoicing",
+  "short_name": "Invotor",
+  "description": "Professional TallyPrime GST Tax Invoice, Delivery Challan & Inventory ERP for PASS CORP.",
+  "start_url": "./invotor.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0c2340",
+  "theme_color": "#0c2340",
+  "categories": ["business", "finance", "productivity"],
+  "icons": [
+    {
+      "src": "assets/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

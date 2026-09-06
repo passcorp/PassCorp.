@@ -8,6 +8,11 @@
 <meta http-equiv="Expires" content="0" />
 <title>INVOTOR | Pass Corp. Enterprise Billing & ERP</title>
 <link rel="icon" type="image/png" href="https://passcorp.in/assets/favicon-96x96.png" />
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#0c2340" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="PASS Invotor" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -982,6 +987,9 @@ body {
     </button>
     <button class="hdr-btn hdr-btn-primary" onclick="erp.printInvoice()" title="Print Current Document (A4 Tally Sheet)">
       <span>🖨️</span> Print / PDF
+    </button>
+    <button class="hdr-btn" id="btnInstallApp" onclick="erp.openDesktopAppModal()" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #ffffff; border: none; font-weight: 700;" title="Install Desktop App for Windows & macOS">
+      <span>💻</span> <span id="installBtnText">Desktop App</span>
     </button>
     <button class="hdr-btn hdr-btn-whatsapp" onclick="erp.shareWhatsApp()" title="Share Bill on WhatsApp">
       <span>💬</span> WhatsApp
@@ -2154,6 +2162,78 @@ body {
   </div>
 </div>
 
+<!-- DESKTOP APP DOWNLOAD & INSTALL MODAL -->
+<div class="modal-backdrop" id="desktopAppModal">
+  <div class="modal-box" style="max-width: 580px;">
+    <div class="modal-header" style="background: linear-gradient(135deg, #0c2340 0%, #1e3a8a 100%);">
+      <span>💻 PASS CORP. Invotor — Desktop Software Installation</span>
+      <button class="btn btn-danger btn-sm" onclick="erp.closeModal('desktopAppModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="text-align: center; margin-bottom: 16px;">
+        <img src="assets/logo.png" alt="PASS CORP Logo" style="max-height: 48px; object-fit: contain; margin-bottom: 6px;" />
+        <div style="font-size: 15px; font-weight: 800; color: #0c2340;">Install Native Desktop Application</div>
+        <div style="font-size: 11.5px; color: #64748b;">Run Invotor standalone on your Windows PC or Mac without browser address bar, with 100% offline support.</div>
+      </div>
+
+      <!-- METHOD 1: 1-CLICK PWA INSTALL (RECOMMENDED) -->
+      <div style="background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 8px; padding: 14px; margin-bottom: 14px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <div style="font-weight: 800; color: #166534; font-size: 13.5px; display: flex; align-items: center; gap: 6px;">
+            <span>⚡</span> Method 1: 1-Click Desktop App Install (PWA)
+          </div>
+          <span style="background: #22c55e; color: #ffffff; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 12px; text-transform: uppercase;">Recommended</span>
+        </div>
+        <div style="font-size: 11.5px; color: #15803d; line-height: 1.4; margin-bottom: 10px;">
+          Installs directly into your <strong>Windows Start Menu &amp; Taskbar</strong> or <strong>macOS Applications &amp; Dock</strong>. Opens in a clean, standalone desktop window.
+        </div>
+        <button type="button" class="btn btn-blue" id="btnTriggerPwaInstall" onclick="erp.triggerPwaInstall()" style="width: 100%; font-weight: 800; padding: 10px; background: #16a34a; border: none; font-size: 13px;">
+          📥 Click Here to Install Desktop App Now
+        </button>
+      </div>
+
+      <!-- METHOD 2: DIRECT OS PACKAGES -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+        
+        <!-- WINDOWS BOX -->
+        <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="font-size: 26px; margin-bottom: 4px;">🪟</div>
+            <div style="font-weight: 800; font-size: 13px; color: #0c2340; margin-bottom: 2px;">Windows Software</div>
+            <div style="font-size: 10.5px; color: #64748b; margin-bottom: 10px;">For Windows 10, 11 (64-bit / 32-bit). Standalone app mode launcher.</div>
+          </div>
+          <a href="downloads/PASS_CORP_Invotor_Windows.bat" download="PASS_CORP_Invotor_Windows.bat" class="btn btn-outline btn-sm" style="font-weight: 700; font-size: 11.5px; padding: 6px 10px; text-decoration: none; display: block; border-color: #2563eb; color: #2563eb;">
+            ⬇️ Download for Windows (.bat)
+          </a>
+        </div>
+
+        <!-- MACOS BOX -->
+        <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="font-size: 26px; margin-bottom: 4px;">🍎</div>
+            <div style="font-weight: 800; font-size: 13px; color: #0c2340; margin-bottom: 2px;">macOS Software</div>
+            <div style="font-size: 10.5px; color: #64748b; margin-bottom: 10px;">For macOS Ventura, Sonoma, Sequoia (M1/M2/M3/M4 &amp; Intel).</div>
+          </div>
+          <a href="downloads/PASS_CORP_Invotor_macOS.zip" download="PASS_CORP_Invotor_macOS.zip" class="btn btn-outline btn-sm" style="font-weight: 700; font-size: 11.5px; padding: 6px 10px; text-decoration: none; display: block; border-color: #0c2340; color: #0c2340;">
+            ⬇️ Download for Mac (.zip)
+          </a>
+        </div>
+
+      </div>
+
+      <!-- OFFLINE NOTICE -->
+      <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 8px 12px; font-size: 11px; color: #1e40af; display: flex; align-items: center; gap: 8px;">
+        <span>🔒</span>
+        <span><strong>100% Offline Capability:</strong> All invoices, catalog, and settings are saved securely on your computer.</span>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="erp.closeModal('desktopAppModal')">Close</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const INITIAL_SAFETY_CATALOG = [];
 
@@ -2607,6 +2687,42 @@ class PassInvotorERP {
     this.renderLiveInvoicePreview();
     this.populatePartyDropdowns();
     this.syncSettingsFields();
+    this.initPwa();
+  }
+
+  initPwa() {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    }
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      window.deferredPrompt = e;
+      const btn = document.getElementById('btnInstallApp');
+      if (btn) btn.style.display = 'inline-flex';
+    });
+    window.addEventListener('appinstalled', () => {
+      window.deferredPrompt = null;
+      const btn = document.getElementById('btnInstallApp');
+      if (btn) btn.innerHTML = '<span>✅</span> Installed';
+    });
+  }
+
+  openDesktopAppModal() {
+    this.openModal('desktopAppModal');
+  }
+
+  triggerPwaInstall() {
+    if (window.deferredPrompt) {
+      window.deferredPrompt.prompt();
+      window.deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          this.closeModal('desktopAppModal');
+        }
+        window.deferredPrompt = null;
+      });
+    } else {
+      alert('ℹ️ To install on Windows/Mac:\n\n1. In Chrome / Edge: Click the "Install" icon (🖥️ / ➕) on the right side of the URL bar.\n2. Or click the "Download for Windows / Mac" buttons below to download the standalone app package.');
+    }
   }
 
   checkAuthentication() {
