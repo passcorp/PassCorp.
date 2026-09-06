@@ -1307,7 +1307,7 @@ body {
             <div style="flex: 1; min-width: 250px;">
               <input type="text" list="catalogDatalist" id="quickItemSearchInp" class="form-control" placeholder="Type keyword (e.g. Helmet, Shoe, Gloves, Jacket) to insert item immediately..." onchange="erp.handleQuickItemSearchSelect(this)" style="font-weight: 700; font-size: 12.5px; background: #ffffff; border: 1.5px solid #3b82f6;" />
             </div>
-            <button type="button" class="btn btn-blue btn-sm" onclick="erp.openProductPickerModal()" style="font-weight: 800; padding: 6px 12px; display: inline-flex; align-items: center; gap: 5px;">📦 Browse Catalogue (186+ Items)</button>
+            <button type="button" class="btn btn-blue btn-sm" onclick="erp.openProductPickerModal()" style="font-weight: 800; padding: 6px 12px; display: inline-flex; align-items: center; gap: 5px;">📦 Browse Master Catalogue (382+ Items)</button>
             <button type="button" class="btn btn-outline btn-sm" onclick="erp.openNewProductModal()" title="Save New Product">➕ New Product</button>
           </div>
 
@@ -1969,7 +1969,7 @@ body {
     <div class="modal-header">
       <div style="display: flex; align-items: center; gap: 8px;">
         <span style="font-weight: 800; font-size: 15px;">📦 PASS CORP. Master Safety Catalogue</span>
-        <span class="badge badge-blue" id="catalogModalBadge" style="font-size: 11px; padding: 3px 8px;">186+ Products Connected</span>
+        <span class="badge badge-blue" id="catalogModalBadge" style="font-size: 11px; padding: 3px 8px;">382+ Products Connected</span>
       </div>
       <div style="display: flex; gap: 6px;">
         <button class="btn btn-outline btn-sm" style="background:#fff; color:#0c2340;" onclick="erp.openNewProductModal()">+ Save New Product</button>
@@ -1980,7 +1980,7 @@ body {
       <div style="display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap;">
         <input type="text" id="catalogSearch" class="form-control" placeholder="🔍 Search safety product, brand (Hillson, Karam, Udyogi, 3M, Wild Bull), HSN..." style="flex: 2; min-width: 240px; font-weight: 600;" oninput="erp.filterCatalogPicker()" />
         <select id="catalogCategoryFilter" class="form-control" style="flex: 1; min-width: 180px; font-weight: 600;" onchange="erp.filterCatalogPicker()">
-          <option value="all">🌐 All Categories (186+ Products)</option>
+          <option value="all">🌐 All Categories (382+ Products)</option>
           <option value="shoes">🥾 Safety Shoes & Footwear</option>
           <option value="gloves">🧤 Safety Gloves & Hand Protection</option>
           <option value="head">🪖 Safety Helmets & Head Protection</option>
@@ -4159,7 +4159,7 @@ class PassInvotorERP {
             <div style="font-size: 14px; font-weight: 700; color: #0c2340; margin-bottom: 4px;">📋 No Products Added Yet</div>
             <div style="font-size: 12px; margin-bottom: 12px;">Type any product in the Quick Search Bar above, or click below to pick from master safety catalogue.</div>
             <div style="display: flex; justify-content: center; gap: 8px;">
-              <button type="button" class="btn btn-blue btn-sm" onclick="erp.openProductPickerModal()" style="font-weight: 700; padding: 6px 14px;">📦 Browse Master Catalogue (186+ Products)</button>
+              <button type="button" class="btn btn-blue btn-sm" onclick="erp.openProductPickerModal()" style="font-weight: 700; padding: 6px 14px;">📦 Browse Master Catalogue (382+ Products)</button>
               <button type="button" class="btn btn-outline btn-sm" onclick="erp.addCustomBillItem()" style="font-weight: 700; padding: 6px 14px;">➕ Add Blank Item Row</button>
             </div>
           </td>

@@ -324,7 +324,7 @@ function renderHeader(){
       <div class="mobile-nav-drawer${STATE.mobileMenuOpen ? ' open' : ''}">
         <button class="mobile-nav-link${STATE.view==="home"?" active":""}" onclick="A.goHome()"><span>🏠 Home</span> ${icon("chevronRight",14)}</button>
         <button class="mobile-nav-link${STATE.view==="about"?" active":""}" onclick="A.goAbout()"><span>🏢 About PASS CORP.</span> ${icon("chevronRight",14)}</button>
-        <button class="mobile-nav-link${STATE.view==="shop"?" active":""}" onclick="A.goShop('all')"><span>🛡️ Full Catalogue (186+ Products)</span> ${icon("chevronRight",14)}</button>
+        <button class="mobile-nav-link${STATE.view==="shop"?" active":""}" onclick="A.goShop('all')"><span>🛡️ Full Catalogue (382+ Products)</span> ${icon("chevronRight",14)}</button>
         <button class="mobile-nav-link${STATE.view==="brands"?" active":""}" onclick="A.goBrands()"><span>⭐ Authorised Brands</span> ${icon("chevronRight",14)}</button>
         <button class="mobile-nav-link${STATE.view==="compare"?" active":""}" onclick="A.goCompare()"><span>Compare Brands</span> ${icon("chevronRight",14)}</button>
         <button class="mobile-nav-link" onclick="A.openRFQ();A.closeMobileMenu()"><span>⚡ Instant RFQ Engine</span> ${STATE.rfqItems.length ? `<span class="rfq-count-badge">${STATE.rfqItems.length}</span>` : icon("chevronRight",14)}</button>
@@ -396,7 +396,7 @@ function renderHome(){
           <h1 class="hero-title hero-title-in">${esc(CONTENT.hero.title)}</h1>
           <p class="hero-sub hero-sub-in">${esc(CONTENT.hero.subtitle)}</p>
           <div class="hero-ctas hero-ctas-in">
-            <button class="btn-primary" onclick="A.goShop('all')">Browse 186+ Catalog ${icon("arrowRight",16)}</button>
+            <button class="btn-primary" onclick="A.goShop('all')">Browse 382+ Catalog ${icon("arrowRight",16)}</button>
             <a class="btn-secondary" style="display:inline-flex;align-items:center;gap:8px" href="assets/Pass_Corp_Product_Catalogue.pdf" download="Pass_Corp_Product_Catalogue.pdf" target="_blank">${icon("download",16)} Download Catalogue</a>
           </div>
         </div>

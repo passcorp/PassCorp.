@@ -61,7 +61,7 @@ const DEFAULT_CONTENT = {
   "hero": {
     "eyebrow": "Industrial safety equipment \u00b7 Pune",
     "title": "Precision & Assurance in Industrial Safety.",
-    "subtitle": "Browse our complete range of 186+ certified safety shoes, gloves, respiratory, head, eye, hearing, fall protection, electrical, spill control and workwear. Contact us on WhatsApp or call for immediate quotation."
+    "subtitle": "Browse our complete range of 382+ certified safety shoes, gloves, respiratory, head, eye, hearing, fall protection, electrical, spill control and workwear. Contact us on WhatsApp or call for immediate quotation."
   },
   "trust": [
     {
@@ -71,7 +71,7 @@ const DEFAULT_CONTENT = {
     },
     {
       "icon": "box",
-      "b": "186+ Live Products",
+      "b": "382+ Live Products",
       "t": "in active industrial catalog"
     },
     {
