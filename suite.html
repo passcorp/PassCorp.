@@ -386,11 +386,25 @@ function switchAppTab(tabName) {
     btnQuotor.className = 'suite-tab-btn';
     frameInvotor.className = 'suite-frame active';
     frameQuotor.className = 'suite-frame';
+
+    // Refresh Invotor catalog live
+    try {
+      if (frameInvotor.contentWindow && frameInvotor.contentWindow.handleRemoteCatalogSync) {
+        frameInvotor.contentWindow.handleRemoteCatalogSync();
+      }
+    } catch(e){}
   } else {
     btnQuotor.className = 'suite-tab-btn active';
     btnInvotor.className = 'suite-tab-btn';
     frameQuotor.className = 'suite-frame active';
     frameInvotor.className = 'suite-frame';
+
+    // Refresh Quotor catalog live
+    try {
+      if (frameQuotor.contentWindow && frameQuotor.contentWindow.handleRemoteQuoteCatalogSync) {
+        frameQuotor.contentWindow.handleRemoteQuoteCatalogSync();
+      }
+    } catch(e){}
   }
 }
 

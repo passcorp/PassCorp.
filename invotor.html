@@ -2391,6 +2391,107 @@ class PassInvotorERP {
     return siteProducts;
   }
 
+  syncProductToWebsite(p, isDelete) {
+    if (!p) return;
+    try {
+      let contentObj = null;
+      if (typeof loadContent === 'function') {
+        try { contentObj = loadContent(); } catch(e){}
+      }
+      if (!contentObj) {
+        const raw = localStorage.getItem('pass_corp_site_content');
+        if (raw) {
+          try { contentObj = JSON.parse(raw); } catch(e){}
+        }
+      }
+      if (!contentObj && typeof DEFAULT_CONTENT !== 'undefined') {
+        contentObj = JSON.parse(JSON.stringify(DEFAULT_CONTENT));
+      }
+
+      if (contentObj && Array.isArray(contentObj.products)) {
+        if (isDelete) {
+          contentObj.products = contentObj.products.filter(x => x.id !== p.id && x.name.toLowerCase().trim() !== (p.name || '').toLowerCase().trim());
+        } else {
+          let cat = (p.cat || 'misc').toLowerCase();
+          const txt = ((p.name || '') + ' ' + (p.desc || '')).toLowerCase();
+          if (txt.includes('shoe') || txt.includes('boot') || p.hsn === '6403') cat = 'shoes';
+          else if (txt.includes('glove') || txt.includes('hand') || p.hsn === '6116') cat = 'gloves';
+          else if (txt.includes('spectacle') || txt.includes('goggle') || txt.includes('eye') || txt.includes('shield') || p.hsn === '9004') cat = 'eye';
+          else if (txt.includes('mask') || txt.includes('respirat') || txt.includes('cartridge') || p.hsn === '6307') cat = 'resp';
+          else if (txt.includes('helmet') || txt.includes('hard hat') || txt.includes('head') || p.hsn === '6506') cat = 'head';
+          else if (txt.includes('ear') || txt.includes('hearing') || txt.includes('plug') || txt.includes('muff')) cat = 'hear';
+          else if (txt.includes('harness') || txt.includes('fall') || txt.includes('lanyard')) cat = 'fall';
+          else if (txt.includes('jacket') || txt.includes('vest') || txt.includes('coverall')) cat = 'wear';
+          else if (txt.includes('electr') || txt.includes('mat')) cat = 'elec';
+          else if (txt.includes('spill') || txt.includes('absorbent')) cat = 'spill';
+          else if (txt.includes('tripod') || txt.includes('winch')) cat = 'confined';
+
+          let existingIdx = contentObj.products.findIndex(x => x.id === p.id);
+          if (existingIdx === -1) {
+            existingIdx = contentObj.products.findIndex(x => x.name.toLowerCase().trim() === (p.name || '').toLowerCase().trim());
+          }
+
+          const websiteItem = {
+            id: p.id || ('prod_' + Date.now()),
+            category: cat,
+            name: p.name,
+            brand: p.brand || 'PASS CORP',
+            img: p.image || 'assets/logo.png',
+            cert: 'IS / EN Certified',
+            price: parseFloat(p.price || 0),
+            costPrice: parseFloat(p.cost || p.costPrice || (parseFloat(p.price || 0) * 0.75)),
+            rating: 4.8,
+            reviews: 15,
+            bestseller: false,
+            stock: 'in',
+            hsn: p.hsn || '6506',
+            unit: p.unit || 'Nos.',
+            desc: p.desc || p.name,
+            specs: [
+              ['Product Name', p.name],
+              ['Brand / Manufacturer', p.brand || 'PASS CORP'],
+              ['HSN Code', p.hsn || '6506'],
+              ['Unit', p.unit || 'Nos.'],
+              ['GST Rate', (p.gstRate || p.gst || 18) + '%']
+            ]
+          };
+
+          if (existingIdx >= 0) {
+            contentObj.products[existingIdx].name = p.name;
+            contentObj.products[existingIdx].brand = p.brand || contentObj.products[existingIdx].brand;
+            contentObj.products[existingIdx].price = parseFloat(p.price || 0);
+            contentObj.products[existingIdx].costPrice = websiteItem.costPrice;
+            contentObj.products[existingIdx].hsn = p.hsn || contentObj.products[existingIdx].hsn;
+            contentObj.products[existingIdx].unit = p.unit || contentObj.products[existingIdx].unit;
+            if (p.desc) contentObj.products[existingIdx].desc = p.desc;
+            if (p.image) contentObj.products[existingIdx].img = p.image;
+          } else {
+            contentObj.products.unshift(websiteItem);
+          }
+        }
+
+        window.CONTENT = contentObj;
+        if (typeof saveContent === 'function') {
+          saveContent();
+        } else {
+          localStorage.setItem('pass_corp_site_content', JSON.stringify(contentObj));
+        }
+      }
+
+      // Broadcast sync event to Quotor / Suite
+      try {
+        if (typeof BroadcastChannel !== 'undefined') {
+          const bc = new BroadcastChannel('passcorp_catalog_sync');
+          bc.postMessage({ type: 'PRODUCT_UPDATED', product: p, isDelete: !!isDelete, timestamp: Date.now() });
+          bc.close();
+        }
+      } catch(err){}
+      window.dispatchEvent(new CustomEvent('passcorp_product_saved', { detail: { product: p } }));
+    } catch(e) {
+      console.warn("Could not sync product to website storage from Invotor:", e);
+    }
+  }
+
   /* ---------------- GITHUB CLOUD AUTO-SYNC ENGINE ---------------- */
   saveState() {
     localStorage.setItem(this.storageKey, JSON.stringify(this.data));
@@ -3001,17 +3102,20 @@ class PassInvotorERP {
 
     const newProd = {
       id: 'prod_' + Date.now().toString().slice(-6),
-      name, hsn, unit, price, cost, brand, cat, stock, minAlert
+      name, hsn, unit, price, cost, brand, cat, stock, minAlert,
+      desc: name + (brand ? ' | Brand: ' + brand : '')
     };
 
     this.data.stock.unshift(newProd);
     this.saveCatalog();
     this.saveState();
+    this.syncProductToWebsite(newProd, false);
 
     // Also add to current bill
     this.currentInvoice.items.push({
       id: newProd.id,
       name: newProd.name,
+      desc: newProd.desc,
       brand: newProd.brand,
       hsn: newProd.hsn,
       unit: newProd.unit,
@@ -3025,9 +3129,57 @@ class PassInvotorERP {
 
     this.closeModal('newProductModal');
     this.closeModal('productPickerModal');
+    this.renderCatalogDatalist();
+    this.renderEditorItems();
     this.renderLiveInvoicePreview();
     this.renderStockTable();
-    alert(`✅ Product "${newProd.name}" saved to Master Catalogue and added to Bill!`);
+    alert(`✅ Product "${newProd.name}" saved permanently to Master Catalogue & Quotor!`);
+  }
+
+  saveRowItemToCatalog(index) {
+    if (!this.currentInvoice.items || !this.currentInvoice.items[index]) return;
+    const item = this.currentInvoice.items[index];
+    const name = (item.name || '').trim();
+    if (!name) {
+      alert('⚠️ Please enter a product name first.');
+      return;
+    }
+
+    const hsn = (item.hsn || '6506').trim();
+    const unit = item.unit || 'Nos.';
+    const price = parseFloat(item.rate) || 0;
+    const cost = parseFloat(item.cost || (price * 0.75));
+    const brand = (item.brand || 'PASS CORP').trim();
+    const desc = (item.desc || name).trim();
+    const cat = (item.cat || 'Industrial Safety').trim();
+
+    let existing = this.data.stock.find(s => s.id === item.id || (s.name && s.name.toLowerCase().trim() === name.toLowerCase().trim()));
+    if (existing) {
+      existing.name = name;
+      existing.hsn = hsn;
+      existing.unit = unit;
+      existing.price = price;
+      existing.cost = cost;
+      existing.brand = brand;
+      existing.desc = desc;
+    } else {
+      const newProd = {
+        id: (item.id && !item.id.startsWith('custom_')) ? item.id : ('prod_' + Date.now().toString().slice(-6)),
+        name, hsn, unit, price, cost, brand, cat, desc,
+        stock: 50, minAlert: 10
+      };
+      item.id = newProd.id;
+      this.data.stock.unshift(newProd);
+      existing = newProd;
+    }
+
+    this.saveCatalog();
+    this.saveState();
+    this.syncProductToWebsite(existing, false);
+    this.renderCatalogDatalist();
+    this.renderStockTable();
+    this.renderLiveInvoicePreview();
+    alert(`✅ Product "${name}" saved to Billing & Quotor Catalogue!`);
   }
 
   renderBuyersDatalist() {
@@ -4217,7 +4369,10 @@ class PassInvotorERP {
           ₹${amount}
         </td>
         <td style="text-align: center; vertical-align: top; padding-top: 8px;">
-          <button class="btn btn-danger btn-sm" onclick="erp.removeBillItem(${index})" title="Remove Item" style="padding: 3px 7px; font-size: 11px;">✕</button>
+          <div style="display: flex; gap: 3px; justify-content: center;">
+            <button type="button" class="btn btn-outline btn-sm" onclick="erp.saveRowItemToCatalog(${index})" title="💾 Save this Product to Master Catalog & Quotor" style="padding: 3px 6px; font-size: 11px; border-color: #3b82f6; color: #1d4ed8; background: #eff6ff;">💾</button>
+            <button type="button" class="btn btn-danger btn-sm" onclick="erp.removeBillItem(${index})" title="Remove Item" style="padding: 3px 7px; font-size: 11px;">✕</button>
+          </div>
         </td>
       `;
       tbody.appendChild(tr);
@@ -4488,10 +4643,34 @@ class PassInvotorERP {
       status: balanceDue === 0 ? 'Paid' : (advance > 0 ? 'Partial' : 'Unpaid')
     };
 
-    // Decrement stock
+    // Auto-sync and persist all bill items to Master Stock & Quotor Catalogue
     inv.items.forEach(it => {
-      const stockItem = this.data.stock.find(s => s.id === it.id);
-      if (stockItem) stockItem.stock = Math.max(0, stockItem.stock - it.qty);
+      const name = (it.name || '').trim();
+      if (!name) return;
+      const stockItem = this.data.stock.find(s => s.id === it.id || (s.name && s.name.toLowerCase().trim() === name.toLowerCase().trim()));
+      if (stockItem) {
+        stockItem.stock = Math.max(0, stockItem.stock - (parseFloat(it.qty) || 1));
+        if (it.rate) stockItem.price = parseFloat(it.rate);
+        if (it.hsn) stockItem.hsn = it.hsn;
+        if (it.unit) stockItem.unit = it.unit;
+        this.syncProductToWebsite(stockItem, false);
+      } else {
+        const newProd = {
+          id: (it.id && !it.id.startsWith('custom_')) ? it.id : ('prod_' + Date.now().toString().slice(-6)),
+          name: name,
+          desc: it.desc || name,
+          hsn: it.hsn || '6506',
+          unit: it.unit || 'Nos.',
+          price: parseFloat(it.rate) || 0,
+          cost: parseFloat(it.rate || 0) * 0.75,
+          brand: it.brand || 'PASS CORP',
+          cat: it.cat || 'Industrial Safety',
+          stock: 50,
+          minAlert: 10
+        };
+        this.data.stock.unshift(newProd);
+        this.syncProductToWebsite(newProd, false);
+      }
     });
 
     // Increment respective next document number
@@ -4993,6 +5172,52 @@ try {
 } catch (e) {
   console.error("PassInvotorERP initialization error:", e);
 }
+
+// Live Bi-directional Catalog Sync Listener (from Quotor & Suite)
+function handleRemoteCatalogSync() {
+  if (window.erp) {
+    try {
+      const siteItems = window.erp.getWebsiteCatalog();
+      if (siteItems && siteItems.length > 0) {
+        const stockMap = new Map();
+        (window.erp.data.stock || []).forEach(s => stockMap.set((s.name || '').toLowerCase().trim(), s));
+        siteItems.forEach(wp => {
+          const k = (wp.name || '').toLowerCase().trim();
+          if (!stockMap.has(k)) {
+            window.erp.data.stock.unshift(wp);
+            stockMap.set(k, wp);
+          } else {
+            const ex = stockMap.get(k);
+            if (wp.price) ex.price = wp.price;
+            if (wp.hsn) ex.hsn = wp.hsn;
+            if (wp.unit) ex.unit = wp.unit;
+          }
+        });
+        window.erp.saveCatalog();
+        window.erp.renderCatalogDatalist();
+        if (typeof window.erp.renderStockTable === 'function') window.erp.renderStockTable();
+      }
+    } catch(e){}
+  }
+}
+
+try {
+  if (typeof BroadcastChannel !== 'undefined') {
+    const syncChannel = new BroadcastChannel('passcorp_catalog_sync');
+    syncChannel.onmessage = function(e) {
+      handleRemoteCatalogSync();
+    };
+  }
+} catch(e){}
+
+window.addEventListener('storage', function(e) {
+  if (e.key === 'pass_corp_site_content' || e.key === 'PASS_CATALOG_DB_V2') {
+    handleRemoteCatalogSync();
+  }
+});
+window.addEventListener('passcorp_product_saved', function() {
+  handleRemoteCatalogSync();
+});
 </script>
 
 </body>

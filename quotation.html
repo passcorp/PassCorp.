@@ -3184,6 +3184,7 @@ var app = {
     if (confirm('Master Library aur Website se "' + p.name + '" ko permanently delete karein?')) {
       this.catalog = this.catalog.filter(function(x) { return x.id !== id; });
       this.syncProductToWebsite(p, true);
+      this.syncProductToInvotor(p, true);
       this.renderCatalog(this.catalog);
     }
   },
@@ -3259,10 +3260,73 @@ var app = {
 
     if (targetProd) {
       this.syncProductToWebsite(targetProd, false);
+      this.syncProductToInvotor(targetProd, false);
     }
     this.renderCatalog(this.catalog);
     this.closeNewProductModal();
     this.renderAll();
+  },
+
+  syncProductToInvotor: function(p, isDelete) {
+    if (!p) return;
+    try {
+      var catalogKey = "PASS_CATALOG_DB_V2";
+      var rawCatalog = localStorage.getItem(catalogKey);
+      var stockList = [];
+      if (rawCatalog) {
+        try { stockList = JSON.parse(rawCatalog); } catch(e){ stockList = []; }
+      }
+      if (!Array.isArray(stockList)) stockList = [];
+
+      if (isDelete) {
+        stockList = stockList.filter(function(x){ return x.id !== p.id && (x.name || '').toLowerCase().trim() !== (p.name || '').toLowerCase().trim(); });
+      } else {
+        var existingIdx = stockList.findIndex(function(x){ return x.id === p.id || (x.name && x.name.toLowerCase().trim() === (p.name || '').toLowerCase().trim()); });
+        var stockItem = {
+          id: p.id,
+          name: p.name,
+          desc: p.specs || p.desc || p.name,
+          spec: p.specs || p.desc || p.name,
+          brand: p.brand || 'PASS CORP',
+          cat: p.categoryName || p.category || 'Industrial Safety',
+          hsn: p.hsn || '6506',
+          unit: p.unit || 'Nos.',
+          cost: parseFloat(p.costPrice || (parseFloat(p.price || 0) * 0.75)),
+          price: parseFloat(p.price || 0),
+          stock: 50,
+          minAlert: 10,
+          image: p.image || 'https://passcorp.in/assets/logo.png'
+        };
+        if (existingIdx >= 0) {
+          stockList[existingIdx] = Object.assign(stockList[existingIdx], stockItem);
+        } else {
+          stockList.unshift(stockItem);
+        }
+      }
+      localStorage.setItem(catalogKey, JSON.stringify(stockList));
+
+      var rawInvotor = localStorage.getItem("PASS_CORP_INVOTOR_V5");
+      if (rawInvotor) {
+        try {
+          var invData = JSON.parse(rawInvotor);
+          if (invData) {
+            invData.stock = stockList;
+            localStorage.setItem("PASS_CORP_INVOTOR_V5", JSON.stringify(invData));
+          }
+        } catch(e){}
+      }
+
+      try {
+        if (typeof BroadcastChannel !== 'undefined') {
+          var bc = new BroadcastChannel('passcorp_catalog_sync');
+          bc.postMessage({ type: 'PRODUCT_UPDATED', product: p, isDelete: !!isDelete, timestamp: Date.now() });
+          bc.close();
+        }
+      } catch(err){}
+      window.dispatchEvent(new CustomEvent('passcorp_product_saved', { detail: { product: p } }));
+    } catch(e) {
+      console.warn("Could not sync product to Invotor:", e);
+    }
   },
 
   syncProductToWebsite: function(p, isDelete) {
@@ -4397,16 +4461,32 @@ window.addEventListener('beforeprint', function() {
   }
 });
 
-// Live 3-Way Synchronization Listener
-window.addEventListener('storage', function(e) {
-  if (e.key === 'passCorpContent_v8' || (typeof STORAGE_KEY !== 'undefined' && e.key === STORAGE_KEY)) {
-    if (typeof loadContent === 'function') {
-      try { loadContent(); } catch(err){}
-    }
-    if (typeof app !== 'undefined' && app.loadCatalog) {
-      app.loadCatalog();
-    }
+// Live Bi-directional Synchronization Listener (from Invotor, Suite & Website)
+function handleRemoteQuoteCatalogSync() {
+  if (typeof loadContent === 'function') {
+    try { loadContent(); } catch(err){}
   }
+  if (typeof app !== 'undefined' && app.loadCatalog) {
+    try { app.loadCatalog(); } catch(e){}
+  }
+}
+
+try {
+  if (typeof BroadcastChannel !== 'undefined') {
+    var quoteSyncChannel = new BroadcastChannel('passcorp_catalog_sync');
+    quoteSyncChannel.onmessage = function(e) {
+      handleRemoteQuoteCatalogSync();
+    };
+  }
+} catch(e){}
+
+window.addEventListener('storage', function(e) {
+  if (e.key === 'pass_corp_site_content' || e.key === 'PASS_CATALOG_DB_V2' || e.key === 'passCorpContent_v8' || (typeof STORAGE_KEY !== 'undefined' && e.key === STORAGE_KEY)) {
+    handleRemoteQuoteCatalogSync();
+  }
+});
+window.addEventListener('passcorp_product_saved', function() {
+  handleRemoteQuoteCatalogSync();
 });
 
 document.addEventListener('DOMContentLoaded', function() { app.init(); });
