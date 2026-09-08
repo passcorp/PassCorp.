@@ -376,7 +376,7 @@ function renderFooter(){
       <div class="footer-bottom">
         <span>© 2026 Pass Corp.</span>
         <div style="display:inline-flex;align-items:center;gap:14px;">
-          <a href="quotedesk.html" target="_blank" style="display:inline-flex;align-items:center;cursor:pointer;opacity:0.8;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'" title="QuoteDesk Pro"><img src="assets/snowflake-white.png" alt="QuoteDesk" style="width:14px;height:14px;object-fit:contain;display:block;" /></a>
+          <a href="quotedesk.html?v=2026_lock_live" target="_blank" style="display:inline-flex;align-items:center;cursor:pointer;opacity:0.8;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'" title="QuoteDesk Pro"><img src="assets/snowflake-white.png" alt="QuoteDesk" style="width:14px;height:14px;object-fit:contain;display:block;" /></a>
           <a href="admin.html" style="display:inline-flex;align-items:center;cursor:pointer;opacity:0.8;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'" title="Manage content">${icon("settings",14)}</a>
         </div>
       </div>
