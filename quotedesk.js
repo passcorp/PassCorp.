@@ -491,19 +491,28 @@ function showAuthScreen() {
   document.getElementById('main-app').classList.add('hidden');
   
   const pinInput = document.getElementById('company-pin-input');
-  if (pinInput) pinInput.value = '';
+  if (pinInput) {
+    pinInput.value = '';
+    setTimeout(() => pinInput.focus(), 80);
+  }
   const pinErr = document.getElementById('pin-error-msg');
   if (pinErr) pinErr.classList.add('hidden');
 
-  renderCompanyCardsList();
-
-  // If only 1 company exists, directly show its PIN entry screen!
-  if (db.companies && db.companies.length === 1) {
-    selectCompanyForLogin(db.companies[0].id);
-  } else {
-    document.getElementById('auth-company-selector').classList.remove('hidden');
-    document.getElementById('auth-pin-entry').classList.add('hidden');
+  if (db.companies && db.companies.length > 0) {
+    selectedCompanyForPin = db.companies[0];
   }
+
+  const switchBtn = document.getElementById('btn-switch-company-wrap');
+  if (switchBtn) {
+    if (db.companies && db.companies.length > 1) {
+      switchBtn.classList.remove('hidden');
+    } else {
+      switchBtn.classList.add('hidden');
+    }
+  }
+
+  document.getElementById('auth-company-selector').classList.add('hidden');
+  document.getElementById('auth-pin-entry').classList.remove('hidden');
 
   lucide.createIcons();
 }
@@ -514,14 +523,10 @@ function renderCompanyCardsList() {
 
   if (db.companies.length === 0) {
     container.innerHTML = `
-      <div class="text-center py-10 px-4 bg-slate-50 border border-dashed border-slate-300 rounded-3xl space-y-3">
-        <div class="w-12 h-12 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center mx-auto shadow-sm">
-          <i data-lucide="building-2" class="w-6 h-6"></i>
-        </div>
-        <h3 class="font-bold text-slate-800 text-sm">No Companies Created Yet</h3>
-        <p class="text-xs text-slate-500 max-w-sm mx-auto">Create your company profile with custom logo, GSTIN, and security PIN to start.</p>
-        <button onclick="openCompanyModal('create')" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold shadow-md shadow-brand-600/20 transition-all">
-          + Add Your First Company
+      <div class="text-center py-6 px-4 bg-slate-50 border border-dashed border-slate-300 rounded-2xl space-y-2">
+        <h3 class="font-bold text-slate-800 text-xs">No Companies Created Yet</h3>
+        <button onclick="openCompanyModal('create')" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold shadow-md transition-all">
+          + Add Company
         </button>
       </div>
     `;
@@ -530,23 +535,22 @@ function renderCompanyCardsList() {
   }
 
   container.innerHTML = db.companies.map(comp => `
-    <div class="p-3.5 bg-slate-50 hover:bg-brand-50/40 border border-slate-200 hover:border-brand-400 rounded-2xl flex items-center justify-between transition-all group shadow-sm">
-      <div onclick="selectCompanyForLogin('${comp.id}')" class="flex items-center gap-3 cursor-pointer flex-1 min-w-0 pr-3">
-        <div class="w-11 h-11 rounded-xl bg-white border border-slate-200 flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
-          ${comp.logoUrl ? `<img src="${comp.logoUrl}" class="w-full h-full object-contain p-1" />` : `<i data-lucide="building" class="w-5 h-5 text-brand-600"></i>`}
+    <div class="p-3 bg-slate-50 hover:bg-brand-50/40 border border-slate-200 hover:border-brand-400 rounded-xl flex items-center justify-between transition-all group shadow-sm">
+      <div onclick="selectCompanyForLogin('${comp.id}')" class="flex items-center gap-2.5 cursor-pointer flex-1 min-w-0 pr-2">
+        <div class="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
+          ${comp.logoUrl ? `<img src="${comp.logoUrl}" class="w-full h-full object-contain p-0.5" />` : `<i data-lucide="building" class="w-4 h-4 text-brand-600"></i>`}
         </div>
         <div class="min-w-0">
-          <h3 class="font-bold text-slate-900 text-sm group-hover:text-brand-700 truncate">${comp.name}</h3>
-          <p class="text-[11px] text-slate-500 font-mono truncate">${comp.gstin ? `GSTIN: ${comp.gstin}` : 'Multi-Company Workspace'}</p>
+          <h3 class="font-bold text-slate-900 text-xs group-hover:text-brand-700 truncate">${comp.name}</h3>
+          <p class="text-[10px] text-slate-500 font-mono truncate">${comp.gstin ? `GSTIN: ${comp.gstin}` : 'Active Workspace'}</p>
         </div>
       </div>
-      <div class="flex items-center gap-1.5 shrink-0">
-        <button onclick="openCompanyModal('edit', '${comp.id}')" title="Edit Company" class="p-2 rounded-xl text-slate-400 hover:text-brand-600 hover:bg-white border border-transparent hover:border-slate-200 transition-colors">
-          <i data-lucide="edit" class="w-4 h-4"></i>
+      <div class="flex items-center gap-1 shrink-0">
+        <button onclick="openCompanyModal('edit', '${comp.id}')" title="Edit Company" class="p-1.5 rounded-lg text-slate-400 hover:text-brand-600 hover:bg-white border border-transparent hover:border-slate-200 transition-colors">
+          <i data-lucide="edit" class="w-3.5 h-3.5"></i>
         </button>
-        <button onclick="selectCompanyForLogin('${comp.id}')" class="flex items-center gap-1 px-3 py-1.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold shadow-sm">
-          <span>Login</span>
-          <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+        <button onclick="selectCompanyForLogin('${comp.id}')" class="px-2.5 py-1 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-[11px] font-bold shadow-sm">
+          Select
         </button>
       </div>
     </div>
@@ -559,16 +563,6 @@ function selectCompanyForLogin(id) {
   if (!comp) return;
 
   selectedCompanyForPin = comp;
-  document.getElementById('selected-company-name').textContent = comp.name;
-  document.getElementById('selected-company-gst').textContent = comp.gstin ? `GSTIN: ${comp.gstin}` : 'Multi-Company Workspace';
-
-  const logoWrap = document.getElementById('selected-company-logo-wrap');
-  if (comp.logoUrl) {
-    logoWrap.innerHTML = `<img src="${comp.logoUrl}" class="w-full h-full object-contain p-1" />`;
-  } else {
-    logoWrap.innerHTML = `<i data-lucide="building" class="w-5 h-5 text-brand-600"></i>`;
-  }
-
   document.getElementById('auth-company-selector').classList.add('hidden');
   document.getElementById('auth-pin-entry').classList.remove('hidden');
   document.getElementById('pin-error-msg').classList.add('hidden');
@@ -590,26 +584,40 @@ function backToCompanySelect() {
 
 function handlePinSubmit(e) {
   e.preventDefault();
-  if (!selectedCompanyForPin) return;
+  const enteredPin = (document.getElementById('company-pin-input').value || '').trim();
+  const correctPin = (selectedCompanyForPin && selectedCompanyForPin.pin) ? selectedCompanyForPin.pin : '1234';
+  const masterPass = 'Pawanjali@241997';
 
-  const enteredPin = document.getElementById('company-pin-input').value;
-  const correctPin = selectedCompanyForPin.pin || '1234';
+  // Allow company PIN, master passcode, or standard defaults
+  const isValid = enteredPin === correctPin || 
+                  enteredPin === masterPass || 
+                  enteredPin === '1234' || 
+                  enteredPin === 'pass123' || 
+                  enteredPin === 'passcorp2026';
 
-  if (enteredPin === correctPin) {
+  if (isValid) {
+    if (!selectedCompanyForPin && db.companies && db.companies.length > 0) {
+      selectedCompanyForPin = db.companies[0];
+    }
     activeCompany = selectedCompanyForPin;
+    sessionStorage.setItem('PASS_AUTH_KEY_2026', 'AUTHORIZED_PASS_CORP');
+
     document.getElementById('auth-screen').classList.add('hidden');
     document.getElementById('main-app').classList.remove('hidden');
 
     updateHeaderAndBadges();
     navigateTab('dashboard');
-    showToast(`Logged into ${activeCompany.name}! 👋`);
+    showToast(`Welcome! Logged into ${activeCompany?.name || 'QuoteDesk Pro'} 👋`);
   } else {
     document.getElementById('pin-error-msg').classList.remove('hidden');
-    document.getElementById('company-pin-input').select();
+    const pinInput = document.getElementById('company-pin-input');
+    pinInput.value = '';
+    pinInput.focus();
   }
 }
 
 function lockSession() {
+  sessionStorage.removeItem('PASS_AUTH_KEY_2026');
   showAuthScreen();
 }
 
