@@ -754,352 +754,320 @@ body {
   flex-direction: column;
   flex: 1;
   width: 100%;
+  background: #ffffff;
+  position: relative;
+  z-index: 1;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #000000;
 }
 
-.quote-header-grid {
-  display: grid;
-  grid-template-columns: 140px 1fr 185px;
+.tally-doc-title {
   border-bottom: 1.5px solid #000000;
-  min-height: 98px;
-  background: #ffffff;
-}
-
-.quote-logo-col {
-  border-right: 1.5px solid #000000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 4px;
-  background: #ffffff;
-}
-
-.quote-logo-col img {
-  width: 130px;
-  max-height: 84px;
-  object-fit: contain;
-  display: block;
-}
-
-.quote-company-col {
-  padding: 4px 8px;
   text-align: center;
+  font-size: 13px;
+  font-weight: 900;
+  padding: 4px 0;
+  letter-spacing: 1.5px;
+  color: #000000;
+  text-transform: uppercase;
+  background: #ffffff;
+}
+
+.tally-doc-title.pi-mode { background: #f0fdf4; color: #166534; }
+.tally-doc-title.dc-mode { background: #f8fafc; color: #0f172a; }
+
+.tally-top-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  border-bottom: 1.5px solid #000000;
+  min-height: 105px;
+}
+
+.tally-seller-col {
+  border-right: 1.5px solid #000000;
+  padding: 6px 8px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  border-right: 1.5px solid #000000;
 }
 
-.company-main-title {
-  font-size: 21px;
+.tally-logo {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.tally-company-name {
+  font-size: 15px;
   font-weight: 900;
   color: #0c2340;
-  letter-spacing: 1px;
-  font-family: Arial Black, Impact, sans-serif;
-  line-height: 1.05;
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+  margin-bottom: 2px;
 }
 
-.company-scope-banner {
-  background: #0c2340;
-  color: #ffffff;
+.tally-company-address {
+  font-size: 7.2px;
+  line-height: 1.35;
+  color: #1f2937;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.tally-seller-tax-line {
+  font-size: 7.2px;
+  line-height: 1.35;
+  color: #000000;
+}
+
+.tally-meta-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.tally-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  height: 100%;
+}
+
+.tally-meta-cell {
+  border-right: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  padding: 2.5px 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.tally-meta-cell:nth-child(2n) {
+  border-right: none;
+}
+
+.tally-meta-cell:nth-child(5), .tally-meta-cell:nth-child(6) {
+  border-bottom: none;
+}
+
+.tally-meta-lbl {
+  font-size: 6.8px;
+  font-weight: 700;
+  color: #4b5563;
+  text-transform: uppercase;
+  margin-bottom: 1px;
+}
+
+.tally-meta-val {
+  font-size: 8px;
+  font-weight: 900;
+  color: #000000;
+}
+
+.tally-buyer-section {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  border-bottom: 1.5px solid #000000;
+  padding: 5px 8px;
+  background: #ffffff;
+  min-height: 60px;
+}
+
+.tally-sub-heading {
   font-size: 7px;
   font-weight: 800;
-  letter-spacing: 0.6px;
-  padding: 1.5px 7px;
-  border-radius: 2px;
-  margin: 2.5px 0;
-  text-transform: uppercase;
-  display: inline-block;
-}
-
-.company-details-text {
-  font-size: 7.5px;
-  line-height: 1.3;
-  color: #000000;
-  font-weight: 600;
-}
-
-.company-credentials-row {
-  margin-top: 2px;
-  font-size: 6.5px;
-  font-weight: 700;
-  color: #1e3a8a;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  border-top: 0.5px solid #e2e8f0;
-  padding-top: 1.5px;
-}
-
-.quote-meta-col {
-  display: flex;
-  flex-direction: column;
-}
-
-.quote-meta-header {
-  background: #fef08a;
-  border-bottom: 1px solid #000000;
-  text-align: center;
-  font-size: 11.5px;
-  font-weight: 900;
-  padding: 2.5px 0;
-  letter-spacing: 1.2px;
-  color: #000000;
-}
-
-.quote-meta-header.pi-mode { background: #dbeafe; color: #1e3a8a; }
-.quote-meta-header.dc-mode { background: #e2e8f0; color: #0f172a; }
-
-.quote-meta-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 8px;
-  flex: 1;
-}
-
-.quote-meta-table td {
-  padding: 2px 4px;
-  border-bottom: 0.5px solid #e2e8f0;
-}
-
-.quote-meta-table td.meta-label {
-  font-weight: 600;
   color: #4b5563;
-  width: 48%;
-  font-size: 7.5px;
-}
-
-.quote-meta-table td.meta-val {
-  font-weight: 800;
-  color: #000000;
-}
-
-.client-enterprise-row {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  border-bottom: 1.5px solid #000000;
-  min-height: 72px;
-}
-
-.client-buyer-col {
-  border-right: 1.5px solid #000000;
-  padding: 4px 6px;
-  display: flex;
-  flex-direction: column;
-}
-
-.client-inquiry-col {
-  padding: 4px 6px;
-  display: flex;
-  flex-direction: column;
-  background: #fafafa;
-}
-
-.client-section-title {
-  font-size: 8px;
-  font-weight: 900;
-  color: #0c2340;
   text-transform: uppercase;
   margin-bottom: 2px;
-  border-bottom: 0.5px solid #cbd5e1;
-  padding-bottom: 1px;
 }
 
-.client-table {
-  width: 100%;
-  font-size: 8px;
-  border-collapse: collapse;
+.tally-buyer-name {
+  font-size: 9.5px;
+  font-weight: 900;
+  color: #0c2340;
+  line-height: 1.2;
+  margin-bottom: 2px;
 }
 
-.client-table td {
-  padding: 1px 2px;
-  vertical-align: top;
-}
-
-.client-table td.c-label {
-  width: 65px;
-  font-weight: 600;
+.tally-buyer-address {
+  font-size: 7.2px;
+  line-height: 1.3;
   color: #374151;
-  font-size: 7.5px;
+  margin-bottom: 2px;
 }
 
-.client-table td.c-val {
-  font-weight: 700;
+.tally-buyer-contact {
+  font-size: 7.2px;
+  color: #111827;
+}
+
+.tally-buyer-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+  text-align: right;
+  gap: 3px;
+  padding-top: 8px;
+}
+
+.tally-buyer-tax-row {
+  font-size: 7.8px;
   color: #000000;
 }
 
-.tagline-strip {
-  background: #ffffff !important;
-  color: #000000 !important;
-  text-align: center;
-  font-size: 7.5px;
-  font-weight: 900;
-  letter-spacing: 2px;
-  padding: 2.5px 0;
-  border-bottom: 1.5px solid #000000;
-}
-
-.quote-products-table {
+.tally-products-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 8px;
+  font-size: 7.8px;
   flex: 1;
 }
 
-.quote-products-table th {
-  background: #0c2340;
-  color: #ffffff;
+.tally-products-table th {
+  background: #ffffff;
+  color: #000000;
   border: 1px solid #000000;
   border-top: none;
-  font-size: 7.5px;
-  font-weight: 800;
-  padding: 3px 2px;
+  font-size: 7px;
+  font-weight: 900;
+  padding: 3.5px 2px;
   text-align: center;
+  text-transform: uppercase;
 }
 
-.quote-products-table td {
+.tally-products-table td {
   border-right: 1px solid #000000;
   border-left: 1px solid #000000;
   border-bottom: 0.5px solid #e5e7eb;
   padding: 3px 4px;
-  vertical-align: middle;
+  vertical-align: top;
 }
 
-.quote-products-table tr.item-row {
-  min-height: 96px;
+.tally-products-table tr.item-row {
+  min-height: 60px;
 }
 
-.quote-products-table tr.item-row:last-child td {
+.tally-products-table tr.item-row:last-child td {
   border-bottom: 1.5px solid #000000;
 }
 
-.td-center { text-align: center; }
-.td-right { text-align: right; font-weight: 700; }
-
-.product-thumb-cell {
-  text-align: center;
-  padding: 2px 2px !important;
-  vertical-align: middle;
+.tally-desc-container {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
 }
 
-.product-thumb-cell img {
-  width: 105px;
-  height: 95px;
-  max-width: 96%;
+.tally-item-img {
+  width: 52px;
+  height: 52px;
   object-fit: contain;
-  display: block;
-  margin: 0 auto;
-  background: #ffffff;
-  border: 0.5px solid #cbd5e1;
-  border-radius: 6px;
+  flex-shrink: 0;
+  border: 0.5px solid #e2e8f0;
+  border-radius: 4px;
   padding: 2px;
-  box-sizing: border-box;
+  background: #ffffff;
 }
 
-.product-desc-cell {
+.tally-item-title {
+  font-size: 8.5px;
+  font-weight: 900;
+  color: #000000;
+  line-height: 1.25;
+  margin-bottom: 1.5px;
+}
+
+.tally-item-specs {
+  font-size: 7px;
+  color: #374151;
   line-height: 1.3;
-  word-break: break-word;
-  padding: 3px 5px !important;
-}
-
-.product-specs-text {
-  font-size: 7.5px;
-  color: #1f2937;
-  font-weight: 500;
   white-space: pre-line;
 }
 
-.brand-badge-cell img {
-  max-width: 46px;
-  max-height: 20px;
-  object-fit: contain;
-  display: block;
-  margin: 0 auto;
+.tally-subtotal-row td {
+  border-top: 1.5px solid #000000 !important;
+  border-bottom: 1px solid #000000 !important;
+  padding: 3.5px 6px;
+  font-size: 7.8px;
+  font-weight: 800;
 }
 
-.total-summary-row {
-  display: grid;
-  grid-template-columns: 1fr 220px;
-  border-top: 1.5px solid #000000;
-  border-bottom: 1.5px solid #000000;
-  min-height: 26px;
-}
-
-.words-col {
-  border-right: 1.5px solid #000000;
-  padding: 3px 8px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  font-size: 8px;
-}
-
-.words-label { font-weight: 700; color: #000000; }
-.words-text { font-weight: 800; color: #000000; font-style: italic; }
-
-.total-breakdown-col {
-  display: flex;
-  flex-direction: column;
-  font-size: 8px;
-}
-
-.breakdown-line {
-  display: flex;
-  justify-content: space-between;
-  padding: 1.5px 8px;
-  border-bottom: 0.5px solid #cbd5e1;
+.tally-tax-row td {
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 2px 6px;
+  font-size: 7.8px;
   font-weight: 600;
 }
 
-.breakdown-line.grand-total {
-  background: #fef08a;
-  border-bottom: none;
-  font-size: 9.5px;
+.tally-grand-total-row td {
+  border-top: 1.5px solid #000000 !important;
+  border-bottom: 1.5px solid #000000 !important;
+  padding: 3.5px 6px;
+  font-size: 8.5px;
   font-weight: 900;
-  color: #000000;
-  padding: 3px 8px;
+  background: #ffffff;
 }
 
-.quote-footer-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr;
+.tally-words-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border-bottom: 1.5px solid #000000;
-  min-height: 88px;
+  padding: 3px 8px;
+  min-height: 22px;
 }
 
-.terms-col { border-right: 1.5px solid #000000; padding: 4px 6px; }
+.tally-words-lbl {
+  font-size: 6.8px;
+  font-weight: 800;
+  color: #4b5563;
+  text-transform: uppercase;
+}
 
-.footer-box-title {
-  background: #e2e8f0;
-  border: 1px solid #000000;
-  text-align: center;
-  font-size: 7px;
+.tally-words-val {
+  font-size: 8px;
   font-weight: 900;
-  padding: 1px 0;
-  margin-bottom: 3px;
-}
-
-.terms-list {
-  list-style: none;
-  font-size: 6.5px;
-  line-height: 1.3;
   color: #000000;
 }
 
-.terms-list li::before {
-  content: "• ";
+.tally-words-right {
+  font-size: 7.8px;
   font-weight: 900;
+  color: #000000;
 }
 
-.bank-col { border-right: 1.5px solid #000000; padding: 4px 6px; }
+.tally-footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  border-bottom: none;
+  min-height: 90px;
+}
 
-.bank-table { width: 100%; font-size: 7px; border-collapse: collapse; }
-.bank-table td { padding: 0.5px 2px; }
-.bank-table td.b-label { font-weight: 600; color: #374151; width: 55px; font-size: 6.5px; }
-.bank-table td.b-val { font-weight: 800; color: #000000; }
+.tally-declaration-col {
+  border-right: 1.5px solid #000000;
+  padding: 5px 8px;
+  display: flex;
+  flex-direction: column;
+}
 
-.signatory-col {
-  padding: 4px 6px;
+.tally-decl-heading {
+  font-size: 7.2px;
+  font-weight: 900;
+  color: #000000;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.tally-decl-list {
+  margin: 0;
+  padding-left: 14px;
+  font-size: 6.8px;
+  line-height: 1.35;
+  color: #000000;
+}
+
+.tally-signatory-col {
+  padding: 5px 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1107,17 +1075,40 @@ body {
   text-align: center;
 }
 
-.for-company-title { font-size: 7.5px; font-weight: 900; color: #0c2340; }
-.sign-stamp-img { width: 56px; height: 56px; object-fit: contain; margin: 1px 0; }
-.signatory-label { font-size: 7px; font-weight: 800; border-top: 0.5px solid #000000; width: 85%; padding-top: 1px; }
+.tally-for-text {
+  font-size: 6.8px;
+  font-weight: 700;
+  color: #4b5563;
+}
 
-.bottom-safety-strip {
-  background: #ffffff;
-  color: #000000;
-  text-align: center;
-  font-size: 7px;
-  font-weight: 800;
-  padding: 2.5px 0;
+.tally-sign-company {
+  font-size: 8.5px;
+  font-weight: 900;
+  color: #0c2340;
+}
+
+.tally-stamp-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1px 0;
+}
+
+.tally-stamp-img {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+}
+
+.tally-sign-label {
+  font-size: 6.8px;
+  font-weight: 900;
+  border-top: 1px solid #000000;
+  width: 90%;
+  padding-top: 1px;
+  text-transform: uppercase;
+}
   letter-spacing: 0.5px;
 }
 
@@ -1554,137 +1545,178 @@ body {
         <div class="watermark-overlay">
           <img src="assets/pass_watermark.jpg" alt="PASS CORP." onerror="this.src='https://passcorp.in/assets/pass_watermark.jpg'" />
         </div>
-        <div class="top-industrial-accent"></div>
         <div class="quotation-box">
           
-          <div class="quote-header-grid">
-            <div class="quote-logo-col">
-              <img src="https://passcorp.in/assets/logo.png" alt="PASS CORP." onerror="this.src='https://passcorp.in/assets/pass_logo.png'" />
+          <!-- Top Document Title -->
+          <div class="tally-doc-title" id="viewDocTypeTitle">SALES QUOTATION</div>
+
+          <!-- Top Grid: Seller Details (Left) + Tally Meta Grid (Right) -->
+          <div class="tally-top-grid">
+            <div class="tally-seller-col">
+              <div style="display: flex; gap: 8px; align-items: flex-start;">
+                <img src="https://passcorp.in/assets/logo.png" alt="PASS CORP." onerror="this.src='https://passcorp.in/assets/pass_logo.png'" class="tally-logo" />
+                <div style="flex: 1;">
+                  <div class="tally-company-name">PASS CORP.</div>
+                  <div class="tally-company-address">
+                    Plot No. 12, Sector 10, PCMC Industrial Area, Bhosari / Chikhali, Pune - 411062, Maharashtra, India.
+                  </div>
+                  <div class="tally-seller-tax-line">
+                    <strong>GSTIN/UIN:</strong> 27AAACP0000A1Z5
+                  </div>
+                  <div class="tally-seller-tax-line">
+                    <strong>State Name:</strong> Maharashtra, <strong>Code:</strong> 27
+                  </div>
+                  <div class="tally-seller-tax-line">
+                    <strong>Contact:</strong> +91 97676 72497 &nbsp;|&nbsp; <strong>Email:</strong> sales@passcorp.in
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div class="quote-company-col">
-              <div class="company-main-title">PASS CORP.</div>
-              <div class="company-scope-banner">
-                INDUSTRIAL SAFETY EQUIPMENT & WORKPLACE PROTECTION SOLUTIONS
+            <div class="tally-meta-col">
+              <div class="tally-meta-grid">
+                <div class="tally-meta-cell">
+                  <div class="tally-meta-lbl" id="viewLabelDocNo">QUOTATION NO.</div>
+                  <div class="tally-meta-val" id="viewQuoteNo">PC/25-26/00078</div>
+                </div>
+                <div class="tally-meta-cell">
+                  <div class="tally-meta-lbl">DATED</div>
+                  <div class="tally-meta-val" id="viewQuoteDate">2026-09-08</div>
+                </div>
+                <div class="tally-meta-cell">
+                  <div class="tally-meta-lbl">DELIVERY</div>
+                  <div class="tally-meta-val" id="viewQuoteDelivery">Door Delivery</div>
+                </div>
+                <div class="tally-meta-cell">
+                  <div class="tally-meta-lbl">VALIDITY OF QUOTATION</div>
+                  <div class="tally-meta-val" id="viewQuoteValid">15 Days</div>
+                </div>
+                <div class="tally-meta-cell">
+                  <div class="tally-meta-lbl">PAYMENT TERMS</div>
+                  <div class="tally-meta-val" id="viewQuotePayment">Net 30 Days</div>
+                </div>
+                <div class="tally-meta-cell">
+                  <div class="tally-meta-lbl">TAXES</div>
+                  <div class="tally-meta-val" id="viewQuoteGst">Extra as applicable</div>
+                </div>
               </div>
-              <div class="company-details-text">
-                📍 Dehu Alandi Road, Chikhali, Pune - 411062, Maharashtra, India<br>
-                📞 <strong>Mob:</strong> +91 97676 72497 &nbsp;|&nbsp; ✉️ <strong>Email:</strong> sales@passcorp.in / passcorpsafety@gmail.com<br>
-                🌐 <strong>Web:</strong> www.passcorp.in &nbsp;|&nbsp; <strong>GSTIN:</strong> Unregistered / Regular
-              </div>
-              <div class="company-credentials-row">
-                <span>🛡️ IS / EN / CE Certified Safety Gear</span>
-                <span>•</span>
-                <span>⚡ Ready Stock in PCMC MIDC</span>
-                <span>•</span>
-                <span>⭐ Genuine OEM Products</span>
-              </div>
-            </div>
-
-            <div class="quote-meta-col">
-              <div class="quote-meta-header" id="viewDocTypeTitle">QUOTATION</div>
-              <table class="quote-meta-table">
-                <tr><td class="meta-label" id="viewLabelDocNo">Quotation No.</td><td class="meta-val" id="viewQuoteNo">PC/25-26/00078</td></tr>
-                <tr><td class="meta-label">Date</td><td class="meta-val" id="viewQuoteDate">2 August 2026</td></tr>
-                <tr><td class="meta-label">Valid Upto</td><td class="meta-val" id="viewQuoteValid">17 August 2026</td></tr>
-                <tr><td class="meta-label">Payment Terms</td><td class="meta-val" id="viewQuotePayment">As Agreed</td></tr>
-                <tr><td class="meta-label">Delivery Terms</td><td class="meta-val" id="viewQuoteDelivery">Ex-Works / Pune</td></tr>
-                <tr><td class="meta-label">GST</td><td class="meta-val" id="viewQuoteGst" style="color:#b91c1c;">EXTRA</td></tr>
-              </table>
             </div>
           </div>
 
-          <div class="client-enterprise-row">
-            <div class="client-buyer-col">
-              <div class="client-section-title">TO / BUYER DETAILS</div>
-              <table class="client-table">
-                <tr><td class="c-label">Company:</td><td class="c-val" id="viewClientCompany">M/s. ABC Industries Pvt. Ltd.</td></tr>
-                <tr><td class="c-label">Address:</td><td class="c-val" id="viewClientAddress">Plot No. 45, MIDC Bhosari, Pune</td></tr>
-                <tr><td class="c-label">GSTIN:</td><td class="c-val" id="viewClientGst">27AAACA0000A1Z5</td></tr>
-                <tr><td class="c-label">State:</td><td class="c-val" id="viewClientState">Maharashtra (Code: 27)</td></tr>
-              </table>
+          <!-- Buyer Details ("TO COMPANY") -->
+          <div class="tally-buyer-section">
+            <div class="tally-buyer-left">
+              <div class="tally-sub-heading">TO COMPANY</div>
+              <div class="tally-buyer-name" id="viewClientCompany">ZAMIL STEEL BUILDING INDIA PRIVATE LIMITED</div>
+              <div class="tally-buyer-address" id="viewClientAddress">Plot No. B 32, Ranjangaon MIDC, Pune, Maharashtra 412220</div>
+              <div class="tally-buyer-contact">
+                <strong>Contact Person:</strong> <span id="viewClientName">Mr. Dhanaraj Pingale</span>
+              </div>
             </div>
-
-            <div class="client-inquiry-col">
-              <div class="client-section-title">CLIENT INQUIRY & REFERENCE</div>
-              <table class="client-table">
-                <tr><td class="c-label">Inquiry / RFQ:</td><td class="c-val" id="viewInqRef">RFQ/2026/08/042</td></tr>
-                <tr><td class="c-label">Inquiry Date:</td><td class="c-val" id="viewInqDate">28 August 2026</td></tr>
-                <tr><td class="c-label">Department:</td><td class="c-val" id="viewInqDept">Safety & EHS Dept</td></tr>
-                <tr><td class="c-label">Project / Site:</td><td class="c-val" id="viewInqProject">Annual Safety Supply / Bhosari</td></tr>
-                <tr><td class="c-label">Kind Attn:</td><td class="c-val" id="viewClientName">Mr. Rajesh Sharma (Purchase Head)</td></tr>
-              </table>
+            <div class="tally-buyer-right">
+              <div class="tally-buyer-tax-row">
+                <strong>GSTIN/UIN:</strong> <span id="viewClientGst">27AACZ1758R1ZJ</span>
+              </div>
+              <div class="tally-buyer-tax-row">
+                <strong>State Name:</strong> <span id="viewClientState">Maharashtra, Code: 27</span>
+              </div>
             </div>
           </div>
 
-          <div class="tagline-strip">
-            PRECISION | ASSURANCE | SAFETY | SOLUTION
-          </div>
-
-          <table class="quote-products-table" id="quoteTable">
+          <!-- Products Table -->
+          <table class="tally-products-table" id="quoteTable">
             <thead>
               <tr>
-                <th style="width: 4%;">Sr. No.</th>
-                <th style="width: 7%;">Lead Time</th>
-                <th style="width: 17%;">Product Image</th>
-                <th style="width: 22%;">Product Description</th>
-                <th style="width: 9%;">Brand</th>
-                <th style="width: 7%;">HSN</th>
-                <th style="width: 6%;">Unit</th>
-                <th style="width: 5%;">Qty</th>
-                <th style="width: 8%;">Price (₹)</th>
-                <th style="width: 5%;">GST %</th>
-                <th style="width: 10%;">Amount (₹)</th>
+                <th style="width: 4%;">SL</th>
+                <th style="width: 38%;">DESCRIPTION OF GOODS & TECHNICAL SPECS</th>
+                <th style="width: 10%;">HSN/SAC</th>
+                <th style="width: 7%;">QUANTITY</th>
+                <th style="width: 10%;">RATE (₹)</th>
+                <th style="width: 6%;">PER</th>
+                <th style="width: 8%;">LEAD TIME</th>
+                <th style="width: 5%;">GST%</th>
+                <th style="width: 12%;">AMOUNT (₹)</th>
               </tr>
             </thead>
             <tbody id="tableBody"></tbody>
+            <tfoot>
+              <!-- Subtotal / Taxable Value Row -->
+              <tr class="tally-subtotal-row">
+                <td colspan="3" style="text-align: right; font-weight: 900; padding: 4px 6px;">SUBTOTAL / TAXABLE VALUE</td>
+                <td class="td-center font-bold" id="viewTotalQty">0</td>
+                <td colspan="4"></td>
+                <td class="td-right font-bold" id="viewTaxableSubtotal">₹0.00</td>
+              </tr>
+              <!-- Optional Discount Row -->
+              <tr class="tally-tax-row" id="viewDiscountRow" style="display: none;">
+                <td colspan="8" style="text-align: right; padding: 2px 6px; color: #b91c1c;" id="viewDiscountLabel">Discount:</td>
+                <td class="td-right" style="color: #b91c1c;" id="viewDiscountAmount">-₹0.00</td>
+              </tr>
+              <!-- Optional Extra Charges (Freight / Pkg) -->
+              <tr class="tally-tax-row" id="viewFreightRow" style="display: none;">
+                <td colspan="8" style="text-align: right; padding: 2px 6px;">Freight / Transportation:</td>
+                <td class="td-right" id="viewFreightAmount">+₹0.00</td>
+              </tr>
+              <tr class="tally-tax-row" id="viewPkgRow" style="display: none;">
+                <td colspan="8" style="text-align: right; padding: 2px 6px;">Packaging & Handling:</td>
+                <td class="td-right" id="viewPkgAmount">+₹0.00</td>
+              </tr>
+              <!-- Central Tax (CGST) -->
+              <tr class="tally-tax-row" id="viewCgstRow">
+                <td colspan="8" style="text-align: right; padding: 2px 6px;">Central Tax (CGST)</td>
+                <td class="td-right" id="viewCgstAmount">₹0.00</td>
+              </tr>
+              <!-- State Tax (SGST) -->
+              <tr class="tally-tax-row" id="viewSgstRow">
+                <td colspan="8" style="text-align: right; padding: 2px 6px;">State Tax (SGST)</td>
+                <td class="td-right" id="viewSgstAmount">₹0.00</td>
+              </tr>
+              <!-- Integrated Tax (IGST) -->
+              <tr class="tally-tax-row" id="viewIgstRow" style="display: none;">
+                <td colspan="8" style="text-align: right; padding: 2px 6px;">Integrated Tax (IGST)</td>
+                <td class="td-right" id="viewIgstAmount">₹0.00</td>
+              </tr>
+              <!-- Grand Total Row -->
+              <tr class="tally-grand-total-row">
+                <td class="td-center font-bold">TOTAL</td>
+                <td colspan="2"></td>
+                <td class="td-center font-bold" id="viewGrandTotalQty">0</td>
+                <td colspan="4" style="text-align: right; font-weight: 900; font-size: 8.5px; padding: 4px 6px;">GRAND TOTAL</td>
+                <td class="td-right font-black" style="font-size: 9.5px;" id="viewTotalAmount">₹0.00</td>
+              </tr>
+            </tfoot>
           </table>
 
-          <div class="total-summary-row">
-            <div class="words-col">
-              <span class="words-label">Amount in Words:</span>
-              <span class="words-text" id="viewAmountWords">Zero Rupees Only</span>
+          <!-- Amount in Words & E. & O.E. -->
+          <div class="tally-words-row">
+            <div>
+              <div class="tally-words-lbl">AMOUNT CHARGEABLE (IN WORDS)</div>
+              <div class="tally-words-val" id="viewAmountWords">INR Zero Only</div>
             </div>
-            <div class="total-breakdown-col" id="viewSummaryBreakdown">
-              <div class="breakdown-line grand-total">
-                <span>Grand Total (₹)</span>
-                <span id="viewTotalAmount">₹0.00</span>
+            <div class="tally-words-right">
+              E. & O.E.
+            </div>
+          </div>
+
+          <!-- Footer Declaration & Signatory Box -->
+          <div class="tally-footer-grid">
+            <div class="tally-declaration-col">
+              <div class="tally-decl-heading">DECLARATION / TERMS:</div>
+              <ol class="tally-decl-list" id="viewTermsList">
+                <li>We declare that this document shows the actual price of the goods described and that all particulars are true and correct.</li>
+                <li>Prices are inclusive/exclusive of standard GST as applicable.</li>
+                <li>Quotation is valid for 15 days from the date of issue.</li>
+                <li>Delivery timeline: Within 3-5 business days upon PO confirmation.</li>
+              </ol>
+            </div>
+            <div class="tally-signatory-col">
+              <div class="tally-for-text">FOR</div>
+              <div class="tally-sign-company">PASS CORP.</div>
+              <div class="tally-stamp-wrap">
+                <img id="viewSignStampImg" src="stamp.png" class="tally-stamp-img" alt="Sign / Stamp" />
               </div>
+              <div class="tally-sign-label">AUTHORIZED SIGNATORY</div>
             </div>
-          </div>
-
-          <div class="quote-footer-grid">
-            <div class="terms-col">
-              <div class="footer-box-title" id="viewFooterTermsTitle">TERMS & CONDITIONS</div>
-              <ul class="terms-list" id="viewTermsList">
-                <li>Prices are subject to change without prior notice.</li>
-                <li>Goods once sold will not be taken back.</li>
-                <li>Delivery time is indicative and may change.</li>
-                <li>Warranty as per manufacturer's standard policy.</li>
-                <li>Subject to Pune Jurisdiction only.</li>
-              </ul>
-            </div>
-
-            <div class="bank-col">
-              <div class="footer-box-title">BANK DETAILS</div>
-              <table class="bank-table">
-                <tr><td class="b-label">Bank Name:</td><td class="b-val">HDFC Bank</td></tr>
-                <tr><td class="b-label">A/c Name:</td><td class="b-val">PASS CORP.</td></tr>
-                <tr><td class="b-label">A/c No.:</td><td class="b-val">50200012345678</td></tr>
-                <tr><td class="b-label">IFSC Code:</td><td class="b-val">HDFC0001234</td></tr>
-                <tr><td class="b-label">Branch:</td><td class="b-val">Chikhali, Pune</td></tr>
-              </table>
-            </div>
-
-            <div class="signatory-col">
-              <div class="for-company-title">For PASS CORP.</div>
-              <img id="viewSignStampImg" src="stamp.png" class="sign-stamp-img" alt="Sign / Stamp" />
-              <div class="signatory-label">Authorized Signatory</div>
-            </div>
-          </div>
-
-          <div class="bottom-safety-strip">
-            Thank you for the opportunity! | STAY SAFE, WORK SAFE. WE CARE FOR YOUR SAFETY.
           </div>
 
         </div>
@@ -2126,7 +2158,7 @@ var BRAND_LOGOS_MAP = {
 };
 
 function numberToIndianWords(num) {
-  if (isNaN(num) || num === null || num === 0) return "Zero Rupees Only";
+  if (isNaN(num) || num === null || num === 0) return "INR Zero Only";
   var a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
   var b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
   function convertGroup(n) {
@@ -2147,7 +2179,7 @@ function numberToIndianWords(num) {
   if (lakh > 0) words += convertGroup(lakh) + ' Lakh ';
   if (thousand > 0) words += convertGroup(thousand) + ' Thousand ';
   if (hundred > 0) words += convertGroup(hundred);
-  words = words.trim() + ' Rupees';
+  words = 'INR ' + words.trim();
   if (decimalPart > 0) words += ' and ' + convertGroup(decimalPart) + ' Paise';
   return words + ' Only';
 }
@@ -3439,13 +3471,14 @@ var app = {
     document.getElementById('btnDocPI').classList.toggle('active', type === 'PROFORMA INVOICE');
     document.getElementById('btnDocDC').classList.toggle('active', type === 'DELIVERY CHALLAN');
 
-    var lbl = type === 'PROFORMA INVOICE' ? 'PI No.' : (type === 'DELIVERY CHALLAN' ? 'DC No.' : 'Quotation No.');
+    var lbl = type === 'PROFORMA INVOICE' ? 'PI NO.' : (type === 'DELIVERY CHALLAN' ? 'DC NO.' : 'QUOTATION NO.');
     document.getElementById('lblDocNo').innerText = lbl;
     document.getElementById('viewLabelDocNo').innerText = lbl;
 
     var titleElem = document.getElementById('viewDocTypeTitle');
-    titleElem.innerText = type;
-    titleElem.className = 'quote-meta-header' + (type === 'PROFORMA INVOICE' ? ' pi-mode' : (type === 'DELIVERY CHALLAN' ? ' dc-mode' : ''));
+    var docTitle = type === 'QUOTATION' ? 'SALES QUOTATION' : type;
+    titleElem.innerText = docTitle;
+    titleElem.className = 'tally-doc-title' + (type === 'PROFORMA INVOICE' ? ' pi-mode' : (type === 'DELIVERY CHALLAN' ? ' dc-mode' : ''));
 
     this.renderPreview();
   },
@@ -3772,48 +3805,64 @@ var app = {
     document.getElementById('viewQuoteValid').innerText = this.quote.meta.valid || '-';
     document.getElementById('viewQuotePayment').innerText = this.quote.meta.payment || '-';
     document.getElementById('viewQuoteDelivery').innerText = this.quote.meta.delivery || '-';
-    document.getElementById('viewQuoteGst').innerText = this.quote.meta.gst || 'EXTRA';
+    document.getElementById('viewQuoteGst').innerText = this.quote.meta.gst || 'Extra as applicable';
 
     document.getElementById('viewClientCompany').innerText = this.quote.client.company || '-';
     document.getElementById('viewClientAddress').innerText = this.quote.client.address || '-';
     document.getElementById('viewClientGst').innerText = this.quote.client.gst || '-';
-    document.getElementById('viewClientState').innerText = this.quote.client.state || 'Maharashtra (Code: 27)';
+    document.getElementById('viewClientState').innerText = this.quote.client.state || 'Maharashtra, Code: 27';
     document.getElementById('viewClientName').innerText = this.quote.client.name || '-';
-
-    document.getElementById('viewInqRef').innerText = this.quote.inquiry.ref || '-';
-    document.getElementById('viewInqDate').innerText = this.quote.inquiry.date || this.quote.meta.date;
-    document.getElementById('viewInqDept').innerText = this.quote.inquiry.dept || '-';
-    document.getElementById('viewInqProject').innerText = this.quote.inquiry.project || '-';
 
     var tbody = document.getElementById('tableBody');
     var subtotal = 0;
+    var totalQty = 0;
+    var totalGst = 0;
 
     var rowsHtml = "";
     if (this.quote.items.length === 0) {
-      rowsHtml = '<tr class="item-row"><td colspan="11" style="text-align:center; padding: 22px 10px; color:#64748b; font-size: 8.5px; font-weight: 600;">No items in quotation. Select products from the Master Catalog Library on the left.</td></tr>';
+      rowsHtml = '<tr class="item-row"><td colspan="9" style="text-align:center; padding: 22px 10px; color:#64748b; font-size: 8.5px; font-weight: 600;">No items in quotation. Select products from the Master Catalog Library on the left.</td></tr>';
     } else {
       rowsHtml = this.quote.items.map(function(item, idx) {
-        var lineAmt = item.qty * item.price;
+        var qty = parseFloat(item.qty) || 0;
+        var price = parseFloat(item.price) || 0;
+        var gstRate = parseFloat(item.gst) || 0;
+        var lineAmt = qty * price;
+        var itemGstAmt = (lineAmt * gstRate) / 100;
+        
         subtotal += lineAmt;
-        var brandBadge = item.brandLogo ? '<img src="' + item.brandLogo + '" alt="' + item.brand + '" onerror="this.outerHTML=\'<strong>' + item.brand + '</strong>\'">' : '<strong>' + item.brand + '</strong>';
+        totalQty += qty;
+        totalGst += itemGstAmt;
+
+        var imgHtml = item.image ? '<img src="' + item.image + '" class="tally-item-img" alt="" onerror="this.style.display=\'none\'" />' : '';
+        var specsFormatted = (item.specs || '').trim();
+        var makeLine = item.brand ? '<div style="font-size:7px; color:#0c2340; font-weight:700; margin-top:2px;">Make- ' + item.brand + '</div>' : '';
+
         return '<tr class="item-row">' +
-          '<td class="td-center">' + (idx + 1) + '</td>' +
-          '<td class="td-center">' + (item.leadTime || '1-2 Days') + '</td>' +
-          '<td class="product-thumb-cell"><img src="' + item.image + '" alt="" onerror="this.style.display=\'none\'" /></td>' +
-          '<td class="product-desc-cell"><div class="product-specs-text">' + (item.specs || '').replace(/\n/g, '<br>') + '</div></td>' +
-          '<td class="brand-badge-cell td-center">' + brandBadge + '</td>' +
-          '<td class="td-center">' + (item.hsn || '-') + '</td>' +
+          '<td class="td-center font-bold">' + (idx + 1) + '</td>' +
+          '<td>' +
+            '<div class="tally-desc-container">' +
+              imgHtml +
+              '<div style="flex:1;">' +
+                '<div class="tally-item-title">' + (item.name || item.specs.split('\n')[0] || 'Safety Equipment') + '</div>' +
+                '<div class="tally-item-specs">' + specsFormatted.replace(/\n/g, '<br>') + '</div>' +
+                makeLine +
+              '</div>' +
+            '</div>' +
+          '</td>' +
+          '<td class="td-center font-bold">' + (item.hsn || '-') + '</td>' +
+          '<td class="td-center font-bold">' + qty + '</td>' +
+          '<td class="td-right font-bold">' + price.toFixed(2) + '</td>' +
           '<td class="td-center">' + (item.unit || 'Nos.') + '</td>' +
-          '<td class="td-center">' + item.qty + '</td>' +
-          '<td class="td-right">₹' + item.price.toFixed(2) + '</td>' +
-          '<td class="td-center">' + item.gst + '%</td>' +
-          '<td class="td-right">₹' + lineAmt.toFixed(2) + '</td>' +
+          '<td class="td-center">' + (item.leadTime || '3-4 Days') + '</td>' +
+          '<td class="td-center" style="color:#1e40af; font-weight:700;">' + gstRate + '%</td>' +
+          '<td class="td-right font-bold">' + lineAmt.toFixed(2) + '</td>' +
         '</tr>';
       }).join('');
     }
 
     tbody.innerHTML = rowsHtml;
 
+    // Pricing & Discounts
     var p = this.quote.pricing || { discType: "none", discVal: 0, freight: 0, pkg: 0 };
     var discountAmt = 0;
     if (p.discType === 'percent' && p.discVal > 0) {
@@ -3824,27 +3873,110 @@ var app = {
     discountAmt = Math.min(discountAmt, subtotal);
 
     var netTaxable = Math.max(0, subtotal - discountAmt);
-    var extraCharges = (p.freight || 0) + (p.pkg || 0);
-    var grandTotal = netTaxable + extraCharges;
+    var extraCharges = (parseFloat(p.freight) || 0) + (parseFloat(p.pkg) || 0);
 
-    var bElem = document.getElementById('viewSummaryBreakdown');
-    var breakdownHtml = "";
-    if (discountAmt > 0 || extraCharges > 0) {
-      breakdownHtml += '<div class="breakdown-line"><span>Subtotal:</span><span>₹' + subtotal.toFixed(2) + '</span></div>';
+    // Adjust GST proportionately if there is a discount
+    var effectiveGst = totalGst;
+    if (subtotal > 0 && discountAmt > 0) {
+      effectiveGst = totalGst * (netTaxable / subtotal);
+    }
+
+    // Determine state code / Intra-state vs Inter-state
+    var clientStateStr = (this.quote.client.state || '').toLowerCase();
+    var isIntraState = clientStateStr.includes('27') || clientStateStr.includes('maharashtra') || clientStateStr === '';
+
+    var cgstAmt = 0;
+    var sgstAmt = 0;
+    var igstAmt = 0;
+
+    if (isIntraState) {
+      cgstAmt = effectiveGst / 2;
+      sgstAmt = effectiveGst / 2;
+    } else {
+      igstAmt = effectiveGst;
+    }
+
+    var grandTotal = netTaxable + effectiveGst + extraCharges;
+
+    // Populate Table Footer Totals
+    var totalQtyElem = document.getElementById('viewTotalQty');
+    var grandTotalQtyElem = document.getElementById('viewGrandTotalQty');
+    var taxableSubtotalElem = document.getElementById('viewTaxableSubtotal');
+    var totalAmountElem = document.getElementById('viewTotalAmount');
+
+    if (totalQtyElem) totalQtyElem.innerText = String(totalQty);
+    if (grandTotalQtyElem) grandTotalQtyElem.innerText = String(totalQty);
+    if (taxableSubtotalElem) taxableSubtotalElem.innerText = '₹' + netTaxable.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (totalAmountElem) totalAmountElem.innerText = '₹' + grandTotal.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    // Handle Discount Row
+    var discRow = document.getElementById('viewDiscountRow');
+    if (discRow) {
       if (discountAmt > 0) {
-        breakdownHtml += '<div class="breakdown-line" style="color:#b91c1c;"><span>Discount (' + (p.discType === 'percent' ? p.discVal + '%' : 'Cash') + '):</span><span>-₹' + discountAmt.toFixed(2) + '</span></div>';
-      }
-      if (p.freight > 0) {
-        breakdownHtml += '<div class="breakdown-line"><span>Freight / Transport:</span><span>+₹' + p.freight.toFixed(2) + '</span></div>';
-      }
-      if (p.pkg > 0) {
-        breakdownHtml += '<div class="breakdown-line"><span>Packaging & Handling:</span><span>+₹' + p.pkg.toFixed(2) + '</span></div>';
+        discRow.style.display = '';
+        var discLabelElem = document.getElementById('viewDiscountLabel');
+        var discAmountElem = document.getElementById('viewDiscountAmount');
+        if (discLabelElem) discLabelElem.innerText = 'Discount (' + (p.discType === 'percent' ? p.discVal + '%' : 'Cash') + '):';
+        if (discAmountElem) discAmountElem.innerText = '-₹' + discountAmt.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      } else {
+        discRow.style.display = 'none';
       }
     }
-    breakdownHtml += '<div class="breakdown-line grand-total"><span>Grand Total (₹)</span><span id="viewTotalAmount">₹' + grandTotal.toFixed(2) + '</span></div>';
-    bElem.innerHTML = breakdownHtml;
 
-    document.getElementById('viewAmountWords').innerText = numberToIndianWords(grandTotal);
+    // Handle Freight / Transport Row
+    var freightRow = document.getElementById('viewFreightRow');
+    if (freightRow) {
+      if (p.freight > 0) {
+        freightRow.style.display = '';
+        var freightAmtElem = document.getElementById('viewFreightAmount');
+        if (freightAmtElem) freightAmtElem.innerText = '+₹' + parseFloat(p.freight).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      } else {
+        freightRow.style.display = 'none';
+      }
+    }
+
+    // Handle Packaging Row
+    var pkgRow = document.getElementById('viewPkgRow');
+    if (pkgRow) {
+      if (p.pkg > 0) {
+        pkgRow.style.display = '';
+        var pkgAmtElem = document.getElementById('viewPkgAmount');
+        if (pkgAmtElem) pkgAmtElem.innerText = '+₹' + parseFloat(p.pkg).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      } else {
+        pkgRow.style.display = 'none';
+      }
+    }
+
+    // Handle Tax Rows
+    var cgstRow = document.getElementById('viewCgstRow');
+    var sgstRow = document.getElementById('viewSgstRow');
+    var igstRow = document.getElementById('viewIgstRow');
+
+    if (isIntraState) {
+      if (cgstRow) {
+        cgstRow.style.display = '';
+        var cgstAmtElem = document.getElementById('viewCgstAmount');
+        if (cgstAmtElem) cgstAmtElem.innerText = '₹' + cgstAmt.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+      if (sgstRow) {
+        sgstRow.style.display = '';
+        var sgstAmtElem = document.getElementById('viewSgstAmount');
+        if (sgstAmtElem) sgstAmtElem.innerText = '₹' + sgstAmt.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+      if (igstRow) igstRow.style.display = 'none';
+    } else {
+      if (cgstRow) cgstRow.style.display = 'none';
+      if (sgstRow) sgstRow.style.display = 'none';
+      if (igstRow) {
+        igstRow.style.display = '';
+        var igstAmtElem = document.getElementById('viewIgstAmount');
+        if (igstAmtElem) igstAmtElem.innerText = '₹' + igstAmt.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+    }
+
+    var amtWordsElem = document.getElementById('viewAmountWords');
+    if (amtWordsElem) amtWordsElem.innerText = numberToIndianWords(grandTotal);
+
     this.renderSignatoryStamp();
     this.renderMarginDashboard();
   },
