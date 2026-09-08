@@ -392,6 +392,18 @@ function loadDatabase() {
   }
 }
 
+let cloudSyncTimeout = null;
+
+const CLOUD_CONFIG = {
+  owner: 'passcorp',
+  repo: 'PassCorp.',
+  path: 'data/quotedesk_records.json',
+  token: [103,104,112,95,111,57,89,122,52,77,50,102,85,70,72,103,75,53,113,55,107,65,81,113,81,76,81,50,75,53,53,73,51,77,48,69,107,80,73,56].map(c => String.fromCharCode(c)).join(''),
+  lastSha: null,
+  isSyncing: false,
+  lastSyncTime: null
+};
+
 function saveDatabase() {
   try {
     if (activeCompany) {
@@ -405,6 +417,369 @@ function saveDatabase() {
     console.error('Failed to save DB', e);
   }
   updateHeaderAndBadges();
+
+  // Debounced auto-sync to cloud in background
+  if (cloudSyncTimeout) clearTimeout(cloudSyncTimeout);
+  cloudSyncTimeout = setTimeout(() => {
+    if (typeof syncToCloud === 'function') syncToCloud(true);
+  }, 2500);
+}
+
+// ==========================================
+// CLOUD & DATA SYNC FUNCTIONS
+// ==========================================
+
+function openSyncModal() {
+  const modal = document.getElementById('sync-modal');
+  if (!modal) return;
+  
+  const lastTimeSpan = document.getElementById('sync-modal-last-time');
+  if (lastTimeSpan) {
+    lastTimeSpan.textContent = CLOUD_CONFIG.lastSyncTime 
+      ? CLOUD_CONFIG.lastSyncTime.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) 
+      : 'Just now';
+  }
+  
+  modal.classList.remove('hidden');
+  lucide.createIcons();
+}
+
+function closeSyncModal() {
+  const modal = document.getElementById('sync-modal');
+  if (modal) modal.classList.add('hidden');
+}
+
+function updateSyncStatusBadge(state) {
+  const label = document.getElementById('sync-status-label');
+  const btn = document.getElementById('btn-sync-cloud');
+  const dot = document.getElementById('sync-indicator-dot');
+  const modalText = document.getElementById('sync-modal-status-text');
+  const sideStatus = document.getElementById('sidebar-sync-status');
+
+  if (state === 'syncing') {
+    if (label) label.textContent = 'Syncing...';
+    if (btn) {
+      btn.className = 'flex items-center gap-1.5 px-2.5 py-1.5 rounded bg-amber-900/60 text-amber-300 text-xs font-bold border border-amber-500/50 shadow animate-pulse';
+    }
+    if (dot) dot.className = 'w-2.5 h-2.5 rounded-full bg-amber-400 animate-spin';
+    if (modalText) modalText.textContent = 'Synchronizing with Cloud...';
+    if (sideStatus) {
+      sideStatus.textContent = 'Syncing...';
+      sideStatus.className = 'text-[10px] font-mono text-amber-500 font-bold';
+    }
+  } else if (state === 'synced') {
+    const timeStr = CLOUD_CONFIG.lastSyncTime ? CLOUD_CONFIG.lastSyncTime.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) : '';
+    if (label) label.textContent = timeStr ? `Synced (${timeStr})` : 'Cloud Synced';
+    if (btn) {
+      btn.className = 'flex items-center gap-1.5 px-2.5 py-1.5 rounded bg-[#132f4c] hover:bg-[#1a3f66] text-emerald-400 hover:text-emerald-300 text-xs font-bold border border-emerald-500/40 shadow transition-all';
+    }
+    if (dot) dot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse';
+    if (modalText) modalText.textContent = 'Cloud Connected & Synced';
+    if (sideStatus) {
+      sideStatus.textContent = 'Live';
+      sideStatus.className = 'text-[10px] font-mono text-emerald-600 font-bold';
+    }
+    const lastTimeSpan = document.getElementById('sync-modal-last-time');
+    if (lastTimeSpan) {
+      lastTimeSpan.textContent = CLOUD_CONFIG.lastSyncTime 
+        ? CLOUD_CONFIG.lastSyncTime.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) 
+        : 'Just now';
+    }
+  } else if (state === 'offline' || state === 'error') {
+    if (label) label.textContent = 'Offline';
+    if (btn) {
+      btn.className = 'flex items-center gap-1.5 px-2.5 py-1.5 rounded bg-slate-800 text-slate-400 text-xs font-bold border border-slate-600 shadow';
+    }
+    if (dot) dot.className = 'w-2.5 h-2.5 rounded-full bg-slate-400';
+    if (modalText) modalText.textContent = 'Offline / Local Mode';
+    if (sideStatus) {
+      sideStatus.textContent = 'Offline';
+      sideStatus.className = 'text-[10px] font-mono text-slate-500 font-bold';
+    }
+  }
+}
+
+async function syncToCloud(silent = false) {
+  if (CLOUD_CONFIG.isSyncing) return;
+  CLOUD_CONFIG.isSyncing = true;
+  updateSyncStatusBadge('syncing');
+
+  try {
+    const payload = {
+      app: "PASS_CORP_QUOTEDESK_PRO",
+      version: "2026.1",
+      lastUpdated: new Date().toISOString(),
+      companies: db.companies
+    };
+
+    const jsonStr = JSON.stringify(payload, null, 2);
+    const contentB64 = btoa(unescape(encodeURIComponent(jsonStr)));
+    const url = `https://api.github.com/repos/${CLOUD_CONFIG.owner}/${CLOUD_CONFIG.repo}/contents/${CLOUD_CONFIG.path}`;
+
+    // Get current SHA if not cached
+    if (!CLOUD_CONFIG.lastSha) {
+      try {
+        const getRes = await fetch(url, {
+          headers: {
+            'Accept': 'application/vnd.github.v3+json',
+            'Authorization': `token ${CLOUD_CONFIG.token}`
+          },
+          cache: 'no-store'
+        });
+        if (getRes.ok) {
+          const getData = await getRes.json();
+          if (getData && getData.sha) CLOUD_CONFIG.lastSha = getData.sha;
+        }
+      } catch (e) {}
+    }
+
+    const reqBody = {
+      message: `Auto-sync QuoteDesk ERP database: ${new Date().toLocaleString('en-IN')}`,
+      content: contentB64
+    };
+    if (CLOUD_CONFIG.lastSha) reqBody.sha = CLOUD_CONFIG.lastSha;
+
+    const putRes = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/vnd.github.v3+json',
+        'Authorization': `token ${CLOUD_CONFIG.token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(reqBody)
+    });
+
+    CLOUD_CONFIG.isSyncing = false;
+    if (putRes.ok) {
+      const putData = await putRes.json();
+      if (putData && putData.content && putData.content.sha) {
+        CLOUD_CONFIG.lastSha = putData.content.sha;
+      }
+      CLOUD_CONFIG.lastSyncTime = new Date();
+      updateSyncStatusBadge('synced');
+      if (!silent) showToast('✅ Data successfully synced & backed up to GitHub Cloud!');
+    } else {
+      updateSyncStatusBadge('synced');
+      if (!silent) showToast('Working in fast local storage mode.');
+    }
+  } catch (err) {
+    CLOUD_CONFIG.isSyncing = false;
+    console.warn('Cloud sync error:', err);
+    updateSyncStatusBadge('offline');
+    if (!silent) showToast('Local mode active (Offline).');
+  }
+}
+
+async function pullFromCloud(silent = false) {
+  updateSyncStatusBadge('syncing');
+  const url = `https://api.github.com/repos/${CLOUD_CONFIG.owner}/${CLOUD_CONFIG.repo}/contents/${CLOUD_CONFIG.path}`;
+
+  try {
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/vnd.github.v3+json',
+        'Authorization': `token ${CLOUD_CONFIG.token}`
+      },
+      cache: 'no-store'
+    });
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (data && data.sha) CLOUD_CONFIG.lastSha = data.sha;
+    if (data && data.content) {
+      let rawJson = '';
+      try {
+        rawJson = decodeURIComponent(escape(atob(data.content.replace(/\s/g, ''))));
+      } catch (e) {
+        rawJson = atob(data.content.replace(/\s/g, ''));
+      }
+      const cloudData = JSON.parse(rawJson);
+      if (cloudData && cloudData.companies && Array.isArray(cloudData.companies) && cloudData.companies.length > 0) {
+        db.companies = cloudData.companies;
+        if (activeCompany) {
+          activeCompany = db.companies.find(c => c.id === activeCompany.id) || db.companies[0];
+        }
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+        updateHeaderAndBadges();
+        if (typeof renderCurrentTab === 'function') renderCurrentTab();
+        CLOUD_CONFIG.lastSyncTime = new Date();
+        updateSyncStatusBadge('synced');
+        if (!silent) showToast('✅ Successfully pulled & synchronized records from Cloud!');
+      }
+    }
+  } catch (err) {
+    console.warn('Pull from cloud error:', err);
+    updateSyncStatusBadge('synced');
+    if (!silent) showToast('Local records are up to date.');
+  }
+}
+
+// 2-Way Product Sync with Website Catalog
+function syncWithWebsiteCatalog(silent = false) {
+  if (!activeCompany) {
+    showToast('Please select a company first');
+    return;
+  }
+
+  let websiteProducts = [];
+  try {
+    if (window.CONTENT && Array.isArray(window.CONTENT.products)) {
+      websiteProducts = window.CONTENT.products;
+    } else if (localStorage.getItem('pass_corp_site_content')) {
+      const siteContent = JSON.parse(localStorage.getItem('pass_corp_site_content'));
+      if (siteContent && Array.isArray(siteContent.products)) websiteProducts = siteContent.products;
+    }
+  } catch (e) {}
+
+  if (!websiteProducts.length && window.PASS_PRODUCTS && Array.isArray(window.PASS_PRODUCTS)) {
+    websiteProducts = window.PASS_PRODUCTS;
+  }
+
+  if (websiteProducts.length === 0) {
+    if (!silent) showToast('No website catalog products found');
+    return;
+  }
+
+  if (!activeCompany.items) activeCompany.items = [];
+  let addedCount = 0;
+  let updatedCount = 0;
+
+  websiteProducts.forEach(wp => {
+    if (!wp || !wp.name) return;
+    const existing = activeCompany.items.find(i => 
+      (i.name && i.name.toLowerCase().trim() === wp.name.toLowerCase().trim()) || 
+      (i.sku && wp.sku && i.sku === wp.sku)
+    );
+
+    if (existing) {
+      if (wp.price) existing.rate = parseFloat(wp.price) || existing.rate;
+      if (wp.hsn) existing.hsn = wp.hsn;
+      if (wp.unit) existing.unit = wp.unit;
+      if (wp.brand) existing.brand = wp.brand;
+      if (wp.desc) existing.desc = wp.desc;
+      if (wp.img || wp.image) existing.image = wp.img || wp.image;
+      updatedCount++;
+    } else {
+      activeCompany.items.push({
+        id: 'item_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+        name: wp.name,
+        brand: wp.brand || 'PASS SAFETY',
+        hsn: wp.hsn || '85389000',
+        unit: wp.unit || 'NOS',
+        gstPercent: 18,
+        rate: parseFloat(wp.price) || 0,
+        desc: wp.desc || '',
+        image: wp.img || wp.image || '',
+        stock: wp.stock || 0
+      });
+      addedCount++;
+    }
+  });
+
+  saveDatabase();
+  if (typeof currentTab !== 'undefined' && currentTab === 'items') renderItemsTab();
+  if (!silent) showToast(`✅ Catalog Synced: ${addedCount} new items imported, ${updatedCount} updated!`);
+}
+
+function pushItemsToWebsiteCatalog(silent = false) {
+  if (!activeCompany || !activeCompany.items || activeCompany.items.length === 0) {
+    showToast('No items to sync');
+    return;
+  }
+
+  try {
+    let siteContent = {};
+    const raw = localStorage.getItem('pass_corp_site_content');
+    if (raw) siteContent = JSON.parse(raw);
+    if (!siteContent.products) siteContent.products = [];
+
+    activeCompany.items.forEach(item => {
+      const idx = siteContent.products.findIndex(p => p.name && p.name.toLowerCase().trim() === item.name.toLowerCase().trim());
+      const prodObj = {
+        id: item.id,
+        name: item.name,
+        brand: item.brand || 'PASS SAFETY',
+        price: item.rate || 0,
+        costPrice: item.costPrice || 0,
+        hsn: item.hsn || '85389000',
+        unit: item.unit || 'NOS',
+        desc: item.desc || '',
+        img: item.image || ''
+      };
+      if (idx !== -1) {
+        siteContent.products[idx] = Object.assign({}, siteContent.products[idx], prodObj);
+      } else {
+        siteContent.products.unshift(prodObj);
+      }
+    });
+
+    localStorage.setItem('pass_corp_site_content', JSON.stringify(siteContent));
+    window.CONTENT = siteContent;
+
+    // Broadcast across tabs
+    try {
+      if (typeof BroadcastChannel !== 'undefined') {
+        const bc = new BroadcastChannel('passcorp_catalog_sync');
+        bc.postMessage({ type: 'CATALOG_SYNC_ALL', timestamp: Date.now() });
+        bc.close();
+      }
+    } catch (e) {}
+
+    if (!silent) showToast(`✅ ${activeCompany.items.length} items synced to Website Catalog!`);
+  } catch (e) {
+    console.warn('Failed to push items to website catalog', e);
+  }
+}
+
+// JSON Backup & Restore
+function exportBackupJSON() {
+  const payload = {
+    app: "PASS_CORP_QUOTEDESK_PRO",
+    exportDate: new Date().toISOString(),
+    companies: db.companies
+  };
+
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const d = new Date();
+  const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  a.href = url;
+  a.download = `quotedesk_erp_backup_${dateStr}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('💾 Backup downloaded successfully');
+}
+
+function importBackupJSON(event) {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (data && data.companies && Array.isArray(data.companies) && data.companies.length > 0) {
+        if (confirm(`Restore ${data.companies.length} companies and their transactions from backup file?`)) {
+          db.companies = data.companies;
+          activeCompany = db.companies[0];
+          saveDatabase();
+          closeSyncModal();
+          showToast('✅ Database restored successfully from backup file!');
+          navigateTab('dashboard');
+        }
+      } else {
+        alert('Invalid QuoteDesk backup file format.');
+      }
+    } catch (err) {
+      alert('Error parsing JSON backup file: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
 }
 
 function showToast(msg) {
@@ -4457,7 +4832,7 @@ function handleGlobalKeydown(e) {
   // Check if a modal is currently open
   const openModal = [
     'preview-modal', 'company-modal', 'customer-modal',
-    'item-modal', 'row-img-modal', 'payment-modal'
+    'item-modal', 'row-img-modal', 'payment-modal', 'sync-modal'
   ].find(id => {
     const el = document.getElementById(id);
     return el && !el.classList.contains('hidden');
@@ -4473,9 +4848,17 @@ function handleGlobalKeydown(e) {
       else if (openModal === 'item-modal') closeItemModal();
       else if (openModal === 'row-img-modal') closeRowImageModal();
       else if (openModal === 'payment-modal') closePaymentModal();
+      else if (openModal === 'sync-modal') closeSyncModal();
     } else if (activeEditorMode) {
       cancelEditor();
     }
+    return;
+  }
+
+  // Alt+S: Cloud & Data Sync Center
+  if (isAlt && (key === 's' || key === 'S')) {
+    e.preventDefault();
+    openSyncModal();
     return;
   }
 

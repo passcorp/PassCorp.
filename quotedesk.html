@@ -317,6 +317,11 @@
           <span>Sales Inv</span>
         </button>
 
+        <button onclick="openSyncModal()" id="btn-sync-cloud" title="Cloud & Data Sync (Alt+S)" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded bg-[#132f4c] hover:bg-[#1a3f66] text-emerald-400 hover:text-emerald-300 text-xs font-bold border border-emerald-500/40 shadow transition-all">
+          <i data-lucide="cloud" class="w-3.5 h-3.5" id="sync-icon"></i>
+          <span id="sync-status-label" class="hidden md:inline">Sync Cloud</span>
+        </button>
+
         <button onclick="lockSession()" title="Shortcut: Alt+F1" class="flex items-center gap-1 px-2.5 py-1.5 rounded bg-[#163657] hover:bg-[#204975] text-slate-200 text-xs font-semibold border border-[#27578a] transition-all">
           <i data-lucide="arrow-left-right" class="w-3.5 h-3.5 text-blue-300"></i>
           <span class="hidden sm:inline">Switch Co.</span>
@@ -383,8 +388,16 @@
             </button>
 
             <div class="pt-2 px-2 text-[9px] font-black uppercase tracking-wider text-slate-400">
-              Configuration & Setup
+              Cloud & Setup
             </div>
+
+            <button onclick="openSyncModal()" id="nav-sync" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-md transition-all text-slate-700 hover:text-slate-900 hover:bg-slate-200/70">
+              <div class="flex items-center gap-2.5">
+                <i data-lucide="cloud" class="w-4 h-4 text-emerald-600"></i>
+                <span>Cloud & Data Sync</span>
+              </div>
+              <span class="text-[10px] font-mono text-emerald-600 font-bold" id="sidebar-sync-status">Live</span>
+            </button>
 
             <button onclick="navigateTab('settings')" id="nav-settings" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-md transition-all text-slate-700 hover:text-slate-900 hover:bg-slate-200/70">
               <div class="flex items-center gap-2.5">
@@ -401,7 +414,7 @@
           <div class="flex items-center justify-between px-1 text-[10px] text-slate-600 font-mono">
             <span>Status:</span>
             <span class="font-bold text-blue-800 flex items-center gap-1">
-              <span class="w-1.5 h-1.5 rounded-full bg-blue-600 inline-block animate-pulse"></span> Online Mode
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span> Auto-Sync On
             </span>
           </div>
 
@@ -421,6 +434,119 @@
       <main id="main-content" class="flex-1 overflow-y-auto bg-slate-100 p-4 md:p-6">
         <!-- Injected via JS -->
       </main>
+    </div>
+  </div>
+
+  <!-- CLOUD & DATA SYNC MODAL -->
+  <div id="sync-modal" class="hidden fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div class="w-full max-w-xl bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-150">
+      <!-- Header -->
+      <div class="px-6 py-4 bg-gradient-to-r from-[#0c2340] to-[#1e3a8a] text-white flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center text-emerald-300 border border-white/20">
+            <i data-lucide="cloud" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-sm font-black tracking-wide uppercase">Cloud & Data Sync Center</h3>
+            <p class="text-[11px] text-blue-200">Multi-Company Cloud backup, GitHub storage & website synchronization</p>
+          </div>
+        </div>
+        <button onclick="closeSyncModal()" class="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="p-6 overflow-y-auto space-y-5 text-slate-800 text-xs">
+        
+        <!-- Live Status Card -->
+        <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-between">
+          <div class="space-y-1">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" id="sync-indicator-dot"></span>
+              <span class="font-bold text-slate-900 text-sm" id="sync-modal-status-text">Cloud Connected</span>
+            </div>
+            <p class="text-[11px] text-slate-500 font-mono">Last Synchronized: <span id="sync-modal-last-time" class="font-bold text-slate-700">Just now</span></p>
+          </div>
+          <button onclick="syncToCloud(false)" id="btn-sync-trigger" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow-md shadow-emerald-700/20 flex items-center gap-2 transition-all cursor-pointer">
+            <i data-lucide="refresh-cw" class="w-4 h-4" id="btn-sync-trigger-icon"></i>
+            <span>Sync Cloud Now</span>
+          </button>
+        </div>
+
+        <!-- 3 Primary Sync Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+          <!-- 1. Cloud Backup & Pull -->
+          <div class="p-4 bg-blue-50/60 border border-blue-200 rounded-2xl space-y-2.5">
+            <div class="flex items-center gap-2 text-blue-900 font-bold text-xs">
+              <i data-lucide="cloud-upload" class="w-4 h-4 text-blue-700"></i>
+              <span>GitHub Cloud Storage</span>
+            </div>
+            <p class="text-[11px] text-slate-600 leading-relaxed">Syncs all companies, quotations, invoices, items, and customer ledgers securely to GitHub Cloud repository.</p>
+            <div class="flex gap-2 pt-1">
+              <button onclick="syncToCloud(false)" class="flex-1 py-2 px-2 bg-blue-700 hover:bg-blue-800 text-white rounded-xl font-bold text-[11px] flex items-center justify-center gap-1 shadow-sm transition-all">
+                <i data-lucide="arrow-up-circle" class="w-3.5 h-3.5"></i>
+                <span>Push Cloud</span>
+              </button>
+              <button onclick="pullFromCloud(false)" class="flex-1 py-2 px-2 bg-white hover:bg-slate-100 text-blue-800 border border-blue-300 rounded-xl font-bold text-[11px] flex items-center justify-center gap-1 shadow-sm transition-all">
+                <i data-lucide="arrow-down-circle" class="w-3.5 h-3.5"></i>
+                <span>Pull Cloud</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. Website Catalog Sync -->
+          <div class="p-4 bg-amber-50/60 border border-amber-200 rounded-2xl space-y-2.5">
+            <div class="flex items-center gap-2 text-amber-900 font-bold text-xs">
+              <i data-lucide="globe" class="w-4 h-4 text-amber-700"></i>
+              <span>Website Product Catalog</span>
+            </div>
+            <p class="text-[11px] text-slate-600 leading-relaxed">Import live PPE & industrial safety products from passcorp.in directly into your QuoteDesk Item Master.</p>
+            <div class="flex gap-2 pt-1">
+              <button onclick="syncWithWebsiteCatalog(false)" class="flex-1 py-2 px-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl font-bold text-[11px] flex items-center justify-center gap-1 shadow-sm transition-all">
+                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                <span>Import Products</span>
+              </button>
+              <button onclick="pushItemsToWebsiteCatalog(false)" class="flex-1 py-2 px-2 bg-white hover:bg-slate-100 text-amber-800 border border-amber-300 rounded-xl font-bold text-[11px] flex items-center justify-center gap-1 shadow-sm transition-all">
+                <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+                <span>Push to Web</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Local JSON Backup & Restore -->
+        <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2 text-slate-900 font-bold">
+              <i data-lucide="hard-drive" class="w-4 h-4 text-slate-700"></i>
+              <span>Local Offline Backup (.JSON)</span>
+            </div>
+            <span class="text-[10px] text-slate-500 font-mono">Multi-Company Export</span>
+          </div>
+          <p class="text-[11px] text-slate-600">Download a full JSON backup file of all company records for offline safekeeping, or restore an existing backup file.</p>
+          <div class="flex gap-2 pt-1">
+            <button onclick="exportBackupJSON()" class="flex-1 py-2 px-3 bg-slate-800 hover:bg-slate-900 text-white rounded-xl font-bold text-[11px] flex items-center justify-center gap-1.5 shadow-sm transition-all">
+              <i data-lucide="file-down" class="w-3.5 h-3.5"></i>
+              <span>Export Backup (.JSON)</span>
+            </button>
+            <label class="flex-1 py-2 px-3 bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 rounded-xl font-bold text-[11px] flex items-center justify-center gap-1.5 shadow-sm transition-all cursor-pointer">
+              <i data-lucide="file-up" class="w-3.5 h-3.5"></i>
+              <span>Restore (.JSON)</span>
+              <input type="file" accept=".json" onchange="importBackupJSON(event)" class="hidden" />
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="px-6 py-3.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
+        <span class="text-[10px] text-slate-500 font-mono">Auto-sync is enabled for all transactions</span>
+        <button onclick="closeSyncModal()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-bold text-xs transition-colors">
+          Close
+        </button>
+      </div>
     </div>
   </div>
 
