@@ -3,7 +3,7 @@
 // Pure White Theme | Multi-Company PIN Auth | Smooth Typing | Big Product Photos
 // ============================================================================
 
-const STORAGE_KEY = 'quotedesk_multicompany_clean_v3';
+const QUOTEDESK_DB_QUOTEDESK_DB_STORAGE_KEY = 'quotedesk_multicompany_clean_v3';
 
 // Database State (Starts completely clean with 0 demo records)
 let db = {
@@ -295,7 +295,7 @@ async function optimizeDatabaseImages() {
 
   if (modified) {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+      localStorage.setItem(QUOTEDESK_DB_STORAGE_KEY, JSON.stringify(db));
       console.log('QuoteDesk Pro: Database storage optimized successfully.');
     } catch (e) {
       console.error('Failed to save optimized DB', e);
@@ -305,7 +305,7 @@ async function optimizeDatabaseImages() {
 
 function loadDatabase() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(QUOTEDESK_DB_STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
       if (parsed && Array.isArray(parsed.companies) && parsed.companies.length > 0) {
@@ -317,7 +317,7 @@ function loadDatabase() {
     if (!db.companies || db.companies.length === 0) {
       for (let i = 0; i < localStorage.length; i++) {
         const k = localStorage.key(i);
-        if (!k || k === STORAGE_KEY) continue;
+        if (!k || k === QUOTEDESK_DB_STORAGE_KEY) continue;
         try {
           const val = localStorage.getItem(k);
           if (!val) continue;
@@ -326,7 +326,7 @@ function loadDatabase() {
             if (data && Array.isArray(data.companies) && data.companies.length > 0) {
               console.log(`[QuoteDesk] Recovered ${data.companies.length} companies from "${k}"`);
               db.companies = data.companies;
-              localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+              localStorage.setItem(QUOTEDESK_DB_STORAGE_KEY, JSON.stringify(db));
               break;
             }
           } else if (val.startsWith('[')) {
@@ -334,7 +334,7 @@ function loadDatabase() {
             if (Array.isArray(arr) && arr.length > 0 && arr[0] && (arr[0].name || arr[0].id)) {
               console.log(`[QuoteDesk] Recovered ${arr.length} companies from array key "${k}"`);
               db.companies = arr;
-              localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+              localStorage.setItem(QUOTEDESK_DB_STORAGE_KEY, JSON.stringify(db));
               break;
             }
           }
@@ -381,7 +381,7 @@ function loadDatabase() {
       };
       db.companies = [defaultCompany];
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+        localStorage.setItem(QUOTEDESK_DB_STORAGE_KEY, JSON.stringify(db));
       } catch (e) {}
     }
 
@@ -412,7 +412,7 @@ function saveDatabase() {
         db.companies[idx] = activeCompany;
       }
     }
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+    localStorage.setItem(QUOTEDESK_DB_STORAGE_KEY, JSON.stringify(db));
   } catch (e) {
     console.error('Failed to save DB', e);
   }
@@ -600,7 +600,7 @@ async function pullFromCloud(silent = false) {
         if (activeCompany) {
           activeCompany = db.companies.find(c => c.id === activeCompany.id) || db.companies[0];
         }
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+        localStorage.setItem(QUOTEDESK_DB_STORAGE_KEY, JSON.stringify(db));
         updateHeaderAndBadges();
         if (typeof renderCurrentTab === 'function') renderCurrentTab();
         CLOUD_CONFIG.lastSyncTime = new Date();
