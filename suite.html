@@ -399,7 +399,7 @@ function switchAppTab(tabName) {
     frameQuotor.className = 'suite-frame active';
     frameInvotor.className = 'suite-frame';
 
-    // Refresh Quotor catalog live
+    // Refresh QuoteDesk catalog live
     try {
       if (frameQuotor.contentWindow && frameQuotor.contentWindow.handleRemoteQuoteCatalogSync) {
         frameQuotor.contentWindow.handleRemoteQuoteCatalogSync();
