@@ -1,5 +1,5 @@
 @echo off
-title PASS CORP. Enterprise Suite - Quotor & Invotor
+title PASS CORP. Enterprise Suite - QuoteDesk & Invotor
 echo Starting PASS CORP. Unified Suite...
 
 if exist "%ProgramFiles%\Google\Chrome\Application\chrome.exe" (

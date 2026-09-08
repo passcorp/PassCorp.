@@ -37,7 +37,7 @@ class PassCorpHTTPHandler(http.server.SimpleHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
             self.end_headers()
-            resp = {"status": "ok", "service": "PASS CORP. Unified Quotor & Invotor Server", "port": PORT}
+            resp = {"status": "ok", "service": "PASS CORP. Unified QuoteDesk & Invotor Server", "port": PORT}
             self.wfile.write(json.dumps(resp).encode('utf-8'))
             return
         elif self.path == '/api/invotor/backup':
@@ -84,7 +84,7 @@ if __name__ == '__main__':
             print("=" * 65)
             print("🛡️  PASS CORP. — ENTERPRISE ERP & BILLING SERVER")
             print(f"📦  INVOTOR (TallyPrime Style Billing & ERP): http://localhost:{port}/invotor.html")
-            print(f"⚡  QUOTOR  (Quotation & PI Generator):      http://localhost:{port}/index.html")
+            print(f"⚡  QUOTEDESK (Quotation & PI Generator):    http://localhost:{port}/quotation.html")
             print("=" * 65)
             httpd.serve_forever()
     except Exception as e:

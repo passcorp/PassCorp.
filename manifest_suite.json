@@ -1,7 +1,7 @@
 {
   "name": "PASS CORP. Unified Enterprise Suite",
   "short_name": "PASS Suite",
-  "description": "Complete Desktop Suite with Quotor (Quotation) & Invotor (GST Tax Invoice & ERP) for PASS CORP.",
+  "description": "Complete Desktop Suite with QuoteDesk (Quotation) & Invotor (GST Tax Invoice & ERP) for PASS CORP.",
   "start_url": "./suite.html",
   "scope": "./",
   "display": "standalone",

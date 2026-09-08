@@ -941,8 +941,8 @@ body {
     <a href="invotor.html" class="suite-btn active" title="Current App: Invotor Enterprise ERP">
       <span>📦</span> Invotor (Billing & ERP)
     </a>
-    <a href="quotation.html?secure=1" class="suite-btn inactive" title="Go to Quotor Enterprise Quotation Generator">
-      <span>⚡</span> Quotor (Quotation)
+    <a href="quotation.html?secure=1" class="suite-btn inactive" title="Go to QuoteDesk Enterprise Quotation Generator">
+      <span>⚡</span> QuoteDesk (Quotation)
     </a>
     <a href="admin.html" class="suite-btn inactive" title="Go to Manage Content CMS">
       <span>⚙️</span> Manage Content
@@ -3133,7 +3133,7 @@ class PassInvotorERP {
     this.renderEditorItems();
     this.renderLiveInvoicePreview();
     this.renderStockTable();
-    alert(`✅ Product "${newProd.name}" saved permanently to Master Catalogue & Quotor!`);
+    alert(`✅ Product "${newProd.name}" saved permanently to Master Catalogue & QuoteDesk!`);
   }
 
   saveRowItemToCatalog(index) {
@@ -3179,7 +3179,7 @@ class PassInvotorERP {
     this.renderCatalogDatalist();
     this.renderStockTable();
     this.renderLiveInvoicePreview();
-    alert(`✅ Product "${name}" saved to Billing & Quotor Catalogue!`);
+    alert(`✅ Product "${name}" saved to Billing & QuoteDesk Catalogue!`);
   }
 
   renderBuyersDatalist() {
@@ -4370,7 +4370,7 @@ class PassInvotorERP {
         </td>
         <td style="text-align: center; vertical-align: top; padding-top: 8px;">
           <div style="display: flex; gap: 3px; justify-content: center;">
-            <button type="button" class="btn btn-outline btn-sm" onclick="erp.saveRowItemToCatalog(${index})" title="💾 Save this Product to Master Catalog & Quotor" style="padding: 3px 6px; font-size: 11px; border-color: #3b82f6; color: #1d4ed8; background: #eff6ff;">💾</button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="erp.saveRowItemToCatalog(${index})" title="💾 Save this Product to Master Catalog & QuoteDesk" style="padding: 3px 6px; font-size: 11px; border-color: #3b82f6; color: #1d4ed8; background: #eff6ff;">💾</button>
             <button type="button" class="btn btn-danger btn-sm" onclick="erp.removeBillItem(${index})" title="Remove Item" style="padding: 3px 7px; font-size: 11px;">✕</button>
           </div>
         </td>
