@@ -480,8 +480,10 @@ function togglePinVisibility() {
 }
 
 // ==========================================
-// 1. AUTH & COMPANY LOGIN FLOW (PIN SYSTEM)
+// 1. AUTH & COMPANY LOGIN FLOW (MASTER -> COMPANIES -> PIN)
 // ==========================================
+
+const MASTER_PASSCODE = 'Pawanjali@241997';
 
 function showAuthScreen() {
   activeCompany = null;
@@ -489,31 +491,53 @@ function showAuthScreen() {
 
   document.getElementById('auth-screen').classList.remove('hidden');
   document.getElementById('main-app').classList.add('hidden');
+
+  const isMasterUnlocked = sessionStorage.getItem('PASS_MASTER_UNLOCKED') === 'TRUE';
+
+  if (isMasterUnlocked) {
+    showCompanySelector();
+  } else {
+    showMasterLock();
+  }
+}
+
+function showMasterLock() {
+  document.getElementById('auth-master-stage').classList.remove('hidden');
+  document.getElementById('auth-company-selector').classList.add('hidden');
+  document.getElementById('auth-pin-entry').classList.add('hidden');
   
-  const pinInput = document.getElementById('company-pin-input');
-  if (pinInput) {
-    pinInput.value = '';
-    setTimeout(() => pinInput.focus(), 80);
+  const masterInput = document.getElementById('master-pass-input');
+  if (masterInput) {
+    masterInput.value = '';
+    setTimeout(() => masterInput.focus(), 80);
   }
-  const pinErr = document.getElementById('pin-error-msg');
-  if (pinErr) pinErr.classList.add('hidden');
+  const masterErr = document.getElementById('master-error-msg');
+  if (masterErr) masterErr.classList.add('hidden');
+  lucide.createIcons();
+}
 
-  if (db.companies && db.companies.length > 0) {
-    selectedCompanyForPin = db.companies[0];
-  }
-
-  const switchBtn = document.getElementById('btn-switch-company-wrap');
-  if (switchBtn) {
-    if (db.companies && db.companies.length > 1) {
-      switchBtn.classList.remove('hidden');
-    } else {
-      switchBtn.classList.add('hidden');
+function handleMasterSubmit(e) {
+  e.preventDefault();
+  const entered = (document.getElementById('master-pass-input').value || '').trim();
+  if (entered === MASTER_PASSCODE) {
+    sessionStorage.setItem('PASS_MASTER_UNLOCKED', 'TRUE');
+    showCompanySelector();
+  } else {
+    const err = document.getElementById('master-error-msg');
+    if (err) err.classList.remove('hidden');
+    const masterInput = document.getElementById('master-pass-input');
+    if (masterInput) {
+      masterInput.value = '';
+      masterInput.focus();
     }
   }
+}
 
-  document.getElementById('auth-company-selector').classList.add('hidden');
-  document.getElementById('auth-pin-entry').classList.remove('hidden');
-
+function showCompanySelector() {
+  document.getElementById('auth-master-stage').classList.add('hidden');
+  document.getElementById('auth-company-selector').classList.remove('hidden');
+  document.getElementById('auth-pin-entry').classList.add('hidden');
+  renderCompanyCardsList();
   lucide.createIcons();
 }
 
@@ -563,34 +587,52 @@ function selectCompanyForLogin(id) {
   if (!comp) return;
 
   selectedCompanyForPin = comp;
+  document.getElementById('auth-master-stage').classList.add('hidden');
   document.getElementById('auth-company-selector').classList.add('hidden');
   document.getElementById('auth-pin-entry').classList.remove('hidden');
   document.getElementById('pin-error-msg').classList.add('hidden');
-  
+
+  // Update selected company UI
+  const nameHeading = document.getElementById('selected-company-name-heading');
+  if (nameHeading) nameHeading.textContent = comp.name;
+
+  const logoContainer = document.getElementById('selected-company-logo-container');
+  if (logoContainer) {
+    if (comp.logoUrl) {
+      logoContainer.innerHTML = `<img src="${comp.logoUrl}" class="w-full h-full object-contain p-1" />`;
+    } else {
+      logoContainer.innerHTML = `<i data-lucide="building" class="w-6 h-6 text-brand-600"></i>`;
+    }
+  }
+
   const pinInput = document.getElementById('company-pin-input');
-  pinInput.value = '';
-  setTimeout(() => pinInput.focus(), 60);
+  if (pinInput) {
+    pinInput.value = '';
+    setTimeout(() => pinInput.focus(), 60);
+  }
 
   lucide.createIcons();
 }
 
 function backToCompanySelect() {
   selectedCompanyForPin = null;
-  document.getElementById('auth-company-selector').classList.remove('hidden');
-  document.getElementById('auth-pin-entry').classList.add('hidden');
-  renderCompanyCardsList();
-  lucide.createIcons();
+  showCompanySelector();
+}
+
+function lockToMaster() {
+  sessionStorage.removeItem('PASS_MASTER_UNLOCKED');
+  sessionStorage.removeItem('PASS_AUTH_KEY_2026');
+  showMasterLock();
 }
 
 function handlePinSubmit(e) {
   e.preventDefault();
   const enteredPin = (document.getElementById('company-pin-input').value || '').trim();
   const correctPin = (selectedCompanyForPin && selectedCompanyForPin.pin) ? selectedCompanyForPin.pin : '1234';
-  const masterPass = 'Pawanjali@241997';
 
   // Allow company PIN, master passcode, or default 1234
   const isValid = enteredPin === correctPin || 
-                  enteredPin === masterPass || 
+                  enteredPin === MASTER_PASSCODE || 
                   enteredPin === '1234';
 
   if (isValid) {
@@ -609,9 +651,25 @@ function handlePinSubmit(e) {
   } else {
     document.getElementById('pin-error-msg').classList.remove('hidden');
     const pinInput = document.getElementById('company-pin-input');
-    pinInput.value = '';
-    pinInput.focus();
+    if (pinInput) {
+      pinInput.value = '';
+      pinInput.focus();
+    }
   }
+}
+
+function toggleMasterPassVisibility() {
+  const input = document.getElementById('master-pass-input');
+  const icon = document.getElementById('master-eye-icon');
+  if (!input) return;
+  if (input.type === 'password') {
+    input.type = 'text';
+    if (icon) icon.setAttribute('data-lucide', 'eye-off');
+  } else {
+    input.type = 'password';
+    if (icon) icon.setAttribute('data-lucide', 'eye');
+  }
+  lucide.createIcons();
 }
 
 function lockSession() {

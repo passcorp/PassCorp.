@@ -156,45 +156,100 @@
     <div class="absolute pointer-events-none opacity-30 text-sky-400" style="bottom: 24%; right: 26%; font-size: 28px;">🧯</div>
 
     <div class="w-full max-w-md bg-white border-2 border-[#0c2340] rounded-2xl shadow-2xl p-7 space-y-5 text-center relative z-10">
-      <!-- Lock Header -->
-      <div class="space-y-1.5">
-        <div class="flex justify-center items-center mb-2">
-          <img src="assets/logo.png" alt="PASS CORP." onerror="this.src='https://passcorp.in/assets/logo.png'" class="h-12 w-auto max-w-[190px] object-contain block" />
+      
+      <!-- Stage 1: MASTER PASSCODE SCREEN -->
+      <div id="auth-master-stage" class="space-y-4">
+        <div class="space-y-1.5">
+          <div class="flex justify-center items-center mb-2">
+            <img src="assets/logo.png" alt="PASS CORP." onerror="this.src='https://passcorp.in/assets/logo.png'" class="h-12 w-auto max-w-[190px] object-contain block" />
+          </div>
+          <h2 class="text-lg font-extrabold text-[#0c2340] tracking-tight">PASS CORP. Master Security</h2>
+          <p class="text-xs text-slate-500 font-medium">Enter Master Passcode to access Your Companies</p>
         </div>
-        <h2 class="text-lg font-extrabold text-[#0c2340] tracking-tight">PASS CORP. Security Lock</h2>
-        <p class="text-xs text-slate-500 font-medium">Authorized Access Only — Enter Security Passcode</p>
+
+        <div id="master-error-msg" class="hidden bg-rose-50 border border-rose-300 text-rose-700 text-xs font-bold py-2 px-3 rounded-lg text-center">
+          ❌ Invalid Master Passcode. Access Denied.
+        </div>
+
+        <form onsubmit="handleMasterSubmit(event)" class="space-y-3.5">
+          <div class="space-y-1.5 text-left">
+            <label class="block text-[11px] font-extrabold text-slate-700 uppercase tracking-wider">Master Passcode</label>
+            <div class="relative w-full">
+              <input
+                type="password"
+                id="master-pass-input"
+                required
+                placeholder="Enter master passcode..."
+                class="w-full px-3.5 py-2.5 bg-slate-50 border-2 border-slate-300 focus:border-brand-600 rounded-xl text-slate-900 text-sm font-semibold focus:outline-none transition-all pr-10 shadow-inner"
+                autocomplete="current-password"
+                autofocus
+              />
+              <button type="button" onclick="toggleMasterPassVisibility()" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 p-1" title="Show/Hide Passcode">
+                <i data-lucide="eye" id="master-eye-icon" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full py-3 bg-[#0c2340] hover:bg-[#1e3a8a] text-white rounded-xl text-sm font-extrabold shadow-lg shadow-blue-900/30 flex items-center justify-center gap-2 transition-all cursor-pointer">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Unlock Companies</span>
+          </button>
+        </form>
       </div>
 
-      <!-- Companies List (if multiple exist) -->
-      <div id="auth-company-selector" class="hidden space-y-3 text-left">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Your Companies</span>
+      <!-- Stage 2: YOUR COMPANIES LIST -->
+      <div id="auth-company-selector" class="hidden space-y-4 text-left">
+        <div class="space-y-1 text-center">
+          <div class="flex justify-center items-center mb-1">
+            <img src="assets/logo.png" alt="PASS CORP." onerror="this.src='https://passcorp.in/assets/logo.png'" class="h-9 w-auto max-w-[150px] object-contain block" />
+          </div>
+          <h2 class="text-base font-extrabold text-[#0c2340]">Your Companies</h2>
+          <p class="text-[11px] text-slate-500 font-medium">Select a company workspace to continue</p>
+        </div>
+
+        <div class="flex items-center justify-between pt-1">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Registered Companies</span>
           <button onclick="openCompanyModal('create')" class="flex items-center gap-1.5 text-xs font-bold text-brand-600 hover:text-brand-700 bg-brand-50 hover:bg-brand-100 px-3 py-1 rounded-xl transition-colors">
             <i data-lucide="plus" class="w-3.5 h-3.5"></i>
             <span>Add Company</span>
           </button>
         </div>
-        <div id="company-cards-list" class="space-y-2 max-h-56 overflow-y-auto pr-1"></div>
+
+        <div id="company-cards-list" class="space-y-2 max-h-60 overflow-y-auto pr-1"></div>
+
+        <div class="pt-2 text-center border-t border-slate-100">
+          <button type="button" onclick="lockToMaster()" class="text-xs text-slate-500 hover:text-rose-600 font-semibold inline-flex items-center gap-1 transition-colors">
+            <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+            <span>Lock Master Session</span>
+          </button>
+        </div>
       </div>
 
-      <!-- PIN / Passcode Verification Screen -->
-      <div id="auth-pin-entry" class="space-y-4">
+      <!-- Stage 3: COMPANY PASSCODE / PIN VERIFICATION -->
+      <div id="auth-pin-entry" class="hidden space-y-4">
+        <div class="space-y-1.5 text-center">
+          <div id="selected-company-logo-container" class="w-12 h-12 mx-auto rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center overflow-hidden shadow-sm">
+            <i data-lucide="building" class="w-6 h-6 text-brand-600"></i>
+          </div>
+          <h2 id="selected-company-name-heading" class="text-base font-extrabold text-[#0c2340] tracking-tight">Company Name</h2>
+          <p class="text-xs text-slate-500 font-medium">Enter Company PIN / Passcode to open workspace</p>
+        </div>
+
         <div id="pin-error-msg" class="hidden bg-rose-50 border border-rose-300 text-rose-700 text-xs font-bold py-2 px-3 rounded-lg text-center">
-          ❌ Invalid Passcode. Access Denied.
+          ❌ Invalid Company Passcode. Try again.
         </div>
 
         <form onsubmit="handlePinSubmit(event)" class="space-y-3.5">
           <div class="space-y-1.5 text-left">
-            <label class="block text-[11px] font-extrabold text-slate-700 uppercase tracking-wider">Security Passcode</label>
+            <label class="block text-[11px] font-extrabold text-slate-700 uppercase tracking-wider">Company PIN / Passcode</label>
             <div class="relative w-full">
               <input
                 type="password"
                 id="company-pin-input"
                 required
-                placeholder="Enter passcode..."
+                placeholder="Enter 4-digit PIN..."
                 class="w-full px-3.5 py-2.5 bg-slate-50 border-2 border-slate-300 focus:border-brand-600 rounded-xl text-slate-900 text-sm font-semibold focus:outline-none transition-all pr-10 shadow-inner"
                 autocomplete="current-password"
-                autofocus
               />
               <button type="button" onclick="togglePinVisibility()" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 p-1" title="Show/Hide Passcode">
                 <i data-lucide="eye" id="pin-eye-icon" class="w-4 h-4"></i>
@@ -205,11 +260,12 @@
           <div class="pt-1 space-y-2">
             <button type="submit" class="w-full py-3 bg-[#0c2340] hover:bg-[#1e3a8a] text-white rounded-xl text-sm font-extrabold shadow-lg shadow-blue-900/30 flex items-center justify-center gap-2 transition-all cursor-pointer">
               <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-              <span>Unlock QuoteDesk</span>
+              <span>Open QuoteDesk Pro</span>
             </button>
-            <div id="btn-switch-company-wrap" class="hidden">
-              <button type="button" onclick="backToCompanySelect()" class="text-xs text-slate-500 hover:text-slate-800 font-semibold underline">
-                Switch / Manage Companies
+            <div>
+              <button type="button" onclick="backToCompanySelect()" class="text-xs text-slate-500 hover:text-slate-800 font-semibold inline-flex items-center gap-1">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+                <span>Back to Companies</span>
               </button>
             </div>
           </div>
