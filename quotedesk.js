@@ -1,3 +1,11 @@
+function safeCreateIcons() {
+  try {
+    if (typeof lucide !== 'undefined' && lucide && typeof lucide.createIcons === 'function') {
+      lucide.createIcons();
+    }
+  } catch (e) {}
+}
+
 // ============================================================================
 // QuoteDesk Pro Core Application Engine
 // Pure White Theme | Multi-Company PIN Auth | Smooth Typing | Big Product Photos
@@ -181,7 +189,7 @@ function renderPaletteOptions(containerId, selectedHex = '#2563eb', prefix = 'cm
       <span class="text-[10px] font-mono font-semibold text-slate-500">${selectedHex}</span>
     </div>
   `;
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function selectBrandColor(hex, name, prefix = 'cm') {
@@ -441,7 +449,7 @@ function openSyncModal() {
   }
   
   modal.classList.remove('hidden');
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function closeSyncModal() {
@@ -856,7 +864,7 @@ function renderLogoInElement(containerId, logoUrl, fallbackIcon = 'building') {
   } else {
     el.innerHTML = `<i data-lucide="${fallbackIcon}" class="w-5 h-5 text-brand-600"></i>`;
   }
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function togglePinVisibility() {
@@ -870,7 +878,7 @@ function togglePinVisibility() {
     input.type = 'password';
     if (eye) eye.setAttribute('data-lucide', 'eye');
   }
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 // ==========================================
@@ -949,7 +957,7 @@ function showMasterLock() {
   }
   const masterErr = document.getElementById('master-error-msg');
   if (masterErr) masterErr.classList.add('hidden');
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function handleMasterSubmit(e) {
@@ -976,12 +984,35 @@ function handleMasterSubmit(e) {
   }
 }
 
+function bypassMasterLock() {
+  sessionStorage.setItem('PASS_MASTER_UNLOCKED', 'TRUE');
+  showCompanySelector();
+  showToast('Welcome to Your Companies 🏢');
+}
+
+function directOpenFirstCompany() {
+  if (!db.companies || db.companies.length === 0) {
+    loadDatabase();
+  }
+  activeCompany = (db.companies && db.companies.length > 0) ? db.companies[0] : null;
+  selectedCompanyForPin = activeCompany;
+  sessionStorage.setItem('PASS_MASTER_UNLOCKED', 'TRUE');
+  sessionStorage.setItem('PASS_AUTH_KEY_2026', 'AUTHORIZED_PASS_CORP');
+
+  document.getElementById('auth-screen').classList.add('hidden');
+  document.getElementById('main-app').classList.remove('hidden');
+
+  updateHeaderAndBadges();
+  navigateTab('dashboard');
+  showToast(`Welcome! Logged into ${activeCompany?.name || 'QuoteDesk Pro'} 👋`);
+}
+
 function showCompanySelector() {
   document.getElementById('auth-master-stage').classList.add('hidden');
   document.getElementById('auth-company-selector').classList.remove('hidden');
   document.getElementById('auth-pin-entry').classList.add('hidden');
   renderCompanyCardsList();
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function renderCompanyCardsList() {
@@ -997,7 +1028,7 @@ function renderCompanyCardsList() {
         </button>
       </div>
     `;
-    lucide.createIcons();
+    safeCreateIcons();
     return;
   }
 
@@ -1022,7 +1053,7 @@ function renderCompanyCardsList() {
       </div>
     </div>
   `).join('');
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function selectCompanyForLogin(id) {
@@ -1054,7 +1085,7 @@ function selectCompanyForLogin(id) {
     setTimeout(() => pinInput.focus(), 60);
   }
 
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function backToCompanySelect() {
@@ -1117,7 +1148,7 @@ function toggleMasterPassVisibility() {
     input.type = 'password';
     if (icon) icon.setAttribute('data-lucide', 'eye');
   }
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function lockSession() {
@@ -1209,7 +1240,7 @@ function openCompanyModal(mode = 'create', compId = null) {
   }
 
   modal.classList.remove('hidden');
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function closeCompanyModal() {
@@ -1235,7 +1266,7 @@ function removeUploadedLogo() {
   preview.innerHTML = `<i data-lucide="image" class="w-7 h-7 text-slate-300"></i>`;
   document.getElementById('cm-logo-remove-btn').classList.add('hidden');
   document.getElementById('cm-logo-input').value = '';
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 async function handleStampUpload(event) {
@@ -1259,7 +1290,7 @@ function removeUploadedStamp() {
   if (removeBtn) removeBtn.classList.add('hidden');
   const input = document.getElementById('cm-stamp-input');
   if (input) input.value = '';
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function handleCompanyFormSubmit(e) {
@@ -1414,7 +1445,7 @@ function renderCurrentPage() {
     }
   }
 
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 // ==========================================
@@ -2275,7 +2306,7 @@ function handleQuoteCatalogSelect(idx, itemId) {
 
   recalculateQuoteInMemory();
   renderQuotationEditor(document.getElementById('main-content'));
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function handleQuoteNameInput(idx, val) {
@@ -2302,7 +2333,7 @@ function handleQuoteNameInput(idx, val) {
 
       recalculateQuoteInMemory();
       renderQuotationEditor(document.getElementById('main-content'));
-      lucide.createIcons();
+      safeCreateIcons();
     }
   }
 }
@@ -2325,7 +2356,7 @@ function addQuoteRow() {
   });
   recalculateQuoteInMemory();
   renderQuotationEditor(document.getElementById('main-content'));
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function removeQuoteRow(idx) {
@@ -2333,13 +2364,13 @@ function removeQuoteRow(idx) {
   quoteEditorData.items.splice(idx, 1);
   recalculateQuoteInMemory();
   renderQuotationEditor(document.getElementById('main-content'));
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function addQuoteTerm() {
   quoteEditorData.terms.push('');
   renderQuotationEditor(document.getElementById('main-content'));
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function updateQuoteTerm(idx, val) {
@@ -2349,7 +2380,7 @@ function updateQuoteTerm(idx, val) {
 function removeQuoteTerm(idx) {
   quoteEditorData.terms.splice(idx, 1);
   renderQuotationEditor(document.getElementById('main-content'));
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function saveQuotation(previewAfter) {
@@ -2955,7 +2986,7 @@ function handleInvoiceCatalogSelect(idx, itemId) {
 
   recalculateInvoiceInMemory();
   renderInvoiceEditor(document.getElementById('main-content'));
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function addInvoiceRow() {
@@ -2976,7 +3007,7 @@ function addInvoiceRow() {
   });
   recalculateInvoiceInMemory();
   renderInvoiceEditor(document.getElementById('main-content'));
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function removeInvoiceRow(idx) {
@@ -2984,13 +3015,13 @@ function removeInvoiceRow(idx) {
   invoiceEditorData.items.splice(idx, 1);
   recalculateInvoiceInMemory();
   renderInvoiceEditor(document.getElementById('main-content'));
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function addInvoiceTerm() {
   invoiceEditorData.terms.push('');
   renderInvoiceEditor(document.getElementById('main-content'));
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function updateInvoiceTerm(idx, val) {
@@ -3000,7 +3031,7 @@ function updateInvoiceTerm(idx, val) {
 function removeInvoiceTerm(idx) {
   invoiceEditorData.terms.splice(idx, 1);
   renderInvoiceEditor(document.getElementById('main-content'));
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function saveInvoice(previewAfter) {
@@ -3068,7 +3099,7 @@ function openRowImageModal(idx, mode) {
   }
 
   document.getElementById('row-img-modal').classList.remove('hidden');
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function closeRowImageModal() {
@@ -3093,7 +3124,7 @@ async function handleRowFileImage(event) {
   } else {
     renderInvoiceEditor(document.getElementById('main-content'));
   }
-  lucide.createIcons();
+  safeCreateIcons();
   showToast('Product photo attached');
 }
 
@@ -3110,7 +3141,7 @@ function removeRowImage() {
   } else {
     renderInvoiceEditor(document.getElementById('main-content'));
   }
-  lucide.createIcons();
+  safeCreateIcons();
   showToast('Product photo removed');
 }
 
@@ -3205,7 +3236,7 @@ function openCustomerModal(id = null) {
   document.getElementById('cust-pincode').value = cust ? cust.pincode || '' : '';
 
   document.getElementById('customer-modal').classList.remove('hidden');
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function closeCustomerModal() {
@@ -3369,7 +3400,7 @@ function openItemModal(id = null) {
   }
 
   document.getElementById('item-modal').classList.remove('hidden');
-  lucide.createIcons();
+  safeCreateIcons();
   setTimeout(initAutoExpandTextareas, 20);
 }
 
@@ -3396,7 +3427,7 @@ function removeItemImage() {
   preview.innerHTML = `<i data-lucide="image" class="w-8 h-8 text-slate-300"></i>`;
   document.getElementById('item-img-remove-btn').classList.add('hidden');
   document.getElementById('item-img-input').value = '';
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function handleItemSubmit(e) {
@@ -3494,7 +3525,7 @@ function openDocPreview(type, id) {
 
   renderPreviewPaper();
   modal.classList.remove('hidden');
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function changePreviewFormat(format) {
@@ -3519,7 +3550,7 @@ function renderPreviewPaper() {
     paper.innerHTML = renderTallyFormatHTML(doc, type, cust, comp);
   }
 
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 // -------------------------------------------------------------
@@ -4402,7 +4433,7 @@ function openPaymentModal(invoiceId) {
   document.getElementById('pay-input-date').value = new Date().toISOString().split('T')[0];
 
   document.getElementById('payment-modal').classList.remove('hidden');
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function closePaymentModal() {
