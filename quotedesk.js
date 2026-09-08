@@ -344,6 +344,47 @@ function loadDatabase() {
       }
     }
 
+    // Fallback: If companies list is empty, pre-populate default PASS CORP profile
+    if (!db.companies || db.companies.length === 0) {
+      const defaultCompany = {
+        id: 'comp_pass_corp',
+        name: 'PASS CORP.',
+        tagline: 'PRECISION | ASSURANCE | SAFETY | SOLUTION',
+        address: 'SHOP NO. 2, MANIK COMPLEX, S.T. ROAD, CHEMBUR (E), MUMBAI - 400071, MAHARASHTRA',
+        city: 'Mumbai',
+        state: 'Maharashtra',
+        stateCode: '27',
+        pincode: '400071',
+        phone: '+91 99672 52200 / +91 98205 77726',
+        email: 'sales@passcorp.in',
+        website: 'https://passcorp.in',
+        gstin: '27AALFP8680C1Z1',
+        pan: 'AALFP8680C',
+        currency: 'INR',
+        currencySymbol: '₹',
+        pin: '1234',
+        logoUrl: 'assets/logo.png',
+        stampUrl: 'assets/pass_watermark.jpg',
+        bankDetails: {
+          bankName: 'HDFC Bank Ltd.',
+          accountName: 'PASS CORP',
+          accountNumber: '50200085432190',
+          ifscCode: 'HDFC0001234',
+          branch: 'Chembur East Branch'
+        },
+        items: [],
+        customers: [],
+        quotations: [],
+        invoices: [],
+        counterQuote: 101,
+        counterInvoice: 1
+      };
+      db.companies = [defaultCompany];
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+      } catch (e) {}
+    }
+
     // Asynchronously optimize any oversized legacy images in storage
     setTimeout(optimizeDatabaseImages, 500);
   } catch (e) {
@@ -424,6 +465,20 @@ function renderLogoInElement(containerId, logoUrl, fallbackIcon = 'building') {
   lucide.createIcons();
 }
 
+function togglePinVisibility() {
+  const input = document.getElementById('company-pin-input');
+  const eye = document.getElementById('pin-eye-icon');
+  if (!input) return;
+  if (input.type === 'password') {
+    input.type = 'text';
+    if (eye) eye.setAttribute('data-lucide', 'eye-off');
+  } else {
+    input.type = 'password';
+    if (eye) eye.setAttribute('data-lucide', 'eye');
+  }
+  lucide.createIcons();
+}
+
 // ==========================================
 // 1. AUTH & COMPANY LOGIN FLOW (PIN SYSTEM)
 // ==========================================
@@ -434,8 +489,6 @@ function showAuthScreen() {
 
   document.getElementById('auth-screen').classList.remove('hidden');
   document.getElementById('main-app').classList.add('hidden');
-  document.getElementById('auth-company-selector').classList.remove('hidden');
-  document.getElementById('auth-pin-entry').classList.add('hidden');
   
   const pinInput = document.getElementById('company-pin-input');
   if (pinInput) pinInput.value = '';
@@ -443,6 +496,15 @@ function showAuthScreen() {
   if (pinErr) pinErr.classList.add('hidden');
 
   renderCompanyCardsList();
+
+  // If only 1 company exists, directly show its PIN entry screen!
+  if (db.companies && db.companies.length === 1) {
+    selectCompanyForLogin(db.companies[0].id);
+  } else {
+    document.getElementById('auth-company-selector').classList.remove('hidden');
+    document.getElementById('auth-pin-entry').classList.add('hidden');
+  }
+
   lucide.createIcons();
 }
 

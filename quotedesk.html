@@ -185,25 +185,31 @@
 
         <form onsubmit="handlePinSubmit(event)" class="space-y-4 text-center">
           <div class="space-y-1.5">
-            <label class="block text-xs font-bold text-slate-700">Enter 4-Digit Security PIN</label>
-            <input
-              type="password"
-              id="company-pin-input"
-              maxlength="4"
-              required
-              placeholder="••••"
-              class="w-48 mx-auto px-4 py-3 bg-slate-50 border-2 border-slate-300 focus:border-brand-600 rounded-2xl text-center text-2xl tracking-[0.5em] font-mono text-slate-900 focus:outline-none transition-all shadow-inner"
-              autocomplete="off"
-            />
-            <p id="pin-error-msg" class="hidden text-xs text-rose-500 font-semibold pt-1">Incorrect PIN. Please try again.</p>
+            <label class="block text-xs font-bold text-slate-700">Enter Security PIN / Passcode</label>
+            <div class="relative w-56 mx-auto">
+              <input
+                type="password"
+                id="company-pin-input"
+                maxlength="20"
+                required
+                placeholder="••••"
+                class="w-full px-4 py-3 bg-slate-50 border-2 border-slate-300 focus:border-brand-600 rounded-2xl text-center text-xl tracking-[0.3em] font-mono text-slate-900 focus:outline-none transition-all shadow-inner pr-10"
+                autocomplete="current-password"
+              />
+              <button type="button" onclick="togglePinVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 p-1" title="Show/Hide PIN">
+                <i data-lucide="eye" id="pin-eye-icon" class="w-4 h-4"></i>
+              </button>
+            </div>
+            <p id="pin-error-msg" class="hidden text-xs text-rose-500 font-semibold pt-1">❌ Incorrect PIN. Please try again.</p>
           </div>
 
           <div class="flex gap-2.5 pt-2 justify-center">
             <button type="button" onclick="backToCompanySelect()" class="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 text-xs font-semibold hover:bg-slate-100">
-              Back
+              Select Company
             </button>
-            <button type="submit" class="px-7 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-lg shadow-brand-600/25">
-              Login to Company
+            <button type="submit" class="px-7 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-lg shadow-brand-600/25 flex items-center gap-1.5">
+              <span>Unlock Workspace</span>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
             </button>
           </div>
         </form>
@@ -773,6 +779,6 @@
   </div>
 
   <!-- Application Logic & Engine -->
-  <script src="quotedesk.js?v=desktop_pro_live"></script>
+  <script src="quotedesk.js?v=2026_live_v2"></script>
 </body>
 </html>
