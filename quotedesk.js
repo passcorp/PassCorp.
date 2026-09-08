@@ -652,34 +652,53 @@ function syncWithWebsiteCatalog(silent = false) {
       (i.sku && wp.sku && i.sku === wp.sku)
     );
 
+    const pDesc = wp.description || wp.desc || wp.spec || '';
+    const pPrice = parseFloat(wp.price || wp.rate) || 0;
+    const pImg = wp.imageUrl || wp.image || wp.img || '';
+    const pHsn = wp.hsnCode || wp.hsn || '85389000';
+    const pUnit = wp.unit || 'PCS';
+    const pTax = Number(wp.taxRate || wp.gstPercent) || 18;
+
     if (existing) {
-      if (wp.price) existing.rate = parseFloat(wp.price) || existing.rate;
-      if (wp.hsn) existing.hsn = wp.hsn;
-      if (wp.unit) existing.unit = wp.unit;
-      if (wp.brand) existing.brand = wp.brand;
-      if (wp.desc) existing.desc = wp.desc;
-      if (wp.img || wp.image) existing.image = wp.img || wp.image;
+      existing.price = pPrice;
+      existing.rate = pPrice;
+      existing.hsnCode = pHsn;
+      existing.hsn = pHsn;
+      existing.unit = pUnit;
+      existing.brand = wp.brand || existing.brand || 'PASS SAFETY';
+      existing.description = pDesc || existing.description;
+      existing.desc = pDesc || existing.desc;
+      existing.imageUrl = pImg || existing.imageUrl;
+      existing.image = pImg || existing.image;
+      existing.taxRate = pTax;
+      existing.gstPercent = pTax;
       updatedCount++;
     } else {
       activeCompany.items.push({
         id: 'item_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
         name: wp.name,
+        sku: wp.sku || ('SKU-' + Math.random().toString(36).substr(2, 4).toUpperCase()),
         brand: wp.brand || 'PASS SAFETY',
-        hsn: wp.hsn || '85389000',
-        unit: wp.unit || 'NOS',
-        gstPercent: 18,
-        rate: parseFloat(wp.price) || 0,
-        desc: wp.desc || '',
-        image: wp.img || wp.image || '',
-        stock: wp.stock || 0
+        hsnCode: pHsn,
+        hsn: pHsn,
+        unit: pUnit,
+        taxRate: pTax,
+        gstPercent: pTax,
+        price: pPrice,
+        rate: pPrice,
+        description: pDesc,
+        desc: pDesc,
+        imageUrl: pImg,
+        image: pImg,
+        stock: wp.stock || 100
       });
       addedCount++;
     }
   });
 
   saveDatabase();
-  if (typeof currentTab !== 'undefined' && currentTab === 'items') renderItemsTab();
-  if (!silent) showToast(`✅ Catalog Synced: ${addedCount} new items imported, ${updatedCount} updated!`);
+  renderCurrentPage();
+  if (!silent) showToast(`✅ Website Catalog Synced: ${addedCount} items added, ${updatedCount} updated!`);
 }
 
 function pushItemsToWebsiteCatalog(silent = false) {
@@ -1709,8 +1728,72 @@ function renderQuotationsList(container) {
 }
 
 // ==========================================
-// 6. QUOTATION EDITOR (Prominent Product Photos & Smooth Typing)
+// 6. UNIFIED PRODUCT SEARCH & QUOTATION EDITOR
 // ==========================================
+
+function getUnifiedProductsList() {
+  const list = [];
+  const seen = new Set();
+
+  // 1. Company Item Master
+  if (activeCompany && Array.isArray(activeCompany.items)) {
+    activeCompany.items.forEach((it, i) => {
+      if (!it || !it.name) return;
+      const k = it.name.toLowerCase().trim();
+      seen.add(k);
+      list.push({
+        id: it.id || ('comp_it_' + i),
+        source: 'company',
+        sourceLabel: '🏢 Master',
+        name: it.name,
+        brand: it.brand || activeCompany.name || 'PASS SAFETY',
+        hsn: it.hsnCode || it.hsn || '85389000',
+        unit: it.unit || 'PCS',
+        price: Number(it.price || it.rate) || 0,
+        taxRate: Number(it.taxRate || it.gstPercent || 18),
+        description: it.description || it.desc || it.spec || '',
+        imageUrl: it.imageUrl || it.image || it.img || null
+      });
+    });
+  }
+
+  // 2. Website Catalog Products
+  let siteProds = [];
+  try {
+    if (window.CONTENT && Array.isArray(window.CONTENT.products)) {
+      siteProds = window.CONTENT.products;
+    } else if (localStorage.getItem('pass_corp_site_content')) {
+      const parsed = JSON.parse(localStorage.getItem('pass_corp_site_content'));
+      if (parsed && Array.isArray(parsed.products)) siteProds = parsed.products;
+    }
+  } catch(e){}
+  if (!siteProds.length && window.PASS_PRODUCTS && Array.isArray(window.PASS_PRODUCTS)) {
+    siteProds = window.PASS_PRODUCTS;
+  }
+
+  siteProds.forEach((sp, idx) => {
+    if (!sp || !sp.name) return;
+    const k = sp.name.toLowerCase().trim();
+    if (!seen.has(k)) {
+      seen.add(k);
+      list.push({
+        id: 'web_' + (sp.id || idx),
+        source: 'website',
+        sourceLabel: '🌐 Website',
+        name: sp.name,
+        brand: sp.brand || 'PASS SAFETY',
+        hsn: sp.hsn || '85389000',
+        unit: sp.unit || 'PCS',
+        price: Number(sp.price || sp.rate) || 0,
+        taxRate: 18,
+        description: sp.desc || sp.spec || sp.description || '',
+        imageUrl: sp.img || sp.image || sp.imageUrl || null
+      });
+    }
+  });
+
+  return list;
+}
 
 function openNewQuotationEditor() {
   activeEditorMode = 'quote';
@@ -1784,6 +1867,7 @@ function editQuotation(id) {
 
 function renderQuotationEditor(container) {
   const isEditing = Boolean(activeEditingId);
+  const unifiedProds = getUnifiedProductsList();
 
   container.innerHTML = `
     <div class="space-y-4 max-w-7xl mx-auto text-xs pb-8">
@@ -1890,10 +1974,16 @@ function renderQuotationEditor(container) {
               <i data-lucide="calculator" class="w-3.5 h-3.5 text-blue-700"></i>
               Itemized Particulars & Stock Allocation
             </h3>
-            <button onclick="addQuoteRow()" class="flex items-center gap-1 px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-800 font-bold text-[11px]">
-              <i data-lucide="plus" class="w-3 h-3 text-blue-700"></i>
-              <span>Add Item Row [Alt+I]</span>
-            </button>
+            <div class="flex items-center gap-2">
+              <button onclick="syncWithWebsiteCatalog(false)" title="Import latest products from passcorp.in" class="flex items-center gap-1 px-2.5 py-1 rounded bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-900 font-bold text-[11px]">
+                <i data-lucide="globe" class="w-3 h-3 text-amber-700"></i>
+                <span>Import Web Catalog</span>
+              </button>
+              <button onclick="addQuoteRow()" class="flex items-center gap-1 px-2.5 py-1 rounded bg-blue-50 hover:bg-blue-100 border border-blue-300 text-blue-900 font-bold text-[11px]">
+                <i data-lucide="plus" class="w-3 h-3 text-blue-700"></i>
+                <span>Add Item Row [Alt+I]</span>
+              </button>
+            </div>
           </div>
 
           <div class="overflow-x-auto border border-slate-300 rounded-md bg-white">
@@ -1932,16 +2022,21 @@ function renderQuotationEditor(container) {
                           `}
                         </div>
 
-                        <!-- Item Master Dropdown, Name & Unlimited Description -->
+                        <!-- Item Master / Website Dropdown, Search Input & Unlimited Description -->
                         <div class="flex-1 space-y-1.5 min-w-0">
                           <div class="flex gap-2">
                             <select onchange="handleQuoteCatalogSelect(${idx}, this.value)" class="w-2/5 px-2 py-1.5 bg-slate-50 border border-slate-300 rounded text-[11px] font-medium text-slate-700 truncate focus:outline-none focus:border-blue-600 focus:bg-white">
-                              <option value="">-- From Item Master --</option>
-                              ${(activeCompany.items || []).map(it => `<option value="${it.id}">${it.name}</option>`).join('')}
+                              <option value="">-- From Master / Website --</option>
+                              <optgroup label="🏢 Company Item Master">
+                                ${(activeCompany.items || []).map(it => `<option value="${it.id}" ${it.name === row.name ? 'selected' : ''}>${it.name} [₹${it.price || it.rate || 0}]</option>`).join('')}
+                              </optgroup>
+                              <optgroup label="🌐 PASS CORP. Website Catalog">
+                                ${unifiedProds.filter(p => p.source === 'website').map(it => `<option value="${it.id}" ${it.name === row.name ? 'selected' : ''}>${it.name} [₹${it.price || 0}]</option>`).join('')}
+                              </optgroup>
                             </select>
-                            <input type="text" value="${escapeHtml(row.name)}" oninput="updateQuoteRow(${idx}, 'name', this.value)" placeholder="Stock Item / Description Particulars" class="flex-1 px-2.5 py-1.5 bg-white border border-slate-300 rounded text-xs font-bold text-slate-900 focus:outline-none focus:border-blue-600" />
+                            <input type="text" list="global-products-datalist" value="${escapeHtml(row.name)}" oninput="handleQuoteNameInput(${idx}, this.value)" placeholder="Search website product or enter particulars..." class="flex-1 px-2.5 py-1.5 bg-white border border-slate-300 rounded text-xs font-bold text-slate-900 focus:outline-none focus:border-blue-600" />
                           </div>
-                          <textarea oninput="autoExpandTextarea(this); updateQuoteRow(${idx}, 'description', this.value)" placeholder="Technical specifications, model dimensions, features, scope of work (Unlimited lines supported)..." class="auto-expand w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded text-[11px] text-slate-700 focus:outline-none focus:border-blue-600 focus:bg-white resize-y leading-relaxed font-normal min-h-[44px] overflow-hidden">${escapeHtml(row.description || '')}</textarea>
+                          <textarea oninput="autoExpandTextarea(this); updateQuoteRow(${idx}, 'description', this.value)" placeholder="Technical specifications, model dimensions, features, scope of work (Auto-filled on product selection, unlimited lines supported)..." class="auto-expand w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded text-[11px] text-slate-700 focus:outline-none focus:border-blue-600 focus:bg-white resize-y leading-relaxed font-normal min-h-[44px] overflow-hidden">${escapeHtml(row.description || '')}</textarea>
                         </div>
                       </div>
                     </td>
@@ -1972,6 +2067,11 @@ function renderQuotationEditor(container) {
               </tbody>
             </table>
           </div>
+
+          <!-- Datalist Autocomplete from Full Catalog -->
+          <datalist id="global-products-datalist">
+            ${unifiedProds.map(p => `<option value="${escapeHtml(p.name)}">${p.sourceLabel} • ₹${p.price} (HSN: ${p.hsn || '-'})</option>`).join('')}
+          </datalist>
         </div>
 
         <!-- Voucher Bottom Ledger & Accounting Totals Grid -->
@@ -2048,30 +2148,41 @@ function updateQuoteRow(idx, field, val) {
   }
 
   recalculateQuoteInMemory();
-  updateQuoteSummaryDOM();
 }
 
 function recalculateQuoteInMemory() {
-  const subtotal = quoteEditorData.items.reduce((acc, r) => acc + (Number(r.quantity || 0) * Number(r.price || 0)), 0);
-  const taxable = subtotal;
-  const totalTax = quoteEditorData.items.reduce((acc, r) => acc + Number(r.taxAmount || 0), 0);
-  const grandTotal = taxable + totalTax;
+  let subtotal = 0;
+  let taxTotal = 0;
+
+  quoteEditorData.items.forEach(r => {
+    const qty = Number(r.quantity) || 0;
+    const price = Number(r.price) || 0;
+    const tax = Number(r.taxRate) || 0;
+
+    const lineTaxable = qty * price;
+    const lineTax = lineTaxable * (tax / 100);
+
+    r.amount = lineTaxable;
+    r.taxAmount = lineTax;
+    r.total = lineTaxable + lineTax;
+
+    subtotal += lineTaxable;
+    taxTotal += lineTax;
+  });
 
   quoteEditorData.subtotal = subtotal;
-  quoteEditorData.taxableAmount = taxable;
-  quoteEditorData.totalTax = totalTax;
-  quoteEditorData.grandTotal = grandTotal;
-}
+  quoteEditorData.taxableAmount = subtotal;
+  quoteEditorData.totalTax = taxTotal;
+  quoteEditorData.grandTotal = subtotal + taxTotal;
 
-function updateQuoteSummaryDOM() {
-  const sEl = document.getElementById('qe-subtotal-val');
-  const tEl = document.getElementById('qe-taxable-val');
-  const xEl = document.getElementById('qe-tax-val');
+  const subEl = document.getElementById('qe-subtotal-val');
+  const taxbEl = document.getElementById('qe-taxable-val');
+  const taxEl = document.getElementById('qe-tax-val');
   const gEl = document.getElementById('qe-grand-val');
 
-  if (sEl) sEl.textContent = `${cur()}${fmt(quoteEditorData.subtotal)}`;
-  if (tEl) tEl.textContent = `${cur()}${fmt(quoteEditorData.taxableAmount)}`;
-  if (xEl) xEl.textContent = `+${cur()}${fmt(quoteEditorData.totalTax)}`;
+  if (subEl) subEl.textContent = `${cur()}${fmt(quoteEditorData.subtotal)}`;
+  if (taxbEl) taxbEl.textContent = `${cur()}${fmt(quoteEditorData.taxableAmount)}`;
+  if (taxEl) taxEl.textContent = `+${cur()}${fmt(quoteEditorData.totalTax)}`;
   if (gEl) gEl.textContent = `${cur()}${fmt(quoteEditorData.grandTotal)}`;
 }
 
@@ -2082,16 +2193,19 @@ function handleQuoteCustChange(custId) {
 }
 
 function handleQuoteCatalogSelect(idx, itemId) {
-  const item = (activeCompany.items || []).find(it => it.id === itemId);
+  if (!itemId) return;
+  const unified = getUnifiedProductsList();
+  const item = unified.find(it => it.id === itemId || it.name.toLowerCase().trim() === itemId.toLowerCase().trim());
   if (!item) return;
+
   const row = quoteEditorData.items[idx];
   row.name = item.name;
   row.description = item.description || '';
-  row.hsnCode = item.hsnCode || '';
+  row.hsnCode = item.hsn || '';
   row.unit = item.unit || 'PCS';
   row.leadTime = row.leadTime || '1-2 Days';
   row.price = Number(item.price) || 0;
-  row.taxRate = Number(item.taxRate) || 0;
+  row.taxRate = Number(item.taxRate) || 18;
   row.imageUrl = item.imageUrl || null;
 
   const qty = Number(row.quantity) || 1;
@@ -2108,6 +2222,35 @@ function handleQuoteCatalogSelect(idx, itemId) {
   recalculateQuoteInMemory();
   renderQuotationEditor(document.getElementById('main-content'));
   lucide.createIcons();
+}
+
+function handleQuoteNameInput(idx, val) {
+  updateQuoteRow(idx, 'name', val);
+
+  if (val && val.length > 2) {
+    const unified = getUnifiedProductsList();
+    const exactMatch = unified.find(p => p.name.toLowerCase().trim() === val.toLowerCase().trim());
+    if (exactMatch) {
+      const row = quoteEditorData.items[idx];
+      row.description = exactMatch.description || '';
+      row.hsnCode = exactMatch.hsn || row.hsnCode || '';
+      row.price = Number(exactMatch.price) || row.price || 0;
+      row.imageUrl = exactMatch.imageUrl || row.imageUrl || null;
+      if (exactMatch.unit) row.unit = exactMatch.unit;
+      if (exactMatch.taxRate) row.taxRate = exactMatch.taxRate;
+
+      const qty = Number(row.quantity) || 1;
+      const price = Number(row.price) || 0;
+      const tax = Number(row.taxRate) || 0;
+      row.amount = qty * price;
+      row.taxAmount = row.amount * (tax / 100);
+      row.total = row.amount + row.taxAmount;
+
+      recalculateQuoteInMemory();
+      renderQuotationEditor(document.getElementById('main-content'));
+      lucide.createIcons();
+    }
+  }
 }
 
 function addQuoteRow() {
@@ -2409,6 +2552,7 @@ function editInvoice(id) {
 
 function renderInvoiceEditor(container) {
   const isEditing = Boolean(activeEditingId);
+  const unifiedProds = getUnifiedProductsList();
 
   container.innerHTML = `
     <div class="space-y-4 max-w-7xl mx-auto text-xs pb-8">
@@ -2511,10 +2655,16 @@ function renderInvoiceEditor(container) {
               <i data-lucide="calculator" class="w-3.5 h-3.5 text-amber-700"></i>
               Itemized Particulars & Stock Allocation
             </h3>
-            <button onclick="addInvoiceRow()" class="flex items-center gap-1 px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-800 font-bold text-[11px]">
-              <i data-lucide="plus" class="w-3 h-3 text-amber-700"></i>
-              <span>Add Item Row [Alt+I]</span>
-            </button>
+            <div class="flex items-center gap-2">
+              <button onclick="syncWithWebsiteCatalog(false)" title="Import latest products from passcorp.in" class="flex items-center gap-1 px-2.5 py-1 rounded bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-900 font-bold text-[11px]">
+                <i data-lucide="globe" class="w-3 h-3 text-amber-700"></i>
+                <span>Import Web Catalog</span>
+              </button>
+              <button onclick="addInvoiceRow()" class="flex items-center gap-1 px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-800 font-bold text-[11px]">
+                <i data-lucide="plus" class="w-3 h-3 text-amber-700"></i>
+                <span>Add Item Row [Alt+I]</span>
+              </button>
+            </div>
           </div>
 
           <div class="overflow-x-auto border border-slate-300 rounded-md bg-white">
@@ -2539,7 +2689,6 @@ function renderInvoiceEditor(container) {
                     <td class="py-3 px-2 text-slate-400 font-mono text-center align-top border-r border-slate-200 font-bold">${idx + 1}</td>
                     <td class="py-3 px-3 align-top border-r border-slate-200">
                       <div class="flex items-start gap-3">
-                        <!-- Product Photo Badge -->
                         <div onclick="openRowImageModal(${idx}, 'invoice')" class="w-20 h-20 rounded bg-white border ${row.imageUrl ? 'border-amber-400 shadow-sm' : 'border-dashed border-slate-300'} hover:border-amber-600 flex flex-col items-center justify-center cursor-pointer overflow-hidden group transition-all shrink-0 relative" title="Click to upload or change product photo">
                           ${row.imageUrl ? `
                             <img src="${row.imageUrl}" class="w-full h-full object-contain p-0.5" />
@@ -2553,16 +2702,20 @@ function renderInvoiceEditor(container) {
                           `}
                         </div>
 
-                        <!-- Item Master Dropdown, Name & Unlimited Description -->
                         <div class="flex-1 space-y-1.5 min-w-0">
                           <div class="flex gap-2">
                             <select onchange="handleInvoiceCatalogSelect(${idx}, this.value)" class="w-2/5 px-2 py-1.5 bg-slate-50 border border-slate-300 rounded text-[11px] font-medium text-slate-700 truncate focus:outline-none focus:border-amber-600 focus:bg-white">
-                              <option value="">-- From Item Master --</option>
-                              ${(activeCompany.items || []).map(it => `<option value="${it.id}">${it.name}</option>`).join('')}
+                              <option value="">-- From Master / Website --</option>
+                              <optgroup label="🏢 Company Item Master">
+                                ${(activeCompany.items || []).map(it => `<option value="${it.id}" ${it.name === row.name ? 'selected' : ''}>${it.name} [₹${it.price || it.rate || 0}]</option>`).join('')}
+                              </optgroup>
+                              <optgroup label="🌐 PASS CORP. Website Catalog">
+                                ${unifiedProds.filter(p => p.source === 'website').map(it => `<option value="${it.id}" ${it.name === row.name ? 'selected' : ''}>${it.name} [₹${it.price || 0}]</option>`).join('')}
+                              </optgroup>
                             </select>
-                            <input type="text" value="${escapeHtml(row.name)}" oninput="updateInvoiceRow(${idx}, 'name', this.value)" placeholder="Stock Item / Description Particulars" class="flex-1 px-2.5 py-1.5 bg-white border border-slate-300 rounded text-xs font-bold text-slate-900 focus:outline-none focus:border-amber-600" />
+                            <input type="text" list="global-products-datalist-invoice" value="${escapeHtml(row.name)}" oninput="handleInvoiceNameInput(${idx}, this.value)" placeholder="Search website product or enter particulars..." class="flex-1 px-2.5 py-1.5 bg-white border border-slate-300 rounded text-xs font-bold text-slate-900 focus:outline-none focus:border-amber-600" />
                           </div>
-                          <textarea oninput="autoExpandTextarea(this); updateInvoiceRow(${idx}, 'description', this.value)" placeholder="Technical specifications, model dimensions, features, scope of work (Unlimited lines supported)..." class="auto-expand w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded text-[11px] text-slate-700 focus:outline-none focus:border-amber-600 focus:bg-white resize-y leading-relaxed font-normal min-h-[44px] overflow-hidden">${escapeHtml(row.description || '')}</textarea>
+                          <textarea oninput="autoExpandTextarea(this); updateInvoiceRow(${idx}, 'description', this.value)" placeholder="Technical specifications, model dimensions, features, scope of work (Auto-filled on product selection, unlimited lines supported)..." class="auto-expand w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded text-[11px] text-slate-700 focus:outline-none focus:border-amber-600 focus:bg-white resize-y leading-relaxed font-normal min-h-[44px] overflow-hidden">${escapeHtml(row.description || '')}</textarea>
                         </div>
                       </div>
                     </td>
@@ -2593,6 +2746,11 @@ function renderInvoiceEditor(container) {
               </tbody>
             </table>
           </div>
+
+          <!-- Datalist Autocomplete from Full Catalog -->
+          <datalist id="global-products-datalist-invoice">
+            ${unifiedProds.map(p => `<option value="${escapeHtml(p.name)}">${p.sourceLabel} • ₹${p.price} (HSN: ${p.hsn || '-'})</option>`).join('')}
+          </datalist>
         </div>
 
         <!-- Voucher Bottom Ledger & Accounting Totals Grid -->
@@ -3061,6 +3219,10 @@ function renderItemsList(container) {
         </div>
 
         <div class="flex items-center gap-2">
+          <button onclick="syncWithWebsiteCatalog(false)" class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-amber-600 hover:bg-amber-700 text-white font-bold border border-amber-700 text-xs shadow-sm" title="Import all products from passcorp.in website into this company master catalog">
+            <i data-lucide="download-cloud" class="w-3.5 h-3.5"></i>
+            <span>Import All Website Products</span>
+          </button>
           <button onclick="openItemModal()" class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-blue-700 hover:bg-blue-800 text-white font-bold border border-blue-800 text-xs shadow-sm">
             <span class="text-[9px] bg-blue-900 px-1 rounded font-mono font-normal">Alt+I</span>
             <span>+ Add Stock Item</span>
