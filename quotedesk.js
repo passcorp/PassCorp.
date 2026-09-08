@@ -588,12 +588,10 @@ function handlePinSubmit(e) {
   const correctPin = (selectedCompanyForPin && selectedCompanyForPin.pin) ? selectedCompanyForPin.pin : '1234';
   const masterPass = 'Pawanjali@241997';
 
-  // Allow company PIN, master passcode, or standard defaults
+  // Allow company PIN, master passcode, or default 1234
   const isValid = enteredPin === correctPin || 
                   enteredPin === masterPass || 
-                  enteredPin === '1234' || 
-                  enteredPin === 'pass123' || 
-                  enteredPin === 'passcorp2026';
+                  enteredPin === '1234';
 
   if (isValid) {
     if (!selectedCompanyForPin && db.companies && db.companies.length > 0) {
