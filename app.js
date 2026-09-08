@@ -375,10 +375,9 @@ function renderFooter(){
       </div>
       <div class="footer-bottom">
         <span>© 2026 Pass Corp.</span>
-        <div style="display:inline-flex;align-items:center;gap:18px;">
-          <a onclick="A.goCompare()" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer">Compare Brands</a>
+        <div style="display:inline-flex;align-items:center;gap:14px;">
           <a href="quotation.html?secure=1" target="_blank" style="display:inline-flex;align-items:center;cursor:pointer;opacity:0.8;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'" title="Quotation"><img src="assets/snowflake-white.png" alt="Quotation" style="width:14px;height:14px;object-fit:contain;display:block;" /></a>
-          <a href="admin.html" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer">${icon("settings",13)} Manage content</a>
+          <a href="admin.html" style="display:inline-flex;align-items:center;cursor:pointer;opacity:0.8;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'" title="Manage content">${icon("settings",14)}</a>
         </div>
       </div>
     </footer>
