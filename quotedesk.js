@@ -4465,7 +4465,7 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
   const docNumber = doc.quoteNumber;
   const wordsAmount = numberToWordsINR(doc.grandTotal);
   const itemsCount = (doc.items || []).length;
-  const spacerMinHeight = Math.max(20, 100 - (itemsCount * 30));
+  const spacerMinHeight = Math.max(40, 240 - (itemsCount * 35));
 
   return `
     <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between w-full w-full box-border select-text">
@@ -4645,39 +4645,44 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
         </div>
 
         <!-- Bank Details & Authorized Signatory Grid -->
-        <div class="grid grid-cols-2 divide-x divide-slate-900 text-[10px]">
-          <!-- Left: Banking Particulars & Terms -->
-          <div class="p-2 space-y-1">
+        <div class="grid grid-cols-12 divide-x divide-slate-900 text-[10px]">
+          <!-- Left: Banking Particulars & Terms (Col 7 / 12) -->
+          <div class="col-span-7 p-2.5 space-y-1.5 bg-white">
             ${comp.bankDetails?.accountNumber ? `
-              <div class="border border-slate-300 bg-slate-50 p-1.5 rounded">
-                <span class="font-black uppercase text-[8.5px] text-slate-700 block mb-0.5">Company's Bank Details</span>
-                <p><span class="font-bold">Bank Name:</span> ${comp.bankDetails.bankName}</p>
-                <p><span class="font-bold">A/c No:</span> <span class="font-mono font-bold">${comp.bankDetails.accountNumber}</span></p>
-                <p><span class="font-bold">Branch & IFSC:</span> <span class="font-mono font-bold">${comp.bankDetails.ifscCode}</span></p>
-                ${comp.bankDetails.upiId ? `<p><span class="font-bold">UPI ID:</span> <span class="font-mono font-bold text-blue-700">${comp.bankDetails.upiId}</span></p>` : ''}
+              <div class="border border-slate-300 bg-slate-50/80 p-2 rounded">
+                <span class="font-black uppercase text-[8.5px] text-slate-900 block mb-0.5 underline">Company's Bank Details</span>
+                <div class="grid grid-cols-2 gap-x-2 gap-y-0.5 text-[9.5px]">
+                  <p><span class="font-bold text-slate-700">Bank:</span> ${comp.bankDetails.bankName}</p>
+                  <p><span class="font-bold text-slate-700">A/c No:</span> <span class="font-mono font-bold text-slate-900">${comp.bankDetails.accountNumber}</span></p>
+                  <p><span class="font-bold text-slate-700">IFSC:</span> <span class="font-mono font-bold text-slate-900">${comp.bankDetails.ifscCode}</span></p>
+                  <p><span class="font-bold text-slate-700">Branch:</span> ${comp.bankDetails.branch || 'PCMC Pune'}</p>
+                  ${comp.bankDetails.upiId ? `<p class="col-span-2"><span class="font-bold text-slate-700">UPI ID:</span> <span class="font-mono font-bold text-blue-700">${comp.bankDetails.upiId}</span></p>` : ''}
+                </div>
               </div>
             ` : ''}
 
-            <div class="space-y-0.5 text-[9px] text-slate-600">
-              <span class="font-bold uppercase text-[8.5px] text-slate-700 block">Declaration / Terms:</span>
+            <div class="space-y-0.5 text-[8.5px] text-slate-600 leading-tight">
+              <span class="font-bold uppercase text-[8px] text-slate-800 block underline">Declaration / Terms:</span>
               <p>1. We declare that this document shows the actual price of the goods described and that all particulars are true and correct.</p>
               ${(doc.terms || []).map((t, i) => `<p>${i + 2}. ${t}</p>`).join('')}
             </div>
           </div>
 
-          <!-- Right: Company Stamp & Signature -->
-          <div class="p-2 flex flex-col items-end justify-center">
-            <div class="flex flex-col items-center text-center w-48 border border-slate-300 bg-slate-50/60 p-2 rounded shadow-sm">
-              <span class="text-[8px] font-bold text-slate-500 uppercase tracking-wider block">for</span>
-              <h4 class="font-black text-xs uppercase tracking-tight text-slate-900 leading-tight mb-1">${comp.name}</h4>
+          <!-- Right: Company Stamp & Signature (Col 5 / 12) -->
+          <div class="col-span-5 p-2.5 flex flex-col items-center justify-between text-center bg-slate-50/30">
+            <div class="w-full text-center">
+              <span class="text-[8.5px] font-bold text-slate-500 uppercase tracking-wider block">for</span>
+              <h4 class="font-black text-xs uppercase tracking-tight text-slate-900 leading-tight">${comp.name}</h4>
+            </div>
+
+            <div class="my-1.5 flex items-center justify-center">
               ${comp.stampUrl ? `
-                <div class="h-14 my-0.5 flex items-center justify-center">
-                  <img src="${comp.stampUrl}" class="max-h-14 max-w-[140px] object-contain opacity-95" alt="Company Stamp" />
-                </div>
-              ` : `<div class="h-10 my-0.5"></div>`}
-              <div class="w-full border-t border-slate-400 pt-1 text-center mt-1">
-                <span class="font-bold text-[8.5px] uppercase text-slate-800 tracking-wider">Authorized Signatory</span>
-              </div>
+                <img src="${comp.stampUrl}" class="max-h-16 max-w-[150px] object-contain opacity-95 filter drop-shadow-sm" alt="Company Stamp" />
+              ` : `<div class="h-12 flex items-center justify-center text-slate-300 text-[10px] italic">[Company Stamp]</div>`}
+            </div>
+
+            <div class="w-full border-t border-slate-900 pt-1 text-center">
+              <span class="font-black text-[9px] uppercase text-slate-900 tracking-wider block">Authorized Signatory</span>
             </div>
           </div>
         </div>
