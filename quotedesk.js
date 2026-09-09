@@ -4100,10 +4100,10 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
   const roundOff = (doc.grandTotal - rawTotal).toFixed(2);
 
   const itemsCount = (doc.items || []).length;
-  const spacerMinHeight = Math.max(80, 310 - (itemsCount * 45));
+  const spacerMinHeight = Math.max(20, 90 - (itemsCount * 30));
 
   return `
-    <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between min-h-[1050px] w-full box-border select-text">
+    <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between w-full w-full box-border select-text">
       <!-- Top Section -->
       <div>
         <!-- Top Title Header -->
@@ -4431,19 +4431,18 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
           </div>
 
           <!-- Col 3: Company Authorised Signatory -->
-          <div class="p-2 flex flex-col justify-between items-center text-center">
-            <div class="text-center w-full">
+          <div class="p-2 flex flex-col items-center justify-center text-center">
+            <div class="flex flex-col items-center text-center w-full border border-slate-300 bg-slate-50/60 p-2 rounded shadow-sm">
               <span class="text-[8px] font-bold text-slate-500 uppercase tracking-wider block">for</span>
-              <h4 class="font-black text-[11px] uppercase tracking-tight text-slate-900">${comp.name}</h4>
-            </div>
-
-            <div class="pt-1 flex flex-col items-center text-center w-full">
+              <h4 class="font-black text-[11px] uppercase tracking-tight text-slate-900 leading-tight mb-1">${comp.name}</h4>
               ${comp.stampUrl ? `
-                <div class="w-14 h-14 mb-0.5 flex items-center justify-center">
-                  <img src="${comp.stampUrl}" class="max-w-full max-h-full object-contain opacity-95" alt="Company Stamp" />
+                <div class="h-12 my-0.5 flex items-center justify-center">
+                  <img src="${comp.stampUrl}" class="max-h-12 max-w-[120px] object-contain opacity-95" alt="Company Stamp" />
                 </div>
-              ` : `<div class="h-10"></div>`}
-              <span class="font-bold text-[9px] uppercase text-slate-800 tracking-wider">Authorised Signatory</span>
+              ` : `<div class="h-8 my-0.5"></div>`}
+              <div class="w-full border-t border-slate-400 pt-1 text-center mt-1">
+                <span class="font-bold text-[8.5px] uppercase text-slate-800 tracking-wider">Authorised Signatory</span>
+              </div>
             </div>
           </div>
         </div>
@@ -4466,10 +4465,10 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
   const docNumber = doc.quoteNumber;
   const wordsAmount = numberToWordsINR(doc.grandTotal);
   const itemsCount = (doc.items || []).length;
-  const spacerMinHeight = Math.max(80, 340 - (itemsCount * 45));
+  const spacerMinHeight = Math.max(20, 100 - (itemsCount * 30));
 
   return `
-    <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between min-h-[1050px] w-full box-border select-text">
+    <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between w-full w-full box-border select-text">
       <!-- Top Section -->
       <div>
         <!-- Top Title Header -->
@@ -4667,20 +4666,17 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
           </div>
 
           <!-- Right: Company Stamp & Signature -->
-          <div class="p-2 flex flex-col justify-between items-end">
-            <div class="flex flex-col items-center text-center w-48">
-              <span class="text-[8.5px] font-bold text-slate-500 uppercase tracking-wider block">for</span>
-              <h4 class="font-black text-xs uppercase tracking-tight text-slate-900">${comp.name}</h4>
-            </div>
-
-            <div class="pt-1.5 flex flex-col items-center text-center w-48">
+          <div class="p-2 flex flex-col items-end justify-center">
+            <div class="flex flex-col items-center text-center w-48 border border-slate-300 bg-slate-50/60 p-2 rounded shadow-sm">
+              <span class="text-[8px] font-bold text-slate-500 uppercase tracking-wider block">for</span>
+              <h4 class="font-black text-xs uppercase tracking-tight text-slate-900 leading-tight mb-1">${comp.name}</h4>
               ${comp.stampUrl ? `
-                <div class="w-16 h-16 mb-0.5 flex items-center justify-center">
-                  <img src="${comp.stampUrl}" class="max-w-full max-h-full object-contain opacity-95" alt="Company Stamp" />
+                <div class="h-14 my-0.5 flex items-center justify-center">
+                  <img src="${comp.stampUrl}" class="max-h-14 max-w-[140px] object-contain opacity-95" alt="Company Stamp" />
                 </div>
-              ` : `<div class="h-10"></div>`}
-              <div class="w-full border-t border-slate-400 pt-0.5 text-center">
-                <span class="font-bold text-[9px] uppercase text-slate-800 tracking-wider">Authorized Signatory</span>
+              ` : `<div class="h-10 my-0.5"></div>`}
+              <div class="w-full border-t border-slate-400 pt-1 text-center mt-1">
+                <span class="font-bold text-[8.5px] uppercase text-slate-800 tracking-wider">Authorized Signatory</span>
               </div>
             </div>
           </div>
@@ -4715,10 +4711,10 @@ function renderBusyFormatHTML(doc, type, cust, comp) {
 
   const wordsAmount = numberToWordsINR(doc.grandTotal);
   const itemsCount = (doc.items || []).length;
-  const spacerMinHeight = Math.max(80, 280 - (itemsCount * 45));
+  const spacerMinHeight = Math.max(20, 80 - (itemsCount * 30));
 
   return `
-    <div class="border border-slate-400 font-sans text-xs text-slate-900 bg-white shadow-sm flex flex-col justify-between min-h-[1050px] w-full box-border select-text">
+    <div class="border border-slate-400 font-sans text-xs text-slate-900 bg-white shadow-sm flex flex-col justify-between w-full w-full box-border select-text">
       <!-- Top Section -->
       <div>
         <!-- Busy Top Header Banner -->
@@ -4888,10 +4884,10 @@ function renderModernFormatHTML(doc, type, cust, comp) {
   }
 
   const itemsCount = (doc.items || []).length;
-  const spacerMinHeight = Math.max(60, 240 - (itemsCount * 45));
+  const spacerMinHeight = Math.max(20, 70 - (itemsCount * 30));
 
   return `
-    <div class="bg-white p-6 rounded-xl border border-slate-200 font-sans text-xs flex flex-col justify-between min-h-[1050px] w-full space-y-6 box-border select-text">
+    <div class="bg-white p-6 rounded-xl border border-slate-200 font-sans text-xs flex flex-col justify-between w-full w-full space-y-6 box-border select-text">
       <!-- Top Section -->
       <div class="space-y-6">
         <div class="flex justify-between items-start pb-6 border-b border-slate-200">
