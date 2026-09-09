@@ -4887,30 +4887,39 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
         <table class="w-full h-full text-left text-xs border-collapse">
           <thead>
             <tr class="border-b border-slate-900 bg-white text-slate-900 font-black uppercase text-[8.5px] tracking-wider divide-x divide-slate-900">
-              <th class="py-1 px-1.5 w-7 text-center">Sl<br/>No.</th>
-              <th class="py-1 px-2.5">Description of Goods</th>
-              <th class="py-1 px-1.5 w-16 text-center whitespace-nowrap">HSN/SAC</th>
-              <th class="py-1 px-1.5 w-16 text-center whitespace-nowrap">Quantity</th>
-              <th class="py-1 px-1.5 w-16 text-right whitespace-nowrap">Rate</th>
-              <th class="py-1 px-1 w-10 text-center whitespace-nowrap">per</th>
-              <th class="py-1 px-1 w-12 text-center whitespace-nowrap">Disc. %</th>
-              <th class="py-1 px-2 w-24 text-right whitespace-nowrap">Amount</th>
+              <th class="py-1 px-1 w-6 text-center">Sl<br/>No.</th>
+              <th class="py-1 px-2">Description of Goods</th>
+              <th class="py-1 px-1 w-14 text-center whitespace-nowrap">HSN/SAC</th>
+              <th class="py-1 px-1 w-14 text-center whitespace-nowrap">Quantity</th>
+              <th class="py-1 px-1 w-16 text-right whitespace-nowrap">Rate</th>
+              <th class="py-1 px-1 w-8 text-center whitespace-nowrap">per</th>
+              <th class="py-1 px-1 w-10 text-center whitespace-nowrap">Disc. %</th>
+              <th class="py-1 px-1.5 w-20 text-right whitespace-nowrap">Amount</th>
             </tr>
           </thead>
           <tbody class="text-slate-900">
             ${(doc.items || []).map((it, idx) => `
               <tr class="divide-x divide-slate-900 text-[10px]">
-                <td class="py-1 px-1 text-center font-mono font-bold align-top">${idx + 1}</td>
+                <td class="py-1 px-0.5 text-center font-mono font-bold align-top">${idx + 1}</td>
                 <td class="py-1 px-2 align-top">
-                  <div class="font-black text-slate-900 text-[10.5px] uppercase leading-snug">${it.name}</div>
-                  ${it.description ? `<div class="text-[9px] text-slate-600 mt-0.5 whitespace-pre-wrap leading-tight font-normal">${escapeHtml(it.description)}</div>` : ''}
+                  <div class="flex items-start gap-2">
+                    ${it.imageUrl ? `
+                      <div class="w-12 h-12 rounded bg-white border border-slate-300 p-0.5 shrink-0 flex items-center justify-center overflow-hidden shadow-sm mt-0.5">
+                        <img src="${it.imageUrl}" class="max-w-full max-h-full object-contain" />
+                      </div>
+                    ` : ''}
+                    <div class="flex-1 min-w-0">
+                      <div class="font-black text-slate-900 text-[10.5px] uppercase leading-snug tracking-tight">${it.name}</div>
+                      ${it.description ? `<div class="text-[9px] text-slate-600 mt-0.5 whitespace-pre-wrap leading-tight font-normal">${escapeHtml(it.description)}</div>` : ''}
+                    </div>
+                  </div>
                 </td>
-                <td class="py-1 px-1.5 text-center font-mono font-bold align-top whitespace-nowrap">${it.hsnCode || '6403'}</td>
-                <td class="py-1 px-1.5 text-center font-mono font-black align-top whitespace-nowrap">${it.quantity} ${it.unit || 'Pairs'}</td>
-                <td class="py-1 px-1.5 text-right font-mono font-bold align-top whitespace-nowrap">${fmt(it.price)}</td>
-                <td class="py-1 px-1 text-center font-medium align-top whitespace-nowrap">${it.unit || 'Pairs'}</td>
-                <td class="py-1 px-1 text-center font-mono align-top whitespace-nowrap">${it.discount ? `${it.discount}%` : ''}</td>
-                <td class="py-1 px-2 text-right font-mono font-black text-slate-900 align-top whitespace-nowrap">${fmt(it.total || (it.price * it.quantity))}</td>
+                <td class="py-1 px-1 text-center font-mono font-bold align-top whitespace-nowrap text-[9.5px]">${it.hsnCode || '6403'}</td>
+                <td class="py-1 px-1 text-center font-mono font-black align-top whitespace-nowrap text-[10px]">${it.quantity} ${it.unit || 'Pairs'}</td>
+                <td class="py-1 px-1 text-right font-mono font-bold align-top whitespace-nowrap text-[10px]">${fmt(it.price)}</td>
+                <td class="py-1 px-1 text-center font-medium align-top whitespace-nowrap text-[9.5px]">${it.unit || 'Pairs'}</td>
+                <td class="py-1 px-1 text-center font-mono align-top whitespace-nowrap text-[9.5px]">${it.discount ? `${it.discount}%` : ''}</td>
+                <td class="py-1 px-1.5 text-right font-mono font-black text-slate-900 align-top whitespace-nowrap text-[10px]">${fmt(it.total || (it.price * it.quantity))}</td>
               </tr>
             `).join('')}
 
@@ -5165,41 +5174,41 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
         <table class="w-full h-full text-left text-xs border-collapse">
           <thead>
             <tr class="border-b border-slate-900 bg-slate-100 text-slate-900 font-black uppercase text-[8.5px] tracking-wider divide-x divide-slate-900">
-              <th class="py-1 px-1.5 w-7 text-center">Sl</th>
-              <th class="py-1 px-2.5">Description of Goods & Technical Specs</th>
-              <th class="py-1 px-1.5 w-20 text-center whitespace-nowrap">HSN/SAC</th>
-              <th class="py-1 px-1.5 w-14 text-center whitespace-nowrap">Quantity</th>
-              <th class="py-1 px-1.5 w-20 text-right whitespace-nowrap">Rate (${cur()})</th>
-              <th class="py-1 px-1 w-10 text-center whitespace-nowrap">per</th>
-              <th class="py-1 px-1.5 w-20 text-center whitespace-nowrap">Lead Time</th>
-              <th class="py-1 px-1 w-12 text-center whitespace-nowrap">GST%</th>
-              <th class="py-1 px-2 w-24 text-right whitespace-nowrap">Amount (${cur()})</th>
+              <th class="py-1 px-1 w-6 text-center">Sl</th>
+              <th class="py-1 px-2">Description of Goods & Technical Specs</th>
+              <th class="py-1 px-1 w-14 text-center whitespace-nowrap">HSN/SAC</th>
+              <th class="py-1 px-1 w-12 text-center whitespace-nowrap">Quantity</th>
+              <th class="py-1 px-1 w-16 text-right whitespace-nowrap">Rate (${cur()})</th>
+              <th class="py-1 px-1 w-8 text-center whitespace-nowrap">per</th>
+              <th class="py-1 px-1 w-16 text-center whitespace-nowrap">Lead Time</th>
+              <th class="py-1 px-1 w-10 text-center whitespace-nowrap">GST%</th>
+              <th class="py-1 px-1.5 w-20 text-right whitespace-nowrap">Amount (${cur()})</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-300 text-slate-900">
             ${(doc.items || []).map((it, idx) => `
-              <tr class="divide-x divide-slate-900 text-[10.5px]">
-                <td class="py-1 px-1 text-center font-mono font-bold align-top">${idx + 1}</td>
+              <tr class="divide-x divide-slate-900 text-[10px]">
+                <td class="py-1 px-0.5 text-center font-mono font-bold align-top">${idx + 1}</td>
                 <td class="py-1 px-2 align-top">
-                  <div class="flex items-start gap-3">
+                  <div class="flex items-start gap-2.5">
                     ${it.imageUrl ? `
-                      <div class="w-20 h-20 rounded bg-white border border-slate-300 p-1 shrink-0 flex items-center justify-center overflow-hidden shadow-sm">
-                        <img src="${it.imageUrl}" class="w-full h-full object-contain" />
+                      <div class="w-12 h-12 rounded bg-white border border-slate-300 p-0.5 shrink-0 flex items-center justify-center overflow-hidden shadow-sm mt-0.5">
+                        <img src="${it.imageUrl}" class="max-w-full max-h-full object-contain" />
                       </div>
                     ` : ''}
-                    <div class="min-w-0">
-                      <div class="font-bold text-slate-900 text-[11px] uppercase leading-snug">${it.name}</div>
-                      ${it.description ? `<div class="text-[9.5px] text-slate-600 mt-0.5 whitespace-pre-wrap leading-tight font-normal">${escapeHtml(it.description)}</div>` : ''}
+                    <div class="flex-1 min-w-0">
+                      <div class="font-bold text-slate-900 text-[10.5px] uppercase leading-snug tracking-tight">${it.name}</div>
+                      ${it.description ? `<div class="text-[9px] text-slate-600 mt-0.5 whitespace-pre-wrap leading-snug font-normal">${escapeHtml(it.description)}</div>` : ''}
                     </div>
                   </div>
                 </td>
-                <td class="py-1 px-1.5 text-center font-mono font-semibold align-top whitespace-nowrap">${it.hsnCode || '-'}</td>
-                <td class="py-1 px-1.5 text-center font-mono font-bold align-top whitespace-nowrap">${it.quantity}</td>
-                <td class="py-1 px-1.5 text-right font-mono font-semibold align-top whitespace-nowrap">${fmt(it.price)}</td>
-                <td class="py-1 px-1 text-center font-medium align-top whitespace-nowrap">${it.unit || 'PCS'}</td>
-                <td class="py-1 px-1.5 text-center font-mono text-[9px] align-top font-semibold text-slate-700 whitespace-nowrap">${it.leadTime || '1-2 Days'}</td>
-                <td class="py-1 px-1 text-center font-mono font-bold align-top text-blue-800 whitespace-nowrap">${it.taxRate || 0}%</td>
-                <td class="py-1 px-2 text-right font-mono font-bold text-slate-900 align-top whitespace-nowrap">${fmt(it.total)}</td>
+                <td class="py-1 px-1 text-center font-mono font-semibold align-top whitespace-nowrap text-[9.5px]">${it.hsnCode || '-'}</td>
+                <td class="py-1 px-1 text-center font-mono font-bold align-top whitespace-nowrap text-[10px]">${it.quantity}</td>
+                <td class="py-1 px-1 text-right font-mono font-semibold align-top whitespace-nowrap text-[10px]">${fmt(it.price)}</td>
+                <td class="py-1 px-1 text-center font-medium align-top whitespace-nowrap text-[9.5px]">${it.unit || 'PCS'}</td>
+                <td class="py-1 px-1 text-center font-mono text-[9px] align-top font-semibold text-slate-700 whitespace-nowrap">${it.leadTime || '1-2 Days'}</td>
+                <td class="py-1 px-1 text-center font-mono font-bold align-top text-blue-800 whitespace-nowrap text-[9.5px]">${it.taxRate || 0}%</td>
+                <td class="py-1 px-1.5 text-right font-mono font-bold text-slate-900 align-top whitespace-nowrap text-[10px]">${fmt(it.total)}</td>
               </tr>
             `).join('')}
 
@@ -5385,46 +5394,46 @@ function renderBusyFormatHTML(doc, type, cust, comp) {
         <table class="w-full h-full text-left text-xs border-collapse">
           <thead>
             <tr class="bg-slate-100 border-b border-slate-300 text-slate-700 font-bold uppercase text-[9px] divide-x divide-slate-300">
-              <th class="py-2 px-2 text-center w-8">#</th>
-              <th class="py-2 px-3">Item Description Particulars</th>
-              <th class="py-2 px-2 text-center w-20">HSN</th>
-              <th class="py-2 px-2 text-center w-16">Qty</th>
-              <th class="py-2 px-2 text-right w-24">Price (${cur()})</th>
-              <th class="py-2 px-2 text-center w-24">Lead Time</th>
-              <th class="py-2 px-2 text-center w-12">GST%</th>
-              <th class="py-2 px-3 text-right w-28">Amount (${cur()})</th>
+              <th class="py-1.5 px-1 text-center w-6">#</th>
+              <th class="py-1.5 px-2">Item Description Particulars</th>
+              <th class="py-1.5 px-1 text-center w-14">HSN</th>
+              <th class="py-1.5 px-1 text-center w-14">Qty</th>
+              <th class="py-1.5 px-1 text-right w-16">Price (${cur()})</th>
+              <th class="py-1.5 px-1 text-center w-16">Lead Time</th>
+              <th class="py-1.5 px-1 text-center w-10">GST%</th>
+              <th class="py-1.5 px-2 text-right w-20">Amount (${cur()})</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-200">
             ${(doc.items || []).map((it, idx) => `
-              <tr class="divide-x divide-slate-200 hover:bg-slate-50">
-                <td class="py-2.5 px-2 text-center font-mono text-slate-500 align-top">${idx + 1}</td>
-                <td class="py-2.5 px-3 align-top">
-                  <div class="flex items-start gap-3">
+              <tr class="divide-x divide-slate-200 hover:bg-slate-50 text-[10px]">
+                <td class="py-1.5 px-1 text-center font-mono text-slate-500 align-top">${idx + 1}</td>
+                <td class="py-1.5 px-2 align-top">
+                  <div class="flex items-start gap-2">
                     ${(type === 'quote' && it.imageUrl) ? `
-                      <div class="w-20 h-20 rounded bg-white border border-slate-300 p-1 shrink-0 flex items-center justify-center overflow-hidden shadow-sm">
-                        <img src="${it.imageUrl}" class="w-full h-full object-contain" />
+                      <div class="w-12 h-12 rounded bg-white border border-slate-300 p-0.5 shrink-0 flex items-center justify-center overflow-hidden shadow-sm mt-0.5">
+                        <img src="${it.imageUrl}" class="max-w-full max-h-full object-contain" />
                       </div>
                     ` : ''}
-                    <div>
-                      <div class="font-bold text-slate-900">${it.name}</div>
-                      ${it.description ? `<p class="text-[10px] text-slate-600 whitespace-pre-wrap mt-0.5 leading-relaxed">${escapeHtml(it.description)}</p>` : ''}
+                    <div class="flex-1 min-w-0">
+                      <div class="font-bold text-slate-900 text-[10.5px] uppercase leading-snug">${it.name}</div>
+                      ${it.description ? `<p class="text-[9px] text-slate-600 whitespace-pre-wrap mt-0.5 leading-snug">${escapeHtml(it.description)}</p>` : ''}
                     </div>
                   </div>
                 </td>
-                <td class="py-2.5 px-2 text-center font-mono align-top">${it.hsnCode || '-'}</td>
-                <td class="py-2.5 px-2 text-center font-mono font-bold align-top">${it.quantity} ${it.unit || ''}</td>
-                <td class="py-2.5 px-2 text-right font-mono align-top">${fmt(it.price)}</td>
-                <td class="py-2.5 px-2 text-center font-mono text-[10px] align-top font-semibold text-slate-700">${it.leadTime || '1-2 Days'}</td>
-                <td class="py-2.5 px-2 text-center font-mono font-semibold align-top text-blue-700">${it.taxRate || 0}%</td>
-                <td class="py-2.5 px-3 text-right font-mono font-bold text-slate-900 align-top">${fmt(it.total)}</td>
+                <td class="py-1.5 px-1 text-center font-mono align-top text-[9.5px]">${it.hsnCode || '-'}</td>
+                <td class="py-1.5 px-1 text-center font-mono font-bold align-top text-[10px]">${it.quantity} ${it.unit || ''}</td>
+                <td class="py-1.5 px-1 text-right font-mono align-top text-[10px]">${fmt(it.price)}</td>
+                <td class="py-1.5 px-1 text-center font-mono text-[9px] align-top font-semibold text-slate-700">${it.leadTime || '1-2 Days'}</td>
+                <td class="py-1.5 px-1 text-center font-mono font-semibold align-top text-blue-700 text-[9.5px]">${it.taxRate || 0}%</td>
+                <td class="py-1.5 px-2 text-right font-mono font-bold text-slate-900 align-top text-[10px]">${fmt(it.total)}</td>
               </tr>
             `).join('')}
 
             <!-- Expansion Spacer Row to ensure full-page A4 vertical grid lines -->
             <tr class="divide-x divide-slate-200 h-full" style="height: 100%;">
-              <td class="py-2 px-2"></td>
-              <td class="py-2 px-3"></td>
+              <td class="py-1.5 px-1"></td>
+              <td class="py-1.5 px-2"></td>
               <td class="py-2 px-2"></td>
               <td class="py-2 px-2"></td>
               <td class="py-2 px-2"></td>
@@ -5554,47 +5563,47 @@ function renderModernFormatHTML(doc, type, cust, comp) {
       <div class="flex-1 flex flex-col overflow-x-auto border border-slate-200 rounded-xl">
         <table class="w-full h-full text-left text-xs border-collapse">
           <thead>
-            <tr class="border-b border-slate-200 bg-slate-50 text-slate-600 font-bold uppercase text-[10px]">
-              <th class="py-3 px-3 w-8 text-center">#</th>
-              <th class="py-3 px-3">Item Description & Specifications</th>
-              <th class="py-3 px-3 text-center">HSN/SAC</th>
-              <th class="py-3 px-3 text-center">Qty</th>
-              <th class="py-3 px-3 text-right">Unit Price</th>
-              <th class="py-3 px-3 text-center">Lead Time</th>
-              <th class="py-3 px-3 text-center">GST%</th>
-              <th class="py-3 px-3 text-right">Total</th>
+            <tr class="border-b border-slate-200 bg-slate-50 text-slate-600 font-bold uppercase text-[9px]">
+              <th class="py-2 px-2 w-7 text-center">#</th>
+              <th class="py-2 px-3">Item Description & Specifications</th>
+              <th class="py-2 px-2 text-center w-16">HSN/SAC</th>
+              <th class="py-2 px-2 text-center w-14">Qty</th>
+              <th class="py-2 px-2 text-right w-18">Unit Price</th>
+              <th class="py-2 px-2 text-center w-18">Lead Time</th>
+              <th class="py-2 px-2 text-center w-12">GST%</th>
+              <th class="py-2 px-3 text-right w-22">Total</th>
             </tr>
           </thead>
-          <tbody class="divide-y border-slate-100 text-slate-700">
+          <tbody class="divide-y border-slate-100 text-slate-700 text-[10.5px]">
             ${(doc.items || []).map((it, idx) => `
               <tr>
-                <td class="py-3.5 px-3 text-slate-400 font-mono text-center align-top">${idx + 1}</td>
-                <td class="py-3.5 px-3 align-top">
-                  <div class="flex items-start gap-4">
+                <td class="py-2.5 px-2 text-slate-400 font-mono text-center align-top">${idx + 1}</td>
+                <td class="py-2.5 px-3 align-top">
+                  <div class="flex items-start gap-3">
                     ${it.imageUrl ? `
-                      <div class="w-24 h-24 rounded-xl bg-white border border-slate-200 shadow-sm overflow-hidden flex items-center justify-center shrink-0 p-1 mt-0.5">
-                        <img src="${it.imageUrl}" class="w-full h-full object-contain" />
+                      <div class="w-14 h-14 rounded-lg bg-white border border-slate-200 shadow-sm overflow-hidden flex items-center justify-center shrink-0 p-1 mt-0.5">
+                        <img src="${it.imageUrl}" class="max-w-full max-h-full object-contain" />
                       </div>
                     ` : ''}
                     <div class="flex-1 min-w-0">
-                      <div class="font-bold text-slate-900 text-sm">${it.name}</div>
-                      ${it.description ? `<div class="text-[11px] text-slate-600 mt-1 whitespace-pre-wrap break-words leading-relaxed">${escapeHtml(it.description)}</div>` : ''}
+                      <div class="font-bold text-slate-900 text-xs">${it.name}</div>
+                      ${it.description ? `<div class="text-[10px] text-slate-600 mt-0.5 whitespace-pre-wrap break-words leading-relaxed">${escapeHtml(it.description)}</div>` : ''}
                     </div>
                   </div>
                 </td>
-                <td class="py-3.5 px-3 text-center font-mono text-slate-500 font-semibold align-top">${it.hsnCode || '-'}</td>
-                <td class="py-3.5 px-3 text-center font-mono font-medium align-top">${it.quantity} ${it.unit || ''}</td>
-                <td class="py-3.5 px-3 text-right font-mono font-semibold align-top">${cur()}${fmt(it.price)}</td>
-                <td class="py-3.5 px-3 text-center font-mono text-[11px] align-top font-medium text-slate-700">${it.leadTime || '1-2 Days'}</td>
-                <td class="py-3.5 px-3 text-center font-mono text-blue-600 font-semibold align-top">${it.taxRate || 0}%</td>
-                <td class="py-3.5 px-3 text-right font-mono font-bold text-slate-900 text-sm align-top">${cur()}${fmt(it.total)}</td>
+                <td class="py-2.5 px-2 text-center font-mono text-slate-500 font-semibold align-top text-[10px]">${it.hsnCode || '-'}</td>
+                <td class="py-2.5 px-2 text-center font-mono font-medium align-top text-[10.5px]">${it.quantity} ${it.unit || ''}</td>
+                <td class="py-2.5 px-2 text-right font-mono font-semibold align-top text-[10.5px]">${cur()}${fmt(it.price)}</td>
+                <td class="py-2.5 px-2 text-center font-mono text-[10px] align-top font-medium text-slate-700">${it.leadTime || '1-2 Days'}</td>
+                <td class="py-2.5 px-2 text-center font-mono text-blue-600 font-semibold align-top text-[10px]">${it.taxRate || 0}%</td>
+                <td class="py-2.5 px-3 text-right font-mono font-bold text-slate-900 text-xs align-top">${cur()}${fmt(it.total)}</td>
               </tr>
             `).join('')}
 
             <!-- Expansion Spacer Row -->
             <tr class="h-full" style="height: 100%;">
-              <td class="py-3 px-3"></td>
-              <td class="py-3 px-3"></td>
+              <td class="py-2 px-2"></td>
+              <td class="py-2 px-3"></td>
               <td class="py-3 px-3"></td>
               <td class="py-3 px-3"></td>
               <td class="py-3 px-3"></td>
