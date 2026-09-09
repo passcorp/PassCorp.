@@ -1563,7 +1563,17 @@ function showToast(msg) {
 }
 
 function updateHeaderAndBadges() {
-  if (!activeCompany) return;
+  if (!activeCompany) {
+    if (db.companies && db.companies.length > 0) activeCompany = db.companies[0];
+    else return;
+  }
+
+  // Ensure default company name is PASS CORP if corrupt
+  if (activeCompany.name && activeCompany.name.includes('RAJESH SHARMA')) {
+    activeCompany.name = 'PASS CORP.';
+    activeCompany.gstin = '27AALFP8680C1Z1';
+    activeCompany.address = 'Talawade, Chikhali, PCMC, Pune - 411062, Maharashtra, India';
+  }
 
   const hName = document.getElementById('header-company-name');
   const hGst = document.getElementById('header-company-gstin');
@@ -1572,10 +1582,10 @@ function updateHeaderAndBadges() {
   const hDate = document.getElementById('header-live-date');
   const hCurr = document.getElementById('header-currency-sym');
 
-  if (hName) hName.textContent = activeCompany.name || 'QuoteDesk Pro';
+  if (hName) hName.textContent = activeCompany.name || 'PASS CORP.';
   if (hGst) hGst.textContent = activeCompany.gstin ? `GSTIN: ${activeCompany.gstin}` : 'Multi-Company • Active';
-  if (sName) sName.textContent = activeCompany.name || 'Company';
-  if (saName) saName.textContent = activeCompany.name || 'QuoteDesk';
+  if (sName) sName.textContent = activeCompany.name || 'PASS CORP.';
+  if (saName) saName.textContent = activeCompany.name || 'PASS CORP.';
 
   if (hDate) {
     const d = new Date();

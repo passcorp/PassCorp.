@@ -316,25 +316,25 @@
         <div id="header-logo-container" class="w-8 h-8 rounded bg-white/10 border border-white/20 flex items-center justify-center text-blue-300 overflow-hidden shrink-0">
           <i data-lucide="building-2" class="w-4 h-4"></i>
         </div>
-        <div>
+        <div class="min-w-0">
           <div class="flex items-center gap-2">
-            <h2 id="header-company-name" class="text-xs font-black tracking-wide uppercase text-white truncate max-w-[200px] md:max-w-xs">Company Name</h2>
-            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-400/30">Prime ERP</span>
+            <h2 id="header-company-name" class="text-sm font-black tracking-wide uppercase text-white truncate max-w-[220px] md:max-w-sm">PASS CORP.</h2>
+            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-blue-500/30 text-blue-200 border border-blue-400/40 whitespace-nowrap">Prime ERP</span>
           </div>
-          <p id="header-company-gstin" class="text-[10px] text-slate-300 font-mono">GSTIN: -</p>
+          <p id="header-company-gstin" class="text-[10.5px] text-slate-300 font-mono truncate">GSTIN: 27AALFP8680C1Z1</p>
         </div>
       </div>
 
-      <!-- Center: ERP Financial Live Ribbon -->
-      <div class="hidden lg:flex items-center gap-4 text-[11px] font-mono font-medium text-slate-300">
-        <span class="flex items-center gap-1 bg-[#132f4c] px-2.5 py-1 rounded border border-[#1e466f]">
-          <span class="text-blue-400 font-bold">Period:</span> <span>01-Apr-2024 to 31-Mar-2025</span>
+      <!-- Center: ERP Financial Live Ribbon (No-Wrap Clean Badges) -->
+      <div class="hidden xl:flex items-center gap-3 text-xs font-mono font-medium text-slate-300">
+        <span class="flex items-center gap-1.5 bg-[#132f4c] px-3 py-1.5 rounded-lg border border-[#1e466f] whitespace-nowrap shadow-sm">
+          <span class="text-blue-400 font-bold uppercase text-[10px] tracking-wider">FY:</span> <span class="font-bold text-white">2026–27</span>
         </span>
-        <span class="flex items-center gap-1 bg-[#132f4c] px-2.5 py-1 rounded border border-[#1e466f]">
-          <span class="text-blue-400 font-bold">F2 Date:</span> <span id="header-live-date">Today</span>
+        <span class="flex items-center gap-1.5 bg-[#132f4c] px-3 py-1.5 rounded-lg border border-[#1e466f] whitespace-nowrap shadow-sm">
+          <span class="text-blue-400 font-bold uppercase text-[10px] tracking-wider">Date:</span> <span id="header-live-date" class="font-bold text-white">09-Sep-2026</span>
         </span>
-        <span class="flex items-center gap-1 bg-[#132f4c] px-2.5 py-1 rounded border border-[#1e466f]">
-          <span class="text-blue-400 font-bold">Currency:</span> <span id="header-currency-sym">₹ INR</span>
+        <span class="flex items-center gap-1.5 bg-[#132f4c] px-3 py-1.5 rounded-lg border border-[#1e466f] whitespace-nowrap shadow-sm">
+          <span class="text-blue-400 font-bold uppercase text-[10px] tracking-wider">Cur:</span> <span id="header-currency-sym" class="font-bold text-white">₹ INR</span>
         </span>
       </div>
 
@@ -1069,6 +1069,6 @@
   </div>
 
   <!-- Application Logic & Engine -->
-  <script src="quotedesk.js?v=v_print_a4fit_1788953490"></script>
+  <script src="quotedesk.js?v=v_header_clean_1788954062"></script>
 </body>
 </html>
