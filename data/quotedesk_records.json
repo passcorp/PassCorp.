@@ -1,7 +1,7 @@
 {
   "app": "PASS_CORP_QUOTEDESK_PRO",
   "version": "2026.1",
-  "lastUpdated": "2026-09-09T07:50:42.320Z",
+  "lastUpdated": "2026-09-09T07:51:45.349Z",
   "companies": [
     {
       "id": "comp-1788940196438",
@@ -80,7 +80,65 @@
           "shippingPhone": "DEmo"
         }
       ],
-      "invoices": [],
+      "invoices": [
+        {
+          "id": "inv-1788940282847",
+          "invoiceNumber": "INV-2026-001",
+          "date": "2026-09-09",
+          "dueDate": "2026-09-24",
+          "paymentTerms": "Net 30 Days",
+          "deliveryTerms": "Door Delivery",
+          "taxTerms": "Extra as applicable",
+          "status": "Unpaid",
+          "customerId": "cust-1788940231972",
+          "customerName": "ZAmil",
+          "billingAddress": "DEmo",
+          "billingCity": "Pune",
+          "billingState": "Pune",
+          "billingPincode": "73619",
+          "billingGstin": "ZAmil",
+          "billingPhone": "DEmo",
+          "contactPerson": "Zamil",
+          "shipToDifferent": false,
+          "shippingName": "ZAmil",
+          "shippingAddress": "DEmo",
+          "shippingCity": "Pune",
+          "shippingState": "Pune",
+          "shippingPincode": "73619",
+          "shippingGstin": "ZAmil",
+          "shippingPhone": "DEmo",
+          "items": [
+            {
+              "id": "ii-1",
+              "name": "",
+              "description": "",
+              "hsnCode": "",
+              "quantity": 1,
+              "unit": "PCS",
+              "price": 0,
+              "leadTime": "1-2 Days",
+              "taxRate": 18,
+              "amount": 0,
+              "taxAmount": 0,
+              "total": 0,
+              "imageUrl": null
+            }
+          ],
+          "notes": "Thank you for your business. Please remit the payable balance before the due date.",
+          "terms": [
+            "Payment is due within 15 days of invoice date.",
+            "Interest @ 18% p.a. will be charged on overdue payments.",
+            "Goods once sold cannot be returned without prior authorization."
+          ],
+          "subtotal": 0,
+          "taxableAmount": 0,
+          "totalTax": 0,
+          "grandTotal": 0,
+          "paidAmount": 0,
+          "balanceDue": 0,
+          "payments": []
+        }
+      ],
       "customers": [
         {
           "id": "cust-1788940231972",
