@@ -1,7 +1,7 @@
 {
   "app": "PASS_CORP_QUOTEDESK_PRO",
   "version": "2026.1",
-  "lastUpdated": "2026-09-09T09:36:47.966Z",
+  "lastUpdated": "2026-09-09T09:39:14.247Z",
   "companies": [
     {
       "id": "comp-1788946383350",
@@ -25,7 +25,28 @@
       },
       "quotations": [],
       "invoices": [],
-      "customers": [],
+      "customers": [
+        {
+          "id": "cust-1788946751739",
+          "name": "Zamil Steel Building India Private Limited",
+          "contactPerson": "Dhanaraj Pingale",
+          "gstin": "NA",
+          "email": "dhanaraj.pingale@zamilsteel.com",
+          "phone": "+91 77220 31304",
+          "address": "Plot No. B 32, Ranjangaon MIDC, 2Ranjangaon MIDC, Ranjangaon, Dhok Sangavi,",
+          "billingAddress": "Plot No. B 32, Ranjangaon MIDC, 2Ranjangaon MIDC, Ranjangaon, Dhok Sangavi,",
+          "city": "Pune",
+          "state": "Maharashtra",
+          "pincode": "412209",
+          "sameAsBilling": true,
+          "shippingName": "Zamil Steel Building India Private Limited",
+          "shippingGstin": "NA",
+          "shippingAddress": "Plot No. B 32, Ranjangaon MIDC, 2Ranjangaon MIDC, Ranjangaon, Dhok Sangavi,",
+          "shippingCity": "Pune",
+          "shippingState": "Maharashtra",
+          "shippingPincode": "412209"
+        }
+      ],
       "items": [],
       "proformas": [],
       "challans": [],
