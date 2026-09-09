@@ -4046,9 +4046,9 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
         </div>
       </div>
 
-      <!-- Middle Section: Item Particulars Table with Full Vertical Stretch -->
-      <div class="flex-1 flex flex-col justify-between">
-        <table class="w-full text-left text-xs border-collapse">
+      <!-- Middle Section: Items Table with Full Vertical Stretch -->
+      <div class="flex-1 flex flex-col">
+        <table class="w-full h-full text-left text-xs border-collapse">
           <thead>
             <tr class="border-b border-slate-900 bg-white text-slate-900 font-black uppercase text-[8.5px] tracking-wider divide-x divide-slate-900">
               <th class="py-1 px-1.5 w-7 text-center">Sl<br/>No.</th>
@@ -4079,7 +4079,7 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
             `).join('')}
 
             <!-- Expansion Spacer Row to ensure full-page A4 vertical grid lines -->
-            <tr class="divide-x divide-slate-900 text-[10px]" style="min-height: ${spacerMinHeight}px; height: ${spacerMinHeight}px;">
+            <tr class="divide-x divide-slate-900 text-[10px] h-full" style="height: 100%;">
               <td class="py-1 px-1"></td>
               <td class="py-1 px-2"></td>
               <td class="py-1 px-1.5"></td>
@@ -4326,8 +4326,8 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
       </div>
 
       <!-- Middle Section: Item Particulars Table with Full Vertical Stretch -->
-      <div class="flex-1 flex flex-col justify-between overflow-x-auto">
-        <table class="w-full text-left text-xs border-collapse">
+      <div class="flex-1 flex flex-col overflow-x-auto">
+        <table class="w-full h-full text-left text-xs border-collapse">
           <thead>
             <tr class="border-b border-slate-900 bg-slate-100 text-slate-900 font-black uppercase text-[8.5px] tracking-wider divide-x divide-slate-900">
               <th class="py-1 px-1.5 w-7 text-center">Sl</th>
@@ -4369,7 +4369,7 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
             `).join('')}
 
             <!-- Expansion Spacer Row to ensure full-page A4 vertical grid lines -->
-            <tr class="divide-x divide-slate-900 text-[10.5px]" style="min-height: ${spacerMinHeight}px; height: ${spacerMinHeight}px;">
+            <tr class="divide-x divide-slate-900 text-[10.5px] h-full" style="height: 100%;">
               <td class="py-1 px-1"></td>
               <td class="py-1 px-2"></td>
               <td class="py-1 px-1.5"></td>
@@ -4537,8 +4537,8 @@ function renderBusyFormatHTML(doc, type, cust, comp) {
       </div>
 
       <!-- Middle Section: Items Grid with Full Vertical Stretch -->
-      <div class="flex-1 flex flex-col justify-between">
-        <table class="w-full text-left text-xs border-collapse">
+      <div class="flex-1 flex flex-col">
+        <table class="w-full h-full text-left text-xs border-collapse">
           <thead>
             <tr class="bg-slate-100 border-b border-slate-300 text-slate-700 font-bold uppercase text-[9px] divide-x divide-slate-300">
               <th class="py-2 px-2 text-center w-8">#</th>
@@ -4578,7 +4578,7 @@ function renderBusyFormatHTML(doc, type, cust, comp) {
             `).join('')}
 
             <!-- Expansion Spacer Row to ensure full-page A4 vertical grid lines -->
-            <tr class="divide-x divide-slate-200" style="min-height: ${spacerMinHeight}px; height: ${spacerMinHeight}px;">
+            <tr class="divide-x divide-slate-200 h-full" style="height: 100%;">
               <td class="py-2 px-2"></td>
               <td class="py-2 px-3"></td>
               <td class="py-2 px-2"></td>
@@ -4706,8 +4706,8 @@ function renderModernFormatHTML(doc, type, cust, comp) {
       </div>
 
       <!-- Middle Section: Items Table with Full Vertical Stretch -->
-      <div class="flex-1 flex flex-col justify-between overflow-x-auto border border-slate-200 rounded-xl">
-        <table class="w-full text-left text-xs border-collapse">
+      <div class="flex-1 flex flex-col overflow-x-auto border border-slate-200 rounded-xl">
+        <table class="w-full h-full text-left text-xs border-collapse">
           <thead>
             <tr class="border-b border-slate-200 bg-slate-50 text-slate-600 font-bold uppercase text-[10px]">
               <th class="py-3 px-3 w-8 text-center">#</th>
@@ -4747,7 +4747,7 @@ function renderModernFormatHTML(doc, type, cust, comp) {
             `).join('')}
 
             <!-- Expansion Spacer Row -->
-            <tr style="min-height: ${spacerMinHeight}px; height: ${spacerMinHeight}px;">
+            <tr class="h-full" style="height: 100%;">
               <td class="py-3 px-3"></td>
               <td class="py-3 px-3"></td>
               <td class="py-3 px-3"></td>
