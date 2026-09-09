@@ -473,38 +473,358 @@ function loadDatabase() {
     // Fallback: If companies list is empty, pre-populate default PASS CORP profile
     if (!db.companies || db.companies.length === 0) {
       const defaultCompany = {
-        id: 'comp_pass_corp',
-        name: 'PASS CORP.',
-        tagline: 'PRECISION | ASSURANCE | SAFETY | SOLUTION',
-        address: 'Talawade, Chikhali, PCMC, Pune - 411062, Maharashtra, India',
-        city: 'Pune',
-        state: 'Maharashtra',
-        stateCode: '27',
-        pincode: '400071',
-        phone: '+91 97676 72497',
-        email: 'sales@passcorp.in',
-        website: 'https://passcorp.in',
-        gstin: '27AALFP8680C1Z1',
-        pan: 'AALFP8680C',
-        currency: 'INR',
-        currencySymbol: '₹',
-        pin: '1234',
-        logoUrl: 'assets/logo.png',
-        stampUrl: 'assets/pass_watermark.jpg',
-        bankDetails: {
-          bankName: 'HDFC Bank Ltd.',
-          accountName: 'PASS CORP',
-          accountNumber: '50200085432190',
-          ifscCode: 'HDFC0001234',
-          branch: 'Chembur East Branch'
+        "id": "comp_pass_corp",
+        "name": "PASS CORP.",
+        "tagline": "PRECISION | ASSURANCE | SAFETY | SOLUTION",
+        "address": "Talawade, Chikhali, PCMC, Pune - 411062, Maharashtra, India",
+        "city": "Pune",
+        "state": "Maharashtra",
+        "stateCode": "27",
+        "pincode": "411062",
+        "phone": "+91 97676 72497",
+        "email": "sales@passcorp.in",
+        "website": "https://passcorp.in",
+        "gstin": "27AALFP8680C1Z1",
+        "pan": "AALFP8680C",
+        "currency": "INR",
+        "currencySymbol": "\u20b9",
+        "pin": "1234",
+        "logoUrl": "assets/logo.png",
+        "stampUrl": "assets/pass_watermark.jpg",
+        "bankDetails": {
+                "bankName": "HDFC Bank Ltd.",
+                "accountName": "PASS CORP",
+                "accountNumber": "50200085432190",
+                "ifscCode": "HDFC0001234",
+                "branch": "Chikhali / PCMC Pune",
+                "upiId": "passcorp@upi"
         },
-        items: [],
-        customers: [],
-        quotations: [],
-        invoices: [],
-        counterQuote: 101,
-        counterInvoice: 1
-      };
+        "customers": [
+                {
+                        "id": "cust_tata_motors",
+                        "name": "Tata Motors Limited",
+                        "contactPerson": "Mr. Rajesh Sharma (Purchase)",
+                        "email": "purchase.pune@tatamotors.com",
+                        "phone": "+91 98230 11223",
+                        "gstin": "27AAACT2727Q1ZW",
+                        "billingAddress": "Sector 10, PCMC Industrial Area, Pimpri",
+                        "billingCity": "Pune",
+                        "billingState": "Maharashtra",
+                        "billingPincode": "411018",
+                        "shippingAddress": "Plant 2 Assembly Store, MIDC Chikhali",
+                        "shippingCity": "Pune",
+                        "shippingState": "Maharashtra",
+                        "shippingPincode": "411062",
+                        "address": "Sector 10, PCMC Industrial Area, Pimpri, Pune - 411018"
+                },
+                {
+                        "id": "cust_bharat_forge",
+                        "name": "Bharat Forge Limited",
+                        "contactPerson": "Mr. Amit Kulkarni (Safety Officer)",
+                        "email": "procurement@bharatforge.com",
+                        "phone": "+91 98500 44556",
+                        "gstin": "27AAACB0987D1Z8",
+                        "billingAddress": "Mundhwa Industrial Area",
+                        "billingCity": "Pune",
+                        "billingState": "Maharashtra",
+                        "billingPincode": "411036",
+                        "shippingAddress": "Forge Plant 4, Talegaon MIDC",
+                        "shippingCity": "Pune",
+                        "shippingState": "Maharashtra",
+                        "shippingPincode": "410507",
+                        "address": "Mundhwa Industrial Area, Pune - 411036"
+                }
+        ],
+        "quotations": [
+                {
+                        "id": "quote_101",
+                        "quoteNumber": "QT-2026-101",
+                        "date": "2026-09-09",
+                        "validity": "15 Days",
+                        "customerId": "cust_tata_motors",
+                        "customerName": "Tata Motors Limited",
+                        "billingAddress": "Sector 10, PCMC Industrial Area, Pimpri, Pune - 411018",
+                        "billingGstin": "27AAACT2727Q1ZW",
+                        "billingPhone": "+91 98230 11223",
+                        "shippingName": "Tata Motors Limited (Plant 2)",
+                        "shippingAddress": "Plant 2 Assembly Store, MIDC Chikhali, Pune - 411062",
+                        "shippingGstin": "27AAACT2727Q1ZW",
+                        "shippingState": "Maharashtra",
+                        "deliveryTerms": "Door Delivery (Chikhali Plant)",
+                        "paymentTerms": "30 Days Credit / PO",
+                        "taxTerms": "GST 18% Extra as listed",
+                        "items": [
+                                {
+                                        "id": "item_1",
+                                        "name": "Wild Bull Power SD Industrial Safety Shoe",
+                                        "desc": "Heavy-duty steel toe safety shoe (IS 15298 Certified) with anti-skid dual-density PU sole.",
+                                        "hsn": "6403",
+                                        "quantity": 50,
+                                        "unit": "Pairs",
+                                        "rate": 1150,
+                                        "gstRate": 18,
+                                        "leadTime": "Ex-Stock (1-2 Days)",
+                                        "amount": 57500,
+                                        "imageUrl": "assets/products/shoes/power_sd.png"
+                                },
+                                {
+                                        "id": "item_2",
+                                        "name": "Udyogi Cut-5 Resistant Safety Hand Gloves",
+                                        "desc": "HPPE cut-resistant liner with polyurethane palm coating (EN 388 Level 5).",
+                                        "hsn": "6116",
+                                        "quantity": 100,
+                                        "unit": "Pairs",
+                                        "rate": 280,
+                                        "gstRate": 18,
+                                        "leadTime": "Ex-Stock",
+                                        "amount": 28000,
+                                        "imageUrl": "assets/products/gloves/udyogi_cut5.png"
+                                },
+                                {
+                                        "id": "item_3",
+                                        "name": "Karam PN521 Industrial Safety Helmet",
+                                        "desc": "High-impact polymer shell with 4-point ratchet suspension (IS 2925 Certified).",
+                                        "hsn": "6506",
+                                        "quantity": 40,
+                                        "unit": "Nos",
+                                        "rate": 320,
+                                        "gstRate": 18,
+                                        "leadTime": "Ex-Stock",
+                                        "amount": 12800,
+                                        "imageUrl": "assets/products/head/karam_pn521.png"
+                                },
+                                {
+                                        "id": "item_4",
+                                        "name": "ReflectoSafe High-Visibility Reflective Safety Jacket",
+                                        "desc": "Fluorescent fabric with 2-inch retro-reflective tape (EN ISO 20471 Certified).",
+                                        "hsn": "6211",
+                                        "quantity": 50,
+                                        "unit": "Nos",
+                                        "rate": 240,
+                                        "gstRate": 18,
+                                        "leadTime": "Ex-Stock",
+                                        "amount": 12000,
+                                        "imageUrl": "assets/products/body/reflectosafe.png"
+                                }
+                        ],
+                        "subtotal": 110300,
+                        "taxableAmount": 110300,
+                        "totalTax": 19854,
+                        "grandTotal": 130154,
+                        "notes": "Thank you for your inquiry. All products are 100% genuine with OEM test certificates.",
+                        "terms": [
+                                "Prices are valid for 15 days from the date of quotation.",
+                                "Payment terms: 30 days from date of invoice / delivery.",
+                                "Delivery: Within 1-2 business days from formal PO confirmation.",
+                                "Material is subject to standard manufacturer warranty against manufacturing defects."
+                        ],
+                        "status": "Sent"
+                }
+        ],
+        "proformas": [
+                {
+                        "id": "pi_101",
+                        "proformaNumber": "PI-2026-101",
+                        "date": "2026-09-09",
+                        "validity": "15 Days",
+                        "customerId": "cust_tata_motors",
+                        "customerName": "Tata Motors Limited",
+                        "billingAddress": "Sector 10, PCMC Industrial Area, Pimpri, Pune - 411018",
+                        "billingGstin": "27AAACT2727Q1ZW",
+                        "billingPhone": "+91 98230 11223",
+                        "shippingName": "Tata Motors Limited (Plant 2)",
+                        "shippingAddress": "Plant 2 Assembly Store, MIDC Chikhali, Pune - 411062",
+                        "shippingGstin": "27AAACT2727Q1ZW",
+                        "deliveryTerms": "Door Delivery",
+                        "paymentTerms": "100% Advance against PI",
+                        "taxTerms": "GST 18% Extra as listed",
+                        "items": [
+                                {
+                                        "id": "item_1",
+                                        "name": "Wild Bull Power SD Industrial Safety Shoe",
+                                        "desc": "Heavy-duty steel toe safety shoe (IS 15298 Certified) with anti-skid dual-density PU sole.",
+                                        "hsn": "6403",
+                                        "quantity": 50,
+                                        "unit": "Pairs",
+                                        "rate": 1150,
+                                        "gstRate": 18,
+                                        "leadTime": "Ex-Stock (1-2 Days)",
+                                        "amount": 57500,
+                                        "imageUrl": "assets/products/shoes/power_sd.png"
+                                },
+                                {
+                                        "id": "item_2",
+                                        "name": "Udyogi Cut-5 Resistant Safety Hand Gloves",
+                                        "desc": "HPPE cut-resistant liner with polyurethane palm coating (EN 388 Level 5).",
+                                        "hsn": "6116",
+                                        "quantity": 100,
+                                        "unit": "Pairs",
+                                        "rate": 280,
+                                        "gstRate": 18,
+                                        "leadTime": "Ex-Stock",
+                                        "amount": 28000,
+                                        "imageUrl": "assets/products/gloves/udyogi_cut5.png"
+                                },
+                                {
+                                        "id": "item_3",
+                                        "name": "Karam PN521 Industrial Safety Helmet",
+                                        "desc": "High-impact polymer shell with 4-point ratchet suspension (IS 2925 Certified).",
+                                        "hsn": "6506",
+                                        "quantity": 40,
+                                        "unit": "Nos",
+                                        "rate": 320,
+                                        "gstRate": 18,
+                                        "leadTime": "Ex-Stock",
+                                        "amount": 12800,
+                                        "imageUrl": "assets/products/head/karam_pn521.png"
+                                },
+                                {
+                                        "id": "item_4",
+                                        "name": "ReflectoSafe High-Visibility Reflective Safety Jacket",
+                                        "desc": "Fluorescent fabric with 2-inch retro-reflective tape (EN ISO 20471 Certified).",
+                                        "hsn": "6211",
+                                        "quantity": 50,
+                                        "unit": "Nos",
+                                        "rate": 240,
+                                        "gstRate": 18,
+                                        "leadTime": "Ex-Stock",
+                                        "amount": 12000,
+                                        "imageUrl": "assets/products/body/reflectosafe.png"
+                                }
+                        ],
+                        "subtotal": 110300,
+                        "taxableAmount": 110300,
+                        "totalTax": 19854,
+                        "grandTotal": 130154,
+                        "notes": "Proforma Invoice for commercial advance payment. Goods will be dispatched on payment confirmation.",
+                        "terms": [
+                                "Prices are valid for 15 days from date of issue.",
+                                "Payment terms: 100% advance against Proforma Invoice.",
+                                "GST Extra as applicable at the time of final tax invoicing.",
+                                "Delivery: Within 1-2 working days of payment receipt."
+                        ],
+                        "status": "Draft"
+                }
+        ],
+        "challans": [
+                {
+                        "id": "dc_101",
+                        "challanNumber": "DC-2026-101",
+                        "date": "2026-09-09",
+                        "dispatchDate": "2026-09-09",
+                        "customerId": "cust_tata_motors",
+                        "customerName": "Tata Motors Limited",
+                        "billingAddress": "Sector 10, PCMC Industrial Area, Pimpri, Pune - 411018",
+                        "billingGstin": "27AAACT2727Q1ZW",
+                        "shippingName": "Tata Motors Limited (Plant 2)",
+                        "shippingAddress": "Plant 2 Assembly Store, MIDC Chikhali, Pune - 411062",
+                        "transporter": "Direct Company Delivery Vehicle",
+                        "vehicleNo": "MH 14 EM 2497",
+                        "lrNumber": "LR-PUN-8891",
+                        "deliveryTerms": "Door Delivery (Plant 2)",
+                        "purpose": "Supply / Sale on PO",
+                        "items": [
+                                {
+                                        "id": "c_item_1",
+                                        "name": "Wild Bull Power SD Industrial Safety Shoe",
+                                        "desc": "Size 8 & 9 (IS 15298 Certified)",
+                                        "hsn": "6403",
+                                        "quantity": 50,
+                                        "unit": "Pairs",
+                                        "packages": "5 Cartons",
+                                        "remarks": "Brand New OEM Stock"
+                                },
+                                {
+                                        "id": "c_item_2",
+                                        "name": "Udyogi Cut-5 Resistant Safety Hand Gloves",
+                                        "desc": "Size L (EN 388 Level 5)",
+                                        "hsn": "6116",
+                                        "quantity": 100,
+                                        "unit": "Pairs",
+                                        "packages": "2 Bundles",
+                                        "remarks": "Inspection Approved"
+                                },
+                                {
+                                        "id": "c_item_3",
+                                        "name": "Karam PN521 Industrial Safety Helmet",
+                                        "desc": "Yellow (IS 2925 Ratchet)",
+                                        "hsn": "6506",
+                                        "quantity": 40,
+                                        "unit": "Nos",
+                                        "packages": "2 Boxes",
+                                        "remarks": "Includes Chin Strap"
+                                },
+                                {
+                                        "id": "c_item_4",
+                                        "name": "ReflectoSafe High-Visibility Reflective Safety Jacket",
+                                        "desc": "Free Size (EN ISO 20471)",
+                                        "hsn": "6211",
+                                        "quantity": 50,
+                                        "unit": "Nos",
+                                        "packages": "1 Box",
+                                        "remarks": "Standard Packing"
+                                }
+                        ],
+                        "totalQty": 240,
+                        "notes": "Goods dispatched in good condition. Please verify package seals upon receiving.",
+                        "status": "Dispatched"
+                }
+        ],
+        "invoices": [
+                {
+                        "id": "inv_101",
+                        "invoiceNumber": "INV-2026-101",
+                        "date": "2026-09-09",
+                        "dueDate": "2026-10-09",
+                        "customerId": "cust_bharat_forge",
+                        "customerName": "Bharat Forge Limited",
+                        "billingAddress": "Mundhwa Industrial Area, Pune - 411036",
+                        "billingGstin": "27AAACB0987D1Z8",
+                        "billingPhone": "+91 98500 44556",
+                        "shippingName": "Bharat Forge Limited (Plant 4)",
+                        "shippingAddress": "Forge Plant 4, Talegaon MIDC, Pune - 410507",
+                        "shippingGstin": "27AAACB0987D1Z8",
+                        "deliveryTerms": "Door Delivery",
+                        "paymentTerms": "30 Days Credit",
+                        "items": [
+                                {
+                                        "id": "item_1",
+                                        "name": "Wild Bull Power SD Industrial Safety Shoe",
+                                        "desc": "Heavy-duty steel toe safety shoe (IS 15298 Certified) with anti-skid dual-density PU sole.",
+                                        "hsn": "6403",
+                                        "quantity": 50,
+                                        "unit": "Pairs",
+                                        "rate": 1150,
+                                        "gstRate": 18,
+                                        "leadTime": "Ex-Stock (1-2 Days)",
+                                        "amount": 57500,
+                                        "imageUrl": "assets/products/shoes/power_sd.png"
+                                }
+                        ],
+                        "subtotal": 57500,
+                        "taxableAmount": 57500,
+                        "totalTax": 10350,
+                        "grandTotal": 67850,
+                        "paidAmount": 67850,
+                        "balanceDue": 0,
+                        "payments": [
+                                {
+                                        "id": "pay_1",
+                                        "date": "2026-09-09",
+                                        "amount": 67850,
+                                        "mode": "NEFT / Bank Transfer",
+                                        "ref": "HDFCN2609090012"
+                                }
+                        ],
+                        "notes": "Full payment received via NEFT. Thank you for your business.",
+                        "status": "Paid"
+                }
+        ],
+        "creditNotes": [],
+        "debitNotes": [],
+        "counterQuote": 102,
+        "counterInvoice": 102
+};
       db.companies = [defaultCompany];
       try {
         localStorage.setItem(QUOTEDESK_DB_STORAGE_KEY, JSON.stringify(db));
@@ -8198,4 +8518,19 @@ function createDebitNoteFromInvoice(id) {
   recalculateDebitNoteInMemory();
   renderCurrentPage();
   showToast('Created Debit Note from Invoice! 📑');
+}
+
+function seedDemoData() {
+  if (confirm('Load complete demo vouchers (Demo Quotation, Proforma Invoice, Delivery Challan, Tax Invoice & Demo Customers)?')) {
+    localStorage.removeItem(QUOTEDESK_DB_STORAGE_KEY);
+    loadDatabase();
+    if (db.companies.length > 0) {
+      activeCompany = db.companies[0];
+      saveDatabase();
+      renderDashboard();
+      renderCompanyCardsList();
+      showToast('✅ Demo data loaded successfully!');
+      setTimeout(() => location.reload(), 600);
+    }
+  }
 }
