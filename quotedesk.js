@@ -2492,7 +2492,25 @@ function recalculateQuoteInMemory() {
 function handleQuoteCustChange(custId) {
   quoteEditorData.customerId = custId;
   const cust = (activeCompany.customers || []).find(c => c.id === custId);
-  quoteEditorData.customerName = cust ? cust.name : '';
+  if (cust) {
+    quoteEditorData.customerName = cust.name || '';
+    quoteEditorData.billingAddress = cust.billingAddress || cust.address || '';
+    quoteEditorData.billingCity = cust.city || '';
+    quoteEditorData.billingState = cust.state || '';
+    quoteEditorData.billingPincode = cust.pincode || '';
+    quoteEditorData.billingGstin = cust.gstin || '';
+    quoteEditorData.billingPhone = cust.phone || '';
+    quoteEditorData.contactPerson = cust.contactPerson || '';
+    quoteEditorData.shippingName = (cust.sameAsBilling === false && cust.shippingName) ? cust.shippingName : (cust.name || '');
+    quoteEditorData.shippingAddress = (cust.sameAsBilling === false && cust.shippingAddress) ? cust.shippingAddress : (cust.billingAddress || cust.address || '');
+    quoteEditorData.shippingCity = (cust.sameAsBilling === false && cust.shippingCity) ? cust.shippingCity : (cust.city || '');
+    quoteEditorData.shippingState = (cust.sameAsBilling === false && cust.shippingState) ? cust.shippingState : (cust.state || '');
+    quoteEditorData.shippingPincode = (cust.sameAsBilling === false && cust.shippingPincode) ? cust.shippingPincode : (cust.pincode || '');
+    quoteEditorData.shippingGstin = (cust.sameAsBilling === false && cust.shippingGstin) ? cust.shippingGstin : (cust.gstin || '');
+    quoteEditorData.shippingPhone = cust.phone || '';
+  } else {
+    quoteEditorData.customerName = '';
+  }
 }
 
 function handleQuoteCatalogSelect(idx, itemId) {
@@ -3282,7 +3300,7 @@ function handleInvoiceCustChange(custId) {
   const cust = (activeCompany.customers || []).find(c => c.id === custId);
   if (cust) {
     invoiceEditorData.customerName = cust.name || '';
-    invoiceEditorData.billingAddress = cust.billingAddress || '';
+    invoiceEditorData.billingAddress = cust.billingAddress || cust.address || '';
     invoiceEditorData.billingCity = cust.city || '';
     invoiceEditorData.billingState = cust.state || '';
     invoiceEditorData.billingPincode = cust.pincode || '';
@@ -3301,13 +3319,13 @@ function handleInvoiceCustChange(custId) {
       invoiceEditorData.shippingPhone = cust.phone || '';
     } else {
       invoiceEditorData.shipToDifferent = false;
-      invoiceEditorData.shippingName = '';
-      invoiceEditorData.shippingAddress = '';
-      invoiceEditorData.shippingCity = '';
-      invoiceEditorData.shippingState = '';
-      invoiceEditorData.shippingPincode = '';
-      invoiceEditorData.shippingGstin = '';
-      invoiceEditorData.shippingPhone = '';
+      invoiceEditorData.shippingName = cust.name || '';
+      invoiceEditorData.shippingAddress = cust.billingAddress || cust.address || '';
+      invoiceEditorData.shippingCity = cust.city || '';
+      invoiceEditorData.shippingState = cust.state || '';
+      invoiceEditorData.shippingPincode = cust.pincode || '';
+      invoiceEditorData.shippingGstin = cust.gstin || '';
+      invoiceEditorData.shippingPhone = cust.phone || '';
     }
   }
   renderInvoiceEditor(document.getElementById('main-content'));
@@ -3623,12 +3641,12 @@ function openCustomerModal(id = null) {
   document.getElementById('cust-gstin').value = cust ? cust.gstin || '' : '';
   document.getElementById('cust-email').value = cust ? cust.email || '' : '';
   document.getElementById('cust-phone').value = cust ? cust.phone || '' : '';
-  document.getElementById('cust-address').value = cust ? cust.billingAddress || '' : '';
+  document.getElementById('cust-address').value = cust ? (cust.billingAddress || cust.address || '') : '';
   document.getElementById('cust-city').value = cust ? cust.city || '' : '';
   document.getElementById('cust-state').value = cust ? cust.state || '' : '';
   document.getElementById('cust-pincode').value = cust ? cust.pincode || '' : '';
 
-  const sameShip = cust ? (cust.sameAsBilling !== false && !cust.shippingAddress) : true;
+  const sameShip = cust ? (cust.sameAsBilling !== false && (!cust.shippingAddress || cust.shippingAddress === (cust.billingAddress || cust.address))) : true;
   const sameCheckbox = document.getElementById('cust-same-ship');
   if (sameCheckbox) {
     sameCheckbox.checked = sameShip;
@@ -3655,23 +3673,31 @@ function handleCustomerSubmit(e) {
   const id = document.getElementById('cust-id').value;
   const sameShip = document.getElementById('cust-same-ship')?.checked ?? true;
 
+  const addrVal = document.getElementById('cust-address').value.trim();
+  const nameVal = document.getElementById('cust-name').value.trim();
+  const gstinVal = document.getElementById('cust-gstin').value.trim();
+  const cityVal = document.getElementById('cust-city').value.trim();
+  const stateVal = document.getElementById('cust-state').value.trim();
+  const pinVal = document.getElementById('cust-pincode').value.trim();
+
   const payload = {
-    name: document.getElementById('cust-name').value.trim(),
+    name: nameVal,
     contactPerson: document.getElementById('cust-person').value.trim(),
-    gstin: document.getElementById('cust-gstin').value.trim(),
+    gstin: gstinVal,
     email: document.getElementById('cust-email').value.trim(),
     phone: document.getElementById('cust-phone').value.trim(),
-    billingAddress: document.getElementById('cust-address').value.trim(),
-    city: document.getElementById('cust-city').value.trim(),
-    state: document.getElementById('cust-state').value.trim(),
-    pincode: document.getElementById('cust-pincode').value.trim(),
+    address: addrVal,
+    billingAddress: addrVal,
+    city: cityVal,
+    state: stateVal,
+    pincode: pinVal,
     sameAsBilling: sameShip,
-    shippingName: sameShip ? '' : (document.getElementById('cust-ship-name')?.value.trim() || ''),
-    shippingGstin: sameShip ? '' : (document.getElementById('cust-ship-gstin')?.value.trim() || ''),
-    shippingAddress: sameShip ? '' : (document.getElementById('cust-ship-address')?.value.trim() || ''),
-    shippingCity: sameShip ? '' : (document.getElementById('cust-ship-city')?.value.trim() || ''),
-    shippingState: sameShip ? '' : (document.getElementById('cust-ship-state')?.value.trim() || ''),
-    shippingPincode: sameShip ? '' : (document.getElementById('cust-ship-pincode')?.value.trim() || '')
+    shippingName: sameShip ? nameVal : (document.getElementById('cust-ship-name')?.value.trim() || nameVal),
+    shippingGstin: sameShip ? gstinVal : (document.getElementById('cust-ship-gstin')?.value.trim() || gstinVal),
+    shippingAddress: sameShip ? addrVal : (document.getElementById('cust-ship-address')?.value.trim() || addrVal),
+    shippingCity: sameShip ? cityVal : (document.getElementById('cust-ship-city')?.value.trim() || cityVal),
+    shippingState: sameShip ? stateVal : (document.getElementById('cust-ship-state')?.value.trim() || stateVal),
+    shippingPincode: sameShip ? pinVal : (document.getElementById('cust-ship-pincode')?.value.trim() || pinVal)
   };
 
   if (!activeCompany.customers) activeCompany.customers = [];
@@ -4113,7 +4139,7 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
             <div class="p-2 space-y-0.5 bg-slate-50/50">
               <span class="text-[8.5px] font-bold text-slate-500 uppercase tracking-wider block">Buyer (Bill to)</span>
               <h3 class="font-black text-xs uppercase text-slate-900 tracking-wide">${doc.customerName || cust?.name || 'Direct Customer'}</h3>
-              <p class="text-[9.5px] text-slate-700 leading-tight">${doc.billingAddress || cust?.billingAddress || ''} ${(doc.billingCity || cust?.city) ? `, ${doc.billingCity || cust.city}` : ''} ${(doc.billingState || cust?.state) ? `, ${doc.billingState || cust.state}` : ''} ${doc.billingPincode || cust?.pincode || ''}</p>
+              <p class="text-[9.5px] text-slate-700 leading-tight">${doc.billingAddress || cust?.billingAddress || cust?.address || ''} ${(doc.billingCity || cust?.city) ? `, ${doc.billingCity || cust.city}` : ''} ${(doc.billingState || cust?.state) ? `, ${doc.billingState || cust.state}` : ''} ${doc.billingPincode || cust?.pincode || ''}</p>
               <p><span class="font-bold">CONTACT :</span> <span class="font-mono">${doc.billingPhone || cust?.phone || '-'}</span></p>
               <p><span class="font-bold">GSTIN/UIN :</span> <span class="font-mono font-bold text-slate-900">${doc.billingGstin || cust?.gstin || 'Unregistered'}</span></p>
               <p><span class="font-bold">State Name :</span> ${doc.billingState || cust?.state || 'Maharashtra'} (Code: ${custStateCode})</p>
@@ -4123,11 +4149,11 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
             <!-- Consignee (Ship to) -->
             <div class="p-2 space-y-0.5">
               <span class="text-[8.5px] font-bold text-slate-500 uppercase tracking-wider block">Consignee (Ship to)</span>
-              <h3 class="font-black text-xs uppercase text-slate-900 tracking-wide">${doc.shippingName || (doc.shipToDifferent ? doc.shippingName : (doc.customerName || cust?.name || 'Direct Customer'))}</h3>
-              <p class="text-[9.5px] text-slate-700 leading-tight">${(doc.shippingAddress || cust?.shippingAddress) ? (doc.shippingAddress || cust?.shippingAddress) : (doc.billingAddress || cust?.billingAddress || '')} ${(doc.shippingCity || cust?.shippingCity || doc.billingCity || cust?.city) ? `, ${doc.shippingCity || cust?.shippingCity || doc.billingCity || cust.city}` : ''} ${(doc.shippingState || cust?.shippingState || doc.billingState || cust?.state) ? `, ${doc.shippingState || cust?.shippingState || doc.billingState || cust.state}` : ''} ${doc.shippingPincode || cust?.shippingPincode || doc.billingPincode || cust?.pincode || ''}</p>
-              <p><span class="font-bold">CONTACT :</span> <span class="font-mono">${doc.shippingPhone || doc.billingPhone || cust?.phone || '-'}</span></p>
-              <p><span class="font-bold">GSTIN/UIN :</span> <span class="font-mono font-bold text-slate-900">${doc.shippingGstin || cust?.shippingGstin || doc.billingGstin || cust?.gstin || 'Unregistered'}</span></p>
-              <p><span class="font-bold">State Name :</span> ${(doc.shippingState || cust?.shippingState || doc.billingState || cust?.state || 'Maharashtra')} (Code: ${custStateCode})</p>
+              <h3 class="font-black text-xs uppercase text-slate-900 tracking-wide">${(doc.shipToDifferent && doc.shippingName) ? doc.shippingName : (doc.shippingName || doc.customerName || cust?.name || 'Direct Customer')}</h3>
+              <p class="text-[9.5px] text-slate-700 leading-tight">${(doc.shipToDifferent && doc.shippingAddress) ? doc.shippingAddress : (doc.shippingAddress || doc.billingAddress || cust?.shippingAddress || cust?.billingAddress || cust?.address || '')} ${((doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city))) ? `, ${doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city)}` : ''} ${((doc.shipToDifferent ? doc.shippingState : (doc.shippingState || doc.billingState || cust?.shippingState || cust?.state))) ? `, ${doc.shipToDifferent ? doc.shippingState : (doc.shippingState || doc.billingState || cust?.shippingState || cust?.state)}` : ''} ${(doc.shipToDifferent ? doc.shippingPincode : (doc.shippingPincode || doc.billingPincode || cust?.shippingPincode || cust?.pincode || ''))}</p>
+              <p><span class="font-bold">CONTACT :</span> <span class="font-mono">${(doc.shipToDifferent && doc.shippingPhone) ? doc.shippingPhone : (doc.shippingPhone || doc.billingPhone || cust?.phone || '-')}</span></p>
+              <p><span class="font-bold">GSTIN/UIN :</span> <span class="font-mono font-bold text-slate-900">${(doc.shipToDifferent && doc.shippingGstin) ? doc.shippingGstin : (doc.shippingGstin || doc.billingGstin || cust?.shippingGstin || cust?.gstin || 'Unregistered')}</span></p>
+              <p><span class="font-bold">State Name :</span> ${(doc.shipToDifferent ? (doc.shippingState || cust?.shippingState || doc.billingState || cust?.state || 'Maharashtra') : (doc.billingState || cust?.state || 'Maharashtra'))} (Code: ${custStateCode})</p>
             </div>
           </div>
 
@@ -4511,14 +4537,14 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
           <div class="p-2 space-y-0.5 bg-slate-50/50">
             <span class="text-[8.5px] font-bold text-slate-500 uppercase tracking-wider block">Buyer (Bill to)</span>
             <h3 class="font-black text-xs uppercase text-blue-700 tracking-wide">${doc.customerName || cust?.name || 'Direct Customer'}</h3>
-            <p class="text-[9.5px] text-slate-700 leading-tight">${doc.billingAddress || cust?.billingAddress || ''} ${(doc.billingCity || cust?.city) ? `, ${doc.billingCity || cust.city}` : ''} ${(doc.billingState || cust?.state) ? `, ${doc.billingState || cust.state}` : ''} ${doc.billingPincode || cust?.pincode || ''}</p>
+            <p class="text-[9.5px] text-slate-700 leading-tight">${doc.billingAddress || cust?.billingAddress || cust?.address || ''} ${(doc.billingCity || cust?.city) ? `, ${doc.billingCity || cust.city}` : ''} ${(doc.billingState || cust?.state) ? `, ${doc.billingState || cust.state}` : ''} ${doc.billingPincode || cust?.pincode || ''}</p>
             <p><span class="font-bold">GSTIN/UIN:</span> <span class="font-mono font-bold text-slate-900">${doc.billingGstin || cust?.gstin || 'Unregistered'}</span> | <span class="font-bold">Phone:</span> <span class="font-mono">${doc.billingPhone || cust?.phone || '-'}</span></p>
           </div>
           <div class="p-2 space-y-0.5">
             <span class="text-[8.5px] font-bold text-slate-500 uppercase tracking-wider block">Consignee (Ship to)</span>
-            <h3 class="font-black text-xs uppercase text-slate-900 tracking-wide">${doc.shippingName || (doc.shipToDifferent ? doc.shippingName : (doc.customerName || cust?.name || 'Direct Customer'))}</h3>
-            <p class="text-[9.5px] text-slate-700 leading-tight">${(doc.shippingAddress || cust?.shippingAddress) ? (doc.shippingAddress || cust?.shippingAddress) : (doc.billingAddress || cust?.billingAddress || '')} ${(doc.shippingCity || cust?.shippingCity || doc.billingCity || cust?.city) ? `, ${doc.shippingCity || cust?.shippingCity || doc.billingCity || cust.city}` : ''} ${(doc.shippingState || cust?.shippingState || doc.billingState || cust?.state) ? `, ${doc.shippingState || cust?.shippingState || doc.billingState || cust.state}` : ''} ${doc.shippingPincode || cust?.shippingPincode || doc.billingPincode || cust?.pincode || ''}</p>
-            <p><span class="font-bold">GSTIN/UIN:</span> <span class="font-mono font-bold text-slate-900">${doc.shippingGstin || cust?.shippingGstin || doc.billingGstin || cust?.gstin || 'Unregistered'}</span> | <span class="font-bold">State:</span> ${doc.shippingState || cust?.shippingState || doc.billingState || cust?.state || 'Maharashtra'}</p>
+            <h3 class="font-black text-xs uppercase text-slate-900 tracking-wide">${(doc.shipToDifferent && doc.shippingName) ? doc.shippingName : (doc.shippingName || doc.customerName || cust?.name || 'Direct Customer')}</h3>
+            <p class="text-[9.5px] text-slate-700 leading-tight">${(doc.shipToDifferent && doc.shippingAddress) ? doc.shippingAddress : (doc.shippingAddress || doc.billingAddress || cust?.shippingAddress || cust?.billingAddress || cust?.address || '')} ${((doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city))) ? `, ${doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city)}` : ''} ${((doc.shipToDifferent ? doc.shippingState : (doc.shippingState || doc.billingState || cust?.shippingState || cust?.state))) ? `, ${doc.shipToDifferent ? doc.shippingState : (doc.shippingState || doc.billingState || cust?.shippingState || cust?.state)}` : ''} ${(doc.shipToDifferent ? doc.shippingPincode : (doc.shippingPincode || doc.billingPincode || cust?.shippingPincode || cust?.pincode || ''))}</p>
+            <p><span class="font-bold">GSTIN/UIN:</span> <span class="font-mono font-bold text-slate-900">${(doc.shipToDifferent && doc.shippingGstin) ? doc.shippingGstin : (doc.shippingGstin || doc.billingGstin || cust?.shippingGstin || cust?.gstin || 'Unregistered')}</span> | <span class="font-bold">State:</span> ${(doc.shipToDifferent ? (doc.shippingState || cust?.shippingState || doc.billingState || cust?.state || 'Maharashtra') : (doc.billingState || cust?.state || 'Maharashtra'))}</p>
           </div>
         </div>
       </div>
@@ -4718,13 +4744,13 @@ function renderBusyFormatHTML(doc, type, cust, comp) {
             <div class="p-2.5 bg-slate-50 space-y-0.5">
               <span class="text-[9px] font-bold text-slate-500 uppercase tracking-wider block">Billed To (Buyer)</span>
               <h3 class="font-black text-sm text-blue-700 uppercase tracking-wide">${doc.customerName || cust?.name || 'Direct Customer'}</h3>
-              <p class="text-slate-600 text-[10.5px]">${doc.billingAddress || cust?.billingAddress || ''} ${(doc.billingCity || cust?.city) ? `, ${doc.billingCity || cust.city}` : ''}</p>
+              <p class="text-slate-600 text-[10.5px]">${doc.billingAddress || cust?.billingAddress || cust?.address || ''} ${(doc.billingCity || cust?.city) ? `, ${doc.billingCity || cust.city}` : ''}</p>
               <p class="text-[10px]"><span class="font-semibold">GSTIN:</span> <span class="font-mono font-bold text-blue-700">${doc.billingGstin || cust?.gstin || 'Unregistered'}</span> | Phone: ${doc.billingPhone || cust?.phone || '-'}</p>
             </div>
             <div class="p-2.5 bg-white space-y-0.5">
               <span class="text-[9px] font-bold text-slate-500 uppercase tracking-wider block">Shipped To (Consignee)</span>
-              <h4 class="font-bold text-xs text-slate-900 uppercase tracking-wide">${doc.shippingName || (doc.shipToDifferent ? doc.shippingName : (doc.customerName || cust?.name || 'Direct Customer'))}</h4>
-              <p class="text-slate-600 text-[10px]">${(doc.shippingAddress || cust?.shippingAddress) ? (doc.shippingAddress || cust?.shippingAddress) : (doc.billingAddress || cust?.billingAddress || '')} ${(doc.shippingCity || cust?.shippingCity || doc.billingCity || cust?.city) ? `, ${doc.shippingCity || cust?.shippingCity || doc.billingCity || cust.city}` : ''}</p>
+              <h4 class="font-bold text-xs text-slate-900 uppercase tracking-wide">${(doc.shipToDifferent && doc.shippingName) ? doc.shippingName : (doc.shippingName || doc.customerName || cust?.name || 'Direct Customer')}</h4>
+              <p class="text-slate-600 text-[10px]">${(doc.shipToDifferent && doc.shippingAddress) ? doc.shippingAddress : (doc.shippingAddress || doc.billingAddress || cust?.shippingAddress || cust?.billingAddress || cust?.address || '')} ${((doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city))) ? `, ${doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city)}` : ''}</p>
             </div>
           </div>
           <div class="p-2.5 grid grid-cols-2 gap-x-2 gap-y-1 text-[11px]">
@@ -4897,16 +4923,16 @@ function renderModernFormatHTML(doc, type, cust, comp) {
           <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
             <span class="text-[10px] font-black text-slate-500 uppercase tracking-wider">Billed To (Buyer)</span>
             <h4 class="font-black text-blue-600 text-sm mt-0.5 uppercase tracking-wide">${doc.customerName || cust?.name || 'Direct Customer'}</h4>
-            <p class="text-xs text-slate-600 mt-0.5">${doc.billingAddress || cust?.billingAddress || ''}</p>
-            <p class="text-xs text-slate-500">${doc.billingCity || cust?.city ? `${doc.billingCity || cust.city}, ${doc.billingState || cust?.state || ''} ${doc.billingPincode || cust?.pincode || ''}` : ''}</p>
+            <p class="text-xs text-slate-600 mt-0.5">${doc.billingAddress || cust?.billingAddress || cust?.address || ''}</p>
+            <p class="text-xs text-slate-500">${(doc.billingCity || cust?.city) ? `${doc.billingCity || cust.city}, ${doc.billingState || cust?.state || ''} ${doc.billingPincode || cust?.pincode || ''}` : ''}</p>
             <p class="text-xs text-slate-500 mt-1"><span class="font-bold text-slate-700">GSTIN:</span> <span class="font-mono font-bold text-slate-900">${doc.billingGstin || cust?.gstin || 'Unregistered'}</span> | Phone: ${doc.billingPhone || cust?.phone || '-'}</p>
           </div>
           <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
             <span class="text-[10px] font-black text-slate-500 uppercase tracking-wider">Shipped To (Consignee / Site)</span>
-            <h4 class="font-black text-slate-900 text-sm mt-0.5 uppercase tracking-wide">${doc.shippingName || (doc.shipToDifferent ? doc.shippingName : (doc.customerName || cust?.name || 'Direct Customer'))}</h4>
-            <p class="text-xs text-slate-600 mt-0.5">${(doc.shippingAddress || cust?.shippingAddress) ? (doc.shippingAddress || cust?.shippingAddress) : (doc.billingAddress || cust?.billingAddress || '')}</p>
-            <p class="text-xs text-slate-500">${(doc.shippingCity || cust?.shippingCity || doc.billingCity || cust?.city) ? `${doc.shippingCity || cust?.shippingCity || doc.billingCity || cust.city}, ${doc.shippingState || cust?.shippingState || doc.billingState || cust?.state || ''} ${doc.shippingPincode || cust?.shippingPincode || doc.billingPincode || cust?.pincode || ''}` : ''}</p>
-            <p class="text-xs text-slate-500 mt-1"><span class="font-bold text-slate-700">GSTIN:</span> <span class="font-mono font-bold text-slate-900">${doc.shippingGstin || cust?.shippingGstin || doc.billingGstin || cust?.gstin || 'Unregistered'}</span></p>
+            <h4 class="font-black text-slate-900 text-sm mt-0.5 uppercase tracking-wide">${(doc.shipToDifferent && doc.shippingName) ? doc.shippingName : (doc.shippingName || doc.customerName || cust?.name || 'Direct Customer')}</h4>
+            <p class="text-xs text-slate-600 mt-0.5">${(doc.shipToDifferent && doc.shippingAddress) ? doc.shippingAddress : (doc.shippingAddress || doc.billingAddress || cust?.shippingAddress || cust?.billingAddress || cust?.address || '')}</p>
+            <p class="text-xs text-slate-500">${((doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city))) ? `${doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust.city)}, ${doc.shipToDifferent ? doc.shippingState : (doc.shippingState || doc.billingState || cust?.shippingState || cust?.state || '')} ${doc.shipToDifferent ? doc.shippingPincode : (doc.shippingPincode || doc.billingPincode || cust?.shippingPincode || cust?.pincode || '')}` : ''}</p>
+            <p class="text-xs text-slate-500 mt-1"><span class="font-bold text-slate-700">GSTIN:</span> <span class="font-mono font-bold text-slate-900">${(doc.shipToDifferent && doc.shippingGstin) ? doc.shippingGstin : (doc.shippingGstin || doc.billingGstin || cust?.shippingGstin || cust?.gstin || 'Unregistered')}</span></p>
           </div>
         </div>
       </div>
@@ -5315,8 +5341,7 @@ function generatePDFDoc(docType, doc, company, customer, format = selectedPrintF
 
   docPdf.setFont('helvetica', 'normal');
   docPdf.setFontSize(7.5);
-  docPdf.setTextColor(mutedColor[0], mutedColor[1], mutedColor[2]);
-  docPdf.text(`${customer?.billingAddress || ''} ${customer?.city ? `, ${customer.city}` : ''} ${customer?.state ? `, ${customer.state}` : ''}`, 18, 61);
+  docPdf.text(`${doc.billingAddress || customer?.billingAddress || customer?.address || ''} ${(doc.billingCity || customer?.city) ? `, ${doc.billingCity || customer.city}` : ''} ${(doc.billingState || customer?.state) ? `, ${doc.billingState || customer.state}` : ''} ${doc.billingPincode || customer?.pincode || ''}`, 18, 61);
   docPdf.text(`Phone: ${customer?.phone || '-'} | GSTIN: ${customer?.gstin || 'Unregistered'}`, 18, 65);
 
   const hasImages = !isInvoice && (doc.items || []).some(it => Boolean(it.imageUrl));
@@ -6253,7 +6278,25 @@ function renderProformaEditor(container) {
 function handleProformaCustChange(custId) {
   proformaEditorData.customerId = custId;
   const cust = (activeCompany.customers || []).find(c => c.id === custId);
-  proformaEditorData.customerName = cust ? cust.name : '';
+  if (cust) {
+    proformaEditorData.customerName = cust.name || '';
+    proformaEditorData.billingAddress = cust.billingAddress || cust.address || '';
+    proformaEditorData.billingCity = cust.city || '';
+    proformaEditorData.billingState = cust.state || '';
+    proformaEditorData.billingPincode = cust.pincode || '';
+    proformaEditorData.billingGstin = cust.gstin || '';
+    proformaEditorData.billingPhone = cust.phone || '';
+    proformaEditorData.contactPerson = cust.contactPerson || '';
+    proformaEditorData.shippingName = (cust.sameAsBilling === false && cust.shippingName) ? cust.shippingName : (cust.name || '');
+    proformaEditorData.shippingAddress = (cust.sameAsBilling === false && cust.shippingAddress) ? cust.shippingAddress : (cust.billingAddress || cust.address || '');
+    proformaEditorData.shippingCity = (cust.sameAsBilling === false && cust.shippingCity) ? cust.shippingCity : (cust.city || '');
+    proformaEditorData.shippingState = (cust.sameAsBilling === false && cust.shippingState) ? cust.shippingState : (cust.state || '');
+    proformaEditorData.shippingPincode = (cust.sameAsBilling === false && cust.shippingPincode) ? cust.shippingPincode : (cust.pincode || '');
+    proformaEditorData.shippingGstin = (cust.sameAsBilling === false && cust.shippingGstin) ? cust.shippingGstin : (cust.gstin || '');
+    proformaEditorData.shippingPhone = cust.phone || '';
+  } else {
+    proformaEditorData.customerName = '';
+  }
 }
 
 function updateProformaRow(idx, field, val) {
@@ -6892,7 +6935,25 @@ function renderChallanEditor(container) {
 function handleChallanCustChange(custId) {
   challanEditorData.customerId = custId;
   const cust = (activeCompany.customers || []).find(c => c.id === custId);
-  challanEditorData.customerName = cust ? cust.name : '';
+  if (cust) {
+    challanEditorData.customerName = cust.name || '';
+    challanEditorData.billingAddress = cust.billingAddress || cust.address || '';
+    challanEditorData.billingCity = cust.city || '';
+    challanEditorData.billingState = cust.state || '';
+    challanEditorData.billingPincode = cust.pincode || '';
+    challanEditorData.billingGstin = cust.gstin || '';
+    challanEditorData.billingPhone = cust.phone || '';
+    challanEditorData.contactPerson = cust.contactPerson || '';
+    challanEditorData.shippingName = (cust.sameAsBilling === false && cust.shippingName) ? cust.shippingName : (cust.name || '');
+    challanEditorData.shippingAddress = (cust.sameAsBilling === false && cust.shippingAddress) ? cust.shippingAddress : (cust.billingAddress || cust.address || '');
+    challanEditorData.shippingCity = (cust.sameAsBilling === false && cust.shippingCity) ? cust.shippingCity : (cust.city || '');
+    challanEditorData.shippingState = (cust.sameAsBilling === false && cust.shippingState) ? cust.shippingState : (cust.state || '');
+    challanEditorData.shippingPincode = (cust.sameAsBilling === false && cust.shippingPincode) ? cust.shippingPincode : (cust.pincode || '');
+    challanEditorData.shippingGstin = (cust.sameAsBilling === false && cust.shippingGstin) ? cust.shippingGstin : (cust.gstin || '');
+    challanEditorData.shippingPhone = cust.phone || '';
+  } else {
+    challanEditorData.customerName = '';
+  }
 }
 
 function updateChallanRow(idx, field, val) {
@@ -7416,7 +7477,25 @@ function renderCreditNoteEditor(container) {
 function handleCreditNoteCustChange(custId) {
   creditNoteEditorData.customerId = custId;
   const cust = (activeCompany.customers || []).find(c => c.id === custId);
-  creditNoteEditorData.customerName = cust ? cust.name : '';
+  if (cust) {
+    creditNoteEditorData.customerName = cust.name || '';
+    creditNoteEditorData.billingAddress = cust.billingAddress || cust.address || '';
+    creditNoteEditorData.billingCity = cust.city || '';
+    creditNoteEditorData.billingState = cust.state || '';
+    creditNoteEditorData.billingPincode = cust.pincode || '';
+    creditNoteEditorData.billingGstin = cust.gstin || '';
+    creditNoteEditorData.billingPhone = cust.phone || '';
+    creditNoteEditorData.contactPerson = cust.contactPerson || '';
+    creditNoteEditorData.shippingName = (cust.sameAsBilling === false && cust.shippingName) ? cust.shippingName : (cust.name || '');
+    creditNoteEditorData.shippingAddress = (cust.sameAsBilling === false && cust.shippingAddress) ? cust.shippingAddress : (cust.billingAddress || cust.address || '');
+    creditNoteEditorData.shippingCity = (cust.sameAsBilling === false && cust.shippingCity) ? cust.shippingCity : (cust.city || '');
+    creditNoteEditorData.shippingState = (cust.sameAsBilling === false && cust.shippingState) ? cust.shippingState : (cust.state || '');
+    creditNoteEditorData.shippingPincode = (cust.sameAsBilling === false && cust.shippingPincode) ? cust.shippingPincode : (cust.pincode || '');
+    creditNoteEditorData.shippingGstin = (cust.sameAsBilling === false && cust.shippingGstin) ? cust.shippingGstin : (cust.gstin || '');
+    creditNoteEditorData.shippingPhone = cust.phone || '';
+  } else {
+    creditNoteEditorData.customerName = '';
+  }
 }
 
 function updateCreditNoteRow(idx, field, val) {
@@ -7839,7 +7918,25 @@ function renderDebitNoteEditor(container) {
 function handleDebitNoteCustChange(custId) {
   debitNoteEditorData.customerId = custId;
   const cust = (activeCompany.customers || []).find(c => c.id === custId);
-  debitNoteEditorData.customerName = cust ? cust.name : '';
+  if (cust) {
+    debitNoteEditorData.customerName = cust.name || '';
+    debitNoteEditorData.billingAddress = cust.billingAddress || cust.address || '';
+    debitNoteEditorData.billingCity = cust.city || '';
+    debitNoteEditorData.billingState = cust.state || '';
+    debitNoteEditorData.billingPincode = cust.pincode || '';
+    debitNoteEditorData.billingGstin = cust.gstin || '';
+    debitNoteEditorData.billingPhone = cust.phone || '';
+    debitNoteEditorData.contactPerson = cust.contactPerson || '';
+    debitNoteEditorData.shippingName = (cust.sameAsBilling === false && cust.shippingName) ? cust.shippingName : (cust.name || '');
+    debitNoteEditorData.shippingAddress = (cust.sameAsBilling === false && cust.shippingAddress) ? cust.shippingAddress : (cust.billingAddress || cust.address || '');
+    debitNoteEditorData.shippingCity = (cust.sameAsBilling === false && cust.shippingCity) ? cust.shippingCity : (cust.city || '');
+    debitNoteEditorData.shippingState = (cust.sameAsBilling === false && cust.shippingState) ? cust.shippingState : (cust.state || '');
+    debitNoteEditorData.shippingPincode = (cust.sameAsBilling === false && cust.shippingPincode) ? cust.shippingPincode : (cust.pincode || '');
+    debitNoteEditorData.shippingGstin = (cust.sameAsBilling === false && cust.shippingGstin) ? cust.shippingGstin : (cust.gstin || '');
+    debitNoteEditorData.shippingPhone = cust.phone || '';
+  } else {
+    debitNoteEditorData.customerName = '';
+  }
 }
 
 function updateDebitNoteRow(idx, field, val) {
