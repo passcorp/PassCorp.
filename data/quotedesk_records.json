@@ -1,7 +1,7 @@
 {
   "app": "PASS_CORP_QUOTEDESK_PRO",
   "version": "2026.1",
-  "lastUpdated": "2026-09-09T06:38:13.970Z",
+  "lastUpdated": "2026-09-09T06:39:31.192Z",
   "companies": [
     {
       "id": "comp-1788935811987",
@@ -66,7 +66,50 @@
           "grandTotal": 1296.82
         }
       ],
-      "invoices": [],
+      "invoices": [
+        {
+          "id": "inv-1788935959448",
+          "invoiceNumber": "INV-2026-001",
+          "date": "2026-09-09",
+          "dueDate": "2026-09-24",
+          "paymentTerms": "Net 30 Days",
+          "deliveryTerms": "Door Delivery",
+          "taxTerms": "Extra as applicable",
+          "status": "Unpaid",
+          "customerId": "cust-1788935882952",
+          "customerName": "Zamil Steel",
+          "items": [
+            {
+              "id": "ii-1",
+              "name": "Apollo DD",
+              "description": "Wild Bull Apollo DD full grain leather upper with 200J steel toe, shock absorber sole and PU double density.",
+              "hsnCode": "85389000",
+              "quantity": 1,
+              "unit": "PCS",
+              "price": 1099,
+              "leadTime": "1-2 Days",
+              "taxRate": 18,
+              "amount": 1099,
+              "taxAmount": 197.82,
+              "total": 1296.82,
+              "imageUrl": "assets/products/shoes/apollo_dd.png"
+            }
+          ],
+          "notes": "Thank you for your business. Please remit the payable balance before the due date.",
+          "terms": [
+            "Payment is due within 15 days of invoice date.",
+            "Interest @ 18% p.a. will be charged on overdue payments.",
+            "Goods once sold cannot be returned without prior authorization."
+          ],
+          "subtotal": 1099,
+          "taxableAmount": 1099,
+          "totalTax": 197.82,
+          "grandTotal": 1296.82,
+          "paidAmount": 0,
+          "balanceDue": 1296.82,
+          "payments": []
+        }
+      ],
       "customers": [
         {
           "id": "cust-1788935882952",
