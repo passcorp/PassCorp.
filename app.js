@@ -446,13 +446,7 @@ function renderHome(){
       </div>
     </section>
 
-    <section class="section" style="padding-top:0">
-      <div class="section-header reveal">
-        <h2 class="section-title">Popular items</h2>
-        <button class="section-link" onclick="A.goShop('all')">View all ${icon("chevronRight",16)}</button>
-      </div>
-      <div class="product-grid">${bestsellers.map((p,i) => productCard(p,(i%4)*80)).join("")}</div>
-    </section>
+
   `;
 }
 
