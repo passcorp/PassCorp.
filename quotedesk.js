@@ -13,7 +13,7 @@ function safeCreateIcons() {
 // Pure White Theme | Multi-Company PIN Auth | Smooth Typing | Big Product Photos
 // ============================================================================
 
-const QUOTEDESK_DB_QUOTEDESK_DB_STORAGE_KEY = 'quotedesk_multicompany_clean_v3';
+const QUOTEDESK_DB_STORAGE_KEY = 'quotedesk_multicompany_clean_v3';
 
 // Database State (Starts completely clean with 0 demo records)
 let db = {
@@ -476,12 +476,12 @@ function loadDatabase() {
         id: 'comp_pass_corp',
         name: 'PASS CORP.',
         tagline: 'PRECISION | ASSURANCE | SAFETY | SOLUTION',
-        address: 'SHOP NO. 2, MANIK COMPLEX, S.T. ROAD, CHEMBUR (E), MUMBAI - 400071, MAHARASHTRA',
-        city: 'Mumbai',
+        address: 'Talawade, Chikhali, PCMC, Pune - 411062, Maharashtra, India',
+        city: 'Pune',
         state: 'Maharashtra',
         stateCode: '27',
         pincode: '400071',
-        phone: '+91 99672 52200 / +91 98205 77726',
+        phone: '+91 97676 72497',
         email: 'sales@passcorp.in',
         website: 'https://passcorp.in',
         gstin: '27AALFP8680C1Z1',
@@ -1140,7 +1140,7 @@ function handleMasterSubmit(e) {
     const err = document.getElementById('master-error-msg');
     if (err) {
       err.classList.remove('hidden');
-      err.innerHTML = '❌ Invalid Passcode. Accepted: <b>Pawanjali@241997</b>, <b>pass123</b>, or <b>1234</b>';
+      err.innerHTML = '❌ Invalid Master Passcode. Access Denied.';
     }
     if (masterInput) {
       masterInput.value = '';
