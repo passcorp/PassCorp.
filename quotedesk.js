@@ -705,7 +705,19 @@ function loadDatabase() {
       const parsed = JSON.parse(raw);
       if (parsed && Array.isArray(parsed.companies) && parsed.companies.length > 0) {
         db = parsed;
-        db.companies.forEach(normalizeCompanyVouchers);
+        db.companies.forEach(comp => {
+          if (comp.id === 'comp_pass_corp' || (comp.name && comp.name.includes('RAJESH SHARMA'))) {
+            comp.name = 'PASS CORP.';
+            comp.tagline = 'PRECISION | ASSURANCE | SAFETY | SOLUTION';
+            comp.address = 'Talawade, Chikhali, PCMC, Pune - 411062, Maharashtra, India';
+            comp.city = 'Pune';
+            comp.state = 'Maharashtra';
+            comp.phone = '+91 97676 72497';
+            comp.email = 'sales@passcorp.in';
+            comp.gstin = '27AALFP8680C1Z1';
+          }
+          normalizeCompanyVouchers(comp);
+        });
       }
     }
 
@@ -8816,5 +8828,16 @@ function seedDemoData() {
       showToast('✅ Demo data loaded successfully!');
       setTimeout(() => location.reload(), 600);
     }
+  }
+}
+
+function resetAndClearAppCache() {
+  if (confirm('Are you sure you want to clear browser cache & reload fresh QuoteDesk?')) {
+    try {
+      localStorage.clear();
+      sessionStorage.clear();
+    } catch(e) {}
+    alert('✅ Browser Cache & Local Storage Cleared! Reloading fresh...');
+    window.location.href = window.location.pathname + '?v=' + Date.now();
   }
 }
