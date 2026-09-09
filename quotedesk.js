@@ -1746,12 +1746,8 @@ function handleMasterSubmit(e) {
     sessionStorage.setItem('PASS_MASTER_UNLOCKED', 'TRUE');
     const err = document.getElementById('master-error-msg');
     if (err) err.classList.add('hidden');
-    if (db.companies.length === 1) {
-      selectCompanyForLogin(db.companies[0].id);
-    } else {
-      showCompanySelector();
-      showToast('Master Access Granted ✅');
-    }
+    showCompanySelector();
+    showToast('Master Access Granted ✅');
   } else {
     const err = document.getElementById('master-error-msg');
     if (err) {
