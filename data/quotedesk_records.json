@@ -1,12 +1,12 @@
 {
   "app": "PASS_CORP_QUOTEDESK_PRO",
   "version": "2026.1",
-  "lastUpdated": "2026-09-09T07:28:41.401Z",
+  "lastUpdated": "2026-09-09T07:34:14.851Z",
   "companies": [
     {
-      "id": "comp-1788938845647",
-      "name": "Pass Corp.",
-      "gstin": "27AWERD2637LZ1",
+      "id": "comp-1788939252347",
+      "name": "Pass Corp",
+      "gstin": "27DEWSHD27891Zl",
       "pin": "2497",
       "email": "sales@passcorp.in",
       "phone": "+91 97676 62497",
@@ -18,80 +18,16 @@
       "currencySymbol": "₹",
       "bankDetails": {
         "bankName": "",
-        "accountName": "Pass Corp.",
+        "accountName": "Pass Corp",
         "accountNumber": "",
         "ifscCode": "",
         "branch": "",
         "upiId": ""
       },
-      "quotations": [
-        {
-          "id": "quote-1788938853565",
-          "quoteNumber": "QT-2026-001",
-          "date": "2026-09-09",
-          "validity": "15 Days",
-          "validUntil": "2026-09-24",
-          "deliveryTerms": "Door Delivery",
-          "paymentTerms": "Against PI",
-          "taxTerms": "Extra as applicable",
-          "status": "Sent",
-          "customerId": "cust-1788938907028",
-          "customerName": "Zamil Steel",
-          "items": [
-            {
-              "id": "qi-1",
-              "name": "Power DD",
-              "description": "Wild Bull Power DD split leather upper with 200J steel toe, anti-slip oil resistant sole & PU double density.",
-              "hsnCode": "85389000",
-              "quantity": 1,
-              "unit": "PCS",
-              "price": 949,
-              "leadTime": "1-2 Days",
-              "taxRate": 18,
-              "amount": 949,
-              "taxAmount": 170.82,
-              "total": 1119.82,
-              "imageUrl": "assets/products/shoes/power_dd.png"
-            }
-          ],
-          "notes": "Thank you for your business interest. We assure you our highest quality products and prompt support.",
-          "terms": [
-            "Prices are inclusive of standard GST as applicable.",
-            "Quotation is valid for 15 days from the date of issue.",
-            "Delivery timeline: Within 3-5 business days upon PO confirmation."
-          ],
-          "subtotal": 949,
-          "taxableAmount": 949,
-          "totalTax": 170.82,
-          "grandTotal": 1119.82
-        }
-      ],
+      "quotations": [],
       "invoices": [],
-      "customers": [
-        {
-          "id": "cust-1788938907028",
-          "name": "Zamil Steel",
-          "contactPerson": "Dinesh Wagh",
-          "gstin": "27AWEDSP7363SZl",
-          "email": "Dinesh.Wagh@zamilsteel.com",
-          "phone": "+91 72638 98373",
-          "billingAddress": "Ranjangaon",
-          "city": "Pune",
-          "state": "MH",
-          "pincode": "411062"
-        }
-      ],
-      "items": [],
-      "proformas": [],
-      "challans": [],
-      "creditNotes": [],
-      "debitNotes": [],
-      "counterQuote": 101,
-      "counterProforma": 101,
-      "counterInvoice": 101,
-      "counterChallan": 101,
-      "counterCreditNote": 101,
-      "counterDebitNote": 101
+      "customers": [],
+      "items": []
     }
   ]
 }
