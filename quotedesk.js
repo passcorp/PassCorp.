@@ -27,6 +27,122 @@ let currentPreview = null;
 let activeEditorMode = null; // null | 'quote' | 'invoice'
 let activeEditingId = null;
 
+// Document States for Proforma, Challan, Credit Note, Debit Note
+let proformaEditorData = {
+  id: null,
+  proformaNumber: 'PI-2026-101',
+  date: new Date().toISOString().split('T')[0],
+  validity: '15 Days',
+  customerId: '',
+  customerName: '',
+  deliveryTerms: 'Door Delivery',
+  paymentTerms: 'Against PI',
+  taxTerms: 'Extra as applicable',
+  items: [],
+  subtotal: 0,
+  taxableAmount: 0,
+  totalTax: 0,
+  grandTotal: 0,
+  notes: 'Proforma Invoice for commercial advance payment. Goods will be dispatched on payment confirmation.',
+  terms: [
+    'Prices are valid for 15 days from date of issue.',
+    'Payment terms: 100% advance against Proforma Invoice.',
+    'GST Extra as applicable at the time of final tax invoicing.',
+    'Delivery: Within 1-2 working days of payment receipt.'
+  ],
+  status: 'Draft'
+};
+
+let challanEditorData = {
+  id: null,
+  challanNumber: 'DC-2026-101',
+  date: new Date().toISOString().split('T')[0],
+  dispatchDate: new Date().toISOString().split('T')[0],
+  customerId: '',
+  customerName: '',
+  deliveryTerms: 'Door Delivery',
+  vehicleNo: '',
+  ewayBillNo: '',
+  transporter: '',
+  lrNo: '',
+  items: [],
+  subtotal: 0,
+  taxableAmount: 0,
+  totalTax: 0,
+  grandTotal: 0,
+  notes: 'Goods dispatched for delivery / job-work / supply on approval under GST Rule 55.',
+  terms: [
+    'Goods dispatched in good condition.',
+    'Subject to inspection and receipt acknowledgment by consignee.',
+    'Subject to Mumbai jurisdiction only.'
+  ],
+  status: 'Dispatched'
+};
+
+let creditNoteEditorData = {
+  id: null,
+  noteNumber: 'CN-2026-101',
+  date: new Date().toISOString().split('T')[0],
+  customerId: '',
+  customerName: '',
+  originalInvoiceNumber: '',
+  originalInvoiceDate: new Date().toISOString().split('T')[0],
+  reason: 'Sales Return',
+  items: [],
+  subtotal: 0,
+  taxableAmount: 0,
+  totalTax: 0,
+  grandTotal: 0,
+  notes: 'GST Credit Note issued under Section 34 of CGST Act for sales return / rate adjustment.',
+  terms: [
+    'Credit Note value adjusted against subsequent ledger billing.',
+    'Input Tax Credit / Output GST adjustment as per statutory GST guidelines.'
+  ],
+  status: 'Issued'
+};
+
+let debitNoteEditorData = {
+  id: null,
+  noteNumber: 'DN-2026-101',
+  date: new Date().toISOString().split('T')[0],
+  customerId: '',
+  customerName: '',
+  originalInvoiceNumber: '',
+  originalInvoiceDate: new Date().toISOString().split('T')[0],
+  reason: 'Purchase Return',
+  items: [],
+  subtotal: 0,
+  taxableAmount: 0,
+  totalTax: 0,
+  grandTotal: 0,
+  notes: 'GST Debit Note issued under Section 34 of CGST Act for rate difference / deficiency in goods.',
+  terms: [
+    'Debit Note issued subject to ledger reconciliation.',
+    'Subject to Mumbai jurisdiction only.'
+  ],
+  status: 'Issued'
+};
+
+function normalizeCompanyVouchers(comp) {
+  if (!comp) return;
+  comp.quotations = comp.quotations || [];
+  comp.proformas = comp.proformas || [];
+  comp.invoices = comp.invoices || [];
+  comp.challans = comp.challans || [];
+  comp.creditNotes = comp.creditNotes || [];
+  comp.debitNotes = comp.debitNotes || [];
+  comp.customers = comp.customers || [];
+  comp.items = comp.items || [];
+  comp.counterQuote = comp.counterQuote || 101;
+  comp.counterProforma = comp.counterProforma || 101;
+  comp.counterInvoice = comp.counterInvoice || 101;
+  comp.counterChallan = comp.counterChallan || 101;
+  comp.counterCreditNote = comp.counterCreditNote || 101;
+  comp.counterDebitNote = comp.counterDebitNote || 101;
+}
+
+
+
 // Modal Upload State
 let uploadedLogoDataUrl = null;
 let uploadedStampDataUrl = null;
@@ -883,13 +999,26 @@ function updateHeaderAndBadges() {
   renderLogoInElement('header-logo-container', activeCompany.logoUrl, 'building-2');
   renderLogoInElement('sidebar-logo-container', activeCompany.logoUrl, 'sparkles');
 
-  const pendingQuotes = (activeCompany.quotations || []).filter(q => q.status === 'Sent' || q.status === 'Draft').length;
-  const unpaidInvoices = (activeCompany.invoices || []).filter(i => i.status === 'Unpaid' || i.status === 'Partially Paid').length;
+  const pendingQuotes = (activeCompany.quotations || []).length;
+  const proformasCount = (activeCompany.proformas || []).length;
+  const invoicesCount = (activeCompany.invoices || []).length;
+  const challansCount = (activeCompany.challans || []).length;
+  const creditNotesCount = (activeCompany.creditNotes || []).length;
+  const debitNotesCount = (activeCompany.debitNotes || []).length;
 
   const bQ = document.getElementById('badge-quotes');
+  const bP = document.getElementById('badge-proformas');
   const bI = document.getElementById('badge-invoices');
+  const bC = document.getElementById('badge-challans');
+  const bCN = document.getElementById('badge-creditNotes');
+  const bDN = document.getElementById('badge-debitNotes');
+
   if (bQ) bQ.textContent = pendingQuotes;
-  if (bI) bI.textContent = unpaidInvoices;
+  if (bP) bP.textContent = proformasCount;
+  if (bI) bI.textContent = invoicesCount;
+  if (bC) bC.textContent = challansCount;
+  if (bCN) bCN.textContent = creditNotesCount;
+  if (bDN) bDN.textContent = debitNotesCount;
 }
 
 function renderLogoInElement(containerId, logoUrl, fallbackIcon = 'building') {
@@ -1151,7 +1280,7 @@ function handlePinSubmit(e) {
     if (!selectedCompanyForPin && db.companies && db.companies.length > 0) {
       selectedCompanyForPin = db.companies[0];
     }
-    activeCompany = selectedCompanyForPin;
+    activeCompany = selectedCompanyForPin; normalizeCompanyVouchers(activeCompany);
     sessionStorage.setItem('PASS_AUTH_KEY_2026', 'AUTHORIZED_PASS_CORP');
 
     document.getElementById('auth-screen').classList.add('hidden');
@@ -1454,8 +1583,16 @@ function renderCurrentPage() {
 
   if (activeEditorMode === 'quote') {
     renderQuotationEditor(container);
+  } else if (activeEditorMode === 'proforma') {
+    renderProformaEditor(container);
   } else if (activeEditorMode === 'invoice') {
     renderInvoiceEditor(container);
+  } else if (activeEditorMode === 'challan') {
+    renderChallanEditor(container);
+  } else if (activeEditorMode === 'creditNote') {
+    renderCreditNoteEditor(container);
+  } else if (activeEditorMode === 'debitNote') {
+    renderDebitNoteEditor(container);
   } else {
     switch (currentTab) {
       case 'dashboard':
@@ -1464,8 +1601,20 @@ function renderCurrentPage() {
       case 'quotations':
         renderQuotationsList(container);
         break;
+      case 'proformas':
+        renderProformasList(container);
+        break;
       case 'invoices':
         renderInvoicesList(container);
+        break;
+      case 'challans':
+        renderChallansList(container);
+        break;
+      case 'creditNotes':
+        renderCreditNotesList(container);
+        break;
+      case 'debitNotes':
+        renderDebitNotesList(container);
         break;
       case 'customers':
         renderCustomersList(container);
@@ -1490,7 +1639,11 @@ function renderCurrentPage() {
 
 function renderDashboard(container) {
   const quotations = activeCompany.quotations || [];
+  const proformas = activeCompany.proformas || [];
   const invoices = activeCompany.invoices || [];
+  const challans = activeCompany.challans || [];
+  const creditNotes = activeCompany.creditNotes || [];
+  const debitNotes = activeCompany.debitNotes || [];
 
   const totalInvoiced = invoices.reduce((s, i) => s + (Number(i.grandTotal) || 0), 0);
   const totalReceived = invoices.reduce((s, i) => s + (Number(i.paidAmount) || 0), 0);
@@ -1523,14 +1676,22 @@ function renderDashboard(container) {
           </div>
         </div>
 
-        <div class="flex items-center gap-2">
-          <button onclick="openNewQuotationEditor()" class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-blue-700 hover:bg-blue-800 text-white font-bold shadow-sm border border-blue-800">
-            <span class="text-[10px] bg-blue-900 px-1 rounded font-mono font-normal">Alt+Q</span>
-            <span>+ New Quotation</span>
+        <div class="flex items-center gap-2 flex-wrap">
+          <button onclick="openNewQuotationEditor()" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded bg-blue-700 hover:bg-blue-800 text-white font-bold shadow-sm border border-blue-800 text-[11px]">
+            <span class="text-[9px] bg-blue-900 px-1 rounded font-mono font-normal">Alt+Q</span>
+            <span>+ Quote</span>
           </button>
-          <button onclick="openNewInvoiceEditor()" class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-amber-600 hover:bg-amber-700 text-white font-bold shadow-sm border border-amber-700">
-            <span class="text-[10px] bg-amber-800 px-1 rounded font-mono font-normal">F8</span>
-            <span>+ Sales Invoice</span>
+          <button onclick="openNewProformaEditor()" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded bg-indigo-700 hover:bg-indigo-800 text-white font-bold shadow-sm border border-indigo-800 text-[11px]">
+            <span class="text-[9px] bg-indigo-900 px-1 rounded font-mono font-normal">Alt+P</span>
+            <span>+ Proforma</span>
+          </button>
+          <button onclick="openNewInvoiceEditor()" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded bg-amber-600 hover:bg-amber-700 text-white font-bold shadow-sm border border-amber-700 text-[11px]">
+            <span class="text-[9px] bg-amber-800 px-1 rounded font-mono font-normal">F8</span>
+            <span>+ Invoice</span>
+          </button>
+          <button onclick="openNewChallanEditor()" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded bg-teal-700 hover:bg-teal-800 text-white font-bold shadow-sm border border-teal-800 text-[11px]">
+            <span class="text-[9px] bg-teal-900 px-1 rounded font-mono font-normal">Alt+D</span>
+            <span>+ Challan</span>
           </button>
         </div>
       </div>
@@ -1611,13 +1772,29 @@ function renderDashboard(container) {
             <div>
               <div class="text-[10px] font-black uppercase text-slate-500 tracking-wider mb-1 px-1">Transactions / Vouchers</div>
               <div class="space-y-1">
-                <button onclick="openNewQuotationEditor()" class="w-full text-left px-2.5 py-1.5 rounded hover:bg-blue-50 text-blue-900 flex items-center justify-between border border-blue-200">
+                <button onclick="openNewQuotationEditor()" class="w-full text-left px-2 py-1.2 rounded hover:bg-blue-50 text-blue-900 flex items-center justify-between border border-blue-200">
                   <span class="font-bold">Sales Quotation Entry</span>
-                  <span class="text-[10px] font-mono font-bold text-blue-700 bg-blue-100 px-1 rounded">Alt+Q</span>
+                  <span class="text-[9px] font-mono font-bold text-blue-700 bg-blue-100 px-1 rounded">Alt+Q</span>
                 </button>
-                <button onclick="openNewInvoiceEditor()" class="w-full text-left px-2.5 py-1.5 rounded hover:bg-amber-50 text-amber-900 flex items-center justify-between border border-amber-200">
+                <button onclick="openNewProformaEditor()" class="w-full text-left px-2 py-1.2 rounded hover:bg-indigo-50 text-indigo-900 flex items-center justify-between border border-indigo-200">
+                  <span class="font-bold">Proforma Invoice Entry</span>
+                  <span class="text-[9px] font-mono font-bold text-indigo-700 bg-indigo-100 px-1 rounded">Alt+P</span>
+                </button>
+                <button onclick="openNewInvoiceEditor()" class="w-full text-left px-2 py-1.2 rounded hover:bg-amber-50 text-amber-900 flex items-center justify-between border border-amber-200">
                   <span class="font-bold">Sales Tax Invoice Entry</span>
-                  <span class="text-[10px] font-mono font-bold text-amber-700 bg-amber-100 px-1 rounded">F8</span>
+                  <span class="text-[9px] font-mono font-bold text-amber-700 bg-amber-100 px-1 rounded">F8</span>
+                </button>
+                <button onclick="openNewChallanEditor()" class="w-full text-left px-2 py-1.2 rounded hover:bg-teal-50 text-teal-900 flex items-center justify-between border border-teal-200">
+                  <span class="font-bold">Delivery Challan Entry</span>
+                  <span class="text-[9px] font-mono font-bold text-teal-700 bg-teal-100 px-1 rounded">Alt+D</span>
+                </button>
+                <button onclick="openNewCreditNoteEditor()" class="w-full text-left px-2 py-1.2 rounded hover:bg-purple-50 text-purple-900 flex items-center justify-between border border-purple-200">
+                  <span class="font-bold">Credit Note (GST Sec 34)</span>
+                  <span class="text-[9px] font-mono font-bold text-purple-700 bg-purple-100 px-1 rounded">Alt+C</span>
+                </button>
+                <button onclick="openNewDebitNoteEditor()" class="w-full text-left px-2 py-1.2 rounded hover:bg-rose-50 text-rose-900 flex items-center justify-between border border-rose-200">
+                  <span class="font-bold">Debit Note (GST Sec 34)</span>
+                  <span class="text-[9px] font-mono font-bold text-rose-700 bg-rose-100 px-1 rounded">Alt+N</span>
                 </button>
               </div>
             </div>
@@ -1626,13 +1803,29 @@ function renderDashboard(container) {
             <div>
               <div class="text-[10px] font-black uppercase text-slate-500 tracking-wider mb-1 px-1">Registers & Reports</div>
               <div class="space-y-1">
-                <button onclick="navigateTab('quotations')" class="w-full text-left px-2.5 py-1.5 rounded hover:bg-slate-100 flex items-center justify-between">
+                <button onclick="navigateTab('quotations')" class="w-full text-left px-2.5 py-1.2 rounded hover:bg-slate-100 flex items-center justify-between">
                   <span class="text-slate-700 font-medium">Quotation Daybook</span>
                   <span class="text-[10px] font-mono font-bold text-slate-600">${quotations.length}</span>
                 </button>
-                <button onclick="navigateTab('invoices')" class="w-full text-left px-2.5 py-1.5 rounded hover:bg-slate-100 flex items-center justify-between">
+                <button onclick="navigateTab('proformas')" class="w-full text-left px-2.5 py-1.2 rounded hover:bg-slate-100 flex items-center justify-between">
+                  <span class="text-slate-700 font-medium">Proforma Register</span>
+                  <span class="text-[10px] font-mono font-bold text-slate-600">${proformas.length}</span>
+                </button>
+                <button onclick="navigateTab('invoices')" class="w-full text-left px-2.5 py-1.2 rounded hover:bg-slate-100 flex items-center justify-between">
                   <span class="text-slate-700 font-medium">Sales Invoice Register</span>
                   <span class="text-[10px] font-mono font-bold text-slate-600">${invoices.length}</span>
+                </button>
+                <button onclick="navigateTab('challans')" class="w-full text-left px-2.5 py-1.2 rounded hover:bg-slate-100 flex items-center justify-between">
+                  <span class="text-slate-700 font-medium">Delivery Challan Book</span>
+                  <span class="text-[10px] font-mono font-bold text-slate-600">${challans.length}</span>
+                </button>
+                <button onclick="navigateTab('creditNotes')" class="w-full text-left px-2.5 py-1.2 rounded hover:bg-slate-100 flex items-center justify-between">
+                  <span class="text-slate-700 font-medium">Credit Note Register</span>
+                  <span class="text-[10px] font-mono font-bold text-slate-600">${creditNotes.length}</span>
+                </button>
+                <button onclick="navigateTab('debitNotes')" class="w-full text-left px-2.5 py-1.2 rounded hover:bg-slate-100 flex items-center justify-between">
+                  <span class="text-slate-700 font-medium">Debit Note Register</span>
+                  <span class="text-[10px] font-mono font-bold text-slate-600">${debitNotes.length}</span>
                 </button>
               </div>
             </div>
@@ -3512,7 +3705,7 @@ function numberToWordsINR(num) {
     let digit = n % 10;
     if (n < 100) return b[Math.floor(n / 10)] + (digit ? ' ' + a[digit] : ' ');
     if (n < 1000) return inWords(Math.floor(n / 100)) + 'Hundred ' + (n % 100 !== 0 ? 'and ' + inWords(n % 100) : '');
-    if (n < 100000) return inWords(Math.floor(n / 1000)) + 'Thousand ' + (n % 1000 !== 0 ? inWords(n % 1000) : '');
+    if (n < 100000) return inWords(Math.floor(n / 1000)) + 'Thousand ' + (n % 1000 !== 0 ? 'and ' + inWords(n % 1000) : '');
     if (n < 10000000) return inWords(Math.floor(n / 100000)) + 'Lakh ' + (n % 100000 !== 0 ? inWords(n % 100000) : '');
     return inWords(Math.floor(n / 10000000)) + 'Crore ' + (n % 10000000 !== 0 ? inWords(n % 10000000) : '');
   }
@@ -3520,9 +3713,13 @@ function numberToWordsINR(num) {
 }
 
 function openDocPreview(type, id) {
-  const doc = type === 'quote' 
-    ? (activeCompany.quotations || []).find(q => q.id === id)
-    : (activeCompany.invoices || []).find(i => i.id === id);
+  let doc = null;
+  if (type === 'quote') doc = (activeCompany.quotations || []).find(q => q.id === id);
+  else if (type === 'proforma') doc = (activeCompany.proformas || []).find(p => p.id === id);
+  else if (type === 'invoice') doc = (activeCompany.invoices || []).find(i => i.id === id);
+  else if (type === 'challan') doc = (activeCompany.challans || []).find(c => c.id === id);
+  else if (type === 'creditNote') doc = (activeCompany.creditNotes || []).find(c => c.id === id);
+  else if (type === 'debitNote') doc = (activeCompany.debitNotes || []).find(d => d.id === id);
 
   if (!doc) return;
 
@@ -3533,16 +3730,45 @@ function openDocPreview(type, id) {
   const convertBtn = document.getElementById('preview-convert-btn');
   const formatSelect = document.getElementById('preview-format-select');
 
-  const isInvoice = type === 'invoice';
-  title.textContent = isInvoice ? `Tax Invoice ${doc.invoiceNumber}` : `Sales Quotation ${doc.quoteNumber}`;
-  badge.textContent = doc.status;
-  badge.className = `text-[10px] px-2 py-0.5 rounded font-mono font-bold ${isInvoice ? getInvoiceStatusBadgeClass(doc.status) : getStatusBadgeClass(doc.status)}`;
+  let docTitleText = '';
+  let statusBadgeClass = 'bg-slate-100 text-slate-700';
 
-  if (type === 'quote' && doc.status !== 'Accepted') {
+  if (type === 'quote') {
+    docTitleText = `Sales Quotation ${doc.quoteNumber || ''}`;
+    statusBadgeClass = getStatusBadgeClass(doc.status);
+    if (doc.status !== 'Accepted') {
+      convertBtn.innerHTML = `<i data-lucide="arrow-right-left" class="w-3.5 h-3.5"></i><span>Convert to Invoice</span>`;
+      convertBtn.classList.remove('hidden');
+    } else {
+      convertBtn.classList.add('hidden');
+    }
+  } else if (type === 'proforma') {
+    docTitleText = `Proforma Invoice ${doc.proformaNumber || ''}`;
+    statusBadgeClass = getInvoiceStatusBadgeClass(doc.status);
+    convertBtn.innerHTML = `<i data-lucide="arrow-right-left" class="w-3.5 h-3.5"></i><span>Convert to Tax Invoice (F8)</span>`;
     convertBtn.classList.remove('hidden');
-  } else {
+  } else if (type === 'invoice') {
+    docTitleText = `Tax Invoice ${doc.invoiceNumber || ''}`;
+    statusBadgeClass = getInvoiceStatusBadgeClass(doc.status);
+    convertBtn.classList.add('hidden');
+  } else if (type === 'challan') {
+    docTitleText = `Delivery Challan ${doc.challanNumber || ''}`;
+    statusBadgeClass = doc.status === 'Delivered' ? 'bg-emerald-100 text-emerald-800' : 'bg-blue-100 text-blue-800';
+    convertBtn.innerHTML = `<i data-lucide="receipt" class="w-3.5 h-3.5"></i><span>Generate Tax Invoice</span>`;
+    convertBtn.classList.remove('hidden');
+  } else if (type === 'creditNote') {
+    docTitleText = `Credit Note ${doc.creditNoteNumber || ''}`;
+    statusBadgeClass = 'bg-purple-100 text-purple-800';
+    convertBtn.classList.add('hidden');
+  } else if (type === 'debitNote') {
+    docTitleText = `Debit Note ${doc.debitNoteNumber || ''}`;
+    statusBadgeClass = 'bg-amber-100 text-amber-800';
     convertBtn.classList.add('hidden');
   }
+
+  title.textContent = docTitleText;
+  badge.textContent = doc.status || 'Active';
+  badge.className = `text-[10px] px-2 py-0.5 rounded font-mono font-bold ${statusBadgeClass}`;
 
   if (formatSelect) {
     formatSelect.value = selectedPrintFormat;
@@ -3579,17 +3805,44 @@ function renderPreviewPaper() {
 }
 
 // -------------------------------------------------------------
-// FORMAT 1: AUTHENTIC TALLY PRIME CLASSIC BOX GST TAX INVOICE & QUOTATION
+// FORMAT 1: AUTHENTIC TALLY PRIME CLASSIC BOX GST TAX INVOICE & VOUCHERS
 // -------------------------------------------------------------
 
-function renderTallyInvoiceFormatHTML(doc, cust, comp) {
+function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
   const wordsAmount = numberToWordsINR(doc.grandTotal);
-  const totalTaxInWords = numberToWordsINR(doc.totalTax);
+  const totalTaxInWords = numberToWordsINR(doc.totalTax || 0);
   const totalQty = (doc.items || []).reduce((s, i) => s + Number(i.quantity || 0), 0);
   const primaryUnit = (doc.items && doc.items[0]?.unit) || 'Pairs';
   const companyPan = comp.pan || (comp.gstin && comp.gstin.length >= 12 ? comp.gstin.substring(2, 12) : 'AALFP8680C');
   const compStateCode = comp.stateCode || (comp.gstin && comp.gstin.length >= 2 ? comp.gstin.substring(0, 2) : '27');
   const custStateCode = cust?.stateCode || (cust?.gstin && cust.gstin.length >= 2 ? cust.gstin.substring(0, 2) : '27');
+
+  let docTitle = 'TAX INVOICE';
+  let docSubtitle = '(ORIGINAL FOR RECIPIENT)';
+  let docNumberLabel = 'Invoice No.';
+  let docNumber = doc.invoiceNumber || '';
+
+  if (type === 'proforma') {
+    docTitle = 'PROFORMA INVOICE';
+    docSubtitle = '(NOT A TAX INVOICE - ADVANCE BILLING)';
+    docNumberLabel = 'Proforma No.';
+    docNumber = doc.proformaNumber || '';
+  } else if (type === 'challan') {
+    docTitle = 'DELIVERY CHALLAN';
+    docSubtitle = '(TRANSPORT / DISPATCH SLIP - GST RULE 55)';
+    docNumberLabel = 'Challan No.';
+    docNumber = doc.challanNumber || '';
+  } else if (type === 'creditNote') {
+    docTitle = 'CREDIT NOTE';
+    docSubtitle = '(GST CREDIT ADJUSTMENT - SEC 34)';
+    docNumberLabel = 'Credit Note No.';
+    docNumber = doc.creditNoteNumber || '';
+  } else if (type === 'debitNote') {
+    docTitle = 'DEBIT NOTE';
+    docSubtitle = '(GST DEBIT ADJUSTMENT - SEC 34)';
+    docNumberLabel = 'Debit Note No.';
+    docNumber = doc.debitNoteNumber || '';
+  }
 
   // Dynamic HSN Tax Breakdown Map
   const hsnMap = {};
@@ -3626,8 +3879,8 @@ function renderTallyInvoiceFormatHTML(doc, cust, comp) {
     <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white">
       <!-- Top Title Header -->
       <div class="text-center py-1.5 border-b border-slate-900 bg-white">
-        <h1 class="font-black text-sm uppercase tracking-wide text-slate-900">Tax Invoice</h1>
-        <p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest">(ORIGINAL FOR RECIPIENT)</p>
+        <h1 class="font-black text-sm uppercase tracking-wide text-slate-900">${docTitle}</h1>
+        <p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest">${docSubtitle}</p>
       </div>
 
       <!-- Top 2-Column Split -->
@@ -3677,23 +3930,41 @@ function renderTallyInvoiceFormatHTML(doc, cust, comp) {
 
         <!-- Right: Authentic Tally Dispatch & Reference Grid -->
         <div class="divide-y divide-slate-900 text-[9.5px]">
-          <!-- Row 1: Invoice No. | Invoice Date -->
+          <!-- Row 1: Doc No. | Doc Date -->
           <div class="grid grid-cols-2 divide-x divide-slate-900">
             <div class="p-1.5 px-2">
-              <span class="text-[8px] uppercase font-bold text-slate-500 block">Invoice No.</span>
-              <span class="font-mono font-black text-xs text-slate-900">${doc.invoiceNumber}</span>
+              <span class="text-[8px] uppercase font-bold text-slate-500 block">${docNumberLabel}</span>
+              <span class="font-mono font-black text-xs text-slate-900">${docNumber}</span>
             </div>
             <div class="p-1.5 px-2">
-              <span class="text-[8px] uppercase font-bold text-slate-500 block">Invoice Date</span>
+              <span class="text-[8px] uppercase font-bold text-slate-500 block">Date</span>
               <span class="font-mono font-bold text-slate-900">${doc.date}</span>
             </div>
           </div>
 
+          ${(type === 'creditNote' || type === 'debitNote') ? `
+            <!-- Original Invoice Reference -->
+            <div class="grid grid-cols-2 divide-x divide-slate-900 bg-purple-50/50">
+              <div class="p-1.5 px-2">
+                <span class="text-[8px] uppercase font-bold text-slate-500 block">Orig. Invoice No.</span>
+                <span class="font-mono font-bold text-purple-900">${doc.originalInvoiceNo || '-'}</span>
+              </div>
+              <div class="p-1.5 px-2">
+                <span class="text-[8px] uppercase font-bold text-slate-500 block">Orig. Invoice Date</span>
+                <span class="font-mono font-bold text-purple-900">${doc.originalInvoiceDate || '-'}</span>
+              </div>
+            </div>
+            <div class="p-1.5 px-2 bg-purple-50/30">
+              <span class="text-[8px] uppercase font-bold text-slate-500 block">Reason for Note:</span>
+              <span class="text-slate-900 font-bold">${doc.reason || 'Correction / Return'}</span>
+            </div>
+          ` : ''}
+
           <!-- Row 2: Delivery Note | Mode/Terms of Payment -->
           <div class="grid grid-cols-2 divide-x divide-slate-900">
             <div class="p-1.5 px-2">
-              <span class="text-[8px] uppercase font-bold text-slate-500 block">Delivery Note</span>
-              <span class="text-slate-800 font-semibold">${doc.deliveryNote || '-'}</span>
+              <span class="text-[8px] uppercase font-bold text-slate-500 block">Delivery Note / Challan Ref</span>
+              <span class="text-slate-800 font-semibold">${doc.deliveryNote || doc.challanRef || '-'}</span>
             </div>
             <div class="p-1.5 px-2">
               <span class="text-[8px] uppercase font-bold text-slate-500 block">Mode/Terms of Payment</span>
@@ -3728,8 +3999,8 @@ function renderTallyInvoiceFormatHTML(doc, cust, comp) {
           <!-- Row 5: Dispatch Doc No. | Delivery Note Date -->
           <div class="grid grid-cols-2 divide-x divide-slate-900">
             <div class="p-1.5 px-2">
-              <span class="text-[8px] uppercase font-bold text-slate-500 block">Dispatch Doc No.</span>
-              <span class="font-mono text-slate-800">${doc.dispatchDocNo || '-'}</span>
+              <span class="text-[8px] uppercase font-bold text-slate-500 block">Dispatch Doc / E-Way Bill</span>
+              <span class="font-mono text-slate-800">${doc.ewayBillNo || doc.dispatchDocNo || '-'}</span>
             </div>
             <div class="p-1.5 px-2">
               <span class="text-[8px] uppercase font-bold text-slate-500 block">Delivery Note Date</span>
@@ -3740,8 +4011,8 @@ function renderTallyInvoiceFormatHTML(doc, cust, comp) {
           <!-- Row 6: Dispatched through | Destination -->
           <div class="grid grid-cols-2 divide-x divide-slate-900">
             <div class="p-1.5 px-2">
-              <span class="text-[8px] uppercase font-bold text-slate-500 block">Dispatched through</span>
-              <span class="text-slate-900 font-semibold">${doc.dispatchedThrough || 'Direct Delivery / Surface'}</span>
+              <span class="text-[8px] uppercase font-bold text-slate-500 block">Dispatched through / Transporter</span>
+              <span class="text-slate-900 font-semibold">${doc.transporter || doc.dispatchedThrough || 'Direct Delivery / Surface'}</span>
             </div>
             <div class="p-1.5 px-2">
               <span class="text-[8px] uppercase font-bold text-slate-500 block">Destination</span>
@@ -3789,6 +4060,7 @@ function renderTallyInvoiceFormatHTML(doc, cust, comp) {
               <td class="py-1 px-1 text-center font-mono font-bold align-top">${idx + 1}</td>
               <td class="py-1 px-2 align-top">
                 <div class="font-black text-slate-900 text-[10.5px] uppercase leading-snug">${it.name}</div>
+                ${it.description ? `<div class="text-[9px] text-slate-600 mt-0.5 whitespace-pre-wrap leading-tight font-normal">${escapeHtml(it.description)}</div>` : ''}
               </td>
               <td class="py-1 px-1.5 text-center font-mono font-bold align-top whitespace-nowrap">${it.hsnCode || '6403'}</td>
               <td class="py-1 px-1.5 text-center font-mono font-black align-top whitespace-nowrap">${it.quantity} ${it.unit || 'Pairs'}</td>
@@ -3834,7 +4106,7 @@ function renderTallyInvoiceFormatHTML(doc, cust, comp) {
       <!-- Amount Chargeable in Words Bar -->
       <div class="p-1.5 px-2.5 border-t border-b border-slate-900 bg-white flex items-baseline justify-between text-[10px]">
         <div>
-          <span class="font-bold uppercase text-[8px] text-slate-500 block">Amount Chargeable (in words)</span>
+          <span class="font-bold uppercase text-[8.5px] text-slate-500 block">Amount Chargeable (in words)</span>
           <span class="font-black text-slate-900 text-[10.5px]">${wordsAmount}</span>
         </div>
         <span class="font-mono font-bold text-slate-700 text-[9px]">E. & O.E</span>
@@ -3901,7 +4173,7 @@ function renderTallyInvoiceFormatHTML(doc, cust, comp) {
           </div>
           <div>
             <span class="font-black uppercase text-[8.5px] text-slate-900 block underline mb-0.5">Declaration</span>
-            <p class="text-[8.5px] text-slate-600 leading-tight">We declare that this invoice shows the actual price of the goods described and that all particulars are true and correct.</p>
+            <p class="text-[8.5px] text-slate-600 leading-tight">We declare that this document shows the actual particulars and prices of goods and all statutory details are true and correct.</p>
           </div>
         </div>
 
@@ -3932,16 +4204,15 @@ function renderTallyInvoiceFormatHTML(doc, cust, comp) {
 
       <!-- Bottom System Note -->
       <div class="text-center py-1 text-[8.5px] text-slate-500 font-mono">
-        This is a Computer Generated Invoice
+        This is a Computer Generated Document
       </div>
     </div>
   `;
 }
 
 function renderTallyFormatHTML(doc, type, cust, comp) {
-  const isInvoice = type === 'invoice';
-  if (isInvoice) {
-    return renderTallyInvoiceFormatHTML(doc, cust, comp);
+  if (type !== 'quote') {
+    return renderTallyInvoiceFormatHTML(doc, type, cust, comp);
   }
 
   const docTitle = 'SALES QUOTATION';
@@ -4155,9 +4426,25 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
 // FORMAT 2: BUSY ACCOUNTING HIGH-CONTRAST ERP GRID
 // -------------------------------------------------------------
 function renderBusyFormatHTML(doc, type, cust, comp) {
-  const isInvoice = type === 'invoice';
-  const docTitle = isInvoice ? 'GST TAX INVOICE' : 'SALES ESTIMATE / QUOTATION';
-  const docNumber = isInvoice ? doc.invoiceNumber : doc.quoteNumber;
+  let docTitle = 'GST TAX INVOICE';
+  let docNumber = doc.invoiceNumber || '';
+  if (type === 'quote') {
+    docTitle = 'SALES ESTIMATE / QUOTATION';
+    docNumber = doc.quoteNumber || '';
+  } else if (type === 'proforma') {
+    docTitle = 'PROFORMA INVOICE';
+    docNumber = doc.proformaNumber || '';
+  } else if (type === 'challan') {
+    docTitle = 'DELIVERY CHALLAN';
+    docNumber = doc.challanNumber || '';
+  } else if (type === 'creditNote') {
+    docTitle = 'CREDIT NOTE (GST SEC 34)';
+    docNumber = doc.creditNoteNumber || '';
+  } else if (type === 'debitNote') {
+    docTitle = 'DEBIT NOTE (GST SEC 34)';
+    docNumber = doc.debitNoteNumber || '';
+  }
+
   const wordsAmount = numberToWordsINR(doc.grandTotal);
 
   return `
@@ -4189,10 +4476,14 @@ function renderBusyFormatHTML(doc, type, cust, comp) {
         </div>
         <div class="p-2.5 grid grid-cols-2 gap-x-2 gap-y-1 text-[11px]">
           <div><span class="text-[9px] uppercase font-bold text-slate-500 block">Voucher Date</span><span class="font-mono font-semibold">${doc.date}</span></div>
-          <div><span class="text-[9px] uppercase font-bold text-slate-500 block">${isInvoice ? 'Due Date' : 'Validity of Quotation'}</span><span class="font-mono font-semibold">${isInvoice ? doc.dueDate : (doc.validity || '15 Days')}</span></div>
-          <div><span class="text-[9px] uppercase font-bold text-slate-500 block">Delivery</span><span class="font-semibold text-slate-800">${doc.deliveryTerms || 'Door Delivery'}</span></div>
-          <div><span class="text-[9px] uppercase font-bold text-slate-500 block">Payment Terms</span><span class="font-semibold text-slate-800">${doc.paymentTerms || (isInvoice ? 'Net 30 Days' : 'Against PI')}</span></div>
-          <div class="col-span-2 border-t border-slate-200 pt-0.5"><span class="text-[9px] uppercase font-bold text-slate-500 block">Taxes</span><span class="font-semibold text-slate-800">${doc.taxTerms || 'Extra as applicable'}</span></div>
+          <div><span class="text-[9px] uppercase font-bold text-slate-500 block">${type === 'invoice' ? 'Due Date' : 'Validity / Delivery'}</span><span class="font-mono font-semibold">${doc.dueDate || doc.validity || '15 Days'}</span></div>
+          <div><span class="text-[9px] uppercase font-bold text-slate-500 block">Delivery / Vehicle</span><span class="font-semibold text-slate-800">${doc.vehicleNo || doc.deliveryTerms || 'Door Delivery'}</span></div>
+          <div><span class="text-[9px] uppercase font-bold text-slate-500 block">Payment Terms</span><span class="font-semibold text-slate-800">${doc.paymentTerms || (type === 'invoice' ? 'Net 30 Days' : 'Against PI')}</span></div>
+          ${(doc.originalInvoiceNo || doc.ewayBillNo) ? `
+            <div class="col-span-2 border-t border-slate-200 pt-0.5"><span class="text-[9px] uppercase font-bold text-slate-500 block">Ref / E-Way Bill</span><span class="font-mono font-semibold text-blue-700">${doc.originalInvoiceNo ? `Orig Inv: ${doc.originalInvoiceNo}` : ''} ${doc.ewayBillNo ? `E-Way: ${doc.ewayBillNo}` : ''}</span></div>
+          ` : `
+            <div class="col-span-2 border-t border-slate-200 pt-0.5"><span class="text-[9px] uppercase font-bold text-slate-500 block">Taxes</span><span class="font-semibold text-slate-800">${doc.taxTerms || 'Extra as applicable'}</span></div>
+          `}
         </div>
       </div>
 
@@ -4216,14 +4507,14 @@ function renderBusyFormatHTML(doc, type, cust, comp) {
               <td class="py-2.5 px-2 text-center font-mono text-slate-500 align-top">${idx + 1}</td>
               <td class="py-2.5 px-3 align-top">
                 <div class="flex items-start gap-3">
-                  ${(!isInvoice && it.imageUrl) ? `
+                  ${(type === 'quote' && it.imageUrl) ? `
                     <div class="w-20 h-20 rounded bg-white border border-slate-300 p-1 shrink-0 flex items-center justify-center overflow-hidden shadow-sm">
                       <img src="${it.imageUrl}" class="w-full h-full object-contain" />
                     </div>
                   ` : ''}
                   <div>
                     <div class="font-bold text-slate-900">${it.name}</div>
-                    ${(!isInvoice && it.description) ? `<p class="text-[10px] text-slate-600 whitespace-pre-wrap mt-0.5 leading-relaxed">${escapeHtml(it.description)}</p>` : ''}
+                    ${it.description ? `<p class="text-[10px] text-slate-600 whitespace-pre-wrap mt-0.5 leading-relaxed">${escapeHtml(it.description)}</p>` : ''}
                   </div>
                 </div>
               </td>
@@ -4260,7 +4551,7 @@ function renderBusyFormatHTML(doc, type, cust, comp) {
           <div class="flex justify-between font-black text-sm text-slate-900 pt-1 border-t border-slate-300">
             <span>Grand Total:</span><span>${cur()}${fmt(doc.grandTotal)}</span>
           </div>
-          ${isInvoice ? `
+          ${type === 'invoice' ? `
             <div class="flex justify-between text-blue-700 font-semibold pt-0.5"><span>Paid Amount:</span><span>${cur()}${fmt(doc.paidAmount)}</span></div>
             <div class="flex justify-between text-amber-700 font-black"><span>Balance Due:</span><span>${cur()}${fmt(doc.balanceDue)}</span></div>
           ` : ''}
@@ -4281,9 +4572,24 @@ function renderBusyFormatHTML(doc, type, cust, comp) {
 // FORMAT 3: MODERN CLEAN EXECUTIVE FORMAT
 // -------------------------------------------------------------
 function renderModernFormatHTML(doc, type, cust, comp) {
-  const isInvoice = type === 'invoice';
-  const docTitle = isInvoice ? 'TAX INVOICE' : 'SALES QUOTATION';
-  const docNumber = isInvoice ? doc.invoiceNumber : doc.quoteNumber;
+  let docTitle = 'TAX INVOICE';
+  let docNumber = doc.invoiceNumber || '';
+  if (type === 'quote') {
+    docTitle = 'SALES QUOTATION';
+    docNumber = doc.quoteNumber || '';
+  } else if (type === 'proforma') {
+    docTitle = 'PROFORMA INVOICE';
+    docNumber = doc.proformaNumber || '';
+  } else if (type === 'challan') {
+    docTitle = 'DELIVERY CHALLAN';
+    docNumber = doc.challanNumber || '';
+  } else if (type === 'creditNote') {
+    docTitle = 'CREDIT NOTE';
+    docNumber = doc.creditNoteNumber || '';
+  } else if (type === 'debitNote') {
+    docTitle = 'DEBIT NOTE';
+    docNumber = doc.debitNoteNumber || '';
+  }
 
   return `
     <div class="space-y-6 font-sans text-xs">
@@ -4303,10 +4609,10 @@ function renderModernFormatHTML(doc, type, cust, comp) {
           <span class="inline-block font-black text-xl tracking-wider text-blue-600">${docTitle}</span>
           <div class="text-xs font-mono font-bold text-slate-900 mt-0.5">${docNumber}</div>
           <div class="text-xs text-slate-500">Date: <span class="font-mono text-slate-800">${doc.date}</span></div>
-          <div class="text-xs text-slate-500">${isInvoice ? 'Due Date:' : 'Validity of Quotation:'} <span class="font-mono text-slate-800">${isInvoice ? doc.dueDate : (doc.validity || '15 Days')}</span></div>
+          <div class="text-xs text-slate-500">${type === 'invoice' ? 'Due Date:' : 'Validity / Delivery:'} <span class="font-mono text-slate-800">${doc.dueDate || doc.validity || '15 Days'}</span></div>
           <div class="flex items-center justify-end gap-1.5 flex-wrap pt-1 text-[10px]">
             <span class="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700"><strong>Delivery:</strong> ${doc.deliveryTerms || 'Door Delivery'}</span>
-            <span class="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700"><strong>Payment:</strong> ${doc.paymentTerms || (isInvoice ? 'Net 30 Days' : 'Against PI')}</span>
+            <span class="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700"><strong>Payment:</strong> ${doc.paymentTerms || (type === 'invoice' ? 'Net 30 Days' : 'Against PI')}</span>
             <span class="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700"><strong>Taxes:</strong> ${doc.taxTerms || 'Extra as applicable'}</span>
           </div>
         </div>
@@ -4343,25 +4649,25 @@ function renderModernFormatHTML(doc, type, cust, comp) {
               <th class="py-3 px-3 text-right">Total</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-slate-100 text-slate-700">
+          <tbody class="divide-y border-slate-100 text-slate-700">
             ${(doc.items || []).map((it, idx) => `
               <tr>
                 <td class="py-3.5 px-3 text-slate-400 font-mono text-center align-top">${idx + 1}</td>
                 <td class="py-3.5 px-3 align-top">
                   <div class="flex items-start gap-4">
-                    ${(!isInvoice && it.imageUrl) ? `
+                    ${it.imageUrl ? `
                       <div class="w-24 h-24 rounded-xl bg-white border border-slate-200 shadow-sm overflow-hidden flex items-center justify-center shrink-0 p-1 mt-0.5">
                         <img src="${it.imageUrl}" class="w-full h-full object-contain" />
                       </div>
                     ` : ''}
                     <div class="flex-1 min-w-0">
                       <div class="font-bold text-slate-900 text-sm">${it.name}</div>
-                      ${(!isInvoice && it.description) ? `<div class="text-[11px] text-slate-600 mt-1 whitespace-pre-wrap break-words leading-relaxed">${escapeHtml(it.description)}</div>` : ''}
+                      ${it.description ? `<div class="text-[11px] text-slate-600 mt-1 whitespace-pre-wrap break-words leading-relaxed">${escapeHtml(it.description)}</div>` : ''}
                     </div>
                   </div>
                 </td>
                 <td class="py-3.5 px-3 text-center font-mono text-slate-500 font-semibold align-top">${it.hsnCode || '-'}</td>
-                <td class="py-3.5 px-3 text-center font-mono font-medium align-top">${it.quantity} ${it.unit}</td>
+                <td class="py-3.5 px-3 text-center font-mono font-medium align-top">${it.quantity} ${it.unit || ''}</td>
                 <td class="py-3.5 px-3 text-right font-mono font-semibold align-top">${cur()}${fmt(it.price)}</td>
                 <td class="py-3.5 px-3 text-center font-mono text-[11px] align-top font-medium text-slate-700">${it.leadTime || '1-2 Days'}</td>
                 <td class="py-3.5 px-3 text-center font-mono text-blue-600 font-semibold align-top">${it.taxRate || 0}%</td>
@@ -4402,7 +4708,7 @@ function renderModernFormatHTML(doc, type, cust, comp) {
               <span>Grand Total:</span>
               <span class="text-base font-mono text-blue-700">${cur()}${fmt(doc.grandTotal)}</span>
             </div>
-            ${isInvoice ? `
+            ${type === 'invoice' ? `
               <div class="flex justify-between text-slate-600 pt-1"><span>Paid Amount:</span><span class="font-mono font-semibold text-blue-600">${cur()}${fmt(doc.paidAmount)}</span></div>
               <div class="flex justify-between font-bold text-amber-700"><span>Balance Due:</span><span class="font-mono">${cur()}${fmt(doc.balanceDue)}</span></div>
             ` : ''}
@@ -4433,10 +4739,16 @@ function closePreviewModal() {
 }
 
 function convertCurrentPreview() {
-  if (!currentPreview || currentPreview.type !== 'quote') return;
-  const qId = currentPreview.data.id;
+  if (!currentPreview) return;
+  const { type, data: doc } = currentPreview;
   closePreviewModal();
-  convertQuoteToInvoice(qId);
+  if (type === 'quote') {
+    convertQuoteToInvoice(doc.id);
+  } else if (type === 'proforma') {
+    convertProformaToInvoice(doc.id);
+  } else if (type === 'challan') {
+    convertChallanToInvoice(doc.id);
+  }
 }
 
 function printCurrentPreview() {
@@ -5222,3 +5534,2223 @@ document.addEventListener('DOMContentLoaded', () => {
   loadDatabase();
   showAuthScreen();
 });
+
+
+// ============================================================================
+// 7. PROFORMA INVOICE MODULE (PI)
+// ============================================================================
+
+function renderProformasList(container) {
+  const proformas = activeCompany.proformas || [];
+  const totalVal = proformas.reduce((s, p) => s + (Number(p.grandTotal) || 0), 0);
+
+  container.innerHTML = `
+    <div class="space-y-3.5 max-w-7xl mx-auto text-xs">
+      <!-- Register Header -->
+      <div class="bg-white border border-slate-300 rounded-lg p-3.5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded bg-indigo-50 border border-indigo-300 flex items-center justify-center text-indigo-700">
+            <i data-lucide="file-text" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-sm font-black text-slate-900 uppercase tracking-wide">Proforma Invoice Daybook (Advance Billing)</h1>
+              <span class="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded bg-indigo-100 text-indigo-800 border border-indigo-200">${proformas.length} Vouchers</span>
+            </div>
+            <p class="text-[10px] text-slate-500 font-mono">Total Proforma Value: <span class="font-bold text-slate-800">${cur()}${fmt(totalVal)}</span></p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="openNewProformaEditor()" class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-indigo-700 hover:bg-indigo-800 text-white font-bold border border-indigo-800 text-xs shadow-sm">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            <span>+ Create Proforma Invoice</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- High-Density Daybook Table -->
+      <div class="bg-white border border-slate-300 rounded-lg overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="border-b border-slate-300 bg-[#1e1e38] text-white font-black uppercase text-[9px] tracking-wider">
+                <th class="py-2.5 px-3 w-10 text-center border-r border-[#313156]">#</th>
+                <th class="py-2.5 px-3 border-r border-[#313156]">PI Voucher #</th>
+                <th class="py-2.5 px-3 border-r border-[#313156]">Date / Validity</th>
+                <th class="py-2.5 px-3 border-r border-[#313156]">Party / Debtor Ledger</th>
+                <th class="py-2.5 px-3 text-center border-r border-[#313156]">Items</th>
+                <th class="py-2.5 px-3 text-center border-r border-[#313156]">Status</th>
+                <th class="py-2.5 px-3 text-right border-r border-[#313156]">Amount (${cur()})</th>
+                <th class="py-2.5 px-3 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 text-slate-800 font-medium">
+              ${proformas.length === 0 ? `
+                <tr><td colSpan="8" class="py-12 text-center text-slate-400 font-mono">No proforma invoices found. Click "+ Create Proforma Invoice" to record one.</td></tr>
+              ` : proformas.map((p, idx) => `
+                <tr class="hover:bg-indigo-50/50 transition-colors">
+                  <td class="py-2 px-3 text-slate-400 font-mono text-center border-r border-slate-200 font-bold">${idx + 1}</td>
+                  <td class="py-2 px-3 font-mono font-bold text-indigo-700 cursor-pointer hover:underline border-r border-slate-200" onclick="openDocPreview('proforma', '${p.id}')">
+                    ${p.proformaNumber}
+                  </td>
+                  <td class="py-2 px-3 font-mono text-slate-600 border-r border-slate-200 text-[11px]">
+                    <div>${p.date}</div>
+                    <div class="text-[9px] text-slate-400">Validity: ${p.validity || '15 Days'}</div>
+                  </td>
+                  <td class="py-2 px-3 border-r border-slate-200">
+                    <div class="font-bold text-slate-900">${p.customerName || 'Direct Customer'}</div>
+                  </td>
+                  <td class="py-2 px-3 text-center font-mono text-slate-600 border-r border-slate-200 text-[11px]">${(p.items || []).length} items</td>
+                  <td class="py-2 px-3 text-center border-r border-slate-200">
+                    <span class="inline-block text-[10px] font-bold px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 border border-indigo-200">${p.status || 'Draft'}</span>
+                  </td>
+                  <td class="py-2 px-3 text-right font-mono font-bold text-slate-900 border-r border-slate-200">${cur()}${fmt(p.grandTotal)}</td>
+                  <td class="py-2 px-3 text-center">
+                    <div class="flex items-center justify-center gap-1">
+                      <button onclick="openDocPreview('proforma', '${p.id}')" title="Preview & Print [Alt+P]" class="p-1 rounded text-slate-600 hover:text-indigo-700 hover:bg-slate-100"><i data-lucide="eye" class="w-3.5 h-3.5"></i></button>
+                      <button onclick="editProforma('${p.id}')" title="Alter Voucher" class="p-1 rounded text-slate-600 hover:text-slate-900 hover:bg-slate-100"><i data-lucide="edit" class="w-3.5 h-3.5"></i></button>
+                      <button onclick="convertProformaToInvoice('${p.id}')" title="Convert to Tax Invoice (F8)" class="p-1 rounded text-amber-700 hover:bg-amber-100"><i data-lucide="receipt" class="w-3.5 h-3.5"></i></button>
+                      <button onclick="convertProformaToChallan('${p.id}')" title="Generate Delivery Challan" class="p-1 rounded text-cyan-700 hover:bg-cyan-100"><i data-lucide="truck" class="w-3.5 h-3.5"></i></button>
+                      <button onclick="downloadDocPDF('proforma', '${p.id}')" title="Download PDF" class="p-1 rounded text-slate-600 hover:text-indigo-700 hover:bg-slate-100"><i data-lucide="download" class="w-3.5 h-3.5"></i></button>
+                      <button onclick="deleteProforma('${p.id}')" title="Delete" class="p-1 rounded text-slate-400 hover:text-rose-600 hover:bg-rose-50"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  `;
+  safeCreateIcons();
+}
+
+function openNewProformaEditor() {
+  activeEditingId = null;
+  activeEditorMode = 'proforma';
+
+  const num = (activeCompany.counterProforma || 101);
+  activeCompany.counterProforma = num;
+
+  proformaEditorData = {
+    id: 'pi-' + Date.now(),
+    proformaNumber: `PI-${new Date().getFullYear()}-${num}`,
+    date: new Date().toISOString().split('T')[0],
+    validity: '15 Days',
+    customerId: '',
+    customerName: '',
+    deliveryTerms: 'Door Delivery',
+    paymentTerms: 'Against PI',
+    taxTerms: 'Extra as applicable',
+    items: [
+      {
+        id: 'pi-it-1',
+        name: '',
+        description: '',
+        hsnCode: '',
+        quantity: 1,
+        unit: 'PCS',
+        price: 0,
+        leadTime: '1-2 Days',
+        taxRate: 18,
+        amount: 0,
+        taxAmount: 0,
+        total: 0,
+        imageUrl: null
+      }
+    ],
+    subtotal: 0,
+    taxableAmount: 0,
+    totalTax: 0,
+    grandTotal: 0,
+    notes: 'Proforma Invoice generated for advance payment approval. Goods will be dispatched upon payment receipt.',
+    terms: [
+      'Prices are ex-works / inclusive of standard packing.',
+      'Payment terms: 100% advance against Proforma Invoice.',
+      'GST extra as applicable at actual billing.',
+      'Validity: 15 days from the date of issue.'
+    ],
+    status: 'Draft'
+  };
+
+  recalculateProformaInMemory();
+  renderCurrentPage();
+}
+
+function editProforma(id) {
+  const p = (activeCompany.proformas || []).find(it => it.id === id);
+  if (!p) return;
+
+  activeEditingId = id;
+  activeEditorMode = 'proforma';
+  proformaEditorData = JSON.parse(JSON.stringify(p));
+  recalculateProformaInMemory();
+  renderCurrentPage();
+}
+
+function renderProformaEditor(container) {
+  const isEditing = Boolean(activeEditingId);
+  const unifiedProds = getUnifiedProductsList();
+
+  container.innerHTML = `
+    <div class="space-y-4 max-w-7xl mx-auto text-xs pb-8">
+      <!-- Top Ribbon -->
+      <div class="bg-[#1e1e38] text-white border border-[#313156] rounded-lg px-4 py-2.5 shadow-sm flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <button onclick="cancelEditor()" title="Back / Cancel [Esc]" class="p-1.5 rounded bg-white/10 hover:bg-white/20 text-white border border-white/20">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          </button>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-indigo-500/30 text-indigo-300 border border-indigo-400/40">VCH TYPE</span>
+              <h1 class="text-sm font-black tracking-wide uppercase text-white">${isEditing ? `Alter Proforma Invoice #${proformaEditorData.proformaNumber}` : 'Accounting Voucher: Proforma Invoice Entry'}</h1>
+            </div>
+            <p class="text-[10px] text-slate-300 font-mono mt-0.5">Issue commercial proforma invoice for customer advance payment with full specs.</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="saveProforma(true)" class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-white/10 hover:bg-white/20 text-white font-bold border border-white/30 text-xs">
+            <span class="text-[9px] font-mono bg-black/30 px-1 rounded">Alt+P</span>
+            <span>Preview & Save</span>
+          </button>
+          <button onclick="saveProforma(false)" class="flex items-center gap-1.5 px-4 py-1.5 rounded bg-indigo-600 hover:bg-indigo-500 text-white font-bold border border-indigo-400 text-xs shadow-sm">
+            <span class="text-[9px] font-mono bg-indigo-800 px-1 rounded">Ctrl+A</span>
+            <span>Save Voucher</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Party & Commercial Terms -->
+      <div class="bg-white border border-slate-300 rounded-lg p-4 shadow-sm space-y-4">
+        <div class="bg-slate-50 p-3 rounded-md border border-slate-200 space-y-3">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5">
+            <div class="md:col-span-6">
+              <div class="flex items-center justify-between mb-1">
+                <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider">Party A/c Name (Buyer Ledger) *</label>
+                <button onclick="openCustomerModal()" class="text-[10px] text-indigo-700 font-bold hover:underline">+ New Ledger (Alt+C)</button>
+              </div>
+              <select id="pe-cust" onchange="handleProformaCustChange(this.value)" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs font-semibold text-slate-900 focus:outline-none focus:border-indigo-600">
+                <option value="">-- Select Party / Customer Ledger --</option>
+                ${(activeCompany.customers || []).map(c => `
+                  <option value="${c.id}" ${c.id === proformaEditorData.customerId ? 'selected' : ''}>${c.name} ${c.gstin ? `[GSTIN: ${c.gstin}]` : ''} ${c.city ? `(${c.city})` : ''}</option>
+                `).join('')}
+              </select>
+            </div>
+
+            <div class="md:col-span-2">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">PI Voucher #</label>
+              <input type="text" value="${proformaEditorData.proformaNumber}" oninput="proformaEditorData.proformaNumber = this.value" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs text-slate-900 font-mono font-bold focus:outline-none focus:border-indigo-600" />
+            </div>
+
+            <div class="md:col-span-2">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">PI Date</label>
+              <input type="date" value="${proformaEditorData.date}" oninput="proformaEditorData.date = this.value" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs text-slate-900 font-mono focus:outline-none focus:border-indigo-600" />
+            </div>
+
+            <div class="md:col-span-2">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">Validity</label>
+              <select onchange="proformaEditorData.validity = this.value" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs font-semibold text-slate-900 focus:outline-none focus:border-indigo-600">
+                ${VALIDITY_OPTIONS.map(v => `
+                  <option value="${v}" ${v === (proformaEditorData.validity || '15 Days') ? 'selected' : ''}>${v}</option>
+                `).join('')}
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5 pt-2 border-t border-slate-200">
+            <div class="md:col-span-4">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">Delivery Terms</label>
+              <select onchange="proformaEditorData.deliveryTerms = this.value" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs font-semibold text-slate-900 focus:outline-none focus:border-indigo-600">
+                ${DELIVERY_TERMS_OPTIONS.map(d => `<option value="${d}" ${d === (proformaEditorData.deliveryTerms || 'Door Delivery') ? 'selected' : ''}>${d}</option>`).join('')}
+              </select>
+            </div>
+            <div class="md:col-span-4">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">Payment Terms</label>
+              <select onchange="proformaEditorData.paymentTerms = this.value" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs font-semibold text-slate-900 focus:outline-none focus:border-indigo-600">
+                ${PAYMENT_TERMS_OPTIONS.map(p => `<option value="${p}" ${p === (proformaEditorData.paymentTerms || 'Against PI') ? 'selected' : ''}>${p}</option>`).join('')}
+              </select>
+            </div>
+            <div class="md:col-span-4">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">Taxes</label>
+              <select onchange="proformaEditorData.taxTerms = this.value" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs font-semibold text-slate-900 focus:outline-none focus:border-indigo-600">
+                ${TAX_TERMS_OPTIONS.map(t => `<option value="${t}" ${t === (proformaEditorData.taxTerms || 'Extra as applicable') ? 'selected' : ''}>${t}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Particulars Table -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <h3 class="font-black uppercase text-[10px] tracking-wider text-slate-700 flex items-center gap-1.5">
+              <i data-lucide="calculator" class="w-3.5 h-3.5 text-indigo-700"></i>
+              Itemized Particulars & Stock Allocation
+            </h3>
+            <div class="flex items-center gap-2">
+              <button onclick="syncWithWebsiteCatalog(false)" title="Import latest products from website" class="flex items-center gap-1 px-2.5 py-1 rounded bg-indigo-50 hover:bg-indigo-100 border border-indigo-300 text-indigo-900 font-bold text-[11px]">
+                <i data-lucide="globe" class="w-3 h-3 text-indigo-700"></i>
+                <span>Import Web Catalog</span>
+              </button>
+              <button onclick="addProformaRow()" class="flex items-center gap-1 px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-800 font-bold text-[11px]">
+                <i data-lucide="plus" class="w-3 h-3 text-indigo-700"></i>
+                <span>Add Item Row [Alt+I]</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto border border-slate-300 rounded-md bg-white">
+            <table class="w-full min-w-[1100px] text-left text-xs border-collapse">
+              <thead>
+                <tr class="border-b border-slate-300 bg-[#f1f5f9] text-slate-700 font-black uppercase text-[9px]">
+                  <th class="py-2.5 px-2 w-10 text-center border-r border-slate-300">#</th>
+                  <th class="py-2.5 px-3 min-w-[340px] border-r border-slate-300">Particulars (Stock Item, Photo & Detailed Specs)</th>
+                  <th class="py-2.5 px-2 w-24 min-w-[95px] text-center border-r border-slate-300">HSN/SAC</th>
+                  <th class="py-2.5 px-2 w-20 min-w-[80px] text-center border-r border-slate-300">Qty</th>
+                  <th class="py-2.5 px-2 w-24 min-w-[85px] text-center border-r border-slate-300">Unit</th>
+                  <th class="py-2.5 px-2 w-32 min-w-[110px] text-right border-r border-slate-300">Rate (${cur()})</th>
+                  <th class="py-2.5 px-2 w-32 min-w-[115px] text-center border-r border-slate-300">Lead Time</th>
+                  <th class="py-2.5 px-2 w-20 min-w-[75px] text-center border-r border-slate-300">GST%</th>
+                  <th class="py-2.5 px-3 w-32 min-w-[120px] text-right border-r border-slate-300">Amount (${cur()})</th>
+                  <th class="py-2.5 px-1.5 w-10 text-center"></th>
+                </tr>
+              </thead>
+              <tbody id="proforma-items-tbody" class="divide-y divide-slate-200 text-slate-800">
+                ${proformaEditorData.items.map((row, idx) => `
+                  <tr class="hover:bg-slate-50/80">
+                    <td class="py-3 px-2 text-slate-400 font-mono text-center align-top border-r border-slate-200 font-bold">${idx + 1}</td>
+                    <td class="py-3 px-3 align-top border-r border-slate-200">
+                      <div class="flex items-start gap-3">
+                        <div onclick="openRowImageModal(${idx}, 'proforma')" class="w-20 h-20 rounded bg-white border ${row.imageUrl ? 'border-indigo-400 shadow-sm' : 'border-dashed border-slate-300'} hover:border-indigo-600 flex flex-col items-center justify-center cursor-pointer overflow-hidden group transition-all shrink-0 relative" title="Upload or change product photo">
+                          ${row.imageUrl ? `
+                            <img src="${row.imageUrl}" class="w-full h-full object-contain p-0.5" />
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition-opacity text-white">
+                              <i data-lucide="edit-2" class="w-3.5 h-3.5"></i>
+                              <span class="text-[8px] font-bold mt-0.5">Change</span>
+                            </div>
+                          ` : `
+                            <i data-lucide="image-plus" class="w-5 h-5 text-slate-400 group-hover:text-indigo-600"></i>
+                            <span class="text-[9px] font-bold text-slate-500 group-hover:text-indigo-600 mt-0.5">+ Photo</span>
+                          `}
+                        </div>
+
+                        <div class="flex-1 space-y-1.5 min-w-0">
+                          <div class="flex gap-2">
+                            <select onchange="handleProformaCatalogSelect(${idx}, this.value)" class="w-2/5 px-2 py-1.5 bg-slate-50 border border-slate-300 rounded text-[11px] font-medium text-slate-700 truncate focus:outline-none focus:border-indigo-600 focus:bg-white">
+                              <option value="">-- From Master / Website --</option>
+                              <optgroup label="🏢 Company Item Master">
+                                ${(activeCompany.items || []).map(it => `<option value="${it.id}" ${it.name === row.name ? 'selected' : ''}>${it.name} [₹${it.price || it.rate || 0}]</option>`).join('')}
+                              </optgroup>
+                              <optgroup label="🌐 PASS CORP. Website Catalog">
+                                ${unifiedProds.filter(p => p.source === 'website').map(it => `<option value="${it.id}" ${it.name === row.name ? 'selected' : ''}>${it.name} [₹${it.price || 0}]</option>`).join('')}
+                              </optgroup>
+                            </select>
+                            <input type="text" list="global-products-datalist-proforma" value="${escapeHtml(row.name)}" oninput="handleProformaNameInput(${idx}, this.value)" placeholder="Search website product or enter particulars..." class="flex-1 px-2.5 py-1.5 bg-white border border-slate-300 rounded text-xs font-bold text-slate-900 focus:outline-none focus:border-indigo-600" />
+                          </div>
+                          <textarea oninput="autoExpandTextarea(this); updateProformaRow(${idx}, 'description', this.value)" placeholder="Technical specifications, dimensions, features (Auto-filled on selection)..." class="auto-expand w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded text-[11px] text-slate-700 focus:outline-none focus:border-indigo-600 focus:bg-white resize-y leading-relaxed font-normal min-h-[44px] overflow-hidden">${escapeHtml(row.description || '')}</textarea>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="py-3 px-2 align-top border-r border-slate-200"><input type="text" value="${escapeHtml(row.hsnCode || '')}" oninput="updateProformaRow(${idx}, 'hsnCode', this.value)" placeholder="HSN" class="w-full px-2 py-1.5 bg-white border border-slate-300 rounded text-xs text-center font-mono font-medium focus:outline-none focus:border-indigo-600" /></td>
+                    <td class="py-3 px-2 align-top border-r border-slate-200"><input type="number" min="1" value="${row.quantity}" oninput="updateProformaRow(${idx}, 'quantity', this.value)" class="w-full px-2 py-1.5 bg-white border border-slate-300 rounded text-xs text-center font-mono font-bold focus:outline-none focus:border-indigo-600" /></td>
+                    <td class="py-3 px-2 align-top border-r border-slate-200">
+                      <select onchange="updateProformaRow(${idx}, 'unit', this.value)" class="w-full px-1 py-1.5 bg-white border border-slate-300 rounded text-xs text-center font-semibold focus:outline-none focus:border-indigo-600">
+                        ${STANDARD_UNITS.map(u => `<option value="${u}" ${(row.unit || 'PCS').toUpperCase() === u.toUpperCase() ? 'selected' : ''}>${u}</option>`).join('')}
+                      </select>
+                    </td>
+                    <td class="py-3 px-2 align-top border-r border-slate-200"><input type="number" min="0" step="0.01" value="${row.price}" oninput="updateProformaRow(${idx}, 'price', this.value)" class="w-full px-2 py-1.5 bg-white border border-slate-300 rounded text-xs text-right font-mono font-bold focus:outline-none focus:border-indigo-600" /></td>
+                    <td class="py-3 px-2 align-top border-r border-slate-200">
+                      <select onchange="updateProformaRow(${idx}, 'leadTime', this.value)" class="w-full px-1.5 py-1.5 bg-white border border-slate-300 rounded text-xs text-center font-semibold focus:outline-none focus:border-indigo-600">
+                        ${LEAD_TIME_OPTIONS.map(lt => `<option value="${lt}" ${(row.leadTime || '1-2 Days') === lt ? 'selected' : ''}>${lt}</option>`).join('')}
+                      </select>
+                    </td>
+                    <td class="py-3 px-2 align-top border-r border-slate-200">
+                      <select onchange="updateProformaRow(${idx}, 'taxRate', this.value)" class="w-full px-1.5 py-1.5 bg-white border border-slate-300 rounded text-xs text-center font-mono font-semibold focus:outline-none focus:border-indigo-600">
+                        ${[0, 5, 12, 18, 28].map(t => `<option value="${t}" ${Number(row.taxRate) === t ? 'selected' : ''}>${t}%</option>`).join('')}
+                      </select>
+                    </td>
+                    <td id="pi-row-total-${idx}" class="py-3 px-3 text-right font-mono font-black text-slate-900 text-xs align-top border-r border-slate-200 pt-2.5">${cur()}${fmt(row.total)}</td>
+                    <td class="py-3 px-1.5 text-center align-top pt-2">
+                      <button onclick="removeProformaRow(${idx})" ${proformaEditorData.items.length === 1 ? 'disabled class="opacity-20"' : 'class="p-1 text-slate-400 hover:text-rose-600 rounded"'}><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+
+          <datalist id="global-products-datalist-proforma">
+            ${unifiedProds.map(p => `<option value="${escapeHtml(p.name)}">${p.sourceLabel} • ₹${p.price} (HSN: ${p.hsn || '-'})</option>`).join('')}
+          </datalist>
+        </div>
+
+        <!-- Ledger & Totals Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 pt-3 border-t border-slate-300">
+          <div class="md:col-span-7 space-y-3">
+            <div>
+              <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">Narration / Remarks</label>
+              <textarea rows="2" oninput="proformaEditorData.notes = this.value" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded text-xs text-slate-900 focus:outline-none focus:border-indigo-600">${proformaEditorData.notes || ''}</textarea>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider">Terms & Conditions of Proforma</label>
+                <button onclick="addProformaTerm()" class="text-[10px] text-indigo-700 font-bold hover:underline">+ Add Term</button>
+              </div>
+              <div class="space-y-1.5">
+                ${proformaEditorData.terms.map((t, idx) => `
+                  <div class="flex items-center gap-2">
+                    <span class="text-slate-400 font-mono text-[10px] w-4 text-center">${idx + 1}.</span>
+                    <input type="text" value="${escapeHtml(t)}" oninput="updateProformaTerm(${idx}, this.value)" class="flex-1 px-2.5 py-1 bg-slate-50 border border-slate-300 rounded text-xs text-slate-900 focus:outline-none focus:border-indigo-600" />
+                    <button onclick="removeProformaTerm(${idx})" class="p-1 text-slate-400 hover:text-rose-600"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+
+          <div class="md:col-span-5 bg-slate-50 border border-slate-300 p-4 rounded-md space-y-2 text-xs">
+            <div class="flex justify-between text-slate-600">
+              <span class="font-medium">Gross Subtotal:</span>
+              <span id="pe-subtotal-val" class="font-mono font-bold text-slate-900">${cur()}${fmt(proformaEditorData.subtotal)}</span>
+            </div>
+            <div class="flex justify-between text-slate-600">
+              <span class="font-medium">Taxable Value:</span>
+              <span id="pe-taxable-val" class="font-mono font-bold text-slate-900">${cur()}${fmt(proformaEditorData.taxableAmount)}</span>
+            </div>
+            <div class="flex justify-between text-slate-600">
+              <span class="font-medium">Estimated GST:</span>
+              <span id="pe-tax-val" class="font-mono font-bold text-indigo-700">+${cur()}${fmt(proformaEditorData.totalTax)}</span>
+            </div>
+            <div class="pt-2 border-t-2 border-slate-300 flex justify-between items-center text-sm font-black text-slate-900">
+              <span class="uppercase tracking-wider">Proforma Total:</span>
+              <span id="pe-grand-val" class="text-base text-indigo-950 font-mono">${cur()}${fmt(proformaEditorData.grandTotal)}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  safeCreateIcons();
+}
+
+function handleProformaCustChange(custId) {
+  proformaEditorData.customerId = custId;
+  const cust = (activeCompany.customers || []).find(c => c.id === custId);
+  proformaEditorData.customerName = cust ? cust.name : '';
+}
+
+function updateProformaRow(idx, field, val) {
+  const row = proformaEditorData.items[idx];
+  if (!row) return;
+
+  if (field === 'quantity' || field === 'price' || field === 'taxRate') {
+    row[field] = Number(val) || 0;
+  } else {
+    row[field] = val;
+  }
+
+  const qty = Number(row.quantity) || 0;
+  const price = Number(row.price) || 0;
+  const tax = Number(row.taxRate) || 0;
+
+  const taxable = qty * price;
+  const taxVal = taxable * (tax / 100);
+
+  row.amount = taxable;
+  row.taxAmount = taxVal;
+  row.total = taxable + taxVal;
+
+  const rowTotalEl = document.getElementById(`pi-row-total-${idx}`);
+  if (rowTotalEl) rowTotalEl.textContent = `${cur()}${fmt(row.total)}`;
+  recalculateProformaInMemory();
+}
+
+function recalculateProformaInMemory() {
+  let subtotal = 0;
+  let taxTotal = 0;
+
+  proformaEditorData.items.forEach(r => {
+    const qty = Number(r.quantity) || 0;
+    const price = Number(r.price) || 0;
+    const tax = Number(r.taxRate) || 0;
+    const lineTaxable = qty * price;
+    const lineTax = lineTaxable * (tax / 100);
+    r.amount = lineTaxable;
+    r.taxAmount = lineTax;
+    r.total = lineTaxable + lineTax;
+    subtotal += lineTaxable;
+    taxTotal += lineTax;
+  });
+
+  proformaEditorData.subtotal = subtotal;
+  proformaEditorData.taxableAmount = subtotal;
+  proformaEditorData.totalTax = taxTotal;
+  proformaEditorData.grandTotal = subtotal + taxTotal;
+
+  const subEl = document.getElementById('pe-subtotal-val');
+  const taxbEl = document.getElementById('pe-taxable-val');
+  const taxEl = document.getElementById('pe-tax-val');
+  const gEl = document.getElementById('pe-grand-val');
+
+  if (subEl) subEl.textContent = `${cur()}${fmt(proformaEditorData.subtotal)}`;
+  if (taxbEl) taxbEl.textContent = `${cur()}${fmt(proformaEditorData.taxableAmount)}`;
+  if (taxEl) taxEl.textContent = `+${cur()}${fmt(proformaEditorData.totalTax)}`;
+  if (gEl) gEl.textContent = `${cur()}${fmt(proformaEditorData.grandTotal)}`;
+}
+
+function handleProformaCatalogSelect(idx, itemId) {
+  if (!itemId) return;
+  const unified = getUnifiedProductsList();
+  const item = unified.find(it => it.id === itemId || it.name.toLowerCase().trim() === itemId.toLowerCase().trim());
+  if (!item) return;
+
+  const row = proformaEditorData.items[idx];
+  row.name = item.name;
+  row.description = item.description || '';
+  row.hsnCode = item.hsn || item.hsnCode || '';
+  row.unit = item.unit || 'PCS';
+  row.leadTime = row.leadTime || '1-2 Days';
+  row.price = Number(item.price) || 0;
+  row.taxRate = Number(item.taxRate) || 18;
+  row.imageUrl = item.imageUrl || null;
+
+  const qty = Number(row.quantity) || 1;
+  const price = Number(row.price) || 0;
+  const tax = Number(row.taxRate) || 0;
+  row.amount = qty * price;
+  row.taxAmount = row.amount * (tax / 100);
+  row.total = row.amount + row.taxAmount;
+
+  recalculateProformaInMemory();
+  renderProformaEditor(document.getElementById('main-content'));
+}
+
+function handleProformaNameInput(idx, val) {
+  updateProformaRow(idx, 'name', val);
+  if (val && val.length > 2) {
+    const unified = getUnifiedProductsList();
+    const exactMatch = unified.find(p => p.name.toLowerCase().trim() === val.toLowerCase().trim());
+    if (exactMatch) {
+      const row = proformaEditorData.items[idx];
+      row.description = exactMatch.description || '';
+      row.hsnCode = exactMatch.hsn || row.hsnCode || '';
+      row.price = Number(exactMatch.price) || row.price || 0;
+      row.imageUrl = exactMatch.imageUrl || row.imageUrl || null;
+      if (exactMatch.unit) row.unit = exactMatch.unit;
+      if (exactMatch.taxRate) row.taxRate = exactMatch.taxRate;
+
+      const qty = Number(row.quantity) || 1;
+      const price = Number(row.price) || 0;
+      const tax = Number(row.taxRate) || 0;
+      row.amount = qty * price;
+      row.taxAmount = row.amount * (tax / 100);
+      row.total = row.amount + row.taxAmount;
+
+      recalculateProformaInMemory();
+      renderProformaEditor(document.getElementById('main-content'));
+    }
+  }
+}
+
+function addProformaRow() {
+  proformaEditorData.items.push({
+    id: 'pi-it-' + Date.now(),
+    name: '',
+    description: '',
+    hsnCode: '',
+    quantity: 1,
+    unit: 'PCS',
+    price: 0,
+    leadTime: '1-2 Days',
+    taxRate: 18,
+    amount: 0,
+    taxAmount: 0,
+    total: 0,
+    imageUrl: null
+  });
+  recalculateProformaInMemory();
+  renderProformaEditor(document.getElementById('main-content'));
+}
+
+function removeProformaRow(idx) {
+  if (proformaEditorData.items.length === 1) return;
+  proformaEditorData.items.splice(idx, 1);
+  recalculateProformaInMemory();
+  renderProformaEditor(document.getElementById('main-content'));
+}
+
+function addProformaTerm() {
+  proformaEditorData.terms.push('');
+  renderProformaEditor(document.getElementById('main-content'));
+}
+
+function updateProformaTerm(idx, val) {
+  proformaEditorData.terms[idx] = val;
+}
+
+function removeProformaTerm(idx) {
+  proformaEditorData.terms.splice(idx, 1);
+  renderProformaEditor(document.getElementById('main-content'));
+}
+
+function saveProforma(previewAfter) {
+  if (!proformaEditorData.customerId && !proformaEditorData.customerName) {
+    alert('Please select or add a customer for this proforma invoice.');
+    return;
+  }
+
+  recalculateProformaInMemory();
+  activeCompany.proformas = activeCompany.proformas || [];
+
+  if (activeEditingId) {
+    const idx = activeCompany.proformas.findIndex(p => p.id === activeEditingId);
+    if (idx !== -1) {
+      activeCompany.proformas[idx] = { ...proformaEditorData };
+    }
+  } else {
+    activeCompany.proformas.unshift({ ...proformaEditorData });
+    activeCompany.counterProforma = (activeCompany.counterProforma || 101) + 1;
+  }
+
+  saveDatabase();
+  const savedId = proformaEditorData.id;
+  activeEditorMode = null;
+  activeEditingId = null;
+
+  if (previewAfter) {
+    openDocPreview('proforma', savedId);
+  } else {
+    showToast('Proforma Invoice saved successfully! ✅');
+    navigateTab('proformas');
+  }
+}
+
+function deleteProforma(id) {
+  if (confirm('Are you sure you want to delete this proforma invoice?')) {
+    activeCompany.proformas = (activeCompany.proformas || []).filter(p => p.id !== id);
+    saveDatabase();
+    showToast('Proforma Invoice deleted');
+    renderCurrentPage();
+  }
+}
+
+function convertProformaToInvoice(id) {
+  const p = (activeCompany.proformas || []).find(it => it.id === id);
+  if (!p) return;
+
+  activeCompany.counterInvoice = (activeCompany.counterInvoice || 101);
+  const num = activeCompany.counterInvoice;
+
+  invoiceEditorData = {
+    id: 'inv-' + Date.now(),
+    invoiceNumber: `INV-${new Date().getFullYear()}-${num}`,
+    date: new Date().toISOString().split('T')[0],
+    dueDate: new Date().toISOString().split('T')[0],
+    customerId: p.customerId,
+    customerName: p.customerName,
+    deliveryTerms: p.deliveryTerms || 'Door Delivery',
+    paymentTerms: 'Net 30 Days',
+    taxTerms: p.taxTerms || 'Extra as applicable',
+    items: JSON.parse(JSON.stringify(p.items)),
+    subtotal: p.subtotal,
+    taxableAmount: p.taxableAmount,
+    totalTax: p.totalTax,
+    grandTotal: p.grandTotal,
+    paidAmount: p.grandTotal,
+    balanceDue: 0,
+    notes: `Tax Invoice generated against Proforma #${p.proformaNumber}.`,
+    terms: p.terms || [],
+    status: 'Paid'
+  };
+
+  activeEditorMode = 'invoice';
+  activeEditingId = null;
+  recalculateInvoiceInMemory();
+  renderCurrentPage();
+  showToast('Converted Proforma to Sales Tax Invoice! 🧾');
+}
+
+function convertProformaToChallan(id) {
+  const p = (activeCompany.proformas || []).find(it => it.id === id);
+  if (!p) return;
+
+  const num = (activeCompany.counterChallan || 101);
+  activeCompany.counterChallan = num;
+
+  challanEditorData = {
+    id: 'dc-' + Date.now(),
+    challanNumber: `DC-${new Date().getFullYear()}-${num}`,
+    date: new Date().toISOString().split('T')[0],
+    dispatchDate: new Date().toISOString().split('T')[0],
+    customerId: p.customerId,
+    customerName: p.customerName,
+    deliveryTerms: p.deliveryTerms || 'Door Delivery',
+    vehicleNo: '',
+    ewayBillNo: '',
+    transporter: '',
+    lrNo: '',
+    items: JSON.parse(JSON.stringify(p.items)),
+    subtotal: p.subtotal,
+    taxableAmount: p.taxableAmount,
+    totalTax: p.totalTax,
+    grandTotal: p.grandTotal,
+    notes: `Delivery Challan for dispatch against Proforma #${p.proformaNumber}.`,
+    terms: [
+      'Goods received in good condition.',
+      'Subject to consignee verification.'
+    ],
+    status: 'Dispatched'
+  };
+
+  activeEditorMode = 'challan';
+  activeEditingId = null;
+  recalculateChallanInMemory();
+  renderCurrentPage();
+  showToast('Generated Delivery Challan from Proforma! 🚚');
+}
+
+// ============================================================================
+// 8. DELIVERY CHALLAN MODULE (DC)
+// ============================================================================
+
+function renderChallansList(container) {
+  const challans = activeCompany.challans || [];
+  const totalQty = challans.reduce((s, c) => s + (c.items || []).reduce((iq, it) => iq + Number(it.quantity || 0), 0), 0);
+
+  container.innerHTML = `
+    <div class="space-y-3.5 max-w-7xl mx-auto text-xs">
+      <div class="bg-white border border-slate-300 rounded-lg p-3.5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded bg-cyan-50 border border-cyan-300 flex items-center justify-center text-cyan-700">
+            <i data-lucide="truck" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-sm font-black text-slate-900 uppercase tracking-wide">Delivery Challans & Dispatch Register</h1>
+              <span class="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded bg-cyan-100 text-cyan-800 border border-cyan-200">${challans.length} Challans</span>
+            </div>
+            <p class="text-[10px] text-slate-500 font-mono">Total Units Dispatched: <span class="font-bold text-slate-800">${totalQty} Items</span></p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="openNewChallanEditor()" class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-cyan-700 hover:bg-cyan-800 text-white font-bold border border-cyan-800 text-xs shadow-sm">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            <span>+ Create Delivery Challan</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="bg-white border border-slate-300 rounded-lg overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="border-b border-slate-300 bg-[#073642] text-white font-black uppercase text-[9px] tracking-wider">
+                <th class="py-2.5 px-3 w-10 text-center border-r border-[#0e4d5d]">#</th>
+                <th class="py-2.5 px-3 border-r border-[#0e4d5d]">Challan #</th>
+                <th class="py-2.5 px-3 border-r border-[#0e4d5d]">Date / Dispatch</th>
+                <th class="py-2.5 px-3 border-r border-[#0e4d5d]">Consignee / Party</th>
+                <th class="py-2.5 px-3 border-r border-[#0e4d5d]">Transport & Vehicle</th>
+                <th class="py-2.5 px-3 text-center border-r border-[#0e4d5d]">Qty</th>
+                <th class="py-2.5 px-3 text-right border-r border-[#0e4d5d]">Value (${cur()})</th>
+                <th class="py-2.5 px-3 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 text-slate-800 font-medium">
+              ${challans.length === 0 ? `
+                <tr><td colSpan="8" class="py-12 text-center text-slate-400 font-mono">No delivery challans created. Press "+ Create Delivery Challan" to generate one.</td></tr>
+              ` : challans.map((c, idx) => `
+                <tr class="hover:bg-cyan-50/50 transition-colors">
+                  <td class="py-2 px-3 text-slate-400 font-mono text-center border-r border-slate-200 font-bold">${idx + 1}</td>
+                  <td class="py-2 px-3 font-mono font-bold text-cyan-700 cursor-pointer hover:underline border-r border-slate-200" onclick="openDocPreview('challan', '${c.id}')">
+                    ${c.challanNumber}
+                  </td>
+                  <td class="py-2 px-3 font-mono text-slate-600 border-r border-slate-200 text-[11px]">
+                    <div>${c.date}</div>
+                    <div class="text-[9px] text-slate-400">Dispatch: ${c.dispatchDate || c.date}</div>
+                  </td>
+                  <td class="py-2 px-3 border-r border-slate-200">
+                    <div class="font-bold text-slate-900">${c.customerName || 'Direct Consignee'}</div>
+                  </td>
+                  <td class="py-2 px-3 font-mono text-slate-700 border-r border-slate-200 text-[11px]">
+                    <div>${c.vehicleNo ? `Veh: <span class="font-bold">${c.vehicleNo}</span>` : 'Self Dispatch'}</div>
+                    ${c.ewayBillNo ? `<div class="text-[9px] text-slate-400">E-Way: ${c.ewayBillNo}</div>` : ''}
+                  </td>
+                  <td class="py-2 px-3 text-center font-mono text-slate-700 border-r border-slate-200 font-bold">${(c.items || []).reduce((q, it) => q + Number(it.quantity || 0), 0)}</td>
+                  <td class="py-2 px-3 text-right font-mono font-bold text-slate-900 border-r border-slate-200">${cur()}${fmt(c.grandTotal)}</td>
+                  <td class="py-2 px-3 text-center">
+                    <div class="flex items-center justify-center gap-1">
+                      <button onclick="openDocPreview('challan', '${c.id}')" title="Preview & Print" class="p-1 rounded text-slate-600 hover:text-cyan-700 hover:bg-slate-100"><i data-lucide="eye" class="w-3.5 h-3.5"></i></button>
+                      <button onclick="editChallan('${c.id}')" title="Alter Voucher" class="p-1 rounded text-slate-600 hover:text-slate-900 hover:bg-slate-100"><i data-lucide="edit" class="w-3.5 h-3.5"></i></button>
+                      <button onclick="convertChallanToInvoice('${c.id}')" title="Convert to Tax Invoice (F8)" class="p-1 rounded text-amber-700 hover:bg-amber-100"><i data-lucide="receipt" class="w-3.5 h-3.5"></i></button>
+                      <button onclick="downloadDocPDF('challan', '${c.id}')" title="Download PDF" class="p-1 rounded text-slate-600 hover:text-cyan-700 hover:bg-slate-100"><i data-lucide="download" class="w-3.5 h-3.5"></i></button>
+                      <button onclick="deleteChallan('${c.id}')" title="Delete" class="p-1 rounded text-slate-400 hover:text-rose-600 hover:bg-rose-50"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  `;
+  safeCreateIcons();
+}
+
+function openNewChallanEditor() {
+  activeEditingId = null;
+  activeEditorMode = 'challan';
+
+  const num = (activeCompany.counterChallan || 101);
+  activeCompany.counterChallan = num;
+
+  challanEditorData = {
+    id: 'dc-' + Date.now(),
+    challanNumber: `DC-${new Date().getFullYear()}-${num}`,
+    date: new Date().toISOString().split('T')[0],
+    dispatchDate: new Date().toISOString().split('T')[0],
+    customerId: '',
+    customerName: '',
+    deliveryTerms: 'Door Delivery',
+    vehicleNo: '',
+    ewayBillNo: '',
+    transporter: '',
+    lrNo: '',
+    items: [
+      {
+        id: 'dc-it-1',
+        name: '',
+        description: '',
+        hsnCode: '',
+        quantity: 1,
+        unit: 'PCS',
+        price: 0,
+        leadTime: '1-2 Days',
+        taxRate: 18,
+        amount: 0,
+        taxAmount: 0,
+        total: 0,
+        imageUrl: null
+      }
+    ],
+    subtotal: 0,
+    taxableAmount: 0,
+    totalTax: 0,
+    grandTotal: 0,
+    notes: 'Goods sent for delivery / job work under GST Rule 55.',
+    terms: [
+      'Goods received in good condition & verified by consignee.',
+      'Subject to Mumbai jurisdiction only.'
+    ],
+    status: 'Dispatched'
+  };
+
+  recalculateChallanInMemory();
+  renderCurrentPage();
+}
+
+function editChallan(id) {
+  const c = (activeCompany.challans || []).find(it => it.id === id);
+  if (!c) return;
+
+  activeEditingId = id;
+  activeEditorMode = 'challan';
+  challanEditorData = JSON.parse(JSON.stringify(c));
+  recalculateChallanInMemory();
+  renderCurrentPage();
+}
+
+function renderChallanEditor(container) {
+  const isEditing = Boolean(activeEditingId);
+  const unifiedProds = getUnifiedProductsList();
+
+  container.innerHTML = `
+    <div class="space-y-4 max-w-7xl mx-auto text-xs pb-8">
+      <!-- Ribbon -->
+      <div class="bg-[#073642] text-white border border-[#0e4d5d] rounded-lg px-4 py-2.5 shadow-sm flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <button onclick="cancelEditor()" title="Back / Cancel [Esc]" class="p-1.5 rounded bg-white/10 hover:bg-white/20 text-white border border-white/20">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          </button>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-cyan-500/30 text-cyan-300 border border-cyan-400/40">VCH TYPE</span>
+              <h1 class="text-sm font-black tracking-wide uppercase text-white">${isEditing ? `Alter Delivery Challan #${challanEditorData.challanNumber}` : 'Accounting Voucher: Delivery Challan / Dispatch Slip'}</h1>
+            </div>
+            <p class="text-[10px] text-slate-300 font-mono mt-0.5">Generate GST delivery challan with transport, vehicle, and E-Way bill details.</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="saveChallan(true)" class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-white/10 hover:bg-white/20 text-white font-bold border border-white/30 text-xs">
+            <span class="text-[9px] font-mono bg-black/30 px-1 rounded">Alt+P</span>
+            <span>Preview & Save</span>
+          </button>
+          <button onclick="saveChallan(false)" class="flex items-center gap-1.5 px-4 py-1.5 rounded bg-cyan-700 hover:bg-cyan-600 text-white font-bold border border-cyan-500 text-xs shadow-sm">
+            <span class="text-[9px] font-mono bg-cyan-900 px-1 rounded">Ctrl+A</span>
+            <span>Save Voucher</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Consignee & Transport Details -->
+      <div class="bg-white border border-slate-300 rounded-lg p-4 shadow-sm space-y-4">
+        <div class="bg-slate-50 p-3 rounded-md border border-slate-200 space-y-3">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5">
+            <div class="md:col-span-6">
+              <div class="flex items-center justify-between mb-1">
+                <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider">Consignee / Party Name *</label>
+                <button onclick="openCustomerModal()" class="text-[10px] text-cyan-700 font-bold hover:underline">+ New Ledger (Alt+C)</button>
+              </div>
+              <select onchange="handleChallanCustChange(this.value)" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs font-semibold text-slate-900 focus:outline-none focus:border-cyan-600">
+                <option value="">-- Select Consignee / Party --</option>
+                ${(activeCompany.customers || []).map(c => `
+                  <option value="${c.id}" ${c.id === challanEditorData.customerId ? 'selected' : ''}>${c.name} ${c.gstin ? `[GSTIN: ${c.gstin}]` : ''} ${c.city ? `(${c.city})` : ''}</option>
+                `).join('')}
+              </select>
+            </div>
+
+            <div class="md:col-span-2">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">Challan #</label>
+              <input type="text" value="${challanEditorData.challanNumber}" oninput="challanEditorData.challanNumber = this.value" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs text-slate-900 font-mono font-bold focus:outline-none focus:border-cyan-600" />
+            </div>
+
+            <div class="md:col-span-2">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">Challan Date</label>
+              <input type="date" value="${challanEditorData.date}" oninput="challanEditorData.date = this.value" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs text-slate-900 font-mono focus:outline-none focus:border-cyan-600" />
+            </div>
+
+            <div class="md:col-span-2">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">Dispatch Date</label>
+              <input type="date" value="${challanEditorData.dispatchDate}" oninput="challanEditorData.dispatchDate = this.value" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs text-slate-900 font-mono focus:outline-none focus:border-cyan-600" />
+            </div>
+          </div>
+
+          <!-- Transport row -->
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5 pt-2 border-t border-slate-200">
+            <div class="md:col-span-3">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">Vehicle / Truck No</label>
+              <input type="text" placeholder="e.g. MH01 AB 1234" value="${challanEditorData.vehicleNo || ''}" oninput="challanEditorData.vehicleNo = this.value" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs text-slate-900 font-mono font-bold uppercase focus:outline-none focus:border-cyan-600" />
+            </div>
+            <div class="md:col-span-3">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">E-Way Bill No</label>
+              <input type="text" placeholder="12-digit E-way bill" value="${challanEditorData.ewayBillNo || ''}" oninput="challanEditorData.ewayBillNo = this.value" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs text-slate-900 font-mono focus:outline-none focus:border-cyan-600" />
+            </div>
+            <div class="md:col-span-3">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">Transporter / Courier</label>
+              <input type="text" placeholder="Name of carrier" value="${challanEditorData.transporter || ''}" oninput="challanEditorData.transporter = this.value" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs text-slate-900 focus:outline-none focus:border-cyan-600" />
+            </div>
+            <div class="md:col-span-3">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">LR / Bilty / Docket No</label>
+              <input type="text" placeholder="Receipt / LR No" value="${challanEditorData.lrNo || ''}" oninput="challanEditorData.lrNo = this.value" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs text-slate-900 font-mono focus:outline-none focus:border-cyan-600" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Particulars Table -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <h3 class="font-black uppercase text-[10px] tracking-wider text-slate-700 flex items-center gap-1.5">
+              <i data-lucide="calculator" class="w-3.5 h-3.5 text-cyan-700"></i>
+              Dispatched Items & Quantities
+            </h3>
+            <div class="flex items-center gap-2">
+              <button onclick="syncWithWebsiteCatalog(false)" title="Import latest products" class="flex items-center gap-1 px-2.5 py-1 rounded bg-cyan-50 hover:bg-cyan-100 border border-cyan-300 text-cyan-900 font-bold text-[11px]">
+                <i data-lucide="globe" class="w-3 h-3 text-cyan-700"></i>
+                <span>Import Web Catalog</span>
+              </button>
+              <button onclick="addChallanRow()" class="flex items-center gap-1 px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-800 font-bold text-[11px]">
+                <i data-lucide="plus" class="w-3 h-3 text-cyan-700"></i>
+                <span>Add Item Row</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto border border-slate-300 rounded-md bg-white">
+            <table class="w-full min-w-[1100px] text-left text-xs border-collapse">
+              <thead>
+                <tr class="border-b border-slate-300 bg-[#f1f5f9] text-slate-700 font-black uppercase text-[9px]">
+                  <th class="py-2.5 px-2 w-10 text-center border-r border-slate-300">#</th>
+                  <th class="py-2.5 px-3 min-w-[340px] border-r border-slate-300">Description of Goods</th>
+                  <th class="py-2.5 px-2 w-24 min-w-[95px] text-center border-r border-slate-300">HSN/SAC</th>
+                  <th class="py-2.5 px-2 w-20 min-w-[80px] text-center border-r border-slate-300">Qty</th>
+                  <th class="py-2.5 px-2 w-24 min-w-[85px] text-center border-r border-slate-300">Unit</th>
+                  <th class="py-2.5 px-2 w-32 min-w-[110px] text-right border-r border-slate-300">Rate (${cur()})</th>
+                  <th class="py-2.5 px-2 w-20 min-w-[75px] text-center border-r border-slate-300">GST%</th>
+                  <th class="py-2.5 px-3 w-32 min-w-[120px] text-right border-r border-slate-300">Amount (${cur()})</th>
+                  <th class="py-2.5 px-1.5 w-10 text-center"></th>
+                </tr>
+              </thead>
+              <tbody id="challan-items-tbody" class="divide-y divide-slate-200 text-slate-800">
+                ${challanEditorData.items.map((row, idx) => `
+                  <tr class="hover:bg-slate-50/80">
+                    <td class="py-3 px-2 text-slate-400 font-mono text-center align-top border-r border-slate-200 font-bold">${idx + 1}</td>
+                    <td class="py-3 px-3 align-top border-r border-slate-200">
+                      <div class="flex items-start gap-3">
+                        <div onclick="openRowImageModal(${idx}, 'challan')" class="w-16 h-16 rounded bg-white border ${row.imageUrl ? 'border-cyan-400 shadow-sm' : 'border-dashed border-slate-300'} flex items-center justify-center cursor-pointer overflow-hidden group shrink-0 relative" title="Photo">
+                          ${row.imageUrl ? `<img src="${row.imageUrl}" class="w-full h-full object-contain p-0.5" />` : `<i data-lucide="image-plus" class="w-4 h-4 text-slate-400"></i>`}
+                        </div>
+                        <div class="flex-1 space-y-1.5 min-w-0">
+                          <div class="flex gap-2">
+                            <select onchange="handleChallanCatalogSelect(${idx}, this.value)" class="w-2/5 px-2 py-1.5 bg-slate-50 border border-slate-300 rounded text-[11px] font-medium text-slate-700 truncate focus:outline-none focus:border-cyan-600 focus:bg-white">
+                              <option value="">-- From Master / Website --</option>
+                              <optgroup label="🏢 Company Item Master">
+                                ${(activeCompany.items || []).map(it => `<option value="${it.id}" ${it.name === row.name ? 'selected' : ''}>${it.name} [₹${it.price || it.rate || 0}]</option>`).join('')}
+                              </optgroup>
+                              <optgroup label="🌐 PASS CORP. Website Catalog">
+                                ${unifiedProds.filter(p => p.source === 'website').map(it => `<option value="${it.id}" ${it.name === row.name ? 'selected' : ''}>${it.name} [₹${it.price || 0}]</option>`).join('')}
+                              </optgroup>
+                            </select>
+                            <input type="text" list="global-products-datalist-challan" value="${escapeHtml(row.name)}" oninput="handleChallanNameInput(${idx}, this.value)" placeholder="Search product or enter description..." class="flex-1 px-2.5 py-1.5 bg-white border border-slate-300 rounded text-xs font-bold text-slate-900 focus:outline-none focus:border-cyan-600" />
+                          </div>
+                          <textarea oninput="autoExpandTextarea(this); updateChallanRow(${idx}, 'description', this.value)" placeholder="Technical specifications..." class="auto-expand w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded text-[11px] text-slate-700 focus:outline-none focus:border-cyan-600 focus:bg-white resize-y leading-relaxed font-normal min-h-[44px] overflow-hidden">${escapeHtml(row.description || '')}</textarea>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="py-3 px-2 align-top border-r border-slate-200"><input type="text" value="${escapeHtml(row.hsnCode || '')}" oninput="updateChallanRow(${idx}, 'hsnCode', this.value)" placeholder="HSN" class="w-full px-2 py-1.5 bg-white border border-slate-300 rounded text-xs text-center font-mono font-medium focus:outline-none focus:border-cyan-600" /></td>
+                    <td class="py-3 px-2 align-top border-r border-slate-200"><input type="number" min="1" value="${row.quantity}" oninput="updateChallanRow(${idx}, 'quantity', this.value)" class="w-full px-2 py-1.5 bg-white border border-slate-300 rounded text-xs text-center font-mono font-bold focus:outline-none focus:border-cyan-600" /></td>
+                    <td class="py-3 px-2 align-top border-r border-slate-200">
+                      <select onchange="updateChallanRow(${idx}, 'unit', this.value)" class="w-full px-1 py-1.5 bg-white border border-slate-300 rounded text-xs text-center font-semibold focus:outline-none focus:border-cyan-600">
+                        ${STANDARD_UNITS.map(u => `<option value="${u}" ${(row.unit || 'PCS').toUpperCase() === u.toUpperCase() ? 'selected' : ''}>${u}</option>`).join('')}
+                      </select>
+                    </td>
+                    <td class="py-3 px-2 align-top border-r border-slate-200"><input type="number" min="0" step="0.01" value="${row.price}" oninput="updateChallanRow(${idx}, 'price', this.value)" class="w-full px-2 py-1.5 bg-white border border-slate-300 rounded text-xs text-right font-mono font-bold focus:outline-none focus:border-cyan-600" /></td>
+                    <td class="py-3 px-2 align-top border-r border-slate-200">
+                      <select onchange="updateChallanRow(${idx}, 'taxRate', this.value)" class="w-full px-1.5 py-1.5 bg-white border border-slate-300 rounded text-xs text-center font-mono font-semibold focus:outline-none focus:border-cyan-600">
+                        ${[0, 5, 12, 18, 28].map(t => `<option value="${t}" ${Number(row.taxRate) === t ? 'selected' : ''}>${t}%</option>`).join('')}
+                      </select>
+                    </td>
+                    <td id="dc-row-total-${idx}" class="py-3 px-3 text-right font-mono font-black text-slate-900 text-xs align-top border-r border-slate-200 pt-2.5">${cur()}${fmt(row.total)}</td>
+                    <td class="py-3 px-1.5 text-center align-top pt-2">
+                      <button onclick="removeChallanRow(${idx})" ${challanEditorData.items.length === 1 ? 'disabled class="opacity-20"' : 'class="p-1 text-slate-400 hover:text-rose-600 rounded"'}><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+
+          <datalist id="global-products-datalist-challan">
+            ${unifiedProds.map(p => `<option value="${escapeHtml(p.name)}">${p.sourceLabel} • ₹${p.price} (HSN: ${p.hsn || '-'})</option>`).join('')}
+          </datalist>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 pt-3 border-t border-slate-300">
+          <div class="md:col-span-7 space-y-3">
+            <div>
+              <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">Dispatch Remarks</label>
+              <textarea rows="2" oninput="challanEditorData.notes = this.value" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded text-xs text-slate-900 focus:outline-none focus:border-cyan-600">${challanEditorData.notes || ''}</textarea>
+            </div>
+          </div>
+          <div class="md:col-span-5 bg-slate-50 border border-slate-300 p-4 rounded-md space-y-2 text-xs">
+            <div class="flex justify-between text-slate-600">
+              <span class="font-medium">Total Challan Value:</span>
+              <span id="de-grand-val" class="text-base text-cyan-950 font-mono font-black">${cur()}${fmt(challanEditorData.grandTotal)}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  safeCreateIcons();
+}
+
+function handleChallanCustChange(custId) {
+  challanEditorData.customerId = custId;
+  const cust = (activeCompany.customers || []).find(c => c.id === custId);
+  challanEditorData.customerName = cust ? cust.name : '';
+}
+
+function updateChallanRow(idx, field, val) {
+  const row = challanEditorData.items[idx];
+  if (!row) return;
+  if (field === 'quantity' || field === 'price' || field === 'taxRate') {
+    row[field] = Number(val) || 0;
+  } else {
+    row[field] = val;
+  }
+  const qty = Number(row.quantity) || 0;
+  const price = Number(row.price) || 0;
+  const tax = Number(row.taxRate) || 0;
+  row.amount = qty * price;
+  row.taxAmount = row.amount * (tax / 100);
+  row.total = row.amount + row.taxAmount;
+
+  const rowTotalEl = document.getElementById(`dc-row-total-${idx}`);
+  if (rowTotalEl) rowTotalEl.textContent = `${cur()}${fmt(row.total)}`;
+  recalculateChallanInMemory();
+}
+
+function recalculateChallanInMemory() {
+  let subtotal = 0;
+  let taxTotal = 0;
+  challanEditorData.items.forEach(r => {
+    const qty = Number(r.quantity) || 0;
+    const price = Number(r.price) || 0;
+    const tax = Number(r.taxRate) || 0;
+    const lineTaxable = qty * price;
+    const lineTax = lineTaxable * (tax / 100);
+    r.amount = lineTaxable;
+    r.taxAmount = lineTax;
+    r.total = lineTaxable + lineTax;
+    subtotal += lineTaxable;
+    taxTotal += lineTax;
+  });
+  challanEditorData.subtotal = subtotal;
+  challanEditorData.taxableAmount = subtotal;
+  challanEditorData.totalTax = taxTotal;
+  challanEditorData.grandTotal = subtotal + taxTotal;
+
+  const gEl = document.getElementById('de-grand-val');
+  if (gEl) gEl.textContent = `${cur()}${fmt(challanEditorData.grandTotal)}`;
+}
+
+function handleChallanCatalogSelect(idx, itemId) {
+  if (!itemId) return;
+  const unified = getUnifiedProductsList();
+  const item = unified.find(it => it.id === itemId || it.name.toLowerCase().trim() === itemId.toLowerCase().trim());
+  if (!item) return;
+
+  const row = challanEditorData.items[idx];
+  row.name = item.name;
+  row.description = item.description || '';
+  row.hsnCode = item.hsn || item.hsnCode || '';
+  row.unit = item.unit || 'PCS';
+  row.price = Number(item.price) || 0;
+  row.taxRate = Number(item.taxRate) || 18;
+  row.imageUrl = item.imageUrl || null;
+
+  const qty = Number(row.quantity) || 1;
+  const price = Number(row.price) || 0;
+  const tax = Number(row.taxRate) || 0;
+  row.amount = qty * price;
+  row.taxAmount = row.amount * (tax / 100);
+  row.total = row.amount + row.taxAmount;
+
+  recalculateChallanInMemory();
+  renderChallanEditor(document.getElementById('main-content'));
+}
+
+function handleChallanNameInput(idx, val) {
+  updateChallanRow(idx, 'name', val);
+  if (val && val.length > 2) {
+    const unified = getUnifiedProductsList();
+    const exactMatch = unified.find(p => p.name.toLowerCase().trim() === val.toLowerCase().trim());
+    if (exactMatch) {
+      const row = challanEditorData.items[idx];
+      row.description = exactMatch.description || '';
+      row.hsnCode = exactMatch.hsn || row.hsnCode || '';
+      row.price = Number(exactMatch.price) || row.price || 0;
+      row.imageUrl = exactMatch.imageUrl || row.imageUrl || null;
+      if (exactMatch.unit) row.unit = exactMatch.unit;
+      if (exactMatch.taxRate) row.taxRate = exactMatch.taxRate;
+
+      const qty = Number(row.quantity) || 1;
+      const price = Number(row.price) || 0;
+      const tax = Number(row.taxRate) || 0;
+      row.amount = qty * price;
+      row.taxAmount = row.amount * (tax / 100);
+      row.total = row.amount + row.taxAmount;
+
+      recalculateChallanInMemory();
+      renderChallanEditor(document.getElementById('main-content'));
+    }
+  }
+}
+
+function addChallanRow() {
+  challanEditorData.items.push({
+    id: 'dc-it-' + Date.now(),
+    name: '',
+    description: '',
+    hsnCode: '',
+    quantity: 1,
+    unit: 'PCS',
+    price: 0,
+    leadTime: '1-2 Days',
+    taxRate: 18,
+    amount: 0,
+    taxAmount: 0,
+    total: 0,
+    imageUrl: null
+  });
+  recalculateChallanInMemory();
+  renderChallanEditor(document.getElementById('main-content'));
+}
+
+function removeChallanRow(idx) {
+  if (challanEditorData.items.length === 1) return;
+  challanEditorData.items.splice(idx, 1);
+  recalculateChallanInMemory();
+  renderChallanEditor(document.getElementById('main-content'));
+}
+
+function saveChallan(previewAfter) {
+  if (!challanEditorData.customerId && !challanEditorData.customerName) {
+    alert('Please select or enter consignee for this delivery challan.');
+    return;
+  }
+
+  recalculateChallanInMemory();
+  activeCompany.challans = activeCompany.challans || [];
+
+  if (activeEditingId) {
+    const idx = activeCompany.challans.findIndex(c => c.id === activeEditingId);
+    if (idx !== -1) activeCompany.challans[idx] = { ...challanEditorData };
+  } else {
+    activeCompany.challans.unshift({ ...challanEditorData });
+    activeCompany.counterChallan = (activeCompany.counterChallan || 101) + 1;
+  }
+
+  saveDatabase();
+  const savedId = challanEditorData.id;
+  activeEditorMode = null;
+  activeEditingId = null;
+
+  if (previewAfter) {
+    openDocPreview('challan', savedId);
+  } else {
+    showToast('Delivery Challan saved successfully! 🚚');
+    navigateTab('challans');
+  }
+}
+
+function deleteChallan(id) {
+  if (confirm('Are you sure you want to delete this delivery challan?')) {
+    activeCompany.challans = (activeCompany.challans || []).filter(c => c.id !== id);
+    saveDatabase();
+    showToast('Delivery Challan deleted');
+    renderCurrentPage();
+  }
+}
+
+function convertChallanToInvoice(id) {
+  const c = (activeCompany.challans || []).find(it => it.id === id);
+  if (!c) return;
+
+  const num = (activeCompany.counterInvoice || 101);
+  activeCompany.counterInvoice = num;
+
+  invoiceEditorData = {
+    id: 'inv-' + Date.now(),
+    invoiceNumber: `INV-${new Date().getFullYear()}-${num}`,
+    date: new Date().toISOString().split('T')[0],
+    dueDate: new Date().toISOString().split('T')[0],
+    customerId: c.customerId,
+    customerName: c.customerName,
+    deliveryTerms: c.deliveryTerms || 'Door Delivery',
+    paymentTerms: 'Net 30 Days',
+    taxTerms: 'Extra as applicable',
+    items: JSON.parse(JSON.stringify(c.items)),
+    subtotal: c.subtotal,
+    taxableAmount: c.taxableAmount,
+    totalTax: c.totalTax,
+    grandTotal: c.grandTotal,
+    paidAmount: 0,
+    balanceDue: c.grandTotal,
+    notes: `Tax Invoice billed against Delivery Challan #${c.challanNumber} (Veh: ${c.vehicleNo || 'N/A'}).`,
+    terms: [
+      'Goods once sold will not be taken back without authorization.',
+      'Interest @ 18% p.a. charged on overdue bills.'
+    ],
+    status: 'Unpaid'
+  };
+
+  activeEditorMode = 'invoice';
+  activeEditingId = null;
+  recalculateInvoiceInMemory();
+  renderCurrentPage();
+  showToast('Converted Delivery Challan to Tax Invoice! 🧾');
+}
+
+// ============================================================================
+// 9. CREDIT NOTE (CN) & DEBIT NOTE (DN) MODULES
+// ============================================================================
+
+function renderCreditNotesList(container) {
+  const creditNotes = activeCompany.creditNotes || [];
+  const totalVal = creditNotes.reduce((s, cn) => s + (Number(cn.grandTotal) || 0), 0);
+
+  container.innerHTML = `
+    <div class="space-y-3.5 max-w-7xl mx-auto text-xs">
+      <div class="bg-white border border-slate-300 rounded-lg p-3.5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded bg-rose-50 border border-rose-300 flex items-center justify-center text-rose-700">
+            <i data-lucide="file-minus" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-sm font-black text-slate-900 uppercase tracking-wide">Credit Notes Daybook (Sales Returns & Adjustments)</h1>
+              <span class="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded bg-rose-100 text-rose-800 border border-rose-200">${creditNotes.length} Vouchers</span>
+            </div>
+            <p class="text-[10px] text-slate-500 font-mono">Total Credit Value Issued: <span class="font-bold text-slate-800">${cur()}${fmt(totalVal)}</span></p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="openNewCreditNoteEditor()" class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-rose-700 hover:bg-rose-800 text-white font-bold border border-rose-800 text-xs shadow-sm">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            <span>+ Issue Credit Note</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="bg-white border border-slate-300 rounded-lg overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="border-b border-slate-300 bg-[#4c0519] text-white font-black uppercase text-[9px] tracking-wider">
+                <th class="py-2.5 px-3 w-10 text-center border-r border-[#881337]">#</th>
+                <th class="py-2.5 px-3 border-r border-[#881337]">Credit Note #</th>
+                <th class="py-2.5 px-3 border-r border-[#881337]">Date / Orig. Inv</th>
+                <th class="py-2.5 px-3 border-r border-[#881337]">Party / Debtor Ledger</th>
+                <th class="py-2.5 px-3 border-r border-[#881337]">Reason for Return</th>
+                <th class="py-2.5 px-3 text-right border-r border-[#881337]">Amount (${cur()})</th>
+                <th class="py-2.5 px-3 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 text-slate-800 font-medium">
+              ${creditNotes.length === 0 ? `
+                <tr><td colSpan="7" class="py-12 text-center text-slate-400 font-mono">No credit notes issued. Click "+ Issue Credit Note" to create one.</td></tr>
+              ` : creditNotes.map((cn, idx) => `
+                <tr class="hover:bg-rose-50/50 transition-colors">
+                  <td class="py-2 px-3 text-slate-400 font-mono text-center border-r border-slate-200 font-bold">${idx + 1}</td>
+                  <td class="py-2 px-3 font-mono font-bold text-rose-700 cursor-pointer hover:underline border-r border-slate-200" onclick="openDocPreview('creditNote', '${cn.id}')">
+                    ${cn.noteNumber}
+                  </td>
+                  <td class="py-2 px-3 font-mono text-slate-600 border-r border-slate-200 text-[11px]">
+                    <div>${cn.date}</div>
+                    <div class="text-[9px] text-slate-400">Inv: ${cn.originalInvoiceNumber || 'N/A'}</div>
+                  </td>
+                  <td class="py-2 px-3 border-r border-slate-200 font-bold text-slate-900">${cn.customerName || 'Direct Customer'}</td>
+                  <td class="py-2 px-3 border-r border-slate-200 text-slate-700 font-semibold">${cn.reason || 'Sales Return'}</td>
+                  <td class="py-2 px-3 text-right font-mono font-bold text-rose-700 border-r border-slate-200">${cur()}${fmt(cn.grandTotal)}</td>
+                  <td class="py-2 px-3 text-center">
+                    <div class="flex items-center justify-center gap-1">
+                      <button onclick="openDocPreview('creditNote', '${cn.id}')" title="Preview & Print" class="p-1 rounded text-slate-600 hover:text-rose-700 hover:bg-slate-100"><i data-lucide="eye" class="w-3.5 h-3.5"></i></button>
+                      <button onclick="editCreditNote('${cn.id}')" title="Alter Voucher" class="p-1 rounded text-slate-600 hover:text-slate-900 hover:bg-slate-100"><i data-lucide="edit" class="w-3.5 h-3.5"></i></button>
+                      <button onclick="downloadDocPDF('creditNote', '${cn.id}')" title="Download PDF" class="p-1 rounded text-slate-600 hover:text-rose-700 hover:bg-slate-100"><i data-lucide="download" class="w-3.5 h-3.5"></i></button>
+                      <button onclick="deleteCreditNote('${cn.id}')" title="Delete" class="p-1 rounded text-slate-400 hover:text-rose-600 hover:bg-rose-50"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  `;
+  safeCreateIcons();
+}
+
+function openNewCreditNoteEditor() {
+  activeEditingId = null;
+  activeEditorMode = 'creditNote';
+
+  const num = (activeCompany.counterCreditNote || 101);
+  activeCompany.counterCreditNote = num;
+
+  creditNoteEditorData = {
+    id: 'cn-' + Date.now(),
+    noteNumber: `CN-${new Date().getFullYear()}-${num}`,
+    date: new Date().toISOString().split('T')[0],
+    customerId: '',
+    customerName: '',
+    originalInvoiceNumber: '',
+    originalInvoiceDate: new Date().toISOString().split('T')[0],
+    reason: 'Sales Return',
+    items: [
+      {
+        id: 'cn-it-1',
+        name: '',
+        description: '',
+        hsnCode: '',
+        quantity: 1,
+        unit: 'PCS',
+        price: 0,
+        taxRate: 18,
+        amount: 0,
+        taxAmount: 0,
+        total: 0,
+        imageUrl: null
+      }
+    ],
+    subtotal: 0,
+    taxableAmount: 0,
+    totalTax: 0,
+    grandTotal: 0,
+    notes: 'Credit note issued against sales return under GST Sec 34.',
+    terms: ['Credit value adjusted against ledger balance.'],
+    status: 'Issued'
+  };
+
+  recalculateCreditNoteInMemory();
+  renderCurrentPage();
+}
+
+function editCreditNote(id) {
+  const cn = (activeCompany.creditNotes || []).find(it => it.id === id);
+  if (!cn) return;
+  activeEditingId = id;
+  activeEditorMode = 'creditNote';
+  creditNoteEditorData = JSON.parse(JSON.stringify(cn));
+  recalculateCreditNoteInMemory();
+  renderCurrentPage();
+}
+
+function renderCreditNoteEditor(container) {
+  const isEditing = Boolean(activeEditingId);
+  const unifiedProds = getUnifiedProductsList();
+
+  container.innerHTML = `
+    <div class="space-y-4 max-w-7xl mx-auto text-xs pb-8">
+      <div class="bg-[#4c0519] text-white border border-[#881337] rounded-lg px-4 py-2.5 shadow-sm flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <button onclick="cancelEditor()" title="Back" class="p-1.5 rounded bg-white/10 hover:bg-white/20 text-white border border-white/20">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          </button>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-rose-500/30 text-rose-300 border border-rose-400/40">VCH TYPE</span>
+              <h1 class="text-sm font-black tracking-wide uppercase text-white">${isEditing ? `Alter Credit Note #${creditNoteEditorData.noteNumber}` : 'Accounting Voucher: GST Credit Note Entry'}</h1>
+            </div>
+            <p class="text-[10px] text-rose-200/80 font-mono mt-0.5">Record sales return or invoice price reduction with GST reversal.</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="saveCreditNote(true)" class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-white/10 hover:bg-white/20 text-white font-bold border border-white/30 text-xs">
+            <span class="text-[9px] font-mono bg-black/30 px-1 rounded">Alt+P</span>
+            <span>Preview & Save</span>
+          </button>
+          <button onclick="saveCreditNote(false)" class="flex items-center gap-1.5 px-4 py-1.5 rounded bg-rose-700 hover:bg-rose-600 text-white font-bold border border-rose-500 text-xs shadow-sm">
+            <span class="text-[9px] font-mono bg-rose-900 px-1 rounded">Ctrl+A</span>
+            <span>Save Voucher</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="bg-white border border-slate-300 rounded-lg p-4 shadow-sm space-y-4">
+        <div class="bg-slate-50 p-3 rounded-md border border-slate-200 space-y-3">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5">
+            <div class="md:col-span-6">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">Party / Debtor Ledger *</label>
+              <select onchange="handleCreditNoteCustChange(this.value)" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs font-semibold text-slate-900 focus:outline-none focus:border-rose-600">
+                <option value="">-- Select Party Ledger --</option>
+                ${(activeCompany.customers || []).map(c => `<option value="${c.id}" ${c.id === creditNoteEditorData.customerId ? 'selected' : ''}>${c.name} ${c.gstin ? `[GSTIN: ${c.gstin}]` : ''}</option>`).join('')}
+              </select>
+            </div>
+            <div class="md:col-span-2">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">Credit Note #</label>
+              <input type="text" value="${creditNoteEditorData.noteNumber}" oninput="creditNoteEditorData.noteNumber = this.value" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs text-slate-900 font-mono font-bold focus:outline-none focus:border-rose-600" />
+            </div>
+            <div class="md:col-span-2">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">Note Date</label>
+              <input type="date" value="${creditNoteEditorData.date}" oninput="creditNoteEditorData.date = this.value" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs text-slate-900 font-mono focus:outline-none focus:border-rose-600" />
+            </div>
+            <div class="md:col-span-2">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">Reason</label>
+              <select onchange="creditNoteEditorData.reason = this.value" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs font-semibold text-slate-900 focus:outline-none focus:border-rose-600">
+                ${['Sales Return', 'Defective Goods', 'Post-Sale Discount', 'Correction in Invoice', 'Overcharge in Invoice', 'Other'].map(r => `<option value="${r}" ${r === (creditNoteEditorData.reason || 'Sales Return') ? 'selected' : ''}>${r}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5 pt-2 border-t border-slate-200">
+            <div class="md:col-span-6">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">Original Tax Invoice Number</label>
+              <input type="text" placeholder="e.g. INV-2026-101" value="${creditNoteEditorData.originalInvoiceNumber || ''}" oninput="creditNoteEditorData.originalInvoiceNumber = this.value" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs text-slate-900 font-mono font-bold focus:outline-none focus:border-rose-600" />
+            </div>
+            <div class="md:col-span-6">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">Original Invoice Date</label>
+              <input type="date" value="${creditNoteEditorData.originalInvoiceDate || ''}" oninput="creditNoteEditorData.originalInvoiceDate = this.value" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs text-slate-900 font-mono focus:outline-none focus:border-rose-600" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Particulars Table -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <h3 class="font-black uppercase text-[10px] tracking-wider text-slate-700">Particulars (Returned Items & Tax Reversal)</h3>
+            <button onclick="addCreditNoteRow()" class="flex items-center gap-1 px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-800 font-bold text-[11px]">
+              <i data-lucide="plus" class="w-3 h-3 text-rose-700"></i>
+              <span>Add Item Row</span>
+            </button>
+          </div>
+
+          <div class="overflow-x-auto border border-slate-300 rounded-md bg-white">
+            <table class="w-full min-w-[1100px] text-left text-xs border-collapse">
+              <thead>
+                <tr class="border-b border-slate-300 bg-[#f1f5f9] text-slate-700 font-black uppercase text-[9px]">
+                  <th class="py-2.5 px-2 w-10 text-center border-r border-slate-300">#</th>
+                  <th class="py-2.5 px-3 min-w-[340px] border-r border-slate-300">Stock Item & Description</th>
+                  <th class="py-2.5 px-2 w-24 min-w-[95px] text-center border-r border-slate-300">HSN/SAC</th>
+                  <th class="py-2.5 px-2 w-20 min-w-[80px] text-center border-r border-slate-300">Qty</th>
+                  <th class="py-2.5 px-2 w-24 min-w-[85px] text-center border-r border-slate-300">Unit</th>
+                  <th class="py-2.5 px-2 w-32 min-w-[110px] text-right border-r border-slate-300">Rate (${cur()})</th>
+                  <th class="py-2.5 px-2 w-20 min-w-[75px] text-center border-r border-slate-300">GST%</th>
+                  <th class="py-2.5 px-3 w-32 min-w-[120px] text-right border-r border-slate-300">Amount (${cur()})</th>
+                  <th class="py-2.5 px-1.5 w-10 text-center"></th>
+                </tr>
+              </thead>
+              <tbody id="cn-items-tbody" class="divide-y divide-slate-200 text-slate-800">
+                ${creditNoteEditorData.items.map((row, idx) => `
+                  <tr class="hover:bg-slate-50/80">
+                    <td class="py-3 px-2 text-slate-400 font-mono text-center align-top border-r border-slate-200 font-bold">${idx + 1}</td>
+                    <td class="py-3 px-3 align-top border-r border-slate-200">
+                      <div class="flex items-start gap-3">
+                        <div onclick="openRowImageModal(${idx}, 'creditNote')" class="w-14 h-14 rounded bg-white border ${row.imageUrl ? 'border-rose-400' : 'border-dashed border-slate-300'} flex items-center justify-center cursor-pointer overflow-hidden shrink-0">
+                          ${row.imageUrl ? `<img src="${row.imageUrl}" class="w-full h-full object-contain p-0.5" />` : `<i data-lucide="image-plus" class="w-4 h-4 text-slate-400"></i>`}
+                        </div>
+                        <div class="flex-1 space-y-1.5 min-w-0">
+                          <input type="text" list="global-products-datalist-cn" value="${escapeHtml(row.name)}" oninput="handleCreditNoteNameInput(${idx}, this.value)" placeholder="Search product or enter returned item particulars..." class="w-full px-2.5 py-1.5 bg-white border border-slate-300 rounded text-xs font-bold text-slate-900 focus:outline-none focus:border-rose-600" />
+                          <textarea oninput="autoExpandTextarea(this); updateCreditNoteRow(${idx}, 'description', this.value)" placeholder="Reason / specs..." class="auto-expand w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded text-[11px] text-slate-700 focus:outline-none focus:border-rose-600 resize-y min-h-[44px]">${escapeHtml(row.description || '')}</textarea>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="py-3 px-2 align-top border-r border-slate-200"><input type="text" value="${escapeHtml(row.hsnCode || '')}" oninput="updateCreditNoteRow(${idx}, 'hsnCode', this.value)" class="w-full px-2 py-1.5 bg-white border border-slate-300 rounded text-xs text-center font-mono font-medium focus:outline-none focus:border-rose-600" /></td>
+                    <td class="py-3 px-2 align-top border-r border-slate-200"><input type="number" min="1" value="${row.quantity}" oninput="updateCreditNoteRow(${idx}, 'quantity', this.value)" class="w-full px-2 py-1.5 bg-white border border-slate-300 rounded text-xs text-center font-mono font-bold focus:outline-none focus:border-rose-600" /></td>
+                    <td class="py-3 px-2 align-top border-r border-slate-200">
+                      <select onchange="updateCreditNoteRow(${idx}, 'unit', this.value)" class="w-full px-1 py-1.5 bg-white border border-slate-300 rounded text-xs text-center font-semibold focus:outline-none focus:border-rose-600">
+                        ${STANDARD_UNITS.map(u => `<option value="${u}" ${(row.unit || 'PCS').toUpperCase() === u.toUpperCase() ? 'selected' : ''}>${u}</option>`).join('')}
+                      </select>
+                    </td>
+                    <td class="py-3 px-2 align-top border-r border-slate-200"><input type="number" min="0" step="0.01" value="${row.price}" oninput="updateCreditNoteRow(${idx}, 'price', this.value)" class="w-full px-2 py-1.5 bg-white border border-slate-300 rounded text-xs text-right font-mono font-bold focus:outline-none focus:border-rose-600" /></td>
+                    <td class="py-3 px-2 align-top border-r border-slate-200">
+                      <select onchange="updateCreditNoteRow(${idx}, 'taxRate', this.value)" class="w-full px-1.5 py-1.5 bg-white border border-slate-300 rounded text-xs text-center font-mono font-semibold focus:outline-none focus:border-rose-600">
+                        ${[0, 5, 12, 18, 28].map(t => `<option value="${t}" ${Number(row.taxRate) === t ? 'selected' : ''}>${t}%</option>`).join('')}
+                      </select>
+                    </td>
+                    <td id="cn-row-total-${idx}" class="py-3 px-3 text-right font-mono font-black text-rose-700 text-xs align-top border-r border-slate-200 pt-2.5">${cur()}${fmt(row.total)}</td>
+                    <td class="py-3 px-1.5 text-center align-top pt-2">
+                      <button onclick="removeCreditNoteRow(${idx})" ${creditNoteEditorData.items.length === 1 ? 'disabled class="opacity-20"' : 'class="p-1 text-slate-400 hover:text-rose-600 rounded"'}><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+
+          <datalist id="global-products-datalist-cn">
+            ${unifiedProds.map(p => `<option value="${escapeHtml(p.name)}">${p.sourceLabel} • ₹${p.price}</option>`).join('')}
+          </datalist>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 pt-3 border-t border-slate-300">
+          <div class="md:col-span-7">
+            <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">Remarks & Reason Details</label>
+            <textarea rows="2" oninput="creditNoteEditorData.notes = this.value" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded text-xs text-slate-900 focus:outline-none focus:border-rose-600">${creditNoteEditorData.notes || ''}</textarea>
+          </div>
+          <div class="md:col-span-5 bg-slate-50 border border-slate-300 p-4 rounded-md space-y-2 text-xs">
+            <div class="flex justify-between text-slate-600">
+              <span>Taxable Value:</span>
+              <span class="font-mono font-bold">${cur()}${fmt(creditNoteEditorData.taxableAmount)}</span>
+            </div>
+            <div class="flex justify-between text-slate-600">
+              <span>GST Reversal:</span>
+              <span class="font-mono font-bold text-rose-700">+${cur()}${fmt(creditNoteEditorData.totalTax)}</span>
+            </div>
+            <div class="pt-2 border-t-2 border-slate-300 flex justify-between items-center text-sm font-black text-slate-900">
+              <span class="uppercase">Total Credit Value:</span>
+              <span class="text-base text-rose-800 font-mono">${cur()}${fmt(creditNoteEditorData.grandTotal)}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  safeCreateIcons();
+}
+
+function handleCreditNoteCustChange(custId) {
+  creditNoteEditorData.customerId = custId;
+  const cust = (activeCompany.customers || []).find(c => c.id === custId);
+  creditNoteEditorData.customerName = cust ? cust.name : '';
+}
+
+function updateCreditNoteRow(idx, field, val) {
+  const row = creditNoteEditorData.items[idx];
+  if (!row) return;
+  if (field === 'quantity' || field === 'price' || field === 'taxRate') {
+    row[field] = Number(val) || 0;
+  } else {
+    row[field] = val;
+  }
+  const qty = Number(row.quantity) || 0;
+  const price = Number(row.price) || 0;
+  const tax = Number(row.taxRate) || 0;
+  row.amount = qty * price;
+  row.taxAmount = row.amount * (tax / 100);
+  row.total = row.amount + row.taxAmount;
+
+  const rowTotalEl = document.getElementById(`cn-row-total-${idx}`);
+  if (rowTotalEl) rowTotalEl.textContent = `${cur()}${fmt(row.total)}`;
+  recalculateCreditNoteInMemory();
+}
+
+function recalculateCreditNoteInMemory() {
+  let subtotal = 0;
+  let taxTotal = 0;
+  creditNoteEditorData.items.forEach(r => {
+    const qty = Number(r.quantity) || 0;
+    const price = Number(r.price) || 0;
+    const tax = Number(r.taxRate) || 0;
+    const lineTaxable = qty * price;
+    const lineTax = lineTaxable * (tax / 100);
+    r.amount = lineTaxable;
+    r.taxAmount = lineTax;
+    r.total = lineTaxable + lineTax;
+    subtotal += lineTaxable;
+    taxTotal += lineTax;
+  });
+  creditNoteEditorData.subtotal = subtotal;
+  creditNoteEditorData.taxableAmount = subtotal;
+  creditNoteEditorData.totalTax = taxTotal;
+  creditNoteEditorData.grandTotal = subtotal + taxTotal;
+}
+
+function handleCreditNoteNameInput(idx, val) {
+  updateCreditNoteRow(idx, 'name', val);
+  if (val && val.length > 2) {
+    const unified = getUnifiedProductsList();
+    const exactMatch = unified.find(p => p.name.toLowerCase().trim() === val.toLowerCase().trim());
+    if (exactMatch) {
+      const row = creditNoteEditorData.items[idx];
+      row.description = exactMatch.description || '';
+      row.hsnCode = exactMatch.hsn || row.hsnCode || '';
+      row.price = Number(exactMatch.price) || row.price || 0;
+      row.imageUrl = exactMatch.imageUrl || row.imageUrl || null;
+      if (exactMatch.unit) row.unit = exactMatch.unit;
+      if (exactMatch.taxRate) row.taxRate = exactMatch.taxRate;
+      recalculateCreditNoteInMemory();
+      renderCreditNoteEditor(document.getElementById('main-content'));
+    }
+  }
+}
+
+function addCreditNoteRow() {
+  creditNoteEditorData.items.push({
+    id: 'cn-it-' + Date.now(),
+    name: '',
+    description: '',
+    hsnCode: '',
+    quantity: 1,
+    unit: 'PCS',
+    price: 0,
+    taxRate: 18,
+    amount: 0,
+    taxAmount: 0,
+    total: 0,
+    imageUrl: null
+  });
+  recalculateCreditNoteInMemory();
+  renderCreditNoteEditor(document.getElementById('main-content'));
+}
+
+function removeCreditNoteRow(idx) {
+  if (creditNoteEditorData.items.length === 1) return;
+  creditNoteEditorData.items.splice(idx, 1);
+  recalculateCreditNoteInMemory();
+  renderCreditNoteEditor(document.getElementById('main-content'));
+}
+
+function saveCreditNote(previewAfter) {
+  if (!creditNoteEditorData.customerId && !creditNoteEditorData.customerName) {
+    alert('Please select party ledger for this credit note.');
+    return;
+  }
+  recalculateCreditNoteInMemory();
+  activeCompany.creditNotes = activeCompany.creditNotes || [];
+  if (activeEditingId) {
+    const idx = activeCompany.creditNotes.findIndex(c => c.id === activeEditingId);
+    if (idx !== -1) activeCompany.creditNotes[idx] = { ...creditNoteEditorData };
+  } else {
+    activeCompany.creditNotes.unshift({ ...creditNoteEditorData });
+    activeCompany.counterCreditNote = (activeCompany.counterCreditNote || 101) + 1;
+  }
+  saveDatabase();
+  const savedId = creditNoteEditorData.id;
+  activeEditorMode = null;
+  activeEditingId = null;
+  if (previewAfter) openDocPreview('creditNote', savedId);
+  else {
+    showToast('Credit Note issued successfully! 📄');
+    navigateTab('creditNotes');
+  }
+}
+
+function deleteCreditNote(id) {
+  if (confirm('Are you sure you want to delete this credit note?')) {
+    activeCompany.creditNotes = (activeCompany.creditNotes || []).filter(c => c.id !== id);
+    saveDatabase();
+    showToast('Credit Note deleted');
+    renderCurrentPage();
+  }
+}
+
+// 10. DEBIT NOTE MODULE
+function renderDebitNotesList(container) {
+  const debitNotes = activeCompany.debitNotes || [];
+  const totalVal = debitNotes.reduce((s, dn) => s + (Number(dn.grandTotal) || 0), 0);
+
+  container.innerHTML = `
+    <div class="space-y-3.5 max-w-7xl mx-auto text-xs">
+      <div class="bg-white border border-slate-300 rounded-lg p-3.5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded bg-purple-50 border border-purple-300 flex items-center justify-center text-purple-700">
+            <i data-lucide="file-plus" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-sm font-black text-slate-900 uppercase tracking-wide">Debit Notes Daybook (Purchase Returns & Rate Diffs)</h1>
+              <span class="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded bg-purple-100 text-purple-800 border border-purple-200">${debitNotes.length} Vouchers</span>
+            </div>
+            <p class="text-[10px] text-slate-500 font-mono">Total Debit Value: <span class="font-bold text-slate-800">${cur()}${fmt(totalVal)}</span></p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="openNewDebitNoteEditor()" class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-purple-700 hover:bg-purple-800 text-white font-bold border border-purple-800 text-xs shadow-sm">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            <span>+ Issue Debit Note</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="bg-white border border-slate-300 rounded-lg overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="border-b border-slate-300 bg-[#3b0764] text-white font-black uppercase text-[9px] tracking-wider">
+                <th class="py-2.5 px-3 w-10 text-center border-r border-[#581c87]">#</th>
+                <th class="py-2.5 px-3 border-r border-[#581c87]">Debit Note #</th>
+                <th class="py-2.5 px-3 border-r border-[#581c87]">Date / Orig. Inv</th>
+                <th class="py-2.5 px-3 border-r border-[#581c87]">Party / Creditor Ledger</th>
+                <th class="py-2.5 px-3 border-r border-[#581c87]">Reason</th>
+                <th class="py-2.5 px-3 text-right border-r border-[#581c87]">Amount (${cur()})</th>
+                <th class="py-2.5 px-3 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 text-slate-800 font-medium">
+              ${debitNotes.length === 0 ? `
+                <tr><td colSpan="7" class="py-12 text-center text-slate-400 font-mono">No debit notes issued. Click "+ Issue Debit Note" to create one.</td></tr>
+              ` : debitNotes.map((dn, idx) => `
+                <tr class="hover:bg-purple-50/50 transition-colors">
+                  <td class="py-2 px-3 text-slate-400 font-mono text-center border-r border-slate-200 font-bold">${idx + 1}</td>
+                  <td class="py-2 px-3 font-mono font-bold text-purple-700 cursor-pointer hover:underline border-r border-slate-200" onclick="openDocPreview('debitNote', '${dn.id}')">
+                    ${dn.noteNumber}
+                  </td>
+                  <td class="py-2 px-3 font-mono text-slate-600 border-r border-slate-200 text-[11px]">
+                    <div>${dn.date}</div>
+                    <div class="text-[9px] text-slate-400">Ref: ${dn.originalInvoiceNumber || 'N/A'}</div>
+                  </td>
+                  <td class="py-2 px-3 border-r border-slate-200 font-bold text-slate-900">${dn.customerName || 'Party'}</td>
+                  <td class="py-2 px-3 border-r border-slate-200 text-slate-700 font-semibold">${dn.reason || 'Purchase Return'}</td>
+                  <td class="py-2 px-3 text-right font-mono font-bold text-purple-700 border-r border-slate-200">${cur()}${fmt(dn.grandTotal)}</td>
+                  <td class="py-2 px-3 text-center">
+                    <div class="flex items-center justify-center gap-1">
+                      <button onclick="openDocPreview('debitNote', '${dn.id}')" title="Preview & Print" class="p-1 rounded text-slate-600 hover:text-purple-700 hover:bg-slate-100"><i data-lucide="eye" class="w-3.5 h-3.5"></i></button>
+                      <button onclick="editDebitNote('${dn.id}')" title="Alter Voucher" class="p-1 rounded text-slate-600 hover:text-slate-900 hover:bg-slate-100"><i data-lucide="edit" class="w-3.5 h-3.5"></i></button>
+                      <button onclick="downloadDocPDF('debitNote', '${dn.id}')" title="Download PDF" class="p-1 rounded text-slate-600 hover:text-purple-700 hover:bg-slate-100"><i data-lucide="download" class="w-3.5 h-3.5"></i></button>
+                      <button onclick="deleteDebitNote('${dn.id}')" title="Delete" class="p-1 rounded text-slate-400 hover:text-rose-600 hover:bg-rose-50"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  `;
+  safeCreateIcons();
+}
+
+function openNewDebitNoteEditor() {
+  activeEditingId = null;
+  activeEditorMode = 'debitNote';
+
+  const num = (activeCompany.counterDebitNote || 101);
+  activeCompany.counterDebitNote = num;
+
+  debitNoteEditorData = {
+    id: 'dn-' + Date.now(),
+    noteNumber: `DN-${new Date().getFullYear()}-${num}`,
+    date: new Date().toISOString().split('T')[0],
+    customerId: '',
+    customerName: '',
+    originalInvoiceNumber: '',
+    originalInvoiceDate: new Date().toISOString().split('T')[0],
+    reason: 'Purchase Return',
+    items: [
+      {
+        id: 'dn-it-1',
+        name: '',
+        description: '',
+        hsnCode: '',
+        quantity: 1,
+        unit: 'PCS',
+        price: 0,
+        taxRate: 18,
+        amount: 0,
+        taxAmount: 0,
+        total: 0,
+        imageUrl: null
+      }
+    ],
+    subtotal: 0,
+    taxableAmount: 0,
+    totalTax: 0,
+    grandTotal: 0,
+    notes: 'Debit note issued for difference in price / return under GST Sec 34.',
+    terms: ['Debit value adjusted against ledger balance.'],
+    status: 'Issued'
+  };
+
+  recalculateDebitNoteInMemory();
+  renderCurrentPage();
+}
+
+function editDebitNote(id) {
+  const dn = (activeCompany.debitNotes || []).find(it => it.id === id);
+  if (!dn) return;
+  activeEditingId = id;
+  activeEditorMode = 'debitNote';
+  debitNoteEditorData = JSON.parse(JSON.stringify(dn));
+  recalculateDebitNoteInMemory();
+  renderCurrentPage();
+}
+
+function renderDebitNoteEditor(container) {
+  const isEditing = Boolean(activeEditingId);
+  const unifiedProds = getUnifiedProductsList();
+
+  container.innerHTML = `
+    <div class="space-y-4 max-w-7xl mx-auto text-xs pb-8">
+      <div class="bg-[#3b0764] text-white border border-[#581c87] rounded-lg px-4 py-2.5 shadow-sm flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <button onclick="cancelEditor()" title="Back" class="p-1.5 rounded bg-white/10 hover:bg-white/20 text-white border border-white/20">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          </button>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-purple-500/30 text-purple-300 border border-purple-400/40">VCH TYPE</span>
+              <h1 class="text-sm font-black tracking-wide uppercase text-white">${isEditing ? `Alter Debit Note #${debitNoteEditorData.noteNumber}` : 'Accounting Voucher: GST Debit Note Entry'}</h1>
+            </div>
+            <p class="text-[10px] text-purple-200/80 font-mono mt-0.5">Issue debit note for purchase return or supplier rate difference.</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="saveDebitNote(true)" class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-white/10 hover:bg-white/20 text-white font-bold border border-white/30 text-xs">
+            <span class="text-[9px] font-mono bg-black/30 px-1 rounded">Alt+P</span>
+            <span>Preview & Save</span>
+          </button>
+          <button onclick="saveDebitNote(false)" class="flex items-center gap-1.5 px-4 py-1.5 rounded bg-purple-700 hover:bg-purple-600 text-white font-bold border border-purple-500 text-xs shadow-sm">
+            <span class="text-[9px] font-mono bg-purple-900 px-1 rounded">Ctrl+A</span>
+            <span>Save Voucher</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="bg-white border border-slate-300 rounded-lg p-4 shadow-sm space-y-4">
+        <div class="bg-slate-50 p-3 rounded-md border border-slate-200 space-y-3">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5">
+            <div class="md:col-span-6">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">Party / Creditor Ledger *</label>
+              <select onchange="handleDebitNoteCustChange(this.value)" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs font-semibold text-slate-900 focus:outline-none focus:border-purple-600">
+                <option value="">-- Select Party Ledger --</option>
+                ${(activeCompany.customers || []).map(c => `<option value="${c.id}" ${c.id === debitNoteEditorData.customerId ? 'selected' : ''}>${c.name} ${c.gstin ? `[GSTIN: ${c.gstin}]` : ''}</option>`).join('')}
+              </select>
+            </div>
+            <div class="md:col-span-2">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">Debit Note #</label>
+              <input type="text" value="${debitNoteEditorData.noteNumber}" oninput="debitNoteEditorData.noteNumber = this.value" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs text-slate-900 font-mono font-bold focus:outline-none focus:border-purple-600" />
+            </div>
+            <div class="md:col-span-2">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">Note Date</label>
+              <input type="date" value="${debitNoteEditorData.date}" oninput="debitNoteEditorData.date = this.value" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs text-slate-900 font-mono focus:outline-none focus:border-purple-600" />
+            </div>
+            <div class="md:col-span-2">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">Reason</label>
+              <select onchange="debitNoteEditorData.reason = this.value" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs font-semibold text-slate-900 focus:outline-none focus:border-purple-600">
+                ${['Purchase Return', 'Rate Difference', 'Deficiency in Services', 'Shortage in Supply', 'Other'].map(r => `<option value="${r}" ${r === (debitNoteEditorData.reason || 'Purchase Return') ? 'selected' : ''}>${r}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5 pt-2 border-t border-slate-200">
+            <div class="md:col-span-6">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">Original Invoice / Bill Number</label>
+              <input type="text" placeholder="e.g. INV-2026-101" value="${debitNoteEditorData.originalInvoiceNumber || ''}" oninput="debitNoteEditorData.originalInvoiceNumber = this.value" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs text-slate-900 font-mono font-bold focus:outline-none focus:border-purple-600" />
+            </div>
+            <div class="md:col-span-6">
+              <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">Original Invoice Date</label>
+              <input type="date" value="${debitNoteEditorData.originalInvoiceDate || ''}" oninput="debitNoteEditorData.originalInvoiceDate = this.value" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs text-slate-900 font-mono focus:outline-none focus:border-purple-600" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Particulars Table -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <h3 class="font-black uppercase text-[10px] tracking-wider text-slate-700">Particulars (Debit Items & Tax Adjustments)</h3>
+            <button onclick="addDebitNoteRow()" class="flex items-center gap-1 px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-800 font-bold text-[11px]">
+              <i data-lucide="plus" class="w-3 h-3 text-purple-700"></i>
+              <span>Add Item Row</span>
+            </button>
+          </div>
+
+          <div class="overflow-x-auto border border-slate-300 rounded-md bg-white">
+            <table class="w-full min-w-[1100px] text-left text-xs border-collapse">
+              <thead>
+                <tr class="border-b border-slate-300 bg-[#f1f5f9] text-slate-700 font-black uppercase text-[9px]">
+                  <th class="py-2.5 px-2 w-10 text-center border-r border-slate-300">#</th>
+                  <th class="py-2.5 px-3 min-w-[340px] border-r border-slate-300">Particulars</th>
+                  <th class="py-2.5 px-2 w-24 min-w-[95px] text-center border-r border-slate-300">HSN/SAC</th>
+                  <th class="py-2.5 px-2 w-20 min-w-[80px] text-center border-r border-slate-300">Qty</th>
+                  <th class="py-2.5 px-2 w-24 min-w-[85px] text-center border-r border-slate-300">Unit</th>
+                  <th class="py-2.5 px-2 w-32 min-w-[110px] text-right border-r border-slate-300">Rate (${cur()})</th>
+                  <th class="py-2.5 px-2 w-20 min-w-[75px] text-center border-r border-slate-300">GST%</th>
+                  <th class="py-2.5 px-3 w-32 min-w-[120px] text-right border-r border-slate-300">Amount (${cur()})</th>
+                  <th class="py-2.5 px-1.5 w-10 text-center"></th>
+                </tr>
+              </thead>
+              <tbody id="dn-items-tbody" class="divide-y divide-slate-200 text-slate-800">
+                ${debitNoteEditorData.items.map((row, idx) => `
+                  <tr class="hover:bg-slate-50/80">
+                    <td class="py-3 px-2 text-slate-400 font-mono text-center align-top border-r border-slate-200 font-bold">${idx + 1}</td>
+                    <td class="py-3 px-3 align-top border-r border-slate-200">
+                      <div class="flex items-start gap-3">
+                        <div onclick="openRowImageModal(${idx}, 'debitNote')" class="w-14 h-14 rounded bg-white border ${row.imageUrl ? 'border-purple-400' : 'border-dashed border-slate-300'} flex items-center justify-center cursor-pointer overflow-hidden shrink-0">
+                          ${row.imageUrl ? `<img src="${row.imageUrl}" class="w-full h-full object-contain p-0.5" />` : `<i data-lucide="image-plus" class="w-4 h-4 text-slate-400"></i>`}
+                        </div>
+                        <div class="flex-1 space-y-1.5 min-w-0">
+                          <input type="text" list="global-products-datalist-dn" value="${escapeHtml(row.name)}" oninput="handleDebitNoteNameInput(${idx}, this.value)" placeholder="Search product or enter debit item..." class="w-full px-2.5 py-1.5 bg-white border border-slate-300 rounded text-xs font-bold text-slate-900 focus:outline-none focus:border-purple-600" />
+                          <textarea oninput="autoExpandTextarea(this); updateDebitNoteRow(${idx}, 'description', this.value)" placeholder="Reason details..." class="auto-expand w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded text-[11px] text-slate-700 focus:outline-none focus:border-purple-600 resize-y min-h-[44px]">${escapeHtml(row.description || '')}</textarea>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="py-3 px-2 align-top border-r border-slate-200"><input type="text" value="${escapeHtml(row.hsnCode || '')}" oninput="updateDebitNoteRow(${idx}, 'hsnCode', this.value)" class="w-full px-2 py-1.5 bg-white border border-slate-300 rounded text-xs text-center font-mono font-medium focus:outline-none focus:border-purple-600" /></td>
+                    <td class="py-3 px-2 align-top border-r border-slate-200"><input type="number" min="1" value="${row.quantity}" oninput="updateDebitNoteRow(${idx}, 'quantity', this.value)" class="w-full px-2 py-1.5 bg-white border border-slate-300 rounded text-xs text-center font-mono font-bold focus:outline-none focus:border-purple-600" /></td>
+                    <td class="py-3 px-2 align-top border-r border-slate-200">
+                      <select onchange="updateDebitNoteRow(${idx}, 'unit', this.value)" class="w-full px-1 py-1.5 bg-white border border-slate-300 rounded text-xs text-center font-semibold focus:outline-none focus:border-purple-600">
+                        ${STANDARD_UNITS.map(u => `<option value="${u}" ${(row.unit || 'PCS').toUpperCase() === u.toUpperCase() ? 'selected' : ''}>${u}</option>`).join('')}
+                      </select>
+                    </td>
+                    <td class="py-3 px-2 align-top border-r border-slate-200"><input type="number" min="0" step="0.01" value="${row.price}" oninput="updateDebitNoteRow(${idx}, 'price', this.value)" class="w-full px-2 py-1.5 bg-white border border-slate-300 rounded text-xs text-right font-mono font-bold focus:outline-none focus:border-purple-600" /></td>
+                    <td class="py-3 px-2 align-top border-r border-slate-200">
+                      <select onchange="updateDebitNoteRow(${idx}, 'taxRate', this.value)" class="w-full px-1.5 py-1.5 bg-white border border-slate-300 rounded text-xs text-center font-mono font-semibold focus:outline-none focus:border-purple-600">
+                        ${[0, 5, 12, 18, 28].map(t => `<option value="${t}" ${Number(row.taxRate) === t ? 'selected' : ''}>${t}%</option>`).join('')}
+                      </select>
+                    </td>
+                    <td id="dn-row-total-${idx}" class="py-3 px-3 text-right font-mono font-black text-purple-700 text-xs align-top border-r border-slate-200 pt-2.5">${cur()}${fmt(row.total)}</td>
+                    <td class="py-3 px-1.5 text-center align-top pt-2">
+                      <button onclick="removeDebitNoteRow(${idx})" ${debitNoteEditorData.items.length === 1 ? 'disabled class="opacity-20"' : 'class="p-1 text-slate-400 hover:text-rose-600 rounded"'}><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+
+          <datalist id="global-products-datalist-dn">
+            ${unifiedProds.map(p => `<option value="${escapeHtml(p.name)}">${p.sourceLabel} • ₹${p.price}</option>`).join('')}
+          </datalist>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 pt-3 border-t border-slate-300">
+          <div class="md:col-span-7">
+            <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">Remarks & Reason Details</label>
+            <textarea rows="2" oninput="debitNoteEditorData.notes = this.value" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded text-xs text-slate-900 focus:outline-none focus:border-purple-600">${debitNoteEditorData.notes || ''}</textarea>
+          </div>
+          <div class="md:col-span-5 bg-slate-50 border border-slate-300 p-4 rounded-md space-y-2 text-xs">
+            <div class="flex justify-between text-slate-600">
+              <span>Taxable Value:</span>
+              <span class="font-mono font-bold">${cur()}${fmt(debitNoteEditorData.taxableAmount)}</span>
+            </div>
+            <div class="flex justify-between text-slate-600">
+              <span>GST Adjustment:</span>
+              <span class="font-mono font-bold text-purple-700">+${cur()}${fmt(debitNoteEditorData.totalTax)}</span>
+            </div>
+            <div class="pt-2 border-t-2 border-slate-300 flex justify-between items-center text-sm font-black text-slate-900">
+              <span class="uppercase">Total Debit Value:</span>
+              <span class="text-base text-purple-800 font-mono">${cur()}${fmt(debitNoteEditorData.grandTotal)}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  safeCreateIcons();
+}
+
+function handleDebitNoteCustChange(custId) {
+  debitNoteEditorData.customerId = custId;
+  const cust = (activeCompany.customers || []).find(c => c.id === custId);
+  debitNoteEditorData.customerName = cust ? cust.name : '';
+}
+
+function updateDebitNoteRow(idx, field, val) {
+  const row = debitNoteEditorData.items[idx];
+  if (!row) return;
+  if (field === 'quantity' || field === 'price' || field === 'taxRate') {
+    row[field] = Number(val) || 0;
+  } else {
+    row[field] = val;
+  }
+  const qty = Number(row.quantity) || 0;
+  const price = Number(row.price) || 0;
+  const tax = Number(row.taxRate) || 0;
+  row.amount = qty * price;
+  row.taxAmount = row.amount * (tax / 100);
+  row.total = row.amount + row.taxAmount;
+
+  const rowTotalEl = document.getElementById(`dn-row-total-${idx}`);
+  if (rowTotalEl) rowTotalEl.textContent = `${cur()}${fmt(row.total)}`;
+  recalculateDebitNoteInMemory();
+}
+
+function recalculateDebitNoteInMemory() {
+  let subtotal = 0;
+  let taxTotal = 0;
+  debitNoteEditorData.items.forEach(r => {
+    const qty = Number(r.quantity) || 0;
+    const price = Number(r.price) || 0;
+    const tax = Number(r.taxRate) || 0;
+    const lineTaxable = qty * price;
+    const lineTax = lineTaxable * (tax / 100);
+    r.amount = lineTaxable;
+    r.taxAmount = lineTax;
+    r.total = lineTaxable + lineTax;
+    subtotal += lineTaxable;
+    taxTotal += lineTax;
+  });
+  debitNoteEditorData.subtotal = subtotal;
+  debitNoteEditorData.taxableAmount = subtotal;
+  debitNoteEditorData.totalTax = taxTotal;
+  debitNoteEditorData.grandTotal = subtotal + taxTotal;
+}
+
+function handleDebitNoteNameInput(idx, val) {
+  updateDebitNoteRow(idx, 'name', val);
+  if (val && val.length > 2) {
+    const unified = getUnifiedProductsList();
+    const exactMatch = unified.find(p => p.name.toLowerCase().trim() === val.toLowerCase().trim());
+    if (exactMatch) {
+      const row = debitNoteEditorData.items[idx];
+      row.description = exactMatch.description || '';
+      row.hsnCode = exactMatch.hsn || row.hsnCode || '';
+      row.price = Number(exactMatch.price) || row.price || 0;
+      row.imageUrl = exactMatch.imageUrl || row.imageUrl || null;
+      if (exactMatch.unit) row.unit = exactMatch.unit;
+      if (exactMatch.taxRate) row.taxRate = exactMatch.taxRate;
+      recalculateDebitNoteInMemory();
+      renderDebitNoteEditor(document.getElementById('main-content'));
+    }
+  }
+}
+
+function addDebitNoteRow() {
+  debitNoteEditorData.items.push({
+    id: 'dn-it-' + Date.now(),
+    name: '',
+    description: '',
+    hsnCode: '',
+    quantity: 1,
+    unit: 'PCS',
+    price: 0,
+    taxRate: 18,
+    amount: 0,
+    taxAmount: 0,
+    total: 0,
+    imageUrl: null
+  });
+  recalculateDebitNoteInMemory();
+  renderDebitNoteEditor(document.getElementById('main-content'));
+}
+
+function removeDebitNoteRow(idx) {
+  if (debitNoteEditorData.items.length === 1) return;
+  debitNoteEditorData.items.splice(idx, 1);
+  recalculateDebitNoteInMemory();
+  renderDebitNoteEditor(document.getElementById('main-content'));
+}
+
+function saveDebitNote(previewAfter) {
+  if (!debitNoteEditorData.customerId && !debitNoteEditorData.customerName) {
+    alert('Please select party ledger for this debit note.');
+    return;
+  }
+  recalculateDebitNoteInMemory();
+  activeCompany.debitNotes = activeCompany.debitNotes || [];
+  if (activeEditingId) {
+    const idx = activeCompany.debitNotes.findIndex(c => c.id === activeEditingId);
+    if (idx !== -1) activeCompany.debitNotes[idx] = { ...debitNoteEditorData };
+  } else {
+    activeCompany.debitNotes.unshift({ ...debitNoteEditorData });
+    activeCompany.counterDebitNote = (activeCompany.counterDebitNote || 101) + 1;
+  }
+  saveDatabase();
+  const savedId = debitNoteEditorData.id;
+  activeEditorMode = null;
+  activeEditingId = null;
+  if (previewAfter) openDocPreview('debitNote', savedId);
+  else {
+    showToast('Debit Note issued successfully! 📄');
+    navigateTab('debitNotes');
+  }
+}
+
+function deleteDebitNote(id) {
+  if (confirm('Are you sure you want to delete this debit note?')) {
+    activeCompany.debitNotes = (activeCompany.debitNotes || []).filter(c => c.id !== id);
+    saveDatabase();
+    showToast('Debit Note deleted');
+    renderCurrentPage();
+  }
+}
+
+// 11. EXTRA INTER-DOCUMENT CONVERSIONS
+function convertQuoteToProforma(id) {
+  const q = (activeCompany.quotations || []).find(it => it.id === id);
+  if (!q) return;
+
+  const num = (activeCompany.counterProforma || 101);
+  activeCompany.counterProforma = num;
+
+  proformaEditorData = {
+    id: 'pi-' + Date.now(),
+    proformaNumber: `PI-${new Date().getFullYear()}-${num}`,
+    date: new Date().toISOString().split('T')[0],
+    validity: q.validity || '15 Days',
+    customerId: q.customerId,
+    customerName: q.customerName,
+    deliveryTerms: q.deliveryTerms || 'Door Delivery',
+    paymentTerms: q.paymentTerms || 'Against PI',
+    taxTerms: q.taxTerms || 'Extra as applicable',
+    items: JSON.parse(JSON.stringify(q.items)),
+    subtotal: q.subtotal,
+    taxableAmount: q.taxableAmount,
+    totalTax: q.totalTax,
+    grandTotal: q.grandTotal,
+    notes: `Proforma Invoice converted from Quotation #${q.quoteNumber}.`,
+    terms: q.terms || [],
+    status: 'Draft'
+  };
+
+  activeEditorMode = 'proforma';
+  activeEditingId = null;
+  recalculateProformaInMemory();
+  renderCurrentPage();
+  showToast('Converted Quotation to Proforma Invoice! 📄');
+}
+
+function convertQuoteToChallan(id) {
+  const q = (activeCompany.quotations || []).find(it => it.id === id);
+  if (!q) return;
+
+  const num = (activeCompany.counterChallan || 101);
+  activeCompany.counterChallan = num;
+
+  challanEditorData = {
+    id: 'dc-' + Date.now(),
+    challanNumber: `DC-${new Date().getFullYear()}-${num}`,
+    date: new Date().toISOString().split('T')[0],
+    dispatchDate: new Date().toISOString().split('T')[0],
+    customerId: q.customerId,
+    customerName: q.customerName,
+    deliveryTerms: q.deliveryTerms || 'Door Delivery',
+    vehicleNo: '',
+    ewayBillNo: '',
+    transporter: '',
+    lrNo: '',
+    items: JSON.parse(JSON.stringify(q.items)),
+    subtotal: q.subtotal,
+    taxableAmount: q.taxableAmount,
+    totalTax: q.totalTax,
+    grandTotal: q.grandTotal,
+    notes: `Delivery Challan generated from Quotation #${q.quoteNumber}.`,
+    terms: [
+      'Goods received in good condition.',
+      'Subject to inspection and acceptance.'
+    ],
+    status: 'Dispatched'
+  };
+
+  activeEditorMode = 'challan';
+  activeEditingId = null;
+  recalculateChallanInMemory();
+  renderCurrentPage();
+  showToast('Generated Delivery Challan from Quotation! 🚚');
+}
+
+function createCreditNoteFromInvoice(id) {
+  const inv = (activeCompany.invoices || []).find(it => it.id === id);
+  if (!inv) return;
+
+  const num = (activeCompany.counterCreditNote || 101);
+  activeCompany.counterCreditNote = num;
+
+  creditNoteEditorData = {
+    id: 'cn-' + Date.now(),
+    noteNumber: `CN-${new Date().getFullYear()}-${num}`,
+    date: new Date().toISOString().split('T')[0],
+    customerId: inv.customerId,
+    customerName: inv.customerName,
+    originalInvoiceNumber: inv.invoiceNumber,
+    originalInvoiceDate: inv.date,
+    reason: 'Sales Return',
+    items: JSON.parse(JSON.stringify(inv.items)),
+    subtotal: inv.subtotal,
+    taxableAmount: inv.taxableAmount,
+    totalTax: inv.totalTax,
+    grandTotal: inv.grandTotal,
+    notes: `Credit Note issued towards return of goods billed under Tax Invoice #${inv.invoiceNumber}.`,
+    terms: ['Credit amount adjusted against ledger balance.'],
+    status: 'Issued'
+  };
+
+  activeEditorMode = 'creditNote';
+  activeEditingId = null;
+  recalculateCreditNoteInMemory();
+  renderCurrentPage();
+  showToast('Created Credit Note from Invoice! 📑');
+}
+
+function createDebitNoteFromInvoice(id) {
+  const inv = (activeCompany.invoices || []).find(it => it.id === id);
+  if (!inv) return;
+
+  const num = (activeCompany.counterDebitNote || 101);
+  activeCompany.counterDebitNote = num;
+
+  debitNoteEditorData = {
+    id: 'dn-' + Date.now(),
+    noteNumber: `DN-${new Date().getFullYear()}-${num}`,
+    date: new Date().toISOString().split('T')[0],
+    customerId: inv.customerId,
+    customerName: inv.customerName,
+    originalInvoiceNumber: inv.invoiceNumber,
+    originalInvoiceDate: inv.date,
+    reason: 'Rate Difference',
+    items: JSON.parse(JSON.stringify(inv.items)),
+    subtotal: inv.subtotal,
+    taxableAmount: inv.taxableAmount,
+    totalTax: inv.totalTax,
+    grandTotal: inv.grandTotal,
+    notes: `Debit Note issued towards rate difference / adjustment under Invoice #${inv.invoiceNumber}.`,
+    terms: ['Debit amount adjusted against ledger balance.'],
+    status: 'Issued'
+  };
+
+  activeEditorMode = 'debitNote';
+  activeEditingId = null;
+  recalculateDebitNoteInMemory();
+  renderCurrentPage();
+  showToast('Created Debit Note from Invoice! 📑');
+}
