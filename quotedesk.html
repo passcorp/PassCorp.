@@ -68,7 +68,7 @@
     /* Guaranteed Full-Page A4 Print & Screen Layout */
     #preview-paper-content {
       width: 100%;
-      max-width: 860px;
+      max-width: 820px;
       min-height: 1080px;
       background: white;
       box-sizing: border-box;
@@ -80,7 +80,7 @@
     @media print {
       @page {
         size: A4 portrait;
-        margin: 0 !important;
+        margin: 5mm 6mm !important;
       }
       * {
         -webkit-print-color-adjust: exact !important;
@@ -89,7 +89,7 @@
       html, body {
         background: white !important;
         width: 100% !important;
-        height: 100% !important;
+        height: auto !important;
         margin: 0 !important;
         padding: 0 !important;
         overflow: visible !important;
@@ -108,7 +108,7 @@
         visibility: visible !important;
       }
       #preview-modal {
-        position: absolute !important;
+        position: static !important;
         left: 0 !important;
         top: 0 !important;
         width: 100% !important;
@@ -134,16 +134,16 @@
         overflow: visible !important;
       }
       #preview-paper-content {
-        position: absolute !important;
-        left: 0 !important;
-        top: 0 !important;
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
         width: 100% !important;
         max-width: 100% !important;
-        min-height: 297mm !important;
-        height: 297mm !important;
+        min-height: calc(297mm - 12mm) !important;
+        height: auto !important;
         box-sizing: border-box !important;
         margin: 0 !important;
-        padding: 6mm 8mm !important;
+        padding: 0 !important;
         border: none !important;
         box-shadow: none !important;
         display: flex !important;
@@ -780,7 +780,7 @@
       </div>
 
       <div class="p-3 md:p-6 overflow-y-auto bg-slate-400/30 flex justify-center">
-        <div id="preview-paper-content" class="w-full max-w-4xl bg-white text-slate-900 p-0 shadow-2xl border border-slate-300 font-sans text-xs select-text min-h-[1080px] flex flex-col justify-between">
+        <div id="preview-paper-content" class="w-full max-w-[820px] bg-white text-slate-900 p-0 shadow-2xl border border-slate-300 font-sans text-xs select-text min-h-[1080px] flex flex-col justify-between">
           <!-- Injected via JS -->
         </div>
       </div>
@@ -1074,6 +1074,6 @@
   </div>
 
   <!-- Application Logic & Engine -->
-  <script src="quotedesk.js?v=v_desc_fix_1788955300"></script>
+  <script src="quotedesk.js?v=v_print_widescale_1788955700"></script>
 </body>
 </html>

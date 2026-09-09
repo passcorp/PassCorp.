@@ -4887,22 +4887,22 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
         <table class="w-full h-full text-left text-xs border-collapse">
           <thead>
             <tr class="border-b border-slate-900 bg-white text-slate-900 font-black uppercase text-[8.5px] tracking-wider divide-x divide-slate-900">
-              <th class="py-1 px-1 w-6 text-center">Sl<br/>No.</th>
-              <th class="py-1 px-2">Description of Goods</th>
-              <th class="py-1 px-1 w-14 text-center whitespace-nowrap">HSN/SAC</th>
-              <th class="py-1 px-1 w-14 text-center whitespace-nowrap">Quantity</th>
-              <th class="py-1 px-1 w-16 text-right whitespace-nowrap">Rate</th>
-              <th class="py-1 px-1 w-8 text-center whitespace-nowrap">per</th>
-              <th class="py-1 px-1 w-10 text-center whitespace-nowrap">Disc. %</th>
-              <th class="py-1 px-1.5 w-20 text-right whitespace-nowrap">Amount</th>
+              <th class="py-1 px-1.5 w-8 text-center">Sl<br/>No.</th>
+              <th class="py-1 px-2.5">Description of Goods</th>
+              <th class="py-1 px-1.5 w-16 text-center whitespace-nowrap">HSN/SAC</th>
+              <th class="py-1 px-1.5 w-16 text-center whitespace-nowrap">Quantity</th>
+              <th class="py-1 px-2 w-20 text-right whitespace-nowrap">Rate</th>
+              <th class="py-1 px-1 w-10 text-center whitespace-nowrap">per</th>
+              <th class="py-1 px-1 w-12 text-center whitespace-nowrap">Disc. %</th>
+              <th class="py-1 px-2.5 w-24 text-right whitespace-nowrap">Amount</th>
             </tr>
           </thead>
           <tbody class="text-slate-900">
             ${(doc.items || []).map((it, idx) => `
               <tr class="divide-x divide-slate-900 text-[10px]">
-                <td class="py-1 px-0.5 text-center font-mono font-bold align-top">${idx + 1}</td>
-                <td class="py-1 px-2 align-top">
-                  <div class="flex items-start gap-2">
+                <td class="py-1 px-1 text-center font-mono font-bold align-top">${idx + 1}</td>
+                <td class="py-1 px-2.5 align-top">
+                  <div class="flex items-start gap-2.5">
                     ${it.imageUrl ? `
                       <div class="w-12 h-12 rounded bg-white border border-slate-300 p-0.5 shrink-0 flex items-center justify-center overflow-hidden shadow-sm mt-0.5">
                         <img src="${it.imageUrl}" class="max-w-full max-h-full object-contain" />
@@ -4914,19 +4914,19 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
                     </div>
                   </div>
                 </td>
-                <td class="py-1 px-1 text-center font-mono font-bold align-top whitespace-nowrap text-[9.5px]">${it.hsnCode || '6403'}</td>
-                <td class="py-1 px-1 text-center font-mono font-black align-top whitespace-nowrap text-[10px]">${it.quantity} ${it.unit || 'Pairs'}</td>
-                <td class="py-1 px-1 text-right font-mono font-bold align-top whitespace-nowrap text-[10px]">${fmt(it.price)}</td>
+                <td class="py-1 px-1.5 text-center font-mono font-bold align-top whitespace-nowrap text-[9.5px]">${it.hsnCode || '6403'}</td>
+                <td class="py-1 px-1.5 text-center font-mono font-black align-top whitespace-nowrap text-[10px]">${it.quantity} ${it.unit || 'Pairs'}</td>
+                <td class="py-1 px-2 text-right font-mono font-bold align-top whitespace-nowrap text-[10px]">${fmt(it.price)}</td>
                 <td class="py-1 px-1 text-center font-medium align-top whitespace-nowrap text-[9.5px]">${it.unit || 'Pairs'}</td>
                 <td class="py-1 px-1 text-center font-mono align-top whitespace-nowrap text-[9.5px]">${it.discount ? `${it.discount}%` : ''}</td>
-                <td class="py-1 px-1.5 text-right font-mono font-black text-slate-900 align-top whitespace-nowrap text-[10px]">${fmt(it.total || (it.price * it.quantity))}</td>
+                <td class="py-1 px-2.5 text-right font-mono font-black text-slate-900 align-top whitespace-nowrap text-[10px]">${fmt(it.total || (it.price * it.quantity))}</td>
               </tr>
             `).join('')}
 
             <!-- Expansion Spacer Row to ensure full-page A4 vertical grid lines -->
             <tr class="divide-x divide-slate-900 text-[10px] h-full" style="height: 100%;">
               <td class="py-1 px-1"></td>
-              <td class="py-1 px-2"></td>
+              <td class="py-1 px-2.5"></td>
               <td class="py-1 px-1.5"></td>
               <td class="py-1 px-1.5"></td>
               <td class="py-1 px-1.5"></td>
@@ -5174,22 +5174,22 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
         <table class="w-full h-full text-left text-xs border-collapse">
           <thead>
             <tr class="border-b border-slate-900 bg-slate-100 text-slate-900 font-black uppercase text-[8.5px] tracking-wider divide-x divide-slate-900">
-              <th class="py-1 px-1 w-6 text-center">Sl</th>
-              <th class="py-1 px-2">Description of Goods & Technical Specs</th>
-              <th class="py-1 px-1 w-14 text-center whitespace-nowrap">HSN/SAC</th>
-              <th class="py-1 px-1 w-12 text-center whitespace-nowrap">Quantity</th>
-              <th class="py-1 px-1 w-16 text-right whitespace-nowrap">Rate (${cur()})</th>
-              <th class="py-1 px-1 w-8 text-center whitespace-nowrap">per</th>
-              <th class="py-1 px-1 w-16 text-center whitespace-nowrap">Lead Time</th>
-              <th class="py-1 px-1 w-10 text-center whitespace-nowrap">GST%</th>
-              <th class="py-1 px-1.5 w-20 text-right whitespace-nowrap">Amount (${cur()})</th>
+              <th class="py-1 px-1.5 w-8 text-center">Sl</th>
+              <th class="py-1 px-2.5">Description of Goods & Technical Specs</th>
+              <th class="py-1 px-1.5 w-16 text-center whitespace-nowrap">HSN/SAC</th>
+              <th class="py-1 px-1.5 w-14 text-center whitespace-nowrap">Quantity</th>
+              <th class="py-1 px-2 w-20 text-right whitespace-nowrap">Rate (${cur()})</th>
+              <th class="py-1 px-1 w-10 text-center whitespace-nowrap">per</th>
+              <th class="py-1 px-1.5 w-20 text-center whitespace-nowrap">Lead Time</th>
+              <th class="py-1 px-1 w-12 text-center whitespace-nowrap">GST%</th>
+              <th class="py-1 px-2.5 w-24 text-right whitespace-nowrap">Amount (${cur()})</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-300 text-slate-900">
             ${(doc.items || []).map((it, idx) => `
               <tr class="divide-x divide-slate-900 text-[10px]">
-                <td class="py-1 px-0.5 text-center font-mono font-bold align-top">${idx + 1}</td>
-                <td class="py-1 px-2 align-top">
+                <td class="py-1 px-1.5 text-center font-mono font-bold align-top">${idx + 1}</td>
+                <td class="py-1 px-2.5 align-top">
                   <div class="flex items-start gap-2.5">
                     ${it.imageUrl ? `
                       <div class="w-12 h-12 rounded bg-white border border-slate-300 p-0.5 shrink-0 flex items-center justify-center overflow-hidden shadow-sm mt-0.5">
@@ -5202,20 +5202,20 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
                     </div>
                   </div>
                 </td>
-                <td class="py-1 px-1 text-center font-mono font-semibold align-top whitespace-nowrap text-[9.5px]">${it.hsnCode || '-'}</td>
-                <td class="py-1 px-1 text-center font-mono font-bold align-top whitespace-nowrap text-[10px]">${it.quantity}</td>
-                <td class="py-1 px-1 text-right font-mono font-semibold align-top whitespace-nowrap text-[10px]">${fmt(it.price)}</td>
+                <td class="py-1 px-1.5 text-center font-mono font-semibold align-top whitespace-nowrap text-[9.5px]">${it.hsnCode || '-'}</td>
+                <td class="py-1 px-1.5 text-center font-mono font-bold align-top whitespace-nowrap text-[10px]">${it.quantity}</td>
+                <td class="py-1 px-2 text-right font-mono font-semibold align-top whitespace-nowrap text-[10px]">${fmt(it.price)}</td>
                 <td class="py-1 px-1 text-center font-medium align-top whitespace-nowrap text-[9.5px]">${it.unit || 'PCS'}</td>
-                <td class="py-1 px-1 text-center font-mono text-[9px] align-top font-semibold text-slate-700 whitespace-nowrap">${it.leadTime || '1-2 Days'}</td>
+                <td class="py-1 px-1.5 text-center font-mono text-[9px] align-top font-semibold text-slate-700 whitespace-nowrap">${it.leadTime || '1-2 Days'}</td>
                 <td class="py-1 px-1 text-center font-mono font-bold align-top text-blue-800 whitespace-nowrap text-[9.5px]">${it.taxRate || 0}%</td>
-                <td class="py-1 px-1.5 text-right font-mono font-bold text-slate-900 align-top whitespace-nowrap text-[10px]">${fmt(it.total)}</td>
+                <td class="py-1 px-2.5 text-right font-mono font-bold text-slate-900 align-top whitespace-nowrap text-[10px]">${fmt(it.total)}</td>
               </tr>
             `).join('')}
 
             <!-- Expansion Spacer Row to ensure full-page A4 vertical grid lines -->
             <tr class="divide-x divide-slate-900 text-[10.5px] h-full" style="height: 100%;">
-              <td class="py-1 px-1"></td>
-              <td class="py-1 px-2"></td>
+              <td class="py-1 px-1.5"></td>
+              <td class="py-1 px-2.5"></td>
               <td class="py-1 px-1.5"></td>
               <td class="py-1 px-1.5"></td>
               <td class="py-1 px-1.5"></td>
@@ -5394,22 +5394,22 @@ function renderBusyFormatHTML(doc, type, cust, comp) {
         <table class="w-full h-full text-left text-xs border-collapse">
           <thead>
             <tr class="bg-slate-100 border-b border-slate-300 text-slate-700 font-bold uppercase text-[9px] divide-x divide-slate-300">
-              <th class="py-1.5 px-1 text-center w-6">#</th>
-              <th class="py-1.5 px-2">Item Description Particulars</th>
-              <th class="py-1.5 px-1 text-center w-14">HSN</th>
-              <th class="py-1.5 px-1 text-center w-14">Qty</th>
-              <th class="py-1.5 px-1 text-right w-16">Price (${cur()})</th>
-              <th class="py-1.5 px-1 text-center w-16">Lead Time</th>
-              <th class="py-1.5 px-1 text-center w-10">GST%</th>
-              <th class="py-1.5 px-2 text-right w-20">Amount (${cur()})</th>
+              <th class="py-1.5 px-1.5 text-center w-7">#</th>
+              <th class="py-1.5 px-3">Item Description Particulars</th>
+              <th class="py-1.5 px-1.5 text-center w-16">HSN</th>
+              <th class="py-1.5 px-1.5 text-center w-14">Qty</th>
+              <th class="py-1.5 px-2 text-right w-20">Price (${cur()})</th>
+              <th class="py-1.5 px-1.5 text-center w-20">Lead Time</th>
+              <th class="py-1.5 px-1 text-center w-12">GST%</th>
+              <th class="py-1.5 px-2.5 text-right w-24">Amount (${cur()})</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-200">
             ${(doc.items || []).map((it, idx) => `
               <tr class="divide-x divide-slate-200 hover:bg-slate-50 text-[10px]">
-                <td class="py-1.5 px-1 text-center font-mono text-slate-500 align-top">${idx + 1}</td>
-                <td class="py-1.5 px-2 align-top">
-                  <div class="flex items-start gap-2">
+                <td class="py-1.5 px-1.5 text-center font-mono text-slate-500 align-top">${idx + 1}</td>
+                <td class="py-1.5 px-3 align-top">
+                  <div class="flex items-start gap-2.5">
                     ${(type === 'quote' && it.imageUrl) ? `
                       <div class="w-12 h-12 rounded bg-white border border-slate-300 p-0.5 shrink-0 flex items-center justify-center overflow-hidden shadow-sm mt-0.5">
                         <img src="${it.imageUrl}" class="max-w-full max-h-full object-contain" />
@@ -5421,23 +5421,25 @@ function renderBusyFormatHTML(doc, type, cust, comp) {
                     </div>
                   </div>
                 </td>
-                <td class="py-1.5 px-1 text-center font-mono align-top text-[9.5px]">${it.hsnCode || '-'}</td>
-                <td class="py-1.5 px-1 text-center font-mono font-bold align-top text-[10px]">${it.quantity} ${it.unit || ''}</td>
-                <td class="py-1.5 px-1 text-right font-mono align-top text-[10px]">${fmt(it.price)}</td>
-                <td class="py-1.5 px-1 text-center font-mono text-[9px] align-top font-semibold text-slate-700">${it.leadTime || '1-2 Days'}</td>
+                <td class="py-1.5 px-1.5 text-center font-mono align-top text-[9.5px]">${it.hsnCode || '-'}</td>
+                <td class="py-1.5 px-1.5 text-center font-mono font-bold align-top text-[10px]">${it.quantity} ${it.unit || ''}</td>
+                <td class="py-1.5 px-2 text-right font-mono align-top text-[10px]">${fmt(it.price)}</td>
+                <td class="py-1.5 px-1.5 text-center font-mono text-[9px] align-top font-semibold text-slate-700">${it.leadTime || '1-2 Days'}</td>
                 <td class="py-1.5 px-1 text-center font-mono font-semibold align-top text-blue-700 text-[9.5px]">${it.taxRate || 0}%</td>
-                <td class="py-1.5 px-2 text-right font-mono font-bold text-slate-900 align-top text-[10px]">${fmt(it.total)}</td>
+                <td class="py-1.5 px-2.5 text-right font-mono font-bold text-slate-900 align-top text-[10px]">${fmt(it.total)}</td>
               </tr>
             `).join('')}
 
             <!-- Expansion Spacer Row to ensure full-page A4 vertical grid lines -->
             <tr class="divide-x divide-slate-200 h-full" style="height: 100%;">
-              <td class="py-1.5 px-1"></td>
+              <td class="py-1.5 px-1.5"></td>
+              <td class="py-1.5 px-3"></td>
+              <td class="py-1.5 px-1.5"></td>
+              <td class="py-1.5 px-1.5"></td>
               <td class="py-1.5 px-2"></td>
-              <td class="py-2 px-2"></td>
-              <td class="py-2 px-2"></td>
-              <td class="py-2 px-2"></td>
-              <td class="py-2 px-2"></td>
+              <td class="py-1.5 px-1.5"></td>
+              <td class="py-1.5 px-1"></td>
+              <td class="py-1.5 px-2.5"></td>
               <td class="py-2 px-2"></td>
               <td class="py-2 px-3"></td>
             </tr>
