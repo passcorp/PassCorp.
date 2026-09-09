@@ -2648,6 +2648,8 @@ function convertQuoteToInvoice(quoteId) {
   const quote = (activeCompany.quotations || []).find(q => q.id === quoteId);
   if (!quote) return;
 
+  const cust = (activeCompany.customers || []).find(c => c.id === quote.customerId);
+
   const count = (activeCompany.invoices || []).length + 1;
   const invNo = `INV-${new Date().getFullYear()}-${String(count).padStart(3, '0')}`;
   const today = new Date().toISOString().split('T')[0];
@@ -2664,6 +2666,21 @@ function convertQuoteToInvoice(quoteId) {
     status: 'Unpaid',
     customerId: quote.customerId,
     customerName: quote.customerName,
+    billingAddress: quote.billingAddress || (cust ? cust.address : '') || '',
+    billingCity: quote.billingCity || (cust ? cust.city : '') || '',
+    billingState: quote.billingState || (cust ? cust.state : '') || '',
+    billingPincode: quote.billingPincode || (cust ? cust.pincode : '') || '',
+    billingGstin: quote.billingGstin || (cust ? cust.gstin : '') || '',
+    billingPhone: quote.billingPhone || (cust ? cust.phone : '') || '',
+    contactPerson: quote.contactPerson || (cust ? cust.contactPerson : '') || '',
+    shipToDifferent: quote.shipToDifferent || (cust && !cust.sameAsBilling && !!(cust.shippingAddress || cust.shippingName)) || false,
+    shippingName: quote.shippingName || (cust ? cust.shippingName : '') || '',
+    shippingAddress: quote.shippingAddress || (cust ? cust.shippingAddress : '') || '',
+    shippingCity: quote.shippingCity || (cust ? cust.shippingCity : '') || '',
+    shippingState: quote.shippingState || (cust ? cust.shippingState : '') || '',
+    shippingPincode: quote.shippingPincode || (cust ? cust.shippingPincode : '') || '',
+    shippingGstin: quote.shippingGstin || (cust ? cust.shippingGstin : '') || '',
+    shippingPhone: quote.shippingPhone || (cust ? cust.shippingPhone : '') || '',
     items: JSON.parse(JSON.stringify(quote.items)),
     notes: quote.notes || '',
     terms: quote.terms || [],
@@ -2802,6 +2819,21 @@ function openNewInvoiceEditor() {
     status: 'Unpaid',
     customerId: '',
     customerName: '',
+    billingAddress: '',
+    billingCity: '',
+    billingState: '',
+    billingPincode: '',
+    billingGstin: '',
+    billingPhone: '',
+    contactPerson: '',
+    shipToDifferent: false,
+    shippingName: '',
+    shippingAddress: '',
+    shippingCity: '',
+    shippingState: '',
+    shippingPincode: '',
+    shippingGstin: '',
+    shippingPhone: '',
     items: [
       {
         id: 'ii-1',
@@ -2848,6 +2880,9 @@ function editInvoice(id) {
   if (!invoiceEditorData.deliveryTerms) invoiceEditorData.deliveryTerms = 'Door Delivery';
   if (!invoiceEditorData.paymentTerms) invoiceEditorData.paymentTerms = 'Net 30 Days';
   if (!invoiceEditorData.taxTerms) invoiceEditorData.taxTerms = 'Extra as applicable';
+  if (invoiceEditorData.shipToDifferent === undefined) {
+    invoiceEditorData.shipToDifferent = Boolean(invoiceEditorData.shippingAddress && invoiceEditorData.shippingAddress !== invoiceEditorData.billingAddress);
+  }
 
   recalculateInvoiceInMemory();
   renderCurrentPage();
@@ -2917,6 +2952,76 @@ function renderInvoiceEditor(container) {
             <div class="md:col-span-2">
               <label class="block font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-1">Payment Due Date</label>
               <input type="date" id="ie-due" value="${invoiceEditorData.dueDate}" oninput="invoiceEditorData.dueDate = this.value" class="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs text-slate-900 font-mono focus:outline-none focus:border-amber-600" />
+            </div>
+          </div>
+
+          <!-- Bill To (Buyer) & Ship To (Consignee) Allocation Grid -->
+          <div class="border border-slate-300 rounded-lg p-3 bg-white shadow-2xs space-y-2.5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-2">
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-black uppercase tracking-wider text-amber-800 bg-amber-100 px-2 py-0.5 rounded border border-amber-300">Party Allocation</span>
+                <span class="text-[11px] font-bold text-slate-800">Bill To (Buyer) & Ship To (Consignee) Details</span>
+              </div>
+              <label class="flex items-center gap-1.5 cursor-pointer text-xs font-bold text-slate-800 select-none bg-slate-100 hover:bg-slate-200 px-2.5 py-1 rounded border border-slate-300 transition-colors">
+                <input type="checkbox" id="ie-ship-diff" onchange="toggleInvoiceShipTo(this.checked)" ${invoiceEditorData.shipToDifferent ? 'checked' : ''} class="rounded border-slate-300 text-amber-600 focus:ring-amber-500" />
+                <span>Ship to a Different Address (Consignee)</span>
+              </label>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+              <!-- Left: Billed To (Buyer) Details -->
+              <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-lg space-y-1.5 text-slate-800">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-black uppercase tracking-wider text-slate-600 flex items-center gap-1"><i data-lucide="user-check" class="w-3.5 h-3.5 text-blue-600"></i> Billed To (Buyer / Recipient)</span>
+                  <span class="text-[9px] font-mono text-slate-500">Tax Invoice Addressee</span>
+                </div>
+                <div class="space-y-1">
+                  <input type="text" placeholder="Buyer / Company Name *" value="${escapeHtml(invoiceEditorData.customerName || '')}" oninput="invoiceEditorData.customerName = this.value" class="w-full px-2 py-1 bg-white border border-slate-300 rounded text-xs font-bold text-slate-900 focus:outline-none focus:border-amber-600" />
+                  <textarea rows="2" placeholder="Billing Address, Area, Landmark..." oninput="invoiceEditorData.billingAddress = this.value" class="w-full px-2 py-1 bg-white border border-slate-300 rounded text-[11px] text-slate-800 focus:outline-none focus:border-amber-600 resize-none">${escapeHtml(invoiceEditorData.billingAddress || '')}</textarea>
+                  <div class="grid grid-cols-3 gap-1.5">
+                    <input type="text" placeholder="City" value="${escapeHtml(invoiceEditorData.billingCity || '')}" oninput="invoiceEditorData.billingCity = this.value" class="w-full px-2 py-1 bg-white border border-slate-300 rounded text-[11px] text-slate-900 focus:outline-none focus:border-amber-600" />
+                    <input type="text" placeholder="State" value="${escapeHtml(invoiceEditorData.billingState || '')}" oninput="invoiceEditorData.billingState = this.value" class="w-full px-2 py-1 bg-white border border-slate-300 rounded text-[11px] text-slate-900 focus:outline-none focus:border-amber-600" />
+                    <input type="text" placeholder="Pincode" value="${escapeHtml(invoiceEditorData.billingPincode || '')}" oninput="invoiceEditorData.billingPincode = this.value" class="w-full px-2 py-1 bg-white border border-slate-300 rounded text-[11px] font-mono text-slate-900 focus:outline-none focus:border-amber-600" />
+                  </div>
+                  <div class="grid grid-cols-2 gap-1.5 pt-0.5">
+                    <input type="text" placeholder="Buyer GSTIN (e.g. 27AAAAA0000A1Z5)" value="${escapeHtml(invoiceEditorData.billingGstin || '')}" oninput="invoiceEditorData.billingGstin = this.value" class="w-full px-2 py-1 bg-white border border-slate-300 rounded text-[11px] font-mono font-bold text-slate-900 focus:outline-none focus:border-amber-600 uppercase" />
+                    <input type="text" placeholder="Buyer Phone / Contact" value="${escapeHtml(invoiceEditorData.billingPhone || '')}" oninput="invoiceEditorData.billingPhone = this.value" class="w-full px-2 py-1 bg-white border border-slate-300 rounded text-[11px] text-slate-900 focus:outline-none focus:border-amber-600" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: Shipped To (Consignee) Details -->
+              <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-lg space-y-1.5 text-slate-800 ${invoiceEditorData.shipToDifferent ? 'border-amber-400 bg-amber-50/20' : ''}">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-black uppercase tracking-wider text-slate-600 flex items-center gap-1"><i data-lucide="truck" class="w-3.5 h-3.5 text-amber-700"></i> Shipped To (Consignee / Delivery Site)</span>
+                  ${invoiceEditorData.shipToDifferent ? `
+                    <button onclick="copyBillingToShippingInvoice()" type="button" class="text-[9.5px] text-amber-800 font-bold hover:underline">Copy from Bill To</button>
+                  ` : `
+                    <span class="text-[9.5px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.2 rounded border border-emerald-300">Same as Billed To</span>
+                  `}
+                </div>
+
+                ${invoiceEditorData.shipToDifferent ? `
+                  <div class="space-y-1">
+                    <input type="text" placeholder="Consignee / Site Name *" value="${escapeHtml(invoiceEditorData.shippingName || '')}" oninput="invoiceEditorData.shippingName = this.value" class="w-full px-2 py-1 bg-white border border-slate-300 rounded text-xs font-bold text-slate-900 focus:outline-none focus:border-amber-600" />
+                    <textarea rows="2" placeholder="Delivery street address, plant / warehouse location..." oninput="invoiceEditorData.shippingAddress = this.value" class="w-full px-2 py-1 bg-white border border-slate-300 rounded text-[11px] text-slate-800 focus:outline-none focus:border-amber-600 resize-none">${escapeHtml(invoiceEditorData.shippingAddress || '')}</textarea>
+                    <div class="grid grid-cols-3 gap-1.5">
+                      <input type="text" placeholder="City" value="${escapeHtml(invoiceEditorData.shippingCity || '')}" oninput="invoiceEditorData.shippingCity = this.value" class="w-full px-2 py-1 bg-white border border-slate-300 rounded text-[11px] text-slate-900 focus:outline-none focus:border-amber-600" />
+                      <input type="text" placeholder="State" value="${escapeHtml(invoiceEditorData.shippingState || '')}" oninput="invoiceEditorData.shippingState = this.value" class="w-full px-2 py-1 bg-white border border-slate-300 rounded text-[11px] text-slate-900 focus:outline-none focus:border-amber-600" />
+                      <input type="text" placeholder="Pincode" value="${escapeHtml(invoiceEditorData.shippingPincode || '')}" oninput="invoiceEditorData.shippingPincode = this.value" class="w-full px-2 py-1 bg-white border border-slate-300 rounded text-[11px] font-mono text-slate-900 focus:outline-none focus:border-amber-600" />
+                    </div>
+                    <div class="grid grid-cols-2 gap-1.5 pt-0.5">
+                      <input type="text" placeholder="Consignee GSTIN (Optional)" value="${escapeHtml(invoiceEditorData.shippingGstin || '')}" oninput="invoiceEditorData.shippingGstin = this.value" class="w-full px-2 py-1 bg-white border border-slate-300 rounded text-[11px] font-mono text-slate-900 focus:outline-none focus:border-amber-600 uppercase" />
+                      <input type="text" placeholder="Site Contact / Phone" value="${escapeHtml(invoiceEditorData.shippingPhone || '')}" oninput="invoiceEditorData.shippingPhone = this.value" class="w-full px-2 py-1 bg-white border border-slate-300 rounded text-[11px] text-slate-900 focus:outline-none focus:border-amber-600" />
+                    </div>
+                  </div>
+                ` : `
+                  <div class="py-4 px-3 text-center bg-white border border-dashed border-slate-300 rounded-md">
+                    <p class="text-xs font-semibold text-slate-700">Goods will be physically dispatched to the Buyer's Billing Address.</p>
+                    <p class="text-[10px] text-slate-500 mt-0.5">Click "Ship to a Different Address" above if goods need to be dispatched to a different project site or branch.</p>
+                  </div>
+                `}
+              </div>
             </div>
           </div>
 
@@ -3175,7 +3280,66 @@ function updateInvoiceSummaryDOM() {
 function handleInvoiceCustChange(custId) {
   invoiceEditorData.customerId = custId;
   const cust = (activeCompany.customers || []).find(c => c.id === custId);
-  invoiceEditorData.customerName = cust ? cust.name : '';
+  if (cust) {
+    invoiceEditorData.customerName = cust.name || '';
+    invoiceEditorData.billingAddress = cust.billingAddress || '';
+    invoiceEditorData.billingCity = cust.city || '';
+    invoiceEditorData.billingState = cust.state || '';
+    invoiceEditorData.billingPincode = cust.pincode || '';
+    invoiceEditorData.billingGstin = cust.gstin || '';
+    invoiceEditorData.billingPhone = cust.phone || '';
+    invoiceEditorData.contactPerson = cust.contactPerson || '';
+
+    if (cust.shippingAddress && cust.sameAsBilling === false) {
+      invoiceEditorData.shipToDifferent = true;
+      invoiceEditorData.shippingName = cust.shippingName || cust.name || '';
+      invoiceEditorData.shippingAddress = cust.shippingAddress || '';
+      invoiceEditorData.shippingCity = cust.shippingCity || cust.city || '';
+      invoiceEditorData.shippingState = cust.shippingState || cust.state || '';
+      invoiceEditorData.shippingPincode = cust.shippingPincode || cust.pincode || '';
+      invoiceEditorData.shippingGstin = cust.shippingGstin || cust.gstin || '';
+      invoiceEditorData.shippingPhone = cust.phone || '';
+    } else {
+      invoiceEditorData.shipToDifferent = false;
+      invoiceEditorData.shippingName = '';
+      invoiceEditorData.shippingAddress = '';
+      invoiceEditorData.shippingCity = '';
+      invoiceEditorData.shippingState = '';
+      invoiceEditorData.shippingPincode = '';
+      invoiceEditorData.shippingGstin = '';
+      invoiceEditorData.shippingPhone = '';
+    }
+  }
+  renderInvoiceEditor(document.getElementById('main-content'));
+  safeCreateIcons();
+}
+
+function toggleInvoiceShipTo(isDiff) {
+  invoiceEditorData.shipToDifferent = isDiff;
+  if (isDiff && !invoiceEditorData.shippingAddress) {
+    invoiceEditorData.shippingName = invoiceEditorData.customerName || '';
+    invoiceEditorData.shippingAddress = invoiceEditorData.billingAddress || '';
+    invoiceEditorData.shippingCity = invoiceEditorData.billingCity || '';
+    invoiceEditorData.shippingState = invoiceEditorData.billingState || '';
+    invoiceEditorData.shippingPincode = invoiceEditorData.billingPincode || '';
+    invoiceEditorData.shippingGstin = invoiceEditorData.billingGstin || '';
+    invoiceEditorData.shippingPhone = invoiceEditorData.billingPhone || '';
+  }
+  renderInvoiceEditor(document.getElementById('main-content'));
+  safeCreateIcons();
+}
+
+function copyBillingToShippingInvoice() {
+  invoiceEditorData.shippingName = invoiceEditorData.customerName || '';
+  invoiceEditorData.shippingAddress = invoiceEditorData.billingAddress || '';
+  invoiceEditorData.shippingCity = invoiceEditorData.billingCity || '';
+  invoiceEditorData.shippingState = invoiceEditorData.billingState || '';
+  invoiceEditorData.shippingPincode = invoiceEditorData.billingPincode || '';
+  invoiceEditorData.shippingGstin = invoiceEditorData.billingGstin || '';
+  invoiceEditorData.shippingPhone = invoiceEditorData.billingPhone || '';
+  renderInvoiceEditor(document.getElementById('main-content'));
+  safeCreateIcons();
+  showToast('Copied Billed details to Shipped To');
 }
 
 function handleInvoiceCatalogSelect(idx, itemId) {
@@ -3439,6 +3603,17 @@ function renderCustomersList(container) {
   `;
 }
 
+function toggleCustomerShippingFields(sameAsBilling) {
+  const fields = document.getElementById('cust-shipping-fields');
+  if (fields) {
+    if (sameAsBilling) {
+      fields.classList.add('hidden');
+    } else {
+      fields.classList.remove('hidden');
+    }
+  }
+}
+
 function openCustomerModal(id = null) {
   const cust = id ? (activeCompany.customers || []).find(c => c.id === id) : null;
   document.getElementById('cust-id').value = cust ? cust.id : '';
@@ -3453,6 +3628,20 @@ function openCustomerModal(id = null) {
   document.getElementById('cust-state').value = cust ? cust.state || '' : '';
   document.getElementById('cust-pincode').value = cust ? cust.pincode || '' : '';
 
+  const sameShip = cust ? (cust.sameAsBilling !== false && !cust.shippingAddress) : true;
+  const sameCheckbox = document.getElementById('cust-same-ship');
+  if (sameCheckbox) {
+    sameCheckbox.checked = sameShip;
+    toggleCustomerShippingFields(sameShip);
+  }
+
+  document.getElementById('cust-ship-name').value = cust ? (cust.shippingName || '') : '';
+  document.getElementById('cust-ship-gstin').value = cust ? (cust.shippingGstin || '') : '';
+  document.getElementById('cust-ship-address').value = cust ? (cust.shippingAddress || '') : '';
+  document.getElementById('cust-ship-city').value = cust ? (cust.shippingCity || '') : '';
+  document.getElementById('cust-ship-state').value = cust ? (cust.shippingState || '') : '';
+  document.getElementById('cust-ship-pincode').value = cust ? (cust.shippingPincode || '') : '';
+
   document.getElementById('customer-modal').classList.remove('hidden');
   safeCreateIcons();
 }
@@ -3464,6 +3653,8 @@ function closeCustomerModal() {
 function handleCustomerSubmit(e) {
   e.preventDefault();
   const id = document.getElementById('cust-id').value;
+  const sameShip = document.getElementById('cust-same-ship')?.checked ?? true;
+
   const payload = {
     name: document.getElementById('cust-name').value.trim(),
     contactPerson: document.getElementById('cust-person').value.trim(),
@@ -3474,6 +3665,13 @@ function handleCustomerSubmit(e) {
     city: document.getElementById('cust-city').value.trim(),
     state: document.getElementById('cust-state').value.trim(),
     pincode: document.getElementById('cust-pincode').value.trim(),
+    sameAsBilling: sameShip,
+    shippingName: sameShip ? '' : (document.getElementById('cust-ship-name')?.value.trim() || ''),
+    shippingGstin: sameShip ? '' : (document.getElementById('cust-ship-gstin')?.value.trim() || ''),
+    shippingAddress: sameShip ? '' : (document.getElementById('cust-ship-address')?.value.trim() || ''),
+    shippingCity: sameShip ? '' : (document.getElementById('cust-ship-city')?.value.trim() || ''),
+    shippingState: sameShip ? '' : (document.getElementById('cust-ship-state')?.value.trim() || ''),
+    shippingPincode: sameShip ? '' : (document.getElementById('cust-ship-pincode')?.value.trim() || '')
   };
 
   if (!activeCompany.customers) activeCompany.customers = [];
@@ -3914,22 +4112,22 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
             <!-- Buyer (Bill to) -->
             <div class="p-2 space-y-0.5 bg-slate-50/50">
               <span class="text-[8.5px] font-bold text-slate-500 uppercase tracking-wider block">Buyer (Bill to)</span>
-              <h3 class="font-black text-xs uppercase text-slate-900 tracking-wide">${cust?.name || doc.customerName || 'Direct Customer'}</h3>
-              <p class="text-[9.5px] text-slate-700 leading-tight">${cust?.billingAddress || ''} ${cust?.city ? `, ${cust.city}` : ''} ${cust?.state ? `, ${cust.state}` : ''} ${cust?.pincode || ''}</p>
-              <p><span class="font-bold">CONTACT :</span> <span class="font-mono">${cust?.phone || '-'}</span></p>
-              <p><span class="font-bold">GSTIN/UIN :</span> <span class="font-mono font-bold text-slate-900">${cust?.gstin || 'Unregistered'}</span></p>
-              <p><span class="font-bold">State Name :</span> ${cust?.state || 'Maharashtra'} (Code: ${custStateCode})</p>
-              <p><span class="font-bold">Place of Supply :</span> ${cust?.state || 'Maharashtra'} (Code: ${custStateCode})</p>
+              <h3 class="font-black text-xs uppercase text-slate-900 tracking-wide">${doc.customerName || cust?.name || 'Direct Customer'}</h3>
+              <p class="text-[9.5px] text-slate-700 leading-tight">${doc.billingAddress || cust?.billingAddress || ''} ${(doc.billingCity || cust?.city) ? `, ${doc.billingCity || cust.city}` : ''} ${(doc.billingState || cust?.state) ? `, ${doc.billingState || cust.state}` : ''} ${doc.billingPincode || cust?.pincode || ''}</p>
+              <p><span class="font-bold">CONTACT :</span> <span class="font-mono">${doc.billingPhone || cust?.phone || '-'}</span></p>
+              <p><span class="font-bold">GSTIN/UIN :</span> <span class="font-mono font-bold text-slate-900">${doc.billingGstin || cust?.gstin || 'Unregistered'}</span></p>
+              <p><span class="font-bold">State Name :</span> ${doc.billingState || cust?.state || 'Maharashtra'} (Code: ${custStateCode})</p>
+              <p><span class="font-bold">Place of Supply :</span> ${doc.billingState || cust?.state || 'Maharashtra'} (Code: ${custStateCode})</p>
             </div>
 
             <!-- Consignee (Ship to) -->
             <div class="p-2 space-y-0.5">
               <span class="text-[8.5px] font-bold text-slate-500 uppercase tracking-wider block">Consignee (Ship to)</span>
-              <h3 class="font-black text-xs uppercase text-slate-900 tracking-wide">${cust?.shippingAddress ? (cust?.name || doc.customerName) : (cust?.name || doc.customerName || 'Direct Customer')}</h3>
-              <p class="text-[9.5px] text-slate-700 leading-tight">${cust?.shippingAddress || cust?.billingAddress || ''} ${cust?.city ? `, ${cust.city}` : ''} ${cust?.state ? `, ${cust.state}` : ''} ${cust?.pincode || ''}</p>
-              <p><span class="font-bold">CONTACT :</span> <span class="font-mono">${cust?.phone || '-'}</span></p>
-              <p><span class="font-bold">GSTIN/UIN :</span> <span class="font-mono font-bold text-slate-900">${cust?.gstin || 'Unregistered'}</span></p>
-              <p><span class="font-bold">State Name :</span> ${cust?.state || 'Maharashtra'} (Code: ${custStateCode})</p>
+              <h3 class="font-black text-xs uppercase text-slate-900 tracking-wide">${doc.shippingName || (doc.shipToDifferent ? doc.shippingName : (doc.customerName || cust?.name || 'Direct Customer'))}</h3>
+              <p class="text-[9.5px] text-slate-700 leading-tight">${(doc.shippingAddress || cust?.shippingAddress) ? (doc.shippingAddress || cust?.shippingAddress) : (doc.billingAddress || cust?.billingAddress || '')} ${(doc.shippingCity || cust?.shippingCity || doc.billingCity || cust?.city) ? `, ${doc.shippingCity || cust?.shippingCity || doc.billingCity || cust.city}` : ''} ${(doc.shippingState || cust?.shippingState || doc.billingState || cust?.state) ? `, ${doc.shippingState || cust?.shippingState || doc.billingState || cust.state}` : ''} ${doc.shippingPincode || cust?.shippingPincode || doc.billingPincode || cust?.pincode || ''}</p>
+              <p><span class="font-bold">CONTACT :</span> <span class="font-mono">${doc.shippingPhone || doc.billingPhone || cust?.phone || '-'}</span></p>
+              <p><span class="font-bold">GSTIN/UIN :</span> <span class="font-mono font-bold text-slate-900">${doc.shippingGstin || cust?.shippingGstin || doc.billingGstin || cust?.gstin || 'Unregistered'}</span></p>
+              <p><span class="font-bold">State Name :</span> ${(doc.shippingState || cust?.shippingState || doc.billingState || cust?.state || 'Maharashtra')} (Code: ${custStateCode})</p>
             </div>
           </div>
 
@@ -4308,19 +4506,19 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
           </div>
         </div>
 
-        <!-- To Company / Consignee Details Bar -->
-        <div class="p-2 px-3 border-b border-slate-900 bg-slate-50">
-          <span class="text-[8.5px] font-black uppercase tracking-wider text-slate-600 block mb-0.5">To Company</span>
-          <div class="flex flex-col md:flex-row md:items-start justify-between gap-1.5">
-            <div>
-              <h3 class="font-black text-xs uppercase text-blue-700 tracking-wide">${cust?.name || doc.customerName || 'Direct Customer'}</h3>
-              <p class="text-[10px] text-slate-700 leading-tight">${cust?.billingAddress || ''} ${cust?.city ? `, ${cust.city}` : ''} ${cust?.state ? `, ${cust.state}` : ''} ${cust?.pincode || ''}</p>
-              <p class="text-[10px] text-slate-600">Contact Person: <span class="font-semibold text-slate-800">${cust?.contactPerson || '-'}</span> | Phone: <span class="font-mono">${cust?.phone || '-'}</span></p>
-            </div>
-            <div class="text-[10px] text-left md:text-right space-y-0.5 shrink-0">
-              <p><span class="font-bold">GSTIN/UIN:</span> <span class="font-mono font-bold text-slate-900">${cust?.gstin || 'Unregistered'}</span></p>
-              <p><span class="font-bold">State Name:</span> ${cust?.state || 'Local'}, <span class="font-bold">Code:</span> ${cust?.stateCode || (cust?.gstin && cust.gstin.length >= 2 ? cust.gstin.substring(0, 2) : '27')}</p>
-            </div>
+        <!-- To Company / Buyer & Consignee Details Bar -->
+        <div class="grid grid-cols-2 divide-x divide-slate-900 border-b border-slate-900 text-[10px]">
+          <div class="p-2 space-y-0.5 bg-slate-50/50">
+            <span class="text-[8.5px] font-bold text-slate-500 uppercase tracking-wider block">Buyer (Bill to)</span>
+            <h3 class="font-black text-xs uppercase text-blue-700 tracking-wide">${doc.customerName || cust?.name || 'Direct Customer'}</h3>
+            <p class="text-[9.5px] text-slate-700 leading-tight">${doc.billingAddress || cust?.billingAddress || ''} ${(doc.billingCity || cust?.city) ? `, ${doc.billingCity || cust.city}` : ''} ${(doc.billingState || cust?.state) ? `, ${doc.billingState || cust.state}` : ''} ${doc.billingPincode || cust?.pincode || ''}</p>
+            <p><span class="font-bold">GSTIN/UIN:</span> <span class="font-mono font-bold text-slate-900">${doc.billingGstin || cust?.gstin || 'Unregistered'}</span> | <span class="font-bold">Phone:</span> <span class="font-mono">${doc.billingPhone || cust?.phone || '-'}</span></p>
+          </div>
+          <div class="p-2 space-y-0.5">
+            <span class="text-[8.5px] font-bold text-slate-500 uppercase tracking-wider block">Consignee (Ship to)</span>
+            <h3 class="font-black text-xs uppercase text-slate-900 tracking-wide">${doc.shippingName || (doc.shipToDifferent ? doc.shippingName : (doc.customerName || cust?.name || 'Direct Customer'))}</h3>
+            <p class="text-[9.5px] text-slate-700 leading-tight">${(doc.shippingAddress || cust?.shippingAddress) ? (doc.shippingAddress || cust?.shippingAddress) : (doc.billingAddress || cust?.billingAddress || '')} ${(doc.shippingCity || cust?.shippingCity || doc.billingCity || cust?.city) ? `, ${doc.shippingCity || cust?.shippingCity || doc.billingCity || cust.city}` : ''} ${(doc.shippingState || cust?.shippingState || doc.billingState || cust?.state) ? `, ${doc.shippingState || cust?.shippingState || doc.billingState || cust.state}` : ''} ${doc.shippingPincode || cust?.shippingPincode || doc.billingPincode || cust?.pincode || ''}</p>
+            <p><span class="font-bold">GSTIN/UIN:</span> <span class="font-mono font-bold text-slate-900">${doc.shippingGstin || cust?.shippingGstin || doc.billingGstin || cust?.gstin || 'Unregistered'}</span> | <span class="font-bold">State:</span> ${doc.shippingState || cust?.shippingState || doc.billingState || cust?.state || 'Maharashtra'}</p>
           </div>
         </div>
       </div>
@@ -4516,11 +4714,18 @@ function renderBusyFormatHTML(doc, type, cust, comp) {
 
         <!-- Ledger & Commercial Details -->
         <div class="grid grid-cols-2 divide-x divide-slate-300 border-b border-slate-300 text-[11px]">
-          <div class="p-2.5 bg-slate-50 space-y-0.5">
-            <span class="text-[9px] font-bold text-slate-500 uppercase tracking-wider block">To Company</span>
-            <h3 class="font-black text-sm text-blue-700 uppercase tracking-wide">${cust?.name || doc.customerName || 'Direct Customer'}</h3>
-            <p class="text-slate-600">${cust?.billingAddress || ''} ${cust?.city ? `, ${cust.city}` : ''}</p>
-            <p><span class="font-semibold">GSTIN:</span> <span class="font-mono font-bold text-blue-700">${cust?.gstin || 'Unregistered'}</span> | Phone: ${cust?.phone || '-'}</p>
+          <div class="divide-y divide-slate-200">
+            <div class="p-2.5 bg-slate-50 space-y-0.5">
+              <span class="text-[9px] font-bold text-slate-500 uppercase tracking-wider block">Billed To (Buyer)</span>
+              <h3 class="font-black text-sm text-blue-700 uppercase tracking-wide">${doc.customerName || cust?.name || 'Direct Customer'}</h3>
+              <p class="text-slate-600 text-[10.5px]">${doc.billingAddress || cust?.billingAddress || ''} ${(doc.billingCity || cust?.city) ? `, ${doc.billingCity || cust.city}` : ''}</p>
+              <p class="text-[10px]"><span class="font-semibold">GSTIN:</span> <span class="font-mono font-bold text-blue-700">${doc.billingGstin || cust?.gstin || 'Unregistered'}</span> | Phone: ${doc.billingPhone || cust?.phone || '-'}</p>
+            </div>
+            <div class="p-2.5 bg-white space-y-0.5">
+              <span class="text-[9px] font-bold text-slate-500 uppercase tracking-wider block">Shipped To (Consignee)</span>
+              <h4 class="font-bold text-xs text-slate-900 uppercase tracking-wide">${doc.shippingName || (doc.shipToDifferent ? doc.shippingName : (doc.customerName || cust?.name || 'Direct Customer'))}</h4>
+              <p class="text-slate-600 text-[10px]">${(doc.shippingAddress || cust?.shippingAddress) ? (doc.shippingAddress || cust?.shippingAddress) : (doc.billingAddress || cust?.billingAddress || '')} ${(doc.shippingCity || cust?.shippingCity || doc.billingCity || cust?.city) ? `, ${doc.shippingCity || cust?.shippingCity || doc.billingCity || cust.city}` : ''}</p>
+            </div>
           </div>
           <div class="p-2.5 grid grid-cols-2 gap-x-2 gap-y-1 text-[11px]">
             <div><span class="text-[9px] uppercase font-bold text-slate-500 block">Voucher Date</span><span class="font-mono font-semibold">${doc.date}</span></div>
@@ -4688,19 +4893,20 @@ function renderModernFormatHTML(doc, type, cust, comp) {
           </div>
         </div>
 
-        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex justify-between">
-          <div>
-            <span class="text-[10px] font-black text-slate-500 uppercase tracking-wider">To Company</span>
-            <h4 class="font-black text-blue-600 text-sm mt-0.5 uppercase tracking-wide">${cust?.name || doc.customerName || 'Direct Customer'}</h4>
-            <p class="text-xs text-slate-500 mt-0.5">${cust?.billingAddress || ''}</p>
-            <p class="text-xs text-slate-500">${cust?.city ? `${cust.city}, ${cust.state || ''} ${cust.pincode || ''}` : ''}</p>
-            <p class="text-xs text-slate-500">Phone: ${cust?.phone || '-'} | Email: ${cust?.email || '-'}</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+            <span class="text-[10px] font-black text-slate-500 uppercase tracking-wider">Billed To (Buyer)</span>
+            <h4 class="font-black text-blue-600 text-sm mt-0.5 uppercase tracking-wide">${doc.customerName || cust?.name || 'Direct Customer'}</h4>
+            <p class="text-xs text-slate-600 mt-0.5">${doc.billingAddress || cust?.billingAddress || ''}</p>
+            <p class="text-xs text-slate-500">${doc.billingCity || cust?.city ? `${doc.billingCity || cust.city}, ${doc.billingState || cust?.state || ''} ${doc.billingPincode || cust?.pincode || ''}` : ''}</p>
+            <p class="text-xs text-slate-500 mt-1"><span class="font-bold text-slate-700">GSTIN:</span> <span class="font-mono font-bold text-slate-900">${doc.billingGstin || cust?.gstin || 'Unregistered'}</span> | Phone: ${doc.billingPhone || cust?.phone || '-'}</p>
           </div>
-          <div class="text-right">
-            ${cust?.gstin ? `
-              <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Client GSTIN</span>
-              <div class="font-mono font-bold text-slate-900 text-xs">${cust.gstin}</div>
-            ` : ''}
+          <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+            <span class="text-[10px] font-black text-slate-500 uppercase tracking-wider">Shipped To (Consignee / Site)</span>
+            <h4 class="font-black text-slate-900 text-sm mt-0.5 uppercase tracking-wide">${doc.shippingName || (doc.shipToDifferent ? doc.shippingName : (doc.customerName || cust?.name || 'Direct Customer'))}</h4>
+            <p class="text-xs text-slate-600 mt-0.5">${(doc.shippingAddress || cust?.shippingAddress) ? (doc.shippingAddress || cust?.shippingAddress) : (doc.billingAddress || cust?.billingAddress || '')}</p>
+            <p class="text-xs text-slate-500">${(doc.shippingCity || cust?.shippingCity || doc.billingCity || cust?.city) ? `${doc.shippingCity || cust?.shippingCity || doc.billingCity || cust.city}, ${doc.shippingState || cust?.shippingState || doc.billingState || cust?.state || ''} ${doc.shippingPincode || cust?.shippingPincode || doc.billingPincode || cust?.pincode || ''}` : ''}</p>
+            <p class="text-xs text-slate-500 mt-1"><span class="font-bold text-slate-700">GSTIN:</span> <span class="font-mono font-bold text-slate-900">${doc.shippingGstin || cust?.shippingGstin || doc.billingGstin || cust?.gstin || 'Unregistered'}</span></p>
           </div>
         </div>
       </div>
@@ -6248,6 +6454,7 @@ function deleteProforma(id) {
 function convertProformaToInvoice(id) {
   const p = (activeCompany.proformas || []).find(it => it.id === id);
   if (!p) return;
+  const cust = (activeCompany.customers || []).find(c => c.id === p.customerId);
 
   activeCompany.counterInvoice = (activeCompany.counterInvoice || 101);
   const num = activeCompany.counterInvoice;
@@ -6259,6 +6466,21 @@ function convertProformaToInvoice(id) {
     dueDate: new Date().toISOString().split('T')[0],
     customerId: p.customerId,
     customerName: p.customerName,
+    billingAddress: p.billingAddress || (cust ? cust.address : '') || '',
+    billingCity: p.billingCity || (cust ? cust.city : '') || '',
+    billingState: p.billingState || (cust ? cust.state : '') || '',
+    billingPincode: p.billingPincode || (cust ? cust.pincode : '') || '',
+    billingGstin: p.billingGstin || (cust ? cust.gstin : '') || '',
+    billingPhone: p.billingPhone || (cust ? cust.phone : '') || '',
+    contactPerson: p.contactPerson || (cust ? cust.contactPerson : '') || '',
+    shipToDifferent: p.shipToDifferent || (cust && !cust.sameAsBilling && !!(cust.shippingAddress || cust.shippingName)) || false,
+    shippingName: p.shippingName || (cust ? cust.shippingName : '') || '',
+    shippingAddress: p.shippingAddress || (cust ? cust.shippingAddress : '') || '',
+    shippingCity: p.shippingCity || (cust ? cust.shippingCity : '') || '',
+    shippingState: p.shippingState || (cust ? cust.shippingState : '') || '',
+    shippingPincode: p.shippingPincode || (cust ? cust.shippingPincode : '') || '',
+    shippingGstin: p.shippingGstin || (cust ? cust.shippingGstin : '') || '',
+    shippingPhone: p.shippingPhone || (cust ? cust.shippingPhone : '') || '',
     deliveryTerms: p.deliveryTerms || 'Door Delivery',
     paymentTerms: 'Net 30 Days',
     taxTerms: p.taxTerms || 'Extra as applicable',
@@ -6839,6 +7061,7 @@ function deleteChallan(id) {
 function convertChallanToInvoice(id) {
   const c = (activeCompany.challans || []).find(it => it.id === id);
   if (!c) return;
+  const cust = (activeCompany.customers || []).find(cust => cust.id === c.customerId);
 
   const num = (activeCompany.counterInvoice || 101);
   activeCompany.counterInvoice = num;
@@ -6850,6 +7073,21 @@ function convertChallanToInvoice(id) {
     dueDate: new Date().toISOString().split('T')[0],
     customerId: c.customerId,
     customerName: c.customerName,
+    billingAddress: c.billingAddress || (cust ? cust.address : '') || '',
+    billingCity: c.billingCity || (cust ? cust.city : '') || '',
+    billingState: c.billingState || (cust ? cust.state : '') || '',
+    billingPincode: c.billingPincode || (cust ? cust.pincode : '') || '',
+    billingGstin: c.billingGstin || (cust ? cust.gstin : '') || '',
+    billingPhone: c.billingPhone || (cust ? cust.phone : '') || '',
+    contactPerson: c.contactPerson || (cust ? cust.contactPerson : '') || '',
+    shipToDifferent: c.shipToDifferent || (cust && !cust.sameAsBilling && !!(cust.shippingAddress || cust.shippingName)) || false,
+    shippingName: c.shippingName || (cust ? cust.shippingName : '') || '',
+    shippingAddress: c.shippingAddress || (cust ? cust.shippingAddress : '') || '',
+    shippingCity: c.shippingCity || (cust ? cust.shippingCity : '') || '',
+    shippingState: c.shippingState || (cust ? cust.shippingState : '') || '',
+    shippingPincode: c.shippingPincode || (cust ? cust.shippingPincode : '') || '',
+    shippingGstin: c.shippingGstin || (cust ? cust.shippingGstin : '') || '',
+    shippingPhone: c.shippingPhone || (cust ? cust.shippingPhone : '') || '',
     deliveryTerms: c.deliveryTerms || 'Door Delivery',
     paymentTerms: 'Net 30 Days',
     taxTerms: 'Extra as applicable',
