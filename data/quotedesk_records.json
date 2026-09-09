@@ -1,7 +1,7 @@
 {
   "app": "PASS_CORP_QUOTEDESK_PRO",
   "version": "2026.1",
-  "lastUpdated": "2026-09-09T06:53:44.887Z",
+  "lastUpdated": "2026-09-09T06:54:46.509Z",
   "companies": [
     {
       "id": "comp-1788936744554",
@@ -41,7 +41,48 @@
         }
       ],
       "items": [],
-      "proformas": [],
+      "proformas": [
+        {
+          "id": "pi-1788936875915",
+          "proformaNumber": "PI-2026-101",
+          "date": "2026-09-09",
+          "validity": "15 Days",
+          "customerId": "cust-1788936783930",
+          "customerName": "Demo",
+          "deliveryTerms": "Door Delivery",
+          "paymentTerms": "Against PI",
+          "taxTerms": "Extra as applicable",
+          "items": [
+            {
+              "id": "pi-it-1",
+              "name": "Power SD",
+              "description": "Wild Bull Power SD heavy-duty industrial safety shoe with steel toe cap & slip resistant sole.",
+              "hsnCode": "85389000",
+              "quantity": 1,
+              "unit": "PCS",
+              "price": 799,
+              "leadTime": "1-2 Days",
+              "taxRate": 18,
+              "amount": 799,
+              "taxAmount": 143.82,
+              "total": 942.8199999999999,
+              "imageUrl": "assets/products/shoes/power_sd.png"
+            }
+          ],
+          "subtotal": 799,
+          "taxableAmount": 799,
+          "totalTax": 143.82,
+          "grandTotal": 942.8199999999999,
+          "notes": "Proforma Invoice generated for advance payment approval. Goods will be dispatched upon payment receipt.",
+          "terms": [
+            "Prices are ex-works / inclusive of standard packing.",
+            "Payment terms: 100% advance against Proforma Invoice.",
+            "GST extra as applicable at actual billing.",
+            "Validity: 15 days from the date of issue."
+          ],
+          "status": "Draft"
+        }
+      ],
       "challans": [
         {
           "id": "dc-1788936755356",
@@ -87,7 +128,7 @@
       "creditNotes": [],
       "debitNotes": [],
       "counterQuote": 101,
-      "counterProforma": 101,
+      "counterProforma": 102,
       "counterInvoice": 101,
       "counterChallan": 102,
       "counterCreditNote": 101,
