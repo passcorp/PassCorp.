@@ -68,8 +68,8 @@
     /* Guaranteed Full-Page A4 Print & Screen Layout */
     #preview-paper-content {
       width: 100%;
-      max-width: 820px;
-      min-height: 1080px;
+      max-width: 800px;
+      min-height: 1120px;
       background: white;
       box-sizing: border-box;
       display: flex;
@@ -80,7 +80,7 @@
     @media print {
       @page {
         size: A4 portrait;
-        margin: 5mm 6mm !important;
+        margin: 6mm 8mm !important;
       }
       * {
         -webkit-print-color-adjust: exact !important;
@@ -90,11 +90,13 @@
         background: white !important;
         width: 100% !important;
         height: auto !important;
+        min-height: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
         overflow: visible !important;
       }
-      body * {
+      body > *:not(#preview-modal) {
+        display: none !important;
         visibility: hidden !important;
       }
       .no-print, .no-print * {
@@ -102,17 +104,17 @@
         visibility: hidden !important;
       }
       #preview-modal,
-      #preview-modal > div,
-      #preview-paper-content,
-      #preview-paper-content * {
+      #preview-modal * {
         visibility: visible !important;
       }
       #preview-modal {
         position: static !important;
-        left: 0 !important;
-        top: 0 !important;
+        left: auto !important;
+        top: auto !important;
         width: 100% !important;
+        max-width: 100% !important;
         height: auto !important;
+        min-height: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
         background: white !important;
@@ -120,8 +122,10 @@
         overflow: visible !important;
         border: none !important;
         box-shadow: none !important;
+        backdrop-filter: none !important;
       }
-      #preview-modal > div {
+      #preview-modal > div,
+      #preview-modal > div > div {
         width: 100% !important;
         max-width: 100% !important;
         height: auto !important;
@@ -132,6 +136,8 @@
         box-shadow: none !important;
         background: white !important;
         overflow: visible !important;
+        border-radius: 0 !important;
+        display: block !important;
       }
       #preview-paper-content {
         position: relative !important;
@@ -139,13 +145,14 @@
         top: auto !important;
         width: 100% !important;
         max-width: 100% !important;
-        min-height: calc(297mm - 12mm) !important;
+        min-height: calc(297mm - 14mm) !important;
         height: auto !important;
         box-sizing: border-box !important;
         margin: 0 !important;
         padding: 0 !important;
         border: none !important;
         box-shadow: none !important;
+        background: white !important;
         display: flex !important;
         flex-direction: column !important;
         justify-content: space-between !important;
@@ -780,7 +787,7 @@
       </div>
 
       <div class="p-3 md:p-6 overflow-y-auto bg-slate-400/30 flex justify-center">
-        <div id="preview-paper-content" class="w-full max-w-[820px] bg-white text-slate-900 p-0 shadow-2xl border border-slate-300 font-sans text-xs select-text min-h-[1080px] flex flex-col justify-between">
+        <div id="preview-paper-content" class="w-full max-w-[800px] bg-white text-slate-900 p-0 shadow-2xl border border-slate-300 font-sans text-xs select-text min-h-[1120px] flex flex-col justify-between">
           <!-- Injected via JS -->
         </div>
       </div>
@@ -1074,6 +1081,6 @@
   </div>
 
   <!-- Application Logic & Engine -->
-  <script src="quotedesk.js?v=v_print_widescale_1788955700"></script>
+  <script src="quotedesk.js?v=v_wysiwyg_11_print_1788956100"></script>
 </body>
 </html>

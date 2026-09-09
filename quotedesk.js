@@ -4715,7 +4715,7 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
   const spacerMinHeight = Math.max(20, 90 - (itemsCount * 30));
 
   return `
-    <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between w-full w-full box-border select-text">
+    <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between w-full box-border select-text min-h-full">
       <!-- Top Section -->
       <div>
         <!-- Top Title Header -->
@@ -5089,7 +5089,7 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
   const spacerMinHeight = Math.max(40, 240 - (itemsCount * 35));
 
   return `
-    <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between w-full w-full box-border select-text">
+    <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between w-full box-border select-text min-h-full">
       <!-- Top Section -->
       <div>
         <!-- Top Title Header -->
