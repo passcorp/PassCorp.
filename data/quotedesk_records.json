@@ -1,7 +1,7 @@
 {
   "app": "PASS_CORP_QUOTEDESK_PRO",
   "version": "2026.1",
-  "lastUpdated": "2026-09-09T12:28:04.329Z",
+  "lastUpdated": "2026-09-09T12:28:20.529Z",
   "companies": [
     {
       "id": "comp_pass_corp",
@@ -87,19 +87,22 @@
           "items": [
             {
               "id": "item_1",
-              "name": "Wild Bull Power SD Industrial Safety Shoe",
+              "name": "Power SD",
               "desc": "Heavy-duty steel toe safety shoe (IS 15298 Certified) with anti-skid dual-density PU sole.",
               "hsn": "6403",
               "quantity": 50,
-              "unit": "Pairs",
+              "unit": "PCS",
               "rate": 1150,
               "gstRate": 18,
               "leadTime": "Ex-Stock (1-2 Days)",
-              "amount": 25000,
+              "amount": 39950,
               "imageUrl": "assets/products/shoes/power_sd.png",
-              "taxAmount": 0,
-              "total": 25000,
-              "price": "500"
+              "taxAmount": 7191,
+              "total": 47141,
+              "price": 799,
+              "description": "Wild Bull Power SD heavy-duty industrial safety shoe with steel toe cap & slip resistant sole.",
+              "hsnCode": "85389000",
+              "taxRate": 18
             },
             {
               "id": "item_2",
@@ -159,10 +162,10 @@
               "taxRate": 18
             }
           ],
-          "subtotal": 162910,
-          "taxableAmount": 162910,
-          "totalTax": 24823.8,
-          "grandTotal": 187733.8,
+          "subtotal": 177860,
+          "taxableAmount": 177860,
+          "totalTax": 32014.8,
+          "grandTotal": 209874.8,
           "notes": "Thank you for your inquiry. All products are 100% genuine with OEM test certificates.",
           "terms": [
             "Prices are valid for 15 days from the date of quotation.",
