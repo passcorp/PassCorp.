@@ -4957,7 +4957,7 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
             `).join('')}
 
             <!-- Expansion Spacer Row to ensure full-page A4 vertical grid lines -->
-            <tr class="divide-x divide-slate-900 text-[10px]" style="height: ${spacerHeight}px;">
+            <tr class="divide-x divide-slate-900 text-[10px]" style="height: 100%;">
               <td class="py-0.5 px-1"></td>
               <td class="py-0.5 px-2"></td>
               <td class="py-0.5 px-1"></td>
@@ -4969,20 +4969,20 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
             </tr>
 
             <!-- Inline Taxes Section inside Table Body -->
-            <tr class="divide-x divide-slate-900 text-[10px] border-t border-slate-300">
+            <tr class="divide-x divide-slate-900 text-[10px] border-t border-slate-300" style="height: 20px !important;">
               <td class="py-0.5 px-1"></td>
               <td class="py-0.5 px-2 text-right font-bold text-slate-800 italic">Cgst</td>
               <td></td><td></td><td></td><td></td><td></td>
               <td class="py-0.5 px-2 text-right font-mono font-bold text-slate-900">${fmt(halfTaxTotal)}</td>
             </tr>
-            <tr class="divide-x divide-slate-900 text-[10px]">
+            <tr class="divide-x divide-slate-900 text-[10px]" style="height: 20px !important;">
               <td class="py-0.5 px-1"></td>
               <td class="py-0.5 px-2 text-right font-bold text-slate-800 italic">Sgst</td>
               <td></td><td></td><td></td><td></td><td></td>
               <td class="py-0.5 px-2 text-right font-mono font-bold text-slate-900">${fmt(halfTaxTotal)}</td>
             </tr>
             ${Number(roundOff) !== 0 ? `
-              <tr class="divide-x divide-slate-900 text-[10px]">
+              <tr class="divide-x divide-slate-900 text-[10px]" style="height: 20px !important;">
                 <td class="py-0.5 px-1"></td>
                 <td class="py-0.5 px-2 text-right font-bold text-slate-800 italic">Round Off</td>
                 <td></td><td></td><td></td><td></td><td></td>
@@ -4991,7 +4991,7 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
             ` : ''}
 
             <!-- Total Bottom Row -->
-            <tr class="divide-x divide-slate-900 border-t-2 border-slate-900 bg-white font-black text-[11px]">
+            <tr class="divide-x divide-slate-900 border-t-2 border-slate-900 bg-white font-black text-[11px]" style="height: 26px !important;">
               <td colspan="3" class="py-1 px-2 text-right uppercase text-slate-900">Total</td>
               <td class="py-1 px-1.5 text-center font-mono">${totalQty} ${primaryUnit}</td>
               <td colspan="3"></td>
@@ -5246,7 +5246,7 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
             `).join('')}
 
             <!-- Expansion Spacer Row to ensure full-page A4 vertical grid lines -->
-            <tr class="divide-x divide-slate-900 text-[10px]" style="height: ${spacerHeight}px;">
+            <tr class="divide-x divide-slate-900 text-[10px]" style="height: 100%;">
               <td class="py-0.5 px-1.5"></td>
               <td class="py-0.5 px-2"></td>
               <td class="py-0.5 px-1"></td>
@@ -5259,7 +5259,7 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
             </tr>
 
             <!-- Subtotal Row -->
-            <tr class="divide-x divide-slate-900 border-t border-slate-900 bg-slate-50 font-bold text-[10px]">
+            <tr class="divide-x divide-slate-900 border-t border-slate-900 bg-slate-50 font-bold text-[10px]" style="height: 22px !important;">
               <td colspan="3" class="py-1 px-2 text-right uppercase">Subtotal / Taxable Value</td>
               <td class="py-1 px-1.5 text-center font-mono">${(doc.items || []).reduce((s, i) => s + Number(i.quantity || 0), 0)}</td>
               <td colspan="4"></td>
@@ -5267,17 +5267,17 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
             </tr>
 
             <!-- Central Tax / State Tax Rows -->
-            <tr class="divide-x divide-slate-900 text-[10px]">
+            <tr class="divide-x divide-slate-900 text-[10px]" style="height: 20px !important;">
               <td colspan="8" class="py-0.5 px-2 text-right font-semibold text-slate-700">Central Tax (CGST)</td>
               <td class="py-0.5 px-2 text-right font-mono font-bold text-slate-900">${cur()}${fmt(doc.totalTax / 2)}</td>
             </tr>
-            <tr class="divide-x divide-slate-900 text-[10px]">
+            <tr class="divide-x divide-slate-900 text-[10px]" style="height: 20px !important;">
               <td colspan="8" class="py-0.5 px-2 text-right font-semibold text-slate-700">State Tax (SGST)</td>
               <td class="py-0.5 px-2 text-right font-mono font-bold text-slate-900">${cur()}${fmt(doc.totalTax / 2)}</td>
             </tr>
 
             <!-- Grand Total Row -->
-            <tr class="divide-x divide-slate-900 border-t border-slate-900 bg-slate-100 font-black text-[11px]">
+            <tr class="divide-x divide-slate-900 border-t border-slate-900 bg-slate-100 font-black text-[11px]" style="height: 26px !important;">
               <td colspan="3" class="py-1 px-2 uppercase text-slate-900">Total</td>
               <td class="py-1 px-1.5 text-center font-mono">${(doc.items || []).reduce((s, i) => s + Number(i.quantity || 0), 0)}</td>
               <td colspan="4" class="py-1 px-2 text-right uppercase text-slate-800">Grand Total</td>
