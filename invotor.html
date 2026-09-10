@@ -848,20 +848,32 @@ body {
     background: #ffffff !important; 
     margin: 0 !important; 
     padding: 0 !important; 
-    width: 210mm !important;
+    width: 100% !important;
     -webkit-print-color-adjust: exact !important; 
     print-color-adjust: exact !important; 
   }
   .top-industrial-accent, .suite-topbar, .app-header, .app-nav, .no-print, #authLockOverlay {
     display: none !important;
   }
-  .main-wrapper, #billingView, .billing-split, .a4-preview-card, #sheetsContainer { 
+  .main-wrapper, #billingView, .billing-split { 
     padding: 0 !important; 
     margin: 0 !important; 
     width: 100% !important;
     max-width: 100% !important; 
     background: transparent !important; 
     box-shadow: none !important; 
+    display: block !important;
+  }
+  .a4-preview-card, #sheetsContainer { 
+    padding: 0 !important; 
+    margin: 0 !important; 
+    width: 100% !important;
+    max-width: 100% !important; 
+    background: transparent !important; 
+    box-shadow: none !important; 
+    display: block !important;
+    gap: 0 !important;
+    border: none !important;
   }
   .a4-sheet { 
     width: 210mm !important; 
@@ -870,11 +882,12 @@ body {
     min-height: 295mm !important; 
     max-height: 295mm !important; 
     box-shadow: none !important; 
-    padding: 5mm 6mm 3mm 6mm !important; 
+    padding: 4mm 6mm 3mm 6mm !important; 
     margin: 0 auto !important; 
     page-break-before: auto !important;
     page-break-after: always !important; 
     page-break-inside: avoid !important; 
+    break-before: auto !important;
     break-after: page !important;
     break-inside: avoid !important;
     box-sizing: border-box !important;
@@ -884,17 +897,29 @@ body {
     justify-content: space-between !important;
   }
   .a4-sheet:last-child {
-    page-break-after: auto !important;
-    break-after: auto !important;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
   }
   .tally-box-outer {
     flex: 1 !important;
     display: flex !important;
     flex-direction: column !important;
     overflow: hidden !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
   .tally-items-table {
     flex: 1 !important;
+  }
+  .tally-footer-grid, 
+  .tally-declaration-col, 
+  .tally-receiver-col, 
+  .tally-sign-col, 
+  .tally-amount-words-box, 
+  .tally-hsn-box, 
+  .tally-bottom-note {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
 }
 </style>
