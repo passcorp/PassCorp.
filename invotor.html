@@ -842,18 +842,27 @@ body {
 @media print {
   @page {
     size: A4 portrait;
-    margin: 0;
+    margin: 4mm 5mm !important;
+  }
+  * {
+    -webkit-print-color-adjust: exact !important; 
+    print-color-adjust: exact !important; 
+    box-sizing: border-box !important;
   }
   html, body { 
     background: #ffffff !important; 
     margin: 0 !important; 
     padding: 0 !important; 
-    width: 100% !important;
-    -webkit-print-color-adjust: exact !important; 
-    print-color-adjust: exact !important; 
+    width: 100% !important; 
+    height: auto !important;
+    min-height: 0 !important;
   }
-  .top-industrial-accent, .suite-topbar, .app-header, .app-nav, .no-print, #authLockOverlay {
+  .top-industrial-accent, .suite-topbar, .app-header, .app-nav, .no-print, #authLockOverlay, .erp-view:not(.active), .card {
     display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
   .main-wrapper, #billingView, .billing-split { 
     padding: 0 !important; 
@@ -876,13 +885,13 @@ body {
     border: none !important;
   }
   .a4-sheet { 
-    width: 210mm !important; 
-    max-width: 210mm !important;
-    height: 295mm !important; 
-    min-height: 295mm !important; 
-    max-height: 295mm !important; 
+    width: 100% !important; 
+    max-width: 200mm !important;
+    height: 278mm !important; 
+    min-height: 278mm !important; 
+    max-height: 278mm !important; 
     box-shadow: none !important; 
-    padding: 4mm 6mm 3mm 6mm !important; 
+    padding: 2mm 3mm 2mm 3mm !important; 
     margin: 0 auto !important; 
     page-break-before: auto !important;
     page-break-after: always !important; 
@@ -908,8 +917,14 @@ body {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
   }
+  .tally-table-wrapper {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
   .tally-items-table {
     flex: 1 !important;
+    width: 100% !important;
   }
   .tally-footer-grid, 
   .tally-declaration-col, 
@@ -4884,6 +4899,7 @@ class PassInvotorERP {
     }
   }
 
+  printInvoice() { window.print(); }
   printLedger() { window.print(); }
 
   /* FEATURE 6: RECEIVABLES / PAYABLES & 1-CLICK WHATSAPP REMINDER */
