@@ -4950,7 +4950,7 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
             `).join('')}
 
             <!-- Expansion Spacer Row to ensure full-page A4 vertical grid lines -->
-            <tr class="divide-x divide-slate-900 text-[10px]" style="height: 100%;">
+            <tr class="divide-x divide-slate-900 text-[10px]">
               <td class="py-0.5 px-1"></td>
               <td class="py-0.5 px-2"></td>
               <td class="py-0.5 px-1"></td>
@@ -5239,7 +5239,7 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
             `).join('')}
 
             <!-- Expansion Spacer Row to ensure full-page A4 vertical grid lines -->
-            <tr class="divide-x divide-slate-900 text-[10px]" style="height: 100%;">
+            <tr class="divide-x divide-slate-900 text-[10px]">
               <td class="py-0.5 px-1"></td>
               <td class="py-0.5 px-2"></td>
               <td class="py-0.5 px-1"></td>
@@ -5396,7 +5396,7 @@ function renderBusyFormatHTML(doc, type, cust, comp) {
             <div class="p-1.5 bg-white space-y-0.5">
               <span class="text-[8px] font-bold text-slate-500 uppercase tracking-wider block">Shipped To (Consignee)</span>
               <h4 class="font-bold text-xs text-slate-900 uppercase tracking-wide">${(doc.shipToDifferent && doc.shippingName) ? doc.shippingName : (doc.shippingName || doc.customerName || cust?.name || 'Direct Customer')}</h4>
-              <p class="text-slate-600 text-[9px]">${(doc.shipToDifferent && doc.shippingAddress) ? doc.shippingAddress : (doc.shippingAddress || doc.billingAddress || cust?.shippingAddress || cust?.billingAddress || cust?.address || '')} ${((doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city))) ? `, ${doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city)}` : ''}</p>
+              <p class="text-slate-600 text-[9px]">${(doc.shipToDifferent && doc.shippingAddress) ? doc.shippingAddress : (doc.shippingAddress || doc.billingAddress || cust?.shippingAddress || cust?.billingAddress || cust?.address || '')} ${((doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city))) ? `, ${doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city)}` : ''} ${((doc.shipToDifferent ? doc.shippingState : (doc.shippingState || doc.billingState || cust?.shippingState || cust?.state))) ? `, ${doc.shipToDifferent ? doc.shippingState : (doc.shippingState || doc.billingState || cust?.shippingState || cust?.state)}` : ''} ${(doc.shipToDifferent ? doc.shippingPincode : (doc.shippingPincode || doc.billingPincode || cust?.shippingPincode || cust?.pincode || ''))}</p>
             </div>
           </div>
           <div class="p-1.5 grid grid-cols-2 gap-x-2 gap-y-0.5 text-[9.5px]">
@@ -5455,7 +5455,7 @@ function renderBusyFormatHTML(doc, type, cust, comp) {
             `).join('')}
 
             <!-- Expansion Spacer Row to ensure full-page A4 vertical grid lines -->
-            <tr class="divide-x divide-slate-200 text-[10px]" style="height: 100%;">
+            <tr class="divide-x divide-slate-200 text-[10px]">
               <td class="py-0.5 px-1.5"></td>
               <td class="py-0.5 px-2.5"></td>
               <td class="py-0.5 px-1.5"></td>
@@ -5622,7 +5622,7 @@ function renderModernFormatHTML(doc, type, cust, comp) {
             `).join('')}
 
             <!-- Expansion Spacer Row -->
-            <tr style="height: 100%;">
+            <tr>
               <td class="py-0.5 px-1.5"></td>
               <td class="py-0.5 px-2"></td>
               <td class="py-0.5 px-1.5"></td>
@@ -5767,14 +5767,15 @@ function printCurrentPreview() {
     .print-sheet {
       width: 100% !important;
       max-width: 100% !important;
-      height: 288mm !important;
-      min-height: 288mm !important;
-      max-height: 288mm !important;
+      height: 278mm !important;
+      min-height: 278mm !important;
+      max-height: 278mm !important;
       box-sizing: border-box !important;
       display: flex !important;
       flex-direction: column !important;
       justify-content: space-between !important;
       background: #ffffff !important;
+      overflow: hidden !important;
       page-break-inside: avoid !important;
       page-break-after: avoid !important;
       page-break-before: avoid !important;
