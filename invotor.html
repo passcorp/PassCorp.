@@ -2383,6 +2383,7 @@ class PassInvotorERP {
         let defaultUnit = 'Nos.';
         if (p.hsn) { defaultHsn = p.hsn; }
         else if (pName.includes('mirror') || pName.includes('convex')) { defaultHsn = '39269099'; defaultUnit = 'Nos.'; }
+        else if (pName.includes('skid') || pName.includes('anti-skid') || pName.includes('antiskid') || pName.includes('grip tape') || pName.includes('non-slip')) { defaultHsn = '39199090'; defaultUnit = 'Nos.'; }
         else if (cat.includes('shoe') || cat.includes('foot')) { defaultHsn = '6403'; defaultUnit = 'Pairs'; }
         else if (cat.includes('glove') || cat.includes('hand')) { defaultHsn = '6116'; defaultUnit = 'Pairs'; }
         else if (cat.includes('eye') || cat.includes('goggle')) { defaultHsn = '9004'; defaultUnit = 'Nos.'; }

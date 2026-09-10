@@ -8384,6 +8384,7 @@ const DEFAULT_CONTENT = {
     "category": "misc",
     "name": "Udyogi Step Secure Anti-Skid Tape (AutoGlow)",
     "brand": "Udyogi",
+    "hsn": "39199090",
     "img": "assets/products/misc/antiskid_autoglow.png",
     "cert": "OSHA 1910.22 · DIN 51130 R13",
     "price": 1399,
@@ -8400,6 +8401,10 @@ const DEFAULT_CONTENT = {
       [
         "Model",
         "Step Secure (AutoGlow)"
+      ],
+      [
+        "HSN / SAC Code",
+        "39199090"
       ],
       [
         "Size",
@@ -8424,6 +8429,7 @@ const DEFAULT_CONTENT = {
     "category": "misc",
     "name": "Anti-Skid Tape (Zebra Yellow/Black)",
     "brand": "Pass Safe",
+    "hsn": "39199090",
     "img": "assets/products/misc/antiskid_zebra.png",
     "cert": "Hazard Warning · Anti-Slip",
     "price": 1699,
@@ -8440,6 +8446,10 @@ const DEFAULT_CONTENT = {
       [
         "Brand / Manufacturer",
         "Pass Safe"
+      ],
+      [
+        "HSN / SAC Code",
+        "39199090"
       ],
       [
         "Safety Standard",
@@ -8468,6 +8478,7 @@ const DEFAULT_CONTENT = {
     "category": "misc",
     "name": "Heavy Duty Anti-Skid Floor Grip Tape",
     "brand": "Pass Safe",
+    "hsn": "39199090",
     "img": "assets/products/misc/antiskid_black.png",
     "cert": "Mineral Coated Grit · Waterproof",
     "price": 1999,
@@ -8484,6 +8495,10 @@ const DEFAULT_CONTENT = {
       [
         "Brand / Manufacturer",
         "Pass Safe"
+      ],
+      [
+        "HSN / SAC Code",
+        "39199090"
       ],
       [
         "Safety Standard",
