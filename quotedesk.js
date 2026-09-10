@@ -4884,24 +4884,24 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
         <table class="w-full h-full text-left text-xs border-collapse">
           <thead>
             <tr class="border-b border-slate-900 bg-white text-slate-900 font-black uppercase text-[8.5px] tracking-wider divide-x divide-slate-900">
-              <th class="py-1 px-1.5 w-8 text-center">Sl<br/>No.</th>
-              <th class="py-1 px-2.5">Description of Goods</th>
-              <th class="py-1 px-1.5 w-16 text-center whitespace-nowrap">HSN/SAC</th>
-              <th class="py-1 px-1.5 w-16 text-center whitespace-nowrap">Quantity</th>
-              <th class="py-1 px-2 w-20 text-right whitespace-nowrap">Rate</th>
-              <th class="py-1 px-1 w-10 text-center whitespace-nowrap">per</th>
-              <th class="py-1 px-1 w-12 text-center whitespace-nowrap">Disc. %</th>
-              <th class="py-1 px-2.5 w-24 text-right whitespace-nowrap">Amount</th>
+              <th class="py-1 px-1 w-7 text-center">Sl<br/>No.</th>
+              <th class="py-1 px-2">Description of Goods</th>
+              <th class="py-1 px-1 w-14 text-center whitespace-nowrap">HSN/SAC</th>
+              <th class="py-1 px-1 w-16 text-center whitespace-nowrap">Quantity</th>
+              <th class="py-1 px-1.5 w-18 text-right whitespace-nowrap">Rate</th>
+              <th class="py-1 px-1 w-9 text-center whitespace-nowrap">per</th>
+              <th class="py-1 px-1 w-10 text-center whitespace-nowrap">Disc. %</th>
+              <th class="py-1 px-2 w-20 text-right whitespace-nowrap">Amount</th>
             </tr>
           </thead>
           <tbody class="text-slate-900">
             ${(doc.items || []).map((it, idx) => `
               <tr class="divide-x divide-slate-900 text-[10px]">
                 <td class="py-1 px-1 text-center font-mono font-bold align-top">${idx + 1}</td>
-                <td class="py-1 px-2.5 align-top">
-                  <div class="flex items-start gap-2.5">
+                <td class="py-1 px-2 align-top">
+                  <div class="flex items-start gap-2">
                     ${it.imageUrl ? `
-                      <div class="w-12 h-12 rounded bg-white border border-slate-300 p-0.5 shrink-0 flex items-center justify-center overflow-hidden shadow-sm mt-0.5">
+                      <div class="w-11 h-11 rounded bg-white border border-slate-300 p-0.5 shrink-0 flex items-center justify-center overflow-hidden shadow-sm mt-0.5">
                         <img src="${it.imageUrl}" class="max-w-full max-h-full object-contain" />
                       </div>
                     ` : ''}
@@ -4911,21 +4911,21 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
                     </div>
                   </div>
                 </td>
-                <td class="py-1 px-1.5 text-center font-mono font-bold align-top whitespace-nowrap text-[9.5px]">${it.hsnCode || '6403'}</td>
-                <td class="py-1 px-1.5 text-center font-mono font-black align-top whitespace-nowrap text-[10px]">${it.quantity} ${it.unit || 'Pairs'}</td>
-                <td class="py-1 px-2 text-right font-mono font-bold align-top whitespace-nowrap text-[10px]">${fmt(it.price)}</td>
+                <td class="py-1 px-1 text-center font-mono font-bold align-top whitespace-nowrap text-[9.5px]">${it.hsnCode || '6403'}</td>
+                <td class="py-1 px-1 text-center font-mono font-black align-top whitespace-nowrap text-[10px]">${it.quantity} ${it.unit || 'Pairs'}</td>
+                <td class="py-1 px-1.5 text-right font-mono font-bold align-top whitespace-nowrap text-[10px]">${fmt(it.price)}</td>
                 <td class="py-1 px-1 text-center font-medium align-top whitespace-nowrap text-[9.5px]">${it.unit || 'Pairs'}</td>
                 <td class="py-1 px-1 text-center font-mono align-top whitespace-nowrap text-[9.5px]">${it.discount ? `${it.discount}%` : ''}</td>
-                <td class="py-1 px-2.5 text-right font-mono font-black text-slate-900 align-top whitespace-nowrap text-[10px]">${fmt(it.total || (it.price * it.quantity))}</td>
+                <td class="py-1 px-2 text-right font-mono font-black text-slate-900 align-top whitespace-nowrap text-[10px]">${fmt(it.total || (it.price * it.quantity))}</td>
               </tr>
             `).join('')}
 
             <!-- Expansion Spacer Row to ensure full-page A4 vertical grid lines -->
             <tr class="divide-x divide-slate-900 text-[10px]" style="height: ${spacerHeight}px;">
               <td class="py-0.5 px-1"></td>
-              <td class="py-0.5 px-2.5"></td>
-              <td class="py-0.5 px-1.5"></td>
-              <td class="py-0.5 px-1.5"></td>
+              <td class="py-0.5 px-2"></td>
+              <td class="py-0.5 px-1"></td>
+              <td class="py-0.5 px-1"></td>
               <td class="py-0.5 px-1.5"></td>
               <td class="py-0.5 px-1"></td>
               <td class="py-0.5 px-1"></td>
@@ -5171,53 +5171,53 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
         <table class="w-full h-full text-left text-xs border-collapse">
           <thead>
             <tr class="border-b border-slate-900 bg-slate-100 text-slate-900 font-black uppercase text-[8.5px] tracking-wider divide-x divide-slate-900">
-              <th class="py-1 px-1.5 w-8 text-center">Sl</th>
-              <th class="py-1 px-2.5">Description of Goods & Technical Specs</th>
-              <th class="py-1 px-1.5 w-16 text-center whitespace-nowrap">HSN/SAC</th>
-              <th class="py-1 px-1.5 w-14 text-center whitespace-nowrap">Quantity</th>
-              <th class="py-1 px-2 w-20 text-right whitespace-nowrap">Rate (${cur()})</th>
-              <th class="py-1 px-1 w-10 text-center whitespace-nowrap">per</th>
-              <th class="py-1 px-1.5 w-20 text-center whitespace-nowrap">Lead Time</th>
-              <th class="py-1 px-1 w-12 text-center whitespace-nowrap">GST%</th>
-              <th class="py-1 px-2.5 w-24 text-right whitespace-nowrap">Amount (${cur()})</th>
+              <th class="py-1 px-1.5 w-7 text-center">Sl</th>
+              <th class="py-1 px-2">Description of Goods & Technical Specs</th>
+              <th class="py-1 px-1 w-14 text-center whitespace-nowrap">HSN/SAC</th>
+              <th class="py-1 px-1 w-12 text-center whitespace-nowrap">Qty</th>
+              <th class="py-1 px-1.5 w-16 text-right whitespace-nowrap">Rate (${cur()})</th>
+              <th class="py-1 px-1 w-9 text-center whitespace-nowrap">per</th>
+              <th class="py-1 px-1 w-14 text-center whitespace-nowrap">Lead Time</th>
+              <th class="py-1 px-1 w-10 text-center whitespace-nowrap">GST%</th>
+              <th class="py-1 px-2 w-20 text-right whitespace-nowrap">Amount (${cur()})</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-300 text-slate-900">
             ${(doc.items || []).map((it, idx) => `
               <tr class="divide-x divide-slate-900 text-[10px]">
                 <td class="py-1 px-1.5 text-center font-mono font-bold align-top">${idx + 1}</td>
-                <td class="py-1 px-2.5 align-top">
-                  <div class="flex items-start gap-2.5">
+                <td class="py-1 px-2 align-top">
+                  <div class="flex items-start gap-2">
                     ${it.imageUrl ? `
-                      <div class="w-12 h-12 rounded bg-white border border-slate-300 p-0.5 shrink-0 flex items-center justify-center overflow-hidden shadow-sm mt-0.5">
+                      <div class="w-11 h-11 rounded bg-white border border-slate-300 p-0.5 shrink-0 flex items-center justify-center overflow-hidden shadow-sm mt-0.5">
                         <img src="${it.imageUrl}" class="max-w-full max-h-full object-contain" />
                       </div>
                     ` : ''}
                     <div class="flex-1 min-w-0">
-                      <div class="font-bold text-slate-900 text-[10.5px] uppercase leading-snug tracking-tight">${it.name}</div>
-                      ${it.description ? `<div class="text-[9px] text-slate-600 mt-0.5 whitespace-pre-wrap leading-snug font-normal">${escapeHtml(it.description)}</div>` : ''}
+                      <div class="font-bold text-slate-900 text-[10.5px] uppercase leading-tight tracking-tight">${it.name}</div>
+                      ${it.description ? `<div class="text-[9px] text-slate-600 mt-0.5 whitespace-pre-wrap leading-normal font-normal">${escapeHtml(it.description)}</div>` : ''}
                     </div>
                   </div>
                 </td>
-                <td class="py-1 px-1.5 text-center font-mono font-semibold align-top whitespace-nowrap text-[9.5px]">${it.hsnCode || '-'}</td>
-                <td class="py-1 px-1.5 text-center font-mono font-bold align-top whitespace-nowrap text-[10px]">${it.quantity}</td>
-                <td class="py-1 px-2 text-right font-mono font-semibold align-top whitespace-nowrap text-[10px]">${fmt(it.price)}</td>
+                <td class="py-1 px-1 text-center font-mono font-semibold align-top whitespace-nowrap text-[9.5px]">${it.hsnCode || '-'}</td>
+                <td class="py-1 px-1 text-center font-mono font-bold align-top whitespace-nowrap text-[10px]">${it.quantity}</td>
+                <td class="py-1 px-1.5 text-right font-mono font-semibold align-top whitespace-nowrap text-[10px]">${fmt(it.price)}</td>
                 <td class="py-1 px-1 text-center font-medium align-top whitespace-nowrap text-[9.5px]">${it.unit || 'PCS'}</td>
-                <td class="py-1 px-1.5 text-center font-mono text-[9px] align-top font-semibold text-slate-700 whitespace-nowrap">${it.leadTime || '1-2 Days'}</td>
+                <td class="py-1 px-1 text-center font-mono text-[9px] align-top font-semibold text-slate-700 whitespace-nowrap">${it.leadTime || '1-2 Days'}</td>
                 <td class="py-1 px-1 text-center font-mono font-bold align-top text-blue-800 whitespace-nowrap text-[9.5px]">${it.taxRate || 0}%</td>
-                <td class="py-1 px-2.5 text-right font-mono font-bold text-slate-900 align-top whitespace-nowrap text-[10px]">${fmt(it.total)}</td>
+                <td class="py-1 px-2 text-right font-mono font-bold text-slate-900 align-top whitespace-nowrap text-[10px]">${fmt(it.total)}</td>
               </tr>
             `).join('')}
 
             <!-- Expansion Spacer Row to ensure full-page A4 vertical grid lines -->
             <tr class="divide-x divide-slate-900 text-[10px]" style="height: ${spacerHeight}px;">
               <td class="py-0.5 px-1.5"></td>
-              <td class="py-0.5 px-2.5"></td>
-              <td class="py-0.5 px-1.5"></td>
-              <td class="py-0.5 px-1.5"></td>
-              <td class="py-0.5 px-1.5"></td>
+              <td class="py-0.5 px-2"></td>
+              <td class="py-0.5 px-1"></td>
               <td class="py-0.5 px-1"></td>
               <td class="py-0.5 px-1.5"></td>
+              <td class="py-0.5 px-1"></td>
+              <td class="py-0.5 px-1"></td>
               <td class="py-0.5 px-1"></td>
               <td class="py-0.5 px-2"></td>
             </tr>
@@ -5687,7 +5687,108 @@ function convertCurrentPreview() {
 }
 
 function printCurrentPreview() {
-  window.print();
+  if (!currentPreview) return;
+  const { type, data: doc } = currentPreview;
+  const cust = (activeCompany.customers || []).find(c => c.id === doc.customerId);
+  const comp = activeCompany;
+
+  let htmlContent = '';
+  if (selectedPrintFormat === 'busy') {
+    htmlContent = renderBusyFormatHTML(doc, type, cust, comp);
+  } else if (selectedPrintFormat === 'modern') {
+    htmlContent = renderModernFormatHTML(doc, type, cust, comp);
+  } else {
+    htmlContent = renderTallyFormatHTML(doc, type, cust, comp);
+  }
+
+  // Remove existing print iframe if any
+  let oldFrame = document.getElementById('passcorp-print-iframe');
+  if (oldFrame) oldFrame.remove();
+
+  const iframe = document.createElement('iframe');
+  iframe.id = 'passcorp-print-iframe';
+  iframe.style.position = 'fixed';
+  iframe.style.right = '0';
+  iframe.style.bottom = '0';
+  iframe.style.width = '0';
+  iframe.style.height = '0';
+  iframe.style.border = '0';
+  iframe.style.visibility = 'hidden';
+  document.body.appendChild(iframe);
+
+  let docTitle = 'Document';
+  if (type === 'quote') docTitle = `Quotation_${doc.quoteNumber || ''}`;
+  else if (type === 'invoice') docTitle = `Invoice_${doc.invoiceNumber || ''}`;
+  else if (type === 'proforma') docTitle = `Proforma_${doc.proformaNumber || ''}`;
+  else if (type === 'challan') docTitle = `Challan_${doc.challanNumber || ''}`;
+  else if (type === 'creditNote') docTitle = `CreditNote_${doc.creditNoteNumber || ''}`;
+  else if (type === 'debitNote') docTitle = `DebitNote_${doc.debitNoteNumber || ''}`;
+
+  const iframeDoc = iframe.contentWindow.document;
+  iframeDoc.open();
+  iframeDoc.write(`<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>${escapeHtml(docTitle)}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      box-sizing: border-box !important;
+    }
+    @page {
+      size: A4 portrait;
+      margin: 4mm 6mm !important;
+    }
+    html, body {
+      margin: 0 !important;
+      padding: 0 !important;
+      background: #ffffff !important;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      width: 100% !important;
+      height: 100% !important;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .print-sheet {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-height: calc(297mm - 10mm) !important;
+      max-height: calc(297mm - 10mm) !important;
+      box-sizing: border-box !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      background: #ffffff !important;
+      overflow: hidden !important;
+      page-break-inside: avoid !important;
+      page-break-after: avoid !important;
+    }
+  </style>
+</head>
+<body class="bg-white text-slate-900">
+  <div class="print-sheet">
+    ${htmlContent}
+  </div>
+</body>
+</html>`);
+  iframeDoc.close();
+
+  setTimeout(() => {
+    try {
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+    } catch (e) {
+      console.error('Iframe print error, falling back to window.print():', e);
+      window.print();
+    }
+  }, 350);
 }
 
 // ==========================================
