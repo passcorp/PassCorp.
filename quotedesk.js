@@ -4751,7 +4751,7 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
   const spacerHeight = Math.max(8, Math.min(35, 60 - (itemsCount * 20)));
 
   return `
-    <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between w-full box-border select-text min-h-full">
+    <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between w-full h-full max-h-full box-border select-text overflow-hidden">
       <!-- Top Section -->
       <div>
         <!-- Top Title Header -->
@@ -4916,7 +4916,7 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
       </div>
 
       <!-- Middle Section: Items Table with Full Vertical Stretch -->
-      <div class="flex-1 flex flex-col">
+      <div class="flex-1 flex flex-col min-h-0 overflow-hidden">
         <table class="w-full h-full text-left text-xs border-collapse">
           <thead>
             <tr class="border-b border-slate-900 bg-white text-slate-900 font-black uppercase text-[8.5px] tracking-wider divide-x divide-slate-900">
@@ -5122,7 +5122,7 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
   const spacerHeight = Math.max(12, Math.min(60, 140 - (itemsCount * 30)));
 
   return `
-    <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between w-full box-border select-text min-h-full">
+    <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between w-full h-full max-h-full box-border select-text overflow-hidden">
       <!-- Top Section -->
       <div>
         <!-- Top Title Header -->
@@ -5186,7 +5186,7 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
         </div>
 
         <!-- To Company / Buyer & Consignee Details Bar -->
-        <div class="grid grid-cols-2 divide-x divide-slate-900 border-b border-slate-900 text-[10px]">
+        <div class="grid grid-cols-2 border-b border-slate-900 divide-x divide-slate-900 text-[10px]">
           <div class="p-1.5 px-2 space-y-0.5 bg-slate-50/50">
             <span class="text-[8px] font-bold text-slate-500 uppercase tracking-wider block">Buyer (Bill to)</span>
             <h3 class="font-black text-xs uppercase text-blue-700 tracking-wide">${doc.customerName || cust?.name || 'Direct Customer'}</h3>
@@ -5203,7 +5203,7 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
       </div>
 
       <!-- Middle Section: Item Particulars Table with Full Vertical Stretch -->
-      <div class="flex-1 flex flex-col overflow-x-auto">
+      <div class="flex-1 flex flex-col min-h-0 overflow-hidden">
         <table class="w-full h-full text-left text-xs border-collapse">
           <thead>
             <tr class="border-b border-slate-900 bg-slate-100 text-slate-900 font-black uppercase text-[8.5px] tracking-wider divide-x divide-slate-900">
@@ -5373,7 +5373,7 @@ function renderBusyFormatHTML(doc, type, cust, comp) {
   const spacerHeight = Math.max(10, Math.min(45, 100 - (itemsCount * 25)));
 
   return `
-    <div class="border border-slate-400 font-sans text-xs text-slate-900 bg-white shadow-sm flex flex-col justify-between w-full box-border select-text min-h-full">
+    <div class="border border-slate-400 font-sans text-xs text-slate-900 bg-white shadow-sm flex flex-col justify-between w-full h-full max-h-full box-border select-text overflow-hidden">
       <!-- Top Section -->
       <div>
         <!-- Busy Top Header Banner -->
@@ -5423,7 +5423,7 @@ function renderBusyFormatHTML(doc, type, cust, comp) {
       </div>
 
       <!-- Middle Section: Items Grid with Full Vertical Stretch -->
-      <div class="flex-1 flex flex-col">
+      <div class="flex-1 flex flex-col min-h-0 overflow-hidden">
         <table class="w-full h-full text-left text-xs border-collapse">
           <thead>
             <tr class="bg-slate-100 border-b border-slate-300 text-slate-700 font-bold uppercase text-[8.5px] divide-x divide-slate-300">
@@ -5546,7 +5546,7 @@ function renderModernFormatHTML(doc, type, cust, comp) {
   const spacerHeight = Math.max(10, Math.min(40, 100 - (itemsCount * 25)));
 
   return `
-    <div class="bg-white p-4 rounded-xl border border-slate-200 font-sans text-xs flex flex-col justify-between w-full space-y-4 box-border select-text min-h-full">
+    <div class="bg-white p-4 rounded-xl border border-slate-200 font-sans text-xs flex flex-col justify-between w-full space-y-4 box-border select-text h-full max-h-full overflow-hidden">
       <!-- Top Section -->
       <div class="space-y-4">
         <div class="flex justify-between items-start pb-4 border-b border-slate-200">
@@ -5593,7 +5593,7 @@ function renderModernFormatHTML(doc, type, cust, comp) {
       </div>
 
       <!-- Middle Section: Items Table with Full Vertical Stretch -->
-      <div class="flex-1 flex flex-col overflow-x-auto border border-slate-200 rounded-xl">
+      <div class="flex-1 flex flex-col min-h-0 overflow-hidden border border-slate-200 rounded-xl">
         <table class="w-full h-full text-left text-xs border-collapse">
           <thead>
             <tr class="border-b border-slate-200 bg-slate-50 text-slate-600 font-bold uppercase text-[8.5px]">
@@ -5779,7 +5779,7 @@ function printCurrentPreview() {
     }
     @page {
       size: A4 portrait;
-      margin: 4mm 6mm !important;
+      margin: 4mm 5mm !important;
     }
     html, body {
       margin: 0 !important;
@@ -5788,6 +5788,8 @@ function printCurrentPreview() {
       font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
       width: 100% !important;
       height: 100% !important;
+      max-height: 100% !important;
+      overflow: hidden !important;
     }
     .font-mono {
       font-family: 'JetBrains Mono', monospace;
@@ -5795,8 +5797,8 @@ function printCurrentPreview() {
     .print-sheet {
       width: 100% !important;
       max-width: 100% !important;
-      min-height: calc(297mm - 10mm) !important;
-      max-height: calc(297mm - 10mm) !important;
+      height: 284mm !important;
+      max-height: 284mm !important;
       box-sizing: border-box !important;
       display: flex !important;
       flex-direction: column !important;
@@ -5805,6 +5807,9 @@ function printCurrentPreview() {
       overflow: hidden !important;
       page-break-inside: avoid !important;
       page-break-after: avoid !important;
+      page-break-before: avoid !important;
+      break-inside: avoid !important;
+      break-after: avoid !important;
     }
   </style>
 </head>
@@ -6533,6 +6538,15 @@ function handleGlobalKeydown(e) {
       cancelEditor();
     }
     return;
+  }
+
+  // Ctrl/Cmd + P: Print Preview Document
+  if (isCtrlOrCmd && (key === 'p' || key === 'P')) {
+    if (openModal === 'preview-modal' || currentPreview) {
+      e.preventDefault();
+      printCurrentPreview();
+      return;
+    }
   }
 
   // Alt+S: Cloud & Data Sync Center
