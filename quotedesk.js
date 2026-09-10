@@ -4748,10 +4748,10 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
   const roundOff = (doc.grandTotal - rawTotal).toFixed(2);
 
   const itemsCount = (doc.items || []).length;
-  const spacerHeight = Math.max(4, Math.min(20, 30 - (itemsCount * 8)));
+  const spacerHeight = Math.max(15, Math.min(180, 220 - (itemsCount * 28)));
 
   return `
-    <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between w-full h-full min-h-full box-border select-text">
+    <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between w-full box-border select-text">
       <!-- Top Section -->
       <div>
         <!-- Top Title Header -->
@@ -4909,8 +4909,8 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
       </div>
 
       <!-- Middle Section: Items Table -->
-      <div class="flex-1 flex flex-col min-h-0">
-        <table class="w-full h-full text-left text-xs border-collapse">
+      <div>
+        <table class="w-full text-left text-xs border-collapse">
           <thead>
             <tr class="border-b border-slate-900 bg-white text-slate-900 font-black uppercase text-[8px] tracking-wider divide-x divide-slate-900">
               <th class="py-0.5 px-1 w-7 text-center">Sl<br/>No.</th>
@@ -4950,7 +4950,7 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
             `).join('')}
 
             <!-- Expansion Spacer Row to ensure full-page A4 vertical grid lines -->
-            <tr class="divide-x divide-slate-900 text-[10px]">
+            <tr class="divide-x divide-slate-900 text-[10px]" style="height: ${spacerHeight}px;">
               <td class="py-0.5 px-1"></td>
               <td class="py-0.5 px-2"></td>
               <td class="py-0.5 px-1"></td>
@@ -5112,10 +5112,10 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
   const docNumber = doc.quoteNumber;
   const wordsAmount = numberToWordsINR(doc.grandTotal);
   const itemsCount = (doc.items || []).length;
-  const spacerHeight = Math.max(6, Math.min(30, 45 - (itemsCount * 10)));
+  const spacerHeight = Math.max(15, Math.min(180, 220 - (itemsCount * 28)));
 
   return `
-    <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between w-full h-full min-h-full box-border select-text">
+    <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between w-full box-border select-text">
       <!-- Top Section -->
       <div>
         <!-- Top Title Header -->
@@ -5196,8 +5196,8 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
       </div>
 
       <!-- Middle Section: Item Particulars Table with Full Vertical Stretch -->
-      <div class="flex-1 flex flex-col min-h-0">
-        <table class="w-full h-full text-left text-xs border-collapse">
+      <div>
+        <table class="w-full text-left text-xs border-collapse">
           <thead>
             <tr class="border-b border-slate-900 bg-slate-100 text-slate-900 font-black uppercase text-[8px] tracking-wider divide-x divide-slate-900">
               <th class="py-0.5 px-1 w-7 text-center">Sl</th>
@@ -5239,7 +5239,7 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
             `).join('')}
 
             <!-- Expansion Spacer Row to ensure full-page A4 vertical grid lines -->
-            <tr class="divide-x divide-slate-900 text-[10px]">
+            <tr class="divide-x divide-slate-900 text-[10px]" style="height: ${spacerHeight}px;">
               <td class="py-0.5 px-1"></td>
               <td class="py-0.5 px-2"></td>
               <td class="py-0.5 px-1"></td>
@@ -5362,9 +5362,11 @@ function renderBusyFormatHTML(doc, type, cust, comp) {
   }
 
   const wordsAmount = numberToWordsINR(doc.grandTotal);
+  const itemsCount = (doc.items || []).length;
+  const spacerHeight = Math.max(15, Math.min(180, 220 - (itemsCount * 28)));
 
   return `
-    <div class="border border-slate-400 font-sans text-xs text-slate-900 bg-white shadow-sm flex flex-col justify-between w-full h-full min-h-full box-border select-text">
+    <div class="border border-slate-400 font-sans text-xs text-slate-900 bg-white shadow-sm flex flex-col justify-between w-full box-border select-text">
       <!-- Top Section -->
       <div>
         <!-- Busy Top Header Banner -->
@@ -5414,8 +5416,8 @@ function renderBusyFormatHTML(doc, type, cust, comp) {
       </div>
 
       <!-- Middle Section: Items Grid -->
-      <div class="flex-1 flex flex-col min-h-0">
-        <table class="w-full h-full text-left text-xs border-collapse">
+      <div>
+        <table class="w-full text-left text-xs border-collapse">
           <thead>
             <tr class="bg-slate-100 border-b border-slate-300 text-slate-700 font-bold uppercase text-[8px] divide-x divide-slate-300">
               <th class="py-0.5 px-1.5 text-center w-7">#</th>
@@ -5455,7 +5457,7 @@ function renderBusyFormatHTML(doc, type, cust, comp) {
             `).join('')}
 
             <!-- Expansion Spacer Row to ensure full-page A4 vertical grid lines -->
-            <tr class="divide-x divide-slate-200 text-[10px]">
+            <tr class="divide-x divide-slate-200 text-[10px]" style="height: ${spacerHeight}px;">
               <td class="py-0.5 px-1.5"></td>
               <td class="py-0.5 px-2.5"></td>
               <td class="py-0.5 px-1.5"></td>
@@ -5533,8 +5535,11 @@ function renderModernFormatHTML(doc, type, cust, comp) {
     docNumber = doc.debitNoteNumber || '';
   }
 
+  const itemsCount = (doc.items || []).length;
+  const spacerHeight = Math.max(15, Math.min(150, 180 - (itemsCount * 28)));
+
   return `
-    <div class="bg-white p-3 rounded-xl border border-slate-200 font-sans text-xs flex flex-col justify-between w-full h-full min-h-full space-y-2.5 box-border select-text">
+    <div class="bg-white p-3 rounded-xl border border-slate-200 font-sans text-xs flex flex-col justify-between w-full space-y-2.5 box-border select-text">
       <!-- Top Section -->
       <div class="space-y-2.5">
         <div class="flex justify-between items-start pb-2.5 border-b border-slate-200">
@@ -5574,15 +5579,15 @@ function renderModernFormatHTML(doc, type, cust, comp) {
             <span class="text-[8px] font-black text-slate-500 uppercase tracking-wider">Shipped To (Consignee / Site)</span>
             <h4 class="font-black text-slate-900 text-xs mt-0.5 uppercase tracking-wide">${(doc.shipToDifferent && doc.shippingName) ? doc.shippingName : (doc.shippingName || doc.customerName || cust?.name || 'Direct Customer')}</h4>
             <p class="text-[9.5px] text-slate-600 mt-0.5">${(doc.shipToDifferent && doc.shippingAddress) ? doc.shippingAddress : (doc.shippingAddress || doc.billingAddress || cust?.shippingAddress || cust?.billingAddress || cust?.address || '')}</p>
-            <p class="text-[9px] text-slate-500">${((doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city))) ? `${doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust.city)}, ${doc.shipToDifferent ? doc.shippingState : (doc.shippingState || doc.billingState || cust?.shippingState || cust?.state || '')} ${doc.shipToDifferent ? doc.shippingPincode : (doc.shippingPincode || doc.billingPincode || cust?.shippingPincode || cust?.pincode || '')}` : ''}</p>
+            <p class="text-[9px] text-slate-500">${((doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city))) ? `${doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust.city)}, ${doc.shipToDifferent ? doc.shippingState : (doc.shippingState || doc.billingState || cust?.shippingState || cust?.state)} ${doc.shipToDifferent ? doc.shippingPincode : (doc.shippingPincode || doc.billingPincode || cust?.shippingPincode || cust?.pincode || '')}` : ''}</p>
             <p class="text-[9px] text-slate-500 mt-0.5"><span class="font-bold text-slate-700">GSTIN:</span> <span class="font-mono font-bold text-slate-900">${(doc.shipToDifferent && doc.shippingGstin) ? doc.shippingGstin : (doc.shippingGstin || doc.billingGstin || cust?.shippingGstin || cust?.gstin || 'Unregistered')}</span></p>
           </div>
         </div>
       </div>
 
       <!-- Middle Section: Items Table -->
-      <div class="flex-1 flex flex-col min-h-0 border border-slate-200 rounded-lg overflow-hidden">
-        <table class="w-full h-full text-left text-xs border-collapse">
+      <div class="border border-slate-200 rounded-lg overflow-hidden">
+        <table class="w-full text-left text-xs border-collapse">
           <thead>
             <tr class="border-b border-slate-200 bg-slate-50 text-slate-600 font-bold uppercase text-[8px]">
               <th class="py-1 px-1.5 w-7 text-center">#</th>
@@ -5622,7 +5627,7 @@ function renderModernFormatHTML(doc, type, cust, comp) {
             `).join('')}
 
             <!-- Expansion Spacer Row -->
-            <tr>
+            <tr style="height: ${spacerHeight}px;">
               <td class="py-0.5 px-1.5"></td>
               <td class="py-0.5 px-2"></td>
               <td class="py-0.5 px-1.5"></td>
@@ -5759,7 +5764,6 @@ function printCurrentPreview() {
       background: #ffffff !important;
       font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
       width: 100% !important;
-      height: 100% !important;
     }
     .font-mono {
       font-family: 'JetBrains Mono', monospace;
@@ -5767,15 +5771,8 @@ function printCurrentPreview() {
     .print-sheet {
       width: 100% !important;
       max-width: 100% !important;
-      height: 278mm !important;
-      min-height: 278mm !important;
-      max-height: 278mm !important;
       box-sizing: border-box !important;
-      display: flex !important;
-      flex-direction: column !important;
-      justify-content: space-between !important;
       background: #ffffff !important;
-      overflow: hidden !important;
       page-break-inside: avoid !important;
       page-break-after: avoid !important;
       page-break-before: avoid !important;
