@@ -4751,7 +4751,7 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
   const spacerHeight = Math.max(4, Math.min(20, 30 - (itemsCount * 8)));
 
   return `
-    <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between w-full box-border select-text">
+    <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between w-full h-full min-h-full box-border select-text">
       <!-- Top Section -->
       <div>
         <!-- Top Title Header -->
@@ -4910,7 +4910,7 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
 
       <!-- Middle Section: Items Table -->
       <div class="flex-1 flex flex-col min-h-0">
-        <table class="w-full text-left text-xs border-collapse">
+        <table class="w-full h-full text-left text-xs border-collapse">
           <thead>
             <tr class="border-b border-slate-900 bg-white text-slate-900 font-black uppercase text-[8px] tracking-wider divide-x divide-slate-900">
               <th class="py-0.5 px-1 w-7 text-center">Sl<br/>No.</th>
@@ -4950,7 +4950,7 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
             `).join('')}
 
             <!-- Expansion Spacer Row to ensure full-page A4 vertical grid lines -->
-            <tr class="divide-x divide-slate-900 text-[10px]" style="height: ${spacerHeight}px;">
+            <tr class="divide-x divide-slate-900 text-[10px]" style="height: 100%;">
               <td class="py-0.5 px-1"></td>
               <td class="py-0.5 px-2"></td>
               <td class="py-0.5 px-1"></td>
@@ -5115,7 +5115,7 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
   const spacerHeight = Math.max(6, Math.min(30, 45 - (itemsCount * 10)));
 
   return `
-    <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between w-full box-border select-text">
+    <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between w-full h-full min-h-full box-border select-text">
       <!-- Top Section -->
       <div>
         <!-- Top Title Header -->
@@ -5197,7 +5197,7 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
 
       <!-- Middle Section: Item Particulars Table with Full Vertical Stretch -->
       <div class="flex-1 flex flex-col min-h-0">
-        <table class="w-full text-left text-xs border-collapse">
+        <table class="w-full h-full text-left text-xs border-collapse">
           <thead>
             <tr class="border-b border-slate-900 bg-slate-100 text-slate-900 font-black uppercase text-[8px] tracking-wider divide-x divide-slate-900">
               <th class="py-0.5 px-1 w-7 text-center">Sl</th>
@@ -5239,7 +5239,7 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
             `).join('')}
 
             <!-- Expansion Spacer Row to ensure full-page A4 vertical grid lines -->
-            <tr class="divide-x divide-slate-900 text-[10px]" style="height: ${spacerHeight}px;">
+            <tr class="divide-x divide-slate-900 text-[10px]" style="height: 100%;">
               <td class="py-0.5 px-1"></td>
               <td class="py-0.5 px-2"></td>
               <td class="py-0.5 px-1"></td>
@@ -5362,11 +5362,9 @@ function renderBusyFormatHTML(doc, type, cust, comp) {
   }
 
   const wordsAmount = numberToWordsINR(doc.grandTotal);
-  const itemsCount = (doc.items || []).length;
-  const spacerHeight = Math.max(6, Math.min(25, 40 - (itemsCount * 10)));
 
   return `
-    <div class="border border-slate-400 font-sans text-xs text-slate-900 bg-white shadow-sm flex flex-col justify-between w-full box-border select-text">
+    <div class="border border-slate-400 font-sans text-xs text-slate-900 bg-white shadow-sm flex flex-col justify-between w-full h-full min-h-full box-border select-text">
       <!-- Top Section -->
       <div>
         <!-- Busy Top Header Banner -->
@@ -5417,7 +5415,7 @@ function renderBusyFormatHTML(doc, type, cust, comp) {
 
       <!-- Middle Section: Items Grid -->
       <div class="flex-1 flex flex-col min-h-0">
-        <table class="w-full text-left text-xs border-collapse">
+        <table class="w-full h-full text-left text-xs border-collapse">
           <thead>
             <tr class="bg-slate-100 border-b border-slate-300 text-slate-700 font-bold uppercase text-[8px] divide-x divide-slate-300">
               <th class="py-0.5 px-1.5 text-center w-7">#</th>
@@ -5457,7 +5455,7 @@ function renderBusyFormatHTML(doc, type, cust, comp) {
             `).join('')}
 
             <!-- Expansion Spacer Row to ensure full-page A4 vertical grid lines -->
-            <tr class="divide-x divide-slate-200 text-[10px]" style="height: ${spacerHeight}px;">
+            <tr class="divide-x divide-slate-200 text-[10px]" style="height: 100%;">
               <td class="py-0.5 px-1.5"></td>
               <td class="py-0.5 px-2.5"></td>
               <td class="py-0.5 px-1.5"></td>
@@ -5535,11 +5533,8 @@ function renderModernFormatHTML(doc, type, cust, comp) {
     docNumber = doc.debitNoteNumber || '';
   }
 
-  const itemsCount = (doc.items || []).length;
-  const spacerHeight = Math.max(6, Math.min(25, 40 - (itemsCount * 10)));
-
   return `
-    <div class="bg-white p-3 rounded-xl border border-slate-200 font-sans text-xs flex flex-col justify-between w-full space-y-2.5 box-border select-text">
+    <div class="bg-white p-3 rounded-xl border border-slate-200 font-sans text-xs flex flex-col justify-between w-full h-full min-h-full space-y-2.5 box-border select-text">
       <!-- Top Section -->
       <div class="space-y-2.5">
         <div class="flex justify-between items-start pb-2.5 border-b border-slate-200">
@@ -5587,7 +5582,7 @@ function renderModernFormatHTML(doc, type, cust, comp) {
 
       <!-- Middle Section: Items Table -->
       <div class="flex-1 flex flex-col min-h-0 border border-slate-200 rounded-lg overflow-hidden">
-        <table class="w-full text-left text-xs border-collapse">
+        <table class="w-full h-full text-left text-xs border-collapse">
           <thead>
             <tr class="border-b border-slate-200 bg-slate-50 text-slate-600 font-bold uppercase text-[8px]">
               <th class="py-1 px-1.5 w-7 text-center">#</th>
@@ -5627,7 +5622,7 @@ function renderModernFormatHTML(doc, type, cust, comp) {
             `).join('')}
 
             <!-- Expansion Spacer Row -->
-            <tr style="height: ${spacerHeight}px;">
+            <tr style="height: 100%;">
               <td class="py-0.5 px-1.5"></td>
               <td class="py-0.5 px-2"></td>
               <td class="py-0.5 px-1.5"></td>
@@ -5648,47 +5643,31 @@ function renderModernFormatHTML(doc, type, cust, comp) {
             <div class="p-2 bg-slate-50 rounded-lg border border-slate-200 text-[9.5px] space-y-0.5">
               <span class="text-[8px] font-bold text-slate-500 uppercase tracking-wider">Bank Details for Payment</span>
               <p class="font-bold text-slate-900">${comp.bankDetails.bankName}</p>
-              <p class="text-slate-600">A/C: <span class="font-mono font-bold text-slate-900">${comp.bankDetails.accountNumber}</span> | IFSC: <span class="font-mono font-bold text-slate-900">${comp.bankDetails.ifscCode}</span></p>
-              ${comp.bankDetails.upiId ? `<p class="text-slate-600">UPI: <span class="font-mono font-bold text-blue-600">${comp.bankDetails.upiId}</span></p>` : ''}
+              <p class="text-slate-600 font-mono text-[9px]">A/C: <span class="font-bold text-slate-900">${comp.bankDetails.accountNumber}</span> | IFSC: <span class="font-bold text-slate-900">${comp.bankDetails.ifscCode}</span></p>
+              ${comp.bankDetails.upiId ? `<p class="text-slate-600 font-mono text-[8.5px]">UPI ID: <span class="font-bold text-blue-600">${comp.bankDetails.upiId}</span></p>` : ''}
             </div>
           ` : ''}
-
-          ${doc.terms && doc.terms.length > 0 ? `
-            <div class="space-y-0.5 text-[8.5px]">
-              <span class="text-[7.5px] font-bold text-slate-400 uppercase tracking-wider">Terms & Conditions</span>
-              <ul class="list-decimal pl-3 text-slate-500 space-y-0.5 leading-snug">
-                ${doc.terms.map(t => `<li>${t}</li>`).join('')}
-              </ul>
-            </div>
-          ` : ''}
+          <div class="p-2 bg-slate-50 rounded-lg border border-slate-200 text-[9px] space-y-0.5">
+            <span class="text-[8px] font-bold text-slate-500 uppercase tracking-wider">Amount Chargeable (in words)</span>
+            <p class="font-bold text-slate-900">${numberToWordsINR(doc.grandTotal)}</p>
+          </div>
         </div>
 
-        <div class="space-y-1.5">
-          <div class="bg-slate-50 border border-slate-200 p-2 rounded-lg space-y-0.5 text-[9.5px]">
-            <div class="flex justify-between text-slate-600"><span>Subtotal:</span><span class="font-mono font-semibold text-slate-900">${cur()}${fmt(doc.subtotal)}</span></div>
-            <div class="flex justify-between text-slate-600"><span>Taxable Value:</span><span class="font-mono font-semibold text-slate-900">${cur()}${fmt(doc.taxableAmount || doc.subtotal)}</span></div>
-            <div class="flex justify-between text-slate-600"><span>Total GST:</span><span class="font-mono font-semibold text-blue-600">+${cur()}${fmt(doc.totalTax)}</span></div>
-            <div class="pt-0.5 border-t border-slate-300 flex justify-between items-center text-xs font-bold text-slate-900">
-              <span>Grand Total:</span>
-              <span class="text-xs font-mono text-blue-700 font-black">${cur()}${fmt(doc.grandTotal)}</span>
-            </div>
-            ${type === 'invoice' ? `
-              <div class="flex justify-between text-slate-600 pt-0.5"><span>Paid Amount:</span><span class="font-mono font-semibold text-blue-600">${cur()}${fmt(doc.paidAmount)}</span></div>
-              <div class="flex justify-between font-bold text-amber-700"><span>Balance Due:</span><span class="font-mono">${cur()}${fmt(doc.balanceDue)}</span></div>
-            ` : ''}
+        <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200 space-y-1 text-right font-mono">
+          <div class="flex justify-between text-slate-600 text-[9.5px]"><span>Taxable Subtotal:</span><span>${cur()}${fmt(doc.taxableAmount || doc.subtotal)}</span></div>
+          <div class="flex justify-between text-blue-600 text-[9.5px]"><span>Total GST:</span><span>+${cur()}${fmt(doc.totalTax)}</span></div>
+          <div class="flex justify-between font-black text-sm text-slate-900 pt-1 border-t border-slate-200">
+            <span>Grand Total:</span><span>${cur()}${fmt(doc.grandTotal)}</span>
           </div>
-
-          <div class="p-1.5 bg-slate-50 border border-slate-200 rounded-lg flex flex-col items-end">
-            <div class="flex flex-col items-center text-center w-36">
-              <span class="text-[7.5px] font-bold text-slate-400 uppercase tracking-wider block">for ${comp.name}</span>
-              ${comp.stampUrl ? `
-                <div class="max-h-9 max-w-[110px] my-0.5 flex items-center justify-center">
-                  <img src="${comp.stampUrl}" class="max-w-full max-h-full object-contain opacity-90" alt="Stamp" />
-                </div>
-              ` : `<div class="h-5"></div>`}
-              <div class="w-full border-t border-slate-400 pt-0.5 text-center">
-                <span class="font-bold text-[8px] uppercase text-slate-800 tracking-wider">Authorized Signatory</span>
-              </div>
+          ${type === 'invoice' ? `
+            <div class="flex justify-between text-blue-600 font-semibold text-[9.5px] pt-0.5"><span>Paid Amount:</span><span>${cur()}${fmt(doc.paidAmount)}</span></div>
+            <div class="flex justify-between text-amber-600 font-bold text-[9.5px]"><span>Balance Due:</span><span>${cur()}${fmt(doc.balanceDue)}</span></div>
+          ` : ''}
+          <div class="pt-1.5 flex flex-col items-center text-center w-36 ml-auto font-sans">
+            <span class="text-[7.5px] font-bold text-slate-500 uppercase tracking-wider block">for ${comp.name}</span>
+            ${comp.stampUrl ? `<div class="max-h-9 max-w-[110px] my-0.5 flex items-center justify-center"><img src="${comp.stampUrl}" class="max-w-full max-h-full object-contain opacity-90" alt="Stamp" /></div>` : `<div class="h-5"></div>`}
+            <div class="w-full border-t border-slate-300 pt-0.5 text-center">
+              <span class="text-[8px] font-bold uppercase text-slate-700 tracking-wider">Authorized Signatory</span>
             </div>
           </div>
         </div>
@@ -5772,7 +5751,7 @@ function printCurrentPreview() {
     }
     @page {
       size: A4 portrait;
-      margin: 3mm 4mm !important;
+      margin: 4mm 5mm !important;
     }
     html, body {
       margin: 0 !important;
@@ -5788,6 +5767,9 @@ function printCurrentPreview() {
     .print-sheet {
       width: 100% !important;
       max-width: 100% !important;
+      height: 288mm !important;
+      min-height: 288mm !important;
+      max-height: 288mm !important;
       box-sizing: border-box !important;
       display: flex !important;
       flex-direction: column !important;
