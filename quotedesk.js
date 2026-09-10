@@ -3311,7 +3311,11 @@ function convertQuoteToInvoice(quoteId) {
     shippingPincode: quote.shippingPincode || (cust ? cust.shippingPincode : '') || '',
     shippingGstin: quote.shippingGstin || (cust ? cust.shippingGstin : '') || '',
     shippingPhone: quote.shippingPhone || (cust ? cust.shippingPhone : '') || '',
-    items: JSON.parse(JSON.stringify(quote.items)),
+    items: (quote.items || []).map(it => ({
+      ...it,
+      description: '',
+      imageUrl: null
+    })),
     notes: quote.notes || '',
     terms: quote.terms || [],
     subtotal: quote.subtotal,
@@ -3973,17 +3977,18 @@ function copyBillingToShippingInvoice() {
 }
 
 function handleInvoiceCatalogSelect(idx, itemId) {
-  const item = (activeCompany.items || []).find(it => it.id === itemId);
+  const unified = getUnifiedProductsList();
+  const item = (activeCompany.items || []).find(it => it.id === itemId) || unified.find(it => it.id === itemId);
   if (!item) return;
   const row = invoiceEditorData.items[idx];
   row.name = item.name;
-  row.description = item.description || '';
-  row.hsnCode = item.hsnCode || '';
+  row.description = ''; // Exclude description from Item Master in Invoice
+  row.hsnCode = item.hsnCode || item.hsn || '';
   row.unit = item.unit || 'PCS';
   row.leadTime = row.leadTime || '1-2 Days';
-  row.price = Number(item.price) || 0;
-  row.taxRate = Number(item.taxRate) || 0;
-  row.imageUrl = item.imageUrl || null;
+  row.price = Number(item.price || item.rate) || 0;
+  row.taxRate = Number(item.taxRate) || 18;
+  row.imageUrl = null; // Exclude image from Item Master in Invoice
 
   const qty = Number(row.quantity) || 1;
   const price = Number(row.price) || 0;
@@ -3999,6 +4004,37 @@ function handleInvoiceCatalogSelect(idx, itemId) {
   recalculateInvoiceInMemory();
   renderInvoiceEditor(document.getElementById('main-content'));
   safeCreateIcons();
+}
+
+function handleInvoiceNameInput(idx, val) {
+  updateInvoiceRow(idx, 'name', val);
+
+  if (val && val.length > 2) {
+    const unified = getUnifiedProductsList();
+    const exactMatch = (activeCompany.items || []).find(it => it.name.toLowerCase().trim() === val.toLowerCase().trim()) 
+      || unified.find(p => p.name.toLowerCase().trim() === val.toLowerCase().trim());
+    if (exactMatch) {
+      const row = invoiceEditorData.items[idx];
+      row.name = exactMatch.name;
+      row.description = ''; // Exclude description from Item Master in Invoice
+      row.hsnCode = exactMatch.hsnCode || exactMatch.hsn || row.hsnCode || '';
+      row.price = Number(exactMatch.price || exactMatch.rate) || row.price || 0;
+      row.imageUrl = null; // Exclude image from Item Master in Invoice
+      if (exactMatch.unit) row.unit = exactMatch.unit;
+      if (exactMatch.taxRate) row.taxRate = exactMatch.taxRate;
+
+      const qty = Number(row.quantity) || 1;
+      const price = Number(row.price) || 0;
+      const tax = Number(row.taxRate) || 0;
+      row.amount = qty * price;
+      row.taxAmount = row.amount * (tax / 100);
+      row.total = row.amount + row.taxAmount;
+
+      recalculateInvoiceInMemory();
+      renderInvoiceEditor(document.getElementById('main-content'));
+      safeCreateIcons();
+    }
+  }
 }
 
 function addInvoiceRow() {
@@ -7247,7 +7283,11 @@ function convertProformaToInvoice(id) {
     deliveryTerms: p.deliveryTerms || 'Door Delivery',
     paymentTerms: 'Net 30 Days',
     taxTerms: p.taxTerms || 'Extra as applicable',
-    items: JSON.parse(JSON.stringify(p.items)),
+    items: (p.items || []).map(it => ({
+      ...it,
+      description: '',
+      imageUrl: null
+    })),
     subtotal: p.subtotal,
     taxableAmount: p.taxableAmount,
     totalTax: p.totalTax,
@@ -7872,7 +7912,11 @@ function convertChallanToInvoice(id) {
     deliveryTerms: c.deliveryTerms || 'Door Delivery',
     paymentTerms: 'Net 30 Days',
     taxTerms: 'Extra as applicable',
-    items: JSON.parse(JSON.stringify(c.items)),
+    items: (c.items || []).map(it => ({
+      ...it,
+      description: '',
+      imageUrl: null
+    })),
     subtotal: c.subtotal,
     taxableAmount: c.taxableAmount,
     totalTax: c.totalTax,
