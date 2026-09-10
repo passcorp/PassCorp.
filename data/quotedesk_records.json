@@ -1,7 +1,7 @@
 {
   "app": "PASS_CORP_QUOTEDESK_PRO",
   "version": "2026.1",
-  "lastUpdated": "2026-09-10T10:03:18.138Z",
+  "lastUpdated": "2026-09-10T10:05:00.894Z",
   "companies": [
     {
       "id": "comp_pass_corp",
@@ -407,6 +407,89 @@
         "upiId": ""
       },
       "quotations": [
+        {
+          "id": "quote-1789033197797",
+          "quoteNumber": "QT-2026-114",
+          "date": "2026-09-10",
+          "validity": "15 Days",
+          "validUntil": "2026-09-25",
+          "deliveryTerms": "Door Delivery",
+          "paymentTerms": "Net 30 Days",
+          "taxTerms": "Extra as applicable",
+          "status": "Sent",
+          "customerId": "cust-1789033427456",
+          "customerName": "Zamil Steel Building India Private Limited",
+          "items": [
+            {
+              "id": "qi-1",
+              "name": "Industrial Road & Plant Convex Mirror",
+              "description": "Wide-angle outdoor/indoor parabolic convex mirror for plant blind spots, parking and loading docks.\nSize= 32 Inch",
+              "hsnCode": "39269099",
+              "quantity": 1,
+              "unit": "PCS",
+              "price": "2400",
+              "leadTime": "1-2 Weeks",
+              "taxRate": 18,
+              "amount": 2400,
+              "taxAmount": 432,
+              "total": 2832,
+              "imageUrl": "assets/products/misc/convex_mirror.png"
+            },
+            {
+              "id": "qi-1789033597202",
+              "name": "Convex Mirror Pole",
+              "description": "Size- 6 Feet X 3 inch",
+              "hsnCode": "39269099",
+              "quantity": 1,
+              "unit": "PCS",
+              "price": "1600",
+              "leadTime": "1-2 Weeks",
+              "taxRate": 18,
+              "amount": 1600,
+              "taxAmount": 288,
+              "total": 1888,
+              "imageUrl": "data:image/jpeg;base64,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"
+            },
+            {
+              "id": "qi-1789033754101",
+              "name": "Anti-Skid Tape (Zebra Yellow/Black)",
+              "description": "High-contrast yellow and black hazard marking anti-skid floor tape for shop floors and step edges.\nSize 2 inch X 18 Mtr",
+              "hsnCode": "39199090",
+              "quantity": 1,
+              "unit": "PCS",
+              "price": "2100",
+              "leadTime": "1-2 Weeks",
+              "taxRate": 18,
+              "amount": 2100,
+              "taxAmount": 378,
+              "total": 2478,
+              "imageUrl": "assets/products/misc/antiskid_zebra.png"
+            }
+          ],
+          "notes": "Thank you for your business interest. We assure you our highest quality products and prompt support.",
+          "terms": [
+            "Prices are inclusive of standard GST as applicable.",
+            "Quotation is valid for 15 days from the date of issue."
+          ],
+          "subtotal": 6100,
+          "taxableAmount": 6100,
+          "totalTax": 1098,
+          "grandTotal": 7198,
+          "billingAddress": "Plot No. B 32, Ranjangaon MIDC, 2Ranjangaon MIDC, Ranjangaon, Dhok Sangavi, Pune Maharashtra- 412209",
+          "billingCity": "Pune",
+          "billingState": "Maharashtra",
+          "billingPincode": "412209",
+          "billingGstin": "NA",
+          "billingPhone": "+91 77220 1304",
+          "contactPerson": "Dhanaraj Pingale",
+          "shippingName": "Zamil Steel Building India Private Limited",
+          "shippingAddress": "Plot No. B 32, Ranjangaon MIDC, 2Ranjangaon MIDC, Ranjangaon, Dhok Sangavi, Pune Maharashtra- 412209",
+          "shippingCity": "Pune",
+          "shippingState": "Maharashtra",
+          "shippingPincode": "412209",
+          "shippingGstin": "NA",
+          "shippingPhone": "+91 77220 1304"
+        },
         {
           "id": "quote-1789033197797",
           "quoteNumber": "QT-2026-114",
