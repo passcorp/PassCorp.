@@ -2378,9 +2378,12 @@ class PassInvotorERP {
         if (p.desc) specsText += '\n' + p.desc;
         
         const cat = (p.category || '').toLowerCase();
+        const pName = (p.name || '').toLowerCase();
         let defaultHsn = '6506';
         let defaultUnit = 'Nos.';
-        if (cat.includes('shoe') || cat.includes('foot')) { defaultHsn = '6403'; defaultUnit = 'Pairs'; }
+        if (p.hsn) { defaultHsn = p.hsn; }
+        else if (pName.includes('mirror') || pName.includes('convex')) { defaultHsn = '39269099'; defaultUnit = 'Nos.'; }
+        else if (cat.includes('shoe') || cat.includes('foot')) { defaultHsn = '6403'; defaultUnit = 'Pairs'; }
         else if (cat.includes('glove') || cat.includes('hand')) { defaultHsn = '6116'; defaultUnit = 'Pairs'; }
         else if (cat.includes('eye') || cat.includes('goggle')) { defaultHsn = '9004'; defaultUnit = 'Nos.'; }
         else if (cat.includes('resp') || cat.includes('mask')) { defaultHsn = '6307'; defaultUnit = 'Nos.'; }

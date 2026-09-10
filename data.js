@@ -8600,6 +8600,7 @@ const DEFAULT_CONTENT = {
     "category": "misc",
     "name": "Industrial Road & Plant Convex Mirror",
     "brand": "Pass Safe",
+    "hsn": "39269099",
     "img": "assets/products/misc/convex_mirror.png",
     "cert": "Polycarbonate Unbreakable · 130° Wide View",
     "price": 1099,
@@ -8616,6 +8617,10 @@ const DEFAULT_CONTENT = {
       [
         "Brand / Manufacturer",
         "Pass Safe"
+      ],
+      [
+        "HSN / SAC Code",
+        "39269099"
       ],
       [
         "Safety Standard",
