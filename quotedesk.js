@@ -4748,216 +4748,209 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
   const roundOff = (doc.grandTotal - rawTotal).toFixed(2);
 
   const itemsCount = (doc.items || []).length;
-  const spacerHeight = Math.max(8, Math.min(35, 60 - (itemsCount * 20)));
+  const spacerHeight = Math.max(4, Math.min(20, 30 - (itemsCount * 8)));
 
   return `
-    <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between w-full h-full max-h-full box-border select-text overflow-hidden">
+    <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between w-full box-border select-text">
       <!-- Top Section -->
       <div>
         <!-- Top Title Header -->
-        <div class="text-center py-1 border-b border-slate-900 bg-white">
-          <h1 class="font-black text-sm uppercase tracking-wide text-slate-900 leading-tight">${docTitle}</h1>
-          <p class="text-[8.5px] font-bold text-slate-600 uppercase tracking-widest leading-none">${docSubtitle}</p>
+        <div class="text-center py-0.5 border-b border-slate-900 bg-white">
+          <h1 class="font-black text-xs uppercase tracking-wide text-slate-900 leading-tight">${docTitle}</h1>
+          <p class="text-[8px] font-bold text-slate-600 uppercase tracking-widest leading-none">${docSubtitle}</p>
         </div>
 
         <!-- Top 2-Column Split -->
-        <div class="grid grid-cols-2 border-b border-slate-900 divide-x divide-slate-900 text-[9.5px]">
+        <div class="grid grid-cols-2 border-b border-slate-900 divide-x divide-slate-900 text-[9px]">
           <!-- Left: Company Details + Buyer (Bill to) + Consignee (Ship to) -->
           <div class="divide-y divide-slate-900">
             <!-- Supplier / Company Details -->
-            <div class="p-1.5 px-2">
+            <div class="p-1 px-1.5">
               <div class="flex items-start gap-2">
                 ${comp.logoUrl ? `
-                  <div class="w-14 h-14 rounded bg-white border border-slate-300 p-0.5 shrink-0 flex items-center justify-center overflow-hidden">
+                  <div class="w-12 h-12 rounded bg-white border border-slate-300 p-0.5 shrink-0 flex items-center justify-center overflow-hidden">
                     <img src="${comp.logoUrl}" class="max-w-full max-h-full object-contain" />
                   </div>
                 ` : ''}
                 <div class="space-y-0.5 min-w-0">
-                  <h2 class="font-black text-xs uppercase tracking-tight text-slate-900 leading-tight">${comp.name}</h2>
-                  <p class="text-[8.5px] text-slate-500 font-bold uppercase tracking-wider">PRECISION | ASSURANCE | SAFETY | SOLUTION</p>
-                  <p class="text-[9px] text-slate-700 leading-tight">${comp.address || ''}</p>
-                  <p><span class="font-bold">GSTIN/UIN:</span> <span class="font-mono font-bold text-slate-900">${comp.gstin || 'Unregistered (Non-GST Bill of Supply)'}</span></p>
-                  <p><span class="font-bold">State Name :</span> ${comp.state || 'Maharashtra'}, <span class="font-bold">Code :</span> ${compStateCode}</p>
-                  <p><span class="font-bold">Contact :</span> ${comp.phone || '-'} | <span class="font-bold">E-Mail :</span> ${comp.email || '-'}</p>
+                  <h2 class="font-black text-[11px] uppercase tracking-tight text-slate-900 leading-tight">${comp.name}</h2>
+                  <p class="text-[8px] text-slate-500 font-bold uppercase tracking-wider">PRECISION | ASSURANCE | SAFETY | SOLUTION</p>
+                  <p class="text-[8.5px] text-slate-700 leading-tight">${comp.address || ''}</p>
+                  <p class="text-[8.5px]"><span class="font-bold">GSTIN/UIN:</span> <span class="font-mono font-bold text-slate-900">${comp.gstin || 'Unregistered (Non-GST Bill of Supply)'}</span></p>
+                  <p class="text-[8.5px]"><span class="font-bold">State Name :</span> ${comp.state || 'Maharashtra'}, <span class="font-bold">Code :</span> ${compStateCode} | <span class="font-bold">Contact :</span> ${comp.phone || '-'}</p>
                 </div>
               </div>
             </div>
 
             <!-- Buyer (Bill to) -->
-            <div class="p-1.5 px-2 space-y-0.5 bg-slate-50/50">
-              <span class="text-[8px] font-bold text-slate-500 uppercase tracking-wider block">Buyer (Bill to)</span>
-              <h3 class="font-black text-[11px] uppercase text-slate-900 tracking-wide leading-tight">${doc.customerName || cust?.name || 'Direct Customer'}</h3>
-              <p class="text-[9px] text-slate-700 leading-tight">${doc.billingAddress || cust?.billingAddress || cust?.address || ''} ${(doc.billingCity || cust?.city) ? `, ${doc.billingCity || cust.city}` : ''} ${(doc.billingState || cust?.state) ? `, ${doc.billingState || cust.state}` : ''} ${doc.billingPincode || cust?.pincode || ''}</p>
-              <p><span class="font-bold">CONTACT :</span> <span class="font-mono">${doc.billingPhone || cust?.phone || '-'}</span></p>
-              <p><span class="font-bold">GSTIN/UIN :</span> <span class="font-mono font-bold text-slate-900">${doc.billingGstin || cust?.gstin || 'Unregistered'}</span></p>
-              <p><span class="font-bold">State Name :</span> ${doc.billingState || cust?.state || 'Maharashtra'} (Code: ${custStateCode}) | <span class="font-bold">POS :</span> ${doc.billingState || cust?.state || 'Maharashtra'}</p>
+            <div class="p-1 px-1.5 space-y-0.5 bg-slate-50/50">
+              <span class="text-[7.5px] font-bold text-slate-500 uppercase tracking-wider block">Buyer (Bill to)</span>
+              <h3 class="font-black text-[10.5px] uppercase text-slate-900 tracking-wide leading-tight">${doc.customerName || cust?.name || 'Direct Customer'}</h3>
+              <p class="text-[8.5px] text-slate-700 leading-tight">${doc.billingAddress || cust?.billingAddress || cust?.address || ''} ${(doc.billingCity || cust?.city) ? `, ${doc.billingCity || cust.city}` : ''} ${(doc.billingState || cust?.state) ? `, ${doc.billingState || cust.state}` : ''} ${doc.billingPincode || cust?.pincode || ''}</p>
+              <p class="text-[8.5px]"><span class="font-bold">GSTIN/UIN:</span> <span class="font-mono font-bold text-slate-900">${doc.billingGstin || cust?.gstin || 'Unregistered'}</span> | <span class="font-bold">POS:</span> ${doc.billingState || cust?.state || 'Maharashtra'} (${custStateCode})</p>
             </div>
 
             <!-- Consignee (Ship to) -->
-            <div class="p-1.5 px-2 space-y-0.5">
-              <span class="text-[8px] font-bold text-slate-500 uppercase tracking-wider block">Consignee (Ship to)</span>
-              <h3 class="font-black text-[11px] uppercase text-slate-900 tracking-wide leading-tight">${(doc.shipToDifferent && doc.shippingName) ? doc.shippingName : (doc.shippingName || doc.customerName || cust?.name || 'Direct Customer')}</h3>
-              <p class="text-[9px] text-slate-700 leading-tight">${(doc.shipToDifferent && doc.shippingAddress) ? doc.shippingAddress : (doc.shippingAddress || doc.billingAddress || cust?.shippingAddress || cust?.billingAddress || cust?.address || '')} ${((doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city))) ? `, ${doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city)}` : ''} ${((doc.shipToDifferent ? doc.shippingState : (doc.shippingState || doc.billingState || cust?.shippingState || cust?.state))) ? `, ${doc.shipToDifferent ? doc.shippingState : (doc.shippingState || doc.billingState || cust?.shippingState || cust?.state)}` : ''} ${(doc.shipToDifferent ? doc.shippingPincode : (doc.shippingPincode || doc.billingPincode || cust?.shippingPincode || cust?.pincode || ''))}</p>
-              <p><span class="font-bold">CONTACT :</span> <span class="font-mono">${(doc.shipToDifferent && doc.shippingPhone) ? doc.shippingPhone : (doc.shippingPhone || doc.billingPhone || cust?.phone || '-')}</span> | <span class="font-bold">GSTIN :</span> <span class="font-mono font-bold text-slate-900">${(doc.shipToDifferent && doc.shippingGstin) ? doc.shippingGstin : (doc.shippingGstin || doc.billingGstin || cust?.shippingGstin || cust?.gstin || 'Unregistered')}</span></p>
+            <div class="p-1 px-1.5 space-y-0.5">
+              <span class="text-[7.5px] font-bold text-slate-500 uppercase tracking-wider block">Consignee (Ship to)</span>
+              <h3 class="font-black text-[10.5px] uppercase text-slate-900 tracking-wide leading-tight">${(doc.shipToDifferent && doc.shippingName) ? doc.shippingName : (doc.shippingName || doc.customerName || cust?.name || 'Direct Customer')}</h3>
+              <p class="text-[8.5px] text-slate-700 leading-tight">${(doc.shipToDifferent && doc.shippingAddress) ? doc.shippingAddress : (doc.shippingAddress || doc.billingAddress || cust?.shippingAddress || cust?.billingAddress || cust?.address || '')} ${((doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city))) ? `, ${doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city)}` : ''} ${((doc.shipToDifferent ? doc.shippingState : (doc.shippingState || doc.billingState || cust?.shippingState || cust?.state))) ? `, ${doc.shipToDifferent ? doc.shippingState : (doc.shippingState || doc.billingState || cust?.shippingState || cust?.state)}` : ''} ${(doc.shipToDifferent ? doc.shippingPincode : (doc.shippingPincode || doc.billingPincode || cust?.shippingPincode || cust?.pincode || ''))}</p>
+              <p class="text-[8.5px]"><span class="font-bold">CONTACT:</span> <span class="font-mono">${(doc.shipToDifferent && doc.shippingPhone) ? doc.shippingPhone : (doc.shippingPhone || doc.billingPhone || cust?.phone || '-')}</span> | <span class="font-bold">GSTIN:</span> <span class="font-mono font-bold text-slate-900">${(doc.shipToDifferent && doc.shippingGstin) ? doc.shippingGstin : (doc.shippingGstin || doc.billingGstin || cust?.shippingGstin || cust?.gstin || 'Unregistered')}</span></p>
             </div>
           </div>
 
           <!-- Right: Authentic Tally Dispatch & Reference Grid -->
-          <div class="divide-y divide-slate-900 text-[9px]">
+          <div class="divide-y divide-slate-900 text-[8.5px]">
             <!-- Row 1: Doc No. | Doc Date -->
             <div class="grid grid-cols-2 divide-x divide-slate-900">
-              <div class="p-1 px-1.5">
-                <span class="text-[7.5px] uppercase font-bold text-slate-500 block">${docNumberLabel}</span>
-                <span class="font-mono font-black text-[11px] text-slate-900">${docNumber}</span>
+              <div class="p-0.5 px-1.5">
+                <span class="text-[7px] uppercase font-bold text-slate-500 block">${docNumberLabel}</span>
+                <span class="font-mono font-black text-[10.5px] text-slate-900">${docNumber}</span>
               </div>
-              <div class="p-1 px-1.5">
-                <span class="text-[7.5px] uppercase font-bold text-slate-500 block">Date</span>
+              <div class="p-0.5 px-1.5">
+                <span class="text-[7px] uppercase font-bold text-slate-500 block">Date</span>
                 <span class="font-mono font-bold text-slate-900">${doc.date}</span>
               </div>
             </div>
 
             ${(type === 'creditNote' || type === 'debitNote') ? `
               <!-- Original Invoice Reference -->
-              <div class="grid grid-cols-2 divide-x divide-slate-900 bg-purple-50/50">
-                <div class="p-1 px-1.5">
-                  <span class="text-[7.5px] uppercase font-bold text-slate-500 block">Orig. Invoice No.</span>
-                  <span class="font-mono font-bold text-purple-900">${doc.originalInvoiceNo || '-'}</span>
+              <div class="grid grid-cols-2 divide-x divide-slate-900 bg-blue-50/40">
+                <div class="p-0.5 px-1.5">
+                  <span class="text-[7px] uppercase font-bold text-blue-800 block">Original Invoice No.</span>
+                  <span class="font-mono font-bold text-blue-900">${doc.originalInvoiceNo || '-'}</span>
                 </div>
-                <div class="p-1 px-1.5">
-                  <span class="text-[7.5px] uppercase font-bold text-slate-500 block">Orig. Invoice Date</span>
-                  <span class="font-mono font-bold text-purple-900">${doc.originalInvoiceDate || '-'}</span>
+                <div class="p-0.5 px-1.5">
+                  <span class="text-[7px] uppercase font-bold text-blue-800 block">Original Inv Date</span>
+                  <span class="font-mono font-bold text-blue-900">${doc.originalInvoiceDate || '-'}</span>
                 </div>
               </div>
-              <div class="p-1 px-1.5 bg-purple-50/30">
-                <span class="text-[7.5px] uppercase font-bold text-slate-500 block">Reason for Note:</span>
-                <span class="text-slate-900 font-bold">${doc.reason || 'Correction / Return'}</span>
+            ` : `
+              <!-- Row 2: Delivery Note | Payment Mode -->
+              <div class="grid grid-cols-2 divide-x divide-slate-900">
+                <div class="p-0.5 px-1.5">
+                  <span class="text-[7px] uppercase font-bold text-slate-500 block">Delivery Note</span>
+                  <span class="font-mono text-slate-800">${doc.deliveryNote || '-'}</span>
+                </div>
+                <div class="p-0.5 px-1.5">
+                  <span class="text-[7px] uppercase font-bold text-slate-500 block">Mode/Terms of Payment</span>
+                  <span class="font-semibold text-slate-900">${doc.paymentTerms || 'Bank Transfer (Net 30)'}</span>
+                </div>
               </div>
-            ` : ''}
+            `}
 
-            <!-- Row 2: Delivery Note | Mode/Terms of Payment -->
+            <!-- Row 3: Reference No. | Other References -->
             <div class="grid grid-cols-2 divide-x divide-slate-900">
-              <div class="p-1 px-1.5">
-                <span class="text-[7.5px] uppercase font-bold text-slate-500 block">Delivery Note / Challan Ref</span>
-                <span class="text-slate-800 font-semibold">${doc.deliveryNote || doc.challanRef || '-'}</span>
+              <div class="p-0.5 px-1.5">
+                <span class="text-[7px] uppercase font-bold text-slate-500 block">Reference No. & Date</span>
+                <span class="font-mono text-slate-800">${doc.referenceNo || doc.quoteNumber || '-'}</span>
               </div>
-              <div class="p-1 px-1.5">
-                <span class="text-[7.5px] uppercase font-bold text-slate-500 block">Mode/Terms of Payment</span>
-                <span class="text-slate-900 font-bold">${doc.paymentTerms || 'As Agreed'}</span>
+              <div class="p-0.5 px-1.5">
+                <span class="text-[7px] uppercase font-bold text-slate-500 block">Other References</span>
+                <span class="font-mono text-slate-800">${doc.otherReferences || '-'}</span>
               </div>
             </div>
 
-            <!-- Row 3: Reference No. & Date. | Other References -->
+            <!-- Row 4: Buyer's Order No. | Order Date -->
             <div class="grid grid-cols-2 divide-x divide-slate-900">
-              <div class="p-1 px-1.5">
-                <span class="text-[7.5px] uppercase font-bold text-slate-500 block">Reference No. & Date.</span>
-                <span class="font-mono text-slate-800">${doc.referenceNo || '-'}</span>
+              <div class="p-0.5 px-1.5">
+                <span class="text-[7px] uppercase font-bold text-slate-500 block">Buyer's Order No. (PO)</span>
+                <span class="font-mono font-bold text-slate-900">${doc.poNumber || doc.buyerOrderNo || '-'}</span>
               </div>
-              <div class="p-1 px-1.5">
-                <span class="text-[7.5px] uppercase font-bold text-slate-500 block">Other References</span>
-                <span class="text-slate-800">${doc.otherReferences || '-'}</span>
-              </div>
-            </div>
-
-            <!-- Row 4: Buyer's Order No. | PO Date -->
-            <div class="grid grid-cols-2 divide-x divide-slate-900">
-              <div class="p-1 px-1.5">
-                <span class="text-[7.5px] uppercase font-bold text-slate-500 block">Buyer's Order No.</span>
-                <span class="font-mono font-semibold text-slate-800">${doc.buyerOrderNo || '-'}</span>
-              </div>
-              <div class="p-1 px-1.5">
-                <span class="text-[7.5px] uppercase font-bold text-slate-500 block">PO Date</span>
-                <span class="font-mono text-slate-800">${doc.poDate || '-'}</span>
+              <div class="p-0.5 px-1.5">
+                <span class="text-[7px] uppercase font-bold text-slate-500 block">Dated</span>
+                <span class="font-mono text-slate-800">${doc.poDate || doc.orderDate || '-'}</span>
               </div>
             </div>
 
             <!-- Row 5: Dispatch Doc No. | Delivery Note Date -->
             <div class="grid grid-cols-2 divide-x divide-slate-900">
-              <div class="p-1 px-1.5">
-                <span class="text-[7.5px] uppercase font-bold text-slate-500 block">Dispatch Doc / E-Way Bill</span>
+              <div class="p-0.5 px-1.5">
+                <span class="text-[7px] uppercase font-bold text-slate-500 block">Dispatch Doc / E-Way Bill</span>
                 <span class="font-mono text-slate-800">${doc.ewayBillNo || doc.dispatchDocNo || '-'}</span>
               </div>
-              <div class="p-1 px-1.5">
-                <span class="text-[7.5px] uppercase font-bold text-slate-500 block">Delivery Note Date</span>
+              <div class="p-0.5 px-1.5">
+                <span class="text-[7px] uppercase font-bold text-slate-500 block">Delivery Note Date</span>
                 <span class="font-mono text-slate-800">${doc.deliveryNoteDate || '-'}</span>
               </div>
             </div>
 
             <!-- Row 6: Dispatched through | Destination -->
             <div class="grid grid-cols-2 divide-x divide-slate-900">
-              <div class="p-1 px-1.5">
-                <span class="text-[7.5px] uppercase font-bold text-slate-500 block">Dispatched through</span>
+              <div class="p-0.5 px-1.5">
+                <span class="text-[7px] uppercase font-bold text-slate-500 block">Dispatched through</span>
                 <span class="text-slate-900 font-semibold">${doc.transporter || doc.dispatchedThrough || 'Direct Delivery'}</span>
               </div>
-              <div class="p-1 px-1.5">
-                <span class="text-[7.5px] uppercase font-bold text-slate-500 block">Destination</span>
+              <div class="p-0.5 px-1.5">
+                <span class="text-[7px] uppercase font-bold text-slate-500 block">Destination</span>
                 <span class="text-slate-900 font-semibold">${cust?.state ? `${cust.state} (27)` : `Maharashtra (27)`}</span>
               </div>
             </div>
 
             <!-- Row 7: Bill of Lading/LR-RR No. | Motor Vehicle No. -->
             <div class="grid grid-cols-2 divide-x divide-slate-900">
-              <div class="p-1 px-1.5">
-                <span class="text-[7.5px] uppercase font-bold text-slate-500 block">Bill of Lading / LR No.</span>
+              <div class="p-0.5 px-1.5">
+                <span class="text-[7px] uppercase font-bold text-slate-500 block">Bill of Lading / LR No.</span>
                 <span class="font-mono text-slate-800">${doc.lrNo || '-'}</span>
               </div>
-              <div class="p-1 px-1.5">
-                <span class="text-[7.5px] uppercase font-bold text-slate-500 block">Motor Vehicle No.</span>
+              <div class="p-0.5 px-1.5">
+                <span class="text-[7px] uppercase font-bold text-slate-500 block">Motor Vehicle No.</span>
                 <span class="font-mono text-slate-800">${doc.vehicleNo || '-'}</span>
               </div>
             </div>
 
             <!-- Row 8: Terms of Delivery (Full Span) -->
-            <div class="p-1 px-1.5">
-              <span class="text-[7.5px] uppercase font-bold text-slate-500 block">Terms of Delivery</span>
+            <div class="p-0.5 px-1.5">
+              <span class="text-[7px] uppercase font-bold text-slate-500 block">Terms of Delivery</span>
               <span class="text-slate-900 font-medium leading-tight block">${doc.deliveryTerms || 'Door Delivery as per contract terms'}</span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Middle Section: Items Table with Full Vertical Stretch -->
-      <div class="flex-1 flex flex-col min-h-0 overflow-hidden">
-        <table class="w-full h-full text-left text-xs border-collapse">
+      <!-- Middle Section: Items Table -->
+      <div class="flex-1 flex flex-col min-h-0">
+        <table class="w-full text-left text-xs border-collapse">
           <thead>
-            <tr class="border-b border-slate-900 bg-white text-slate-900 font-black uppercase text-[8.5px] tracking-wider divide-x divide-slate-900">
-              <th class="py-1 px-1 w-7 text-center">Sl<br/>No.</th>
-              <th class="py-1 px-2">Description of Goods</th>
-              <th class="py-1 px-1 w-14 text-center whitespace-nowrap">HSN/SAC</th>
-              <th class="py-1 px-1 w-16 text-center whitespace-nowrap">Quantity</th>
-              <th class="py-1 px-1.5 w-18 text-right whitespace-nowrap">Rate</th>
-              <th class="py-1 px-1 w-9 text-center whitespace-nowrap">per</th>
-              <th class="py-1 px-1 w-10 text-center whitespace-nowrap">Disc. %</th>
-              <th class="py-1 px-2 w-20 text-right whitespace-nowrap">Amount</th>
+            <tr class="border-b border-slate-900 bg-white text-slate-900 font-black uppercase text-[8px] tracking-wider divide-x divide-slate-900">
+              <th class="py-0.5 px-1 w-7 text-center">Sl<br/>No.</th>
+              <th class="py-0.5 px-2">Description of Goods</th>
+              <th class="py-0.5 px-1 w-14 text-center whitespace-nowrap">HSN/SAC</th>
+              <th class="py-0.5 px-1 w-16 text-center whitespace-nowrap">Quantity</th>
+              <th class="py-0.5 px-1.5 w-18 text-right whitespace-nowrap">Rate</th>
+              <th class="py-0.5 px-1 w-9 text-center whitespace-nowrap">per</th>
+              <th class="py-0.5 px-1 w-10 text-center whitespace-nowrap">Disc. %</th>
+              <th class="py-0.5 px-2 w-20 text-right whitespace-nowrap">Amount</th>
             </tr>
           </thead>
           <tbody class="text-slate-900">
             ${(doc.items || []).map((it, idx) => `
-              <tr class="divide-x divide-slate-900 text-[10px]">
-                <td class="py-1 px-1 text-center font-mono font-bold align-top">${idx + 1}</td>
-                <td class="py-1 px-2 align-top">
-                  <div class="flex items-start gap-2">
+              <tr class="divide-x divide-slate-900 text-[9.5px]">
+                <td class="py-0.5 px-1 text-center font-mono font-bold align-top">${idx + 1}</td>
+                <td class="py-0.5 px-2 align-top">
+                  <div class="flex items-start gap-1.5">
                     ${it.imageUrl ? `
-                      <div class="w-11 h-11 rounded bg-white border border-slate-300 p-0.5 shrink-0 flex items-center justify-center overflow-hidden shadow-sm mt-0.5">
+                      <div class="w-9 h-9 rounded bg-white border border-slate-300 p-0.5 shrink-0 flex items-center justify-center overflow-hidden shadow-sm mt-0.5">
                         <img src="${it.imageUrl}" class="max-w-full max-h-full object-contain" />
                       </div>
                     ` : ''}
                     <div class="flex-1 min-w-0">
-                      <div class="font-black text-slate-900 text-[10.5px] uppercase leading-snug tracking-tight">${it.name}</div>
-                      ${it.description ? `<div class="text-[9px] text-slate-600 mt-0.5 whitespace-pre-wrap leading-tight font-normal">${escapeHtml(it.description)}</div>` : ''}
+                      <div class="font-black text-slate-900 text-[10px] uppercase leading-tight tracking-tight">${it.name}</div>
+                      ${it.description ? `<div class="text-[8.5px] text-slate-600 mt-0.5 whitespace-pre-wrap leading-tight font-normal">${escapeHtml(it.description)}</div>` : ''}
                     </div>
                   </div>
                 </td>
-                <td class="py-1 px-1 text-center font-mono font-bold align-top whitespace-nowrap text-[9.5px]">${it.hsnCode || '6403'}</td>
-                <td class="py-1 px-1 text-center font-mono font-black align-top whitespace-nowrap text-[10px]">${it.quantity} ${it.unit || 'Pairs'}</td>
-                <td class="py-1 px-1.5 text-right font-mono font-bold align-top whitespace-nowrap text-[10px]">${fmt(it.price)}</td>
-                <td class="py-1 px-1 text-center font-medium align-top whitespace-nowrap text-[9.5px]">${it.unit || 'Pairs'}</td>
-                <td class="py-1 px-1 text-center font-mono align-top whitespace-nowrap text-[9.5px]">${it.discount ? `${it.discount}%` : ''}</td>
-                <td class="py-1 px-2 text-right font-mono font-black text-slate-900 align-top whitespace-nowrap text-[10px]">${fmt(it.total || (it.price * it.quantity))}</td>
+                <td class="py-0.5 px-1 text-center font-mono font-bold align-top whitespace-nowrap text-[9px]">${it.hsnCode || '6403'}</td>
+                <td class="py-0.5 px-1 text-center font-mono font-black align-top whitespace-nowrap text-[9.5px]">${it.quantity} ${it.unit || 'Pairs'}</td>
+                <td class="py-0.5 px-1.5 text-right font-mono font-bold align-top whitespace-nowrap text-[9.5px]">${fmt(it.price)}</td>
+                <td class="py-0.5 px-1 text-center font-medium align-top whitespace-nowrap text-[9px]">${it.unit || 'Pairs'}</td>
+                <td class="py-0.5 px-1 text-center font-mono align-top whitespace-nowrap text-[9px]">${it.discount ? `${it.discount}%` : ''}</td>
+                <td class="py-0.5 px-2 text-right font-mono font-black text-slate-900 align-top whitespace-nowrap text-[9.5px]">${fmt(it.total || (it.price * it.quantity))}</td>
               </tr>
             `).join('')}
 
             <!-- Expansion Spacer Row to ensure full-page A4 vertical grid lines -->
-            <tr class="divide-x divide-slate-900 text-[10px]" style="height: 100%;">
+            <tr class="divide-x divide-slate-900 text-[10px]" style="height: ${spacerHeight}px;">
               <td class="py-0.5 px-1"></td>
               <td class="py-0.5 px-2"></td>
               <td class="py-0.5 px-1"></td>
@@ -4969,20 +4962,20 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
             </tr>
 
             <!-- Inline Taxes Section inside Table Body -->
-            <tr class="divide-x divide-slate-900 text-[10px] border-t border-slate-300" style="height: 20px !important;">
+            <tr class="divide-x divide-slate-900 text-[9.5px] border-t border-slate-300" style="height: 18px !important;">
               <td class="py-0.5 px-1"></td>
               <td class="py-0.5 px-2 text-right font-bold text-slate-800 italic">Cgst</td>
               <td></td><td></td><td></td><td></td><td></td>
               <td class="py-0.5 px-2 text-right font-mono font-bold text-slate-900">${fmt(halfTaxTotal)}</td>
             </tr>
-            <tr class="divide-x divide-slate-900 text-[10px]" style="height: 20px !important;">
+            <tr class="divide-x divide-slate-900 text-[9.5px] border-t border-slate-200" style="height: 18px !important;">
               <td class="py-0.5 px-1"></td>
               <td class="py-0.5 px-2 text-right font-bold text-slate-800 italic">Sgst</td>
               <td></td><td></td><td></td><td></td><td></td>
               <td class="py-0.5 px-2 text-right font-mono font-bold text-slate-900">${fmt(halfTaxTotal)}</td>
             </tr>
             ${Number(roundOff) !== 0 ? `
-              <tr class="divide-x divide-slate-900 text-[10px]" style="height: 20px !important;">
+              <tr class="divide-x divide-slate-900 text-[9.5px] border-t border-slate-200" style="height: 18px !important;">
                 <td class="py-0.5 px-1"></td>
                 <td class="py-0.5 px-2 text-right font-bold text-slate-800 italic">Round Off</td>
                 <td></td><td></td><td></td><td></td><td></td>
@@ -4991,11 +4984,11 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
             ` : ''}
 
             <!-- Total Bottom Row -->
-            <tr class="divide-x divide-slate-900 border-t-2 border-slate-900 bg-white font-black text-[11px]" style="height: 26px !important;">
-              <td colspan="3" class="py-1 px-2 text-right uppercase text-slate-900">Total</td>
-              <td class="py-1 px-1.5 text-center font-mono">${totalQty} ${primaryUnit}</td>
+            <tr class="divide-x divide-slate-900 border-t-2 border-slate-900 bg-white font-black text-[10.5px]" style="height: 24px !important;">
+              <td colspan="3" class="py-0.5 px-2 text-right uppercase text-slate-900">Total</td>
+              <td class="py-0.5 px-1.5 text-center font-mono">${totalQty} ${primaryUnit}</td>
               <td colspan="3"></td>
-              <td class="py-1 px-2 text-right font-mono font-black text-xs text-slate-900">${cur()} ${fmt(doc.grandTotal)}</td>
+              <td class="py-0.5 px-2 text-right font-mono font-black text-[11px] text-slate-900">${cur()} ${fmt(doc.grandTotal)}</td>
             </tr>
           </tbody>
         </table>
@@ -5004,98 +4997,98 @@ function renderTallyInvoiceFormatHTML(doc, type, cust, comp) {
       <!-- Bottom Section: Amount in words, HSN Analysis, Bank Details & Signature Box -->
       <div>
         <!-- Amount Chargeable in Words Bar -->
-        <div class="p-1.5 px-2.5 border-t border-b border-slate-900 bg-white flex items-baseline justify-between text-[10px]">
+        <div class="p-1 px-2 border-t border-b border-slate-900 bg-white flex items-baseline justify-between text-[9px]">
           <div>
-            <span class="font-bold uppercase text-[8.5px] text-slate-500 block">Amount Chargeable (in words)</span>
-            <span class="font-black text-slate-900 text-[10.5px]">${wordsAmount}</span>
+            <span class="font-bold uppercase text-[7.5px] text-slate-500 block">Amount Chargeable (in words)</span>
+            <span class="font-black text-slate-900 text-[9.5px]">${wordsAmount}</span>
           </div>
-          <span class="font-mono font-bold text-slate-700 text-[9px]">E. & O.E</span>
+          <span class="font-mono font-bold text-slate-700 text-[8px]">E. & O.E</span>
         </div>
 
         <!-- GST Tax Analysis Table (HSN/SAC Breakdown) -->
         <div class="border-b border-slate-900">
           <table class="w-full text-left text-xs border-collapse">
             <thead>
-              <tr class="border-b border-slate-900 bg-white text-slate-900 font-bold uppercase text-[8px] tracking-wider divide-x divide-slate-900 text-center">
-                <th rowspan="2" class="py-1 px-1.5 w-24">HSN/SAC</th>
-                <th rowspan="2" class="py-1 px-2 text-right">Taxable<br/>Value</th>
+              <tr class="border-b border-slate-900 bg-white text-slate-900 font-bold uppercase text-[7.5px] tracking-wider divide-x divide-slate-900 text-center">
+                <th rowspan="2" class="py-0.5 px-1.5 w-24">HSN/SAC</th>
+                <th rowspan="2" class="py-0.5 px-2 text-right">Taxable<br/>Value</th>
                 <th colspan="2" class="py-0.5 px-1">Central Tax</th>
                 <th colspan="2" class="py-0.5 px-1">State Tax</th>
-                <th rowspan="2" class="py-1 px-2 text-right w-24">Total<br/>Tax Amount</th>
+                <th rowspan="2" class="py-0.5 px-2 text-right w-24">Total<br/>Tax Amount</th>
               </tr>
-              <tr class="border-b border-slate-900 bg-white text-slate-900 font-bold uppercase text-[8px] tracking-wider divide-x divide-slate-900 text-center">
+              <tr class="border-b border-slate-900 bg-white text-slate-900 font-bold uppercase text-[7.5px] tracking-wider divide-x divide-slate-900 text-center">
                 <th class="py-0.5 px-1 w-12">Rate</th>
                 <th class="py-0.5 px-1 w-16 text-right">Amount</th>
                 <th class="py-0.5 px-1 w-12">Rate</th>
                 <th class="py-0.5 px-1 w-16 text-right">Amount</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-slate-300 text-[9.5px]">
+            <tbody class="divide-y divide-slate-300 text-[9px]">
               ${hsnRows.map(hr => `
                 <tr class="divide-x divide-slate-900">
-                  <td class="py-1 px-1.5 text-center font-mono font-bold">${hr.hsn}</td>
-                  <td class="py-1 px-2 text-right font-mono font-bold">${fmt(hr.taxable)}</td>
-                  <td class="py-1 px-1 text-center font-mono">${hr.halfRate}%</td>
-                  <td class="py-1 px-1.5 text-right font-mono font-semibold">${fmt(hr.cgst)}</td>
-                  <td class="py-1 px-1 text-center font-mono">${hr.halfRate}%</td>
-                  <td class="py-1 px-1.5 text-right font-mono font-semibold">${fmt(hr.sgst)}</td>
-                  <td class="py-1 px-2 text-right font-mono font-black text-slate-900">${fmt(hr.totalTax)}</td>
+                  <td class="py-0.5 px-1.5 text-center font-mono font-bold">${hr.hsn}</td>
+                  <td class="py-0.5 px-2 text-right font-mono font-bold">${fmt(hr.taxable)}</td>
+                  <td class="py-0.5 px-1 text-center font-mono">${hr.halfRate}%</td>
+                  <td class="py-0.5 px-1.5 text-right font-mono font-semibold">${fmt(hr.cgst)}</td>
+                  <td class="py-0.5 px-1 text-center font-mono">${hr.halfRate}%</td>
+                  <td class="py-0.5 px-1.5 text-right font-mono font-semibold">${fmt(hr.sgst)}</td>
+                  <td class="py-0.5 px-2 text-right font-mono font-black text-slate-900">${fmt(hr.totalTax)}</td>
                 </tr>
               `).join('')}
-              <tr class="divide-x divide-slate-900 border-t border-slate-900 font-black text-[10px] bg-slate-50">
-                <td class="py-1 px-1.5 text-center uppercase">Total</td>
-                <td class="py-1 px-2 text-right font-mono">${fmt(doc.taxableAmount || doc.subtotal)}</td>
+              <tr class="divide-x divide-slate-900 border-t border-slate-900 font-black text-[9px] bg-slate-50">
+                <td class="py-0.5 px-1.5 text-center uppercase">Total</td>
+                <td class="py-0.5 px-2 text-right font-mono">${fmt(doc.taxableAmount || doc.subtotal)}</td>
                 <td></td>
-                <td class="py-1 px-1.5 text-right font-mono">${fmt(halfTaxTotal)}</td>
+                <td class="py-0.5 px-1.5 text-right font-mono">${fmt(halfTaxTotal)}</td>
                 <td></td>
-                <td class="py-1 px-1.5 text-right font-mono">${fmt(halfTaxTotal)}</td>
-                <td class="py-1 px-2 text-right font-mono">${fmt(doc.totalTax)}</td>
+                <td class="py-0.5 px-1.5 text-right font-mono">${fmt(halfTaxTotal)}</td>
+                <td class="py-0.5 px-2 text-right font-mono">${fmt(doc.totalTax)}</td>
               </tr>
             </tbody>
           </table>
 
           <!-- Tax in Words & Company PAN -->
-          <div class="p-1.5 px-2.5 space-y-0.5 text-[9.5px] border-t border-slate-900">
+          <div class="p-1 px-2 space-y-0.5 text-[8.5px] border-t border-slate-900">
             <p><span class="font-bold text-slate-700">Tax Amount (in words) :</span> <span class="font-bold text-slate-900">${totalTaxInWords}</span></p>
             <p><span class="font-bold text-slate-700">Company's PAN :</span> <span class="font-mono font-black text-slate-900">${companyPan}</span></p>
           </div>
         </div>
 
         <!-- Bottom 3-Column Signatory & Banking Box -->
-        <div class="grid grid-cols-3 divide-x divide-slate-900 border-b border-slate-900 text-[9.5px]">
+        <div class="grid grid-cols-3 divide-x divide-slate-900 border-b border-slate-900 text-[8.5px]">
           <!-- Col 1: Bank Details & Declaration -->
-          <div class="p-2 space-y-1.5">
+          <div class="p-1.5 space-y-1">
             <div>
-              <span class="font-black uppercase text-[8.5px] text-slate-900 block underline mb-0.5">Company's Bank Details</span>
+              <span class="font-black uppercase text-[8px] text-slate-900 block underline mb-0.5">Company's Bank Details</span>
               <p><span class="font-bold text-slate-700">Bank Name :</span> <span class="font-semibold">${comp.bankDetails?.bankName || 'HDFC Bank Ltd.'}</span></p>
               <p><span class="font-bold text-slate-700">A/c No. :</span> <span class="font-mono font-bold">${comp.bankDetails?.accountNumber || '50200085432190'}</span></p>
-              <p><span class="font-bold text-slate-700">Branch & IFS Code :</span> <span class="font-mono font-bold">${comp.bankDetails?.ifscCode || 'HDFC0001234'}</span></p>
+              <p><span class="font-bold text-slate-700">Branch & IFSC :</span> <span class="font-mono font-bold">${comp.bankDetails?.ifscCode || 'HDFC0001234'}</span></p>
             </div>
             <div>
-              <span class="font-black uppercase text-[8.5px] text-slate-900 block underline mb-0.5">Declaration</span>
-              <p class="text-[8.5px] text-slate-600 leading-tight">We declare that this document shows the actual particulars and prices of goods and all statutory details are true and correct.</p>
+              <span class="font-black uppercase text-[7.5px] text-slate-900 block underline mb-0.5">Declaration</span>
+              <p class="text-[8px] text-slate-600 leading-tight">We declare that this invoice shows actual price and all particulars are true.</p>
             </div>
           </div>
 
           <!-- Col 2: Customer / Receiver's Seal -->
-          <div class="p-2 flex flex-col justify-between items-center text-center">
-            <span class="font-bold text-[9px] uppercase text-slate-800">Customer / Receiver's Seal</span>
-            <div class="h-10"></div>
-            <span class="font-bold text-[9px] uppercase text-slate-800 tracking-wider">Receiving Signatory</span>
+          <div class="p-1.5 flex flex-col justify-between items-center text-center">
+            <span class="font-bold text-[8.5px] uppercase text-slate-800">Customer / Receiver's Seal</span>
+            <div class="h-6"></div>
+            <span class="font-bold text-[8px] uppercase text-slate-800 tracking-wider">Receiving Signatory</span>
           </div>
 
           <!-- Col 3: Company Authorised Signatory -->
-          <div class="p-2 flex flex-col items-center justify-center text-center">
-            <div class="flex flex-col items-center text-center w-full border border-slate-300 bg-slate-50/60 p-2 rounded shadow-sm">
-              <span class="text-[8px] font-bold text-slate-500 uppercase tracking-wider block">for</span>
-              <h4 class="font-black text-[11px] uppercase tracking-tight text-slate-900 leading-tight mb-1">${comp.name}</h4>
+          <div class="p-1.5 flex flex-col items-center justify-center text-center">
+            <div class="flex flex-col items-center text-center w-full border border-slate-300 bg-slate-50/60 p-1.5 rounded shadow-sm">
+              <span class="text-[7.5px] font-bold text-slate-500 uppercase tracking-wider block">for</span>
+              <h4 class="font-black text-[10px] uppercase tracking-tight text-slate-900 leading-tight mb-0.5">${comp.name}</h4>
               ${comp.stampUrl ? `
-                <div class="h-12 my-0.5 flex items-center justify-center">
-                  <img src="${comp.stampUrl}" class="max-h-12 max-w-[120px] object-contain opacity-95" alt="Company Stamp" />
+                <div class="h-9 my-0.5 flex items-center justify-center">
+                  <img src="${comp.stampUrl}" class="max-h-9 max-w-[110px] object-contain opacity-95" alt="Company Stamp" />
                 </div>
-              ` : `<div class="h-8 my-0.5"></div>`}
-              <div class="w-full border-t border-slate-400 pt-1 text-center mt-1">
-                <span class="font-bold text-[8.5px] uppercase text-slate-800 tracking-wider">Authorised Signatory</span>
+              ` : `<div class="h-6 my-0.5"></div>`}
+              <div class="w-full border-t border-slate-400 pt-0.5 text-center mt-0.5">
+                <span class="font-bold text-[8px] uppercase text-slate-800 tracking-wider">Authorised Signatory</span>
               </div>
             </div>
           </div>
@@ -5119,30 +5112,30 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
   const docNumber = doc.quoteNumber;
   const wordsAmount = numberToWordsINR(doc.grandTotal);
   const itemsCount = (doc.items || []).length;
-  const spacerHeight = Math.max(12, Math.min(60, 140 - (itemsCount * 30)));
+  const spacerHeight = Math.max(6, Math.min(30, 45 - (itemsCount * 10)));
 
   return `
-    <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between w-full h-full max-h-full box-border select-text overflow-hidden">
+    <div class="border-2 border-slate-900 font-sans text-xs text-slate-900 bg-white flex flex-col justify-between w-full box-border select-text">
       <!-- Top Section -->
       <div>
         <!-- Top Title Header -->
-        <div class="text-center py-1.5 border-b border-slate-900 bg-slate-100 font-black tracking-widest uppercase text-xs">
+        <div class="text-center py-1 border-b border-slate-900 bg-slate-100 font-black tracking-widest uppercase text-xs">
           <span>${docTitle}</span>
         </div>
 
         <!-- Company & Buyer Grid (2-Column Classic Tally) -->
         <div class="grid grid-cols-2 border-b border-slate-900 divide-x divide-slate-900">
           <!-- Left: Supplier / Company Details -->
-          <div class="p-2">
-            <div class="flex items-start gap-2.5">
+          <div class="p-1.5 px-2">
+            <div class="flex items-start gap-2">
               ${comp.logoUrl ? `
-                <div class="w-14 h-14 rounded bg-white border border-slate-300 p-0.5 shrink-0 flex items-center justify-center overflow-hidden shadow-sm">
+                <div class="w-12 h-12 rounded bg-white border border-slate-300 p-0.5 shrink-0 flex items-center justify-center overflow-hidden shadow-sm">
                   <img src="${comp.logoUrl}" class="max-w-full max-h-full object-contain" />
                 </div>
               ` : ''}
-              <div class="space-y-0.5 text-[10px] min-w-0">
-                <h2 class="font-black text-sm uppercase tracking-tight text-slate-900 leading-tight">${comp.name}</h2>
-                <p class="text-[9.5px] text-slate-700 leading-tight">${comp.address || ''}</p>
+              <div class="space-y-0.5 text-[9.5px] min-w-0">
+                <h2 class="font-black text-xs uppercase tracking-tight text-slate-900 leading-tight">${comp.name}</h2>
+                <p class="text-[9px] text-slate-700 leading-tight">${comp.address || ''}</p>
                 <p class="pt-0.5"><span class="font-bold">GSTIN/UIN:</span> <span class="font-mono font-bold text-slate-900">${comp.gstin || 'Unregistered'}</span></p>
                 <p><span class="font-bold">State Name:</span> ${comp.state || 'Maharashtra'}, <span class="font-bold">Code:</span> ${comp.stateCode || (comp.gstin && comp.gstin.length >= 2 ? comp.gstin.substring(0, 2) : '27')}</p>
                 <p><span class="font-bold">Contact:</span> ${comp.phone || '-'} | <span class="font-bold">Email:</span> ${comp.email || '-'}</p>
@@ -5151,34 +5144,34 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
           </div>
 
           <!-- Right: Voucher Number & Dispatch Particulars -->
-          <div class="text-[10px]">
+          <div class="text-[9.5px]">
             <div class="grid grid-cols-2 divide-x divide-slate-900 border-b border-slate-900">
-              <div class="p-1 px-1.5">
-                <span class="text-[8px] uppercase font-bold text-slate-500 block">Quotation No.</span>
-                <span class="font-mono font-black text-xs text-slate-900">${docNumber}</span>
+              <div class="p-0.5 px-1.5">
+                <span class="text-[7.5px] uppercase font-bold text-slate-500 block">Quotation No.</span>
+                <span class="font-mono font-black text-[11px] text-slate-900">${docNumber}</span>
               </div>
-              <div class="p-1 px-1.5">
-                <span class="text-[8px] uppercase font-bold text-slate-500 block">Dated</span>
+              <div class="p-0.5 px-1.5">
+                <span class="text-[7.5px] uppercase font-bold text-slate-500 block">Dated</span>
                 <span class="font-mono font-bold text-slate-900">${doc.date}</span>
               </div>
             </div>
             <div class="grid grid-cols-2 divide-x divide-slate-900 border-b border-slate-900">
-              <div class="p-1 px-1.5">
-                <span class="text-[8px] uppercase font-bold text-slate-500 block">Delivery</span>
+              <div class="p-0.5 px-1.5">
+                <span class="text-[7.5px] uppercase font-bold text-slate-500 block">Delivery</span>
                 <span class="font-semibold text-slate-900">${doc.deliveryTerms || 'Door Delivery'}</span>
               </div>
-              <div class="p-1 px-1.5">
-                <span class="text-[8px] uppercase font-bold text-slate-500 block">Validity of Quotation</span>
+              <div class="p-0.5 px-1.5">
+                <span class="text-[7.5px] uppercase font-bold text-slate-500 block">Validity of Quotation</span>
                 <span class="font-mono font-semibold text-slate-900">${doc.validity || '15 Days'}</span>
               </div>
             </div>
             <div class="grid grid-cols-2 divide-x divide-slate-900">
-              <div class="p-1 px-1.5">
-                <span class="text-[8px] uppercase font-bold text-slate-500 block">Payment Terms</span>
+              <div class="p-0.5 px-1.5">
+                <span class="text-[7.5px] uppercase font-bold text-slate-500 block">Payment Terms</span>
                 <span class="font-semibold text-slate-900">${doc.paymentTerms || 'Against PI'}</span>
               </div>
-              <div class="p-1 px-1.5">
-                <span class="text-[8px] uppercase font-bold text-slate-500 block">Taxes</span>
+              <div class="p-0.5 px-1.5">
+                <span class="text-[7.5px] uppercase font-bold text-slate-500 block">Taxes</span>
                 <span class="font-semibold text-slate-900">${doc.taxTerms || 'Extra as applicable'}</span>
               </div>
             </div>
@@ -5186,68 +5179,68 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
         </div>
 
         <!-- To Company / Buyer & Consignee Details Bar -->
-        <div class="grid grid-cols-2 border-b border-slate-900 divide-x divide-slate-900 text-[10px]">
-          <div class="p-1.5 px-2 space-y-0.5 bg-slate-50/50">
-            <span class="text-[8px] font-bold text-slate-500 uppercase tracking-wider block">Buyer (Bill to)</span>
-            <h3 class="font-black text-xs uppercase text-blue-700 tracking-wide">${doc.customerName || cust?.name || 'Direct Customer'}</h3>
-            <p class="text-[9px] text-slate-700 leading-tight">${doc.billingAddress || cust?.billingAddress || cust?.address || ''} ${(doc.billingCity || cust?.city) ? `, ${doc.billingCity || cust.city}` : ''} ${(doc.billingState || cust?.state) ? `, ${doc.billingState || cust.state}` : ''} ${doc.billingPincode || cust?.pincode || ''}</p>
-            <p><span class="font-bold">GSTIN/UIN:</span> <span class="font-mono font-bold text-slate-900">${doc.billingGstin || cust?.gstin || 'Unregistered'}</span> | <span class="font-bold">Phone:</span> <span class="font-mono">${doc.billingPhone || cust?.phone || '-'}</span></p>
+        <div class="grid grid-cols-2 border-b border-slate-900 divide-x divide-slate-900 text-[9.5px]">
+          <div class="p-1 px-1.5 space-y-0.5 bg-slate-50/50">
+            <span class="text-[7.5px] font-bold text-slate-500 uppercase tracking-wider block">Buyer (Bill to)</span>
+            <h3 class="font-black text-[11px] uppercase text-blue-700 tracking-wide">${doc.customerName || cust?.name || 'Direct Customer'}</h3>
+            <p class="text-[8.5px] text-slate-700 leading-tight">${doc.billingAddress || cust?.billingAddress || cust?.address || ''} ${(doc.billingCity || cust?.city) ? `, ${doc.billingCity || cust.city}` : ''} ${(doc.billingState || cust?.state) ? `, ${doc.billingState || cust.state}` : ''} ${doc.billingPincode || cust?.pincode || ''}</p>
+            <p class="text-[8.5px]"><span class="font-bold">GSTIN/UIN:</span> <span class="font-mono font-bold text-slate-900">${doc.billingGstin || cust?.gstin || 'Unregistered'}</span> | <span class="font-bold">Phone:</span> <span class="font-mono">${doc.billingPhone || cust?.phone || '-'}</span></p>
           </div>
-          <div class="p-1.5 px-2 space-y-0.5">
-            <span class="text-[8px] font-bold text-slate-500 uppercase tracking-wider block">Consignee (Ship to)</span>
-            <h3 class="font-black text-xs uppercase text-slate-900 tracking-wide">${(doc.shipToDifferent && doc.shippingName) ? doc.shippingName : (doc.shippingName || doc.customerName || cust?.name || 'Direct Customer')}</h3>
-            <p class="text-[9px] text-slate-700 leading-tight">${(doc.shipToDifferent && doc.shippingAddress) ? doc.shippingAddress : (doc.shippingAddress || doc.billingAddress || cust?.shippingAddress || cust?.billingAddress || cust?.address || '')} ${((doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city))) ? `, ${doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city)}` : ''} ${((doc.shipToDifferent ? doc.shippingState : (doc.shippingState || doc.billingState || cust?.shippingState || cust?.state))) ? `, ${doc.shipToDifferent ? doc.shippingState : (doc.shippingState || doc.billingState || cust?.shippingState || cust?.state)}` : ''} ${(doc.shipToDifferent ? doc.shippingPincode : (doc.shippingPincode || doc.billingPincode || cust?.shippingPincode || cust?.pincode || ''))}</p>
-            <p><span class="font-bold">GSTIN/UIN:</span> <span class="font-mono font-bold text-slate-900">${(doc.shipToDifferent && doc.shippingGstin) ? doc.shippingGstin : (doc.shippingGstin || doc.billingGstin || cust?.shippingGstin || cust?.gstin || 'Unregistered')}</span> | <span class="font-bold">State:</span> ${(doc.shipToDifferent ? (doc.shippingState || cust?.shippingState || doc.billingState || cust?.state || 'Maharashtra') : (doc.billingState || cust?.state || 'Maharashtra'))}</p>
+          <div class="p-1 px-1.5 space-y-0.5">
+            <span class="text-[7.5px] font-bold text-slate-500 uppercase tracking-wider block">Consignee (Ship to)</span>
+            <h3 class="font-black text-[11px] uppercase text-slate-900 tracking-wide">${(doc.shipToDifferent && doc.shippingName) ? doc.shippingName : (doc.shippingName || doc.customerName || cust?.name || 'Direct Customer')}</h3>
+            <p class="text-[8.5px] text-slate-700 leading-tight">${(doc.shipToDifferent && doc.shippingAddress) ? doc.shippingAddress : (doc.shippingAddress || doc.billingAddress || cust?.shippingAddress || cust?.billingAddress || cust?.address || '')} ${((doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city))) ? `, ${doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city)}` : ''} ${((doc.shipToDifferent ? doc.shippingState : (doc.shippingState || doc.billingState || cust?.shippingState || cust?.state))) ? `, ${doc.shipToDifferent ? doc.shippingState : (doc.shippingState || doc.billingState || cust?.shippingState || cust?.state)}` : ''} ${(doc.shipToDifferent ? doc.shippingPincode : (doc.shippingPincode || doc.billingPincode || cust?.shippingPincode || cust?.pincode || ''))}</p>
+            <p class="text-[8.5px]"><span class="font-bold">GSTIN/UIN:</span> <span class="font-mono font-bold text-slate-900">${(doc.shipToDifferent && doc.shippingGstin) ? doc.shippingGstin : (doc.shippingGstin || doc.billingGstin || cust?.shippingGstin || cust?.gstin || 'Unregistered')}</span></p>
           </div>
         </div>
       </div>
 
       <!-- Middle Section: Item Particulars Table with Full Vertical Stretch -->
-      <div class="flex-1 flex flex-col min-h-0 overflow-hidden">
-        <table class="w-full h-full text-left text-xs border-collapse">
+      <div class="flex-1 flex flex-col min-h-0">
+        <table class="w-full text-left text-xs border-collapse">
           <thead>
-            <tr class="border-b border-slate-900 bg-slate-100 text-slate-900 font-black uppercase text-[8.5px] tracking-wider divide-x divide-slate-900">
-              <th class="py-1 px-1.5 w-7 text-center">Sl</th>
-              <th class="py-1 px-2">Description of Goods & Technical Specs</th>
-              <th class="py-1 px-1 w-14 text-center whitespace-nowrap">HSN/SAC</th>
-              <th class="py-1 px-1 w-12 text-center whitespace-nowrap">Qty</th>
-              <th class="py-1 px-1.5 w-16 text-right whitespace-nowrap">Rate (${cur()})</th>
-              <th class="py-1 px-1 w-9 text-center whitespace-nowrap">per</th>
-              <th class="py-1 px-1 w-14 text-center whitespace-nowrap">Lead Time</th>
-              <th class="py-1 px-1 w-10 text-center whitespace-nowrap">GST%</th>
-              <th class="py-1 px-2 w-20 text-right whitespace-nowrap">Amount (${cur()})</th>
+            <tr class="border-b border-slate-900 bg-slate-100 text-slate-900 font-black uppercase text-[8px] tracking-wider divide-x divide-slate-900">
+              <th class="py-0.5 px-1 w-7 text-center">Sl</th>
+              <th class="py-0.5 px-2">Description of Goods & Technical Specs</th>
+              <th class="py-0.5 px-1 w-14 text-center whitespace-nowrap">HSN/SAC</th>
+              <th class="py-0.5 px-1 w-12 text-center whitespace-nowrap">Qty</th>
+              <th class="py-0.5 px-1.5 w-16 text-right whitespace-nowrap">Rate (${cur()})</th>
+              <th class="py-0.5 px-1 w-9 text-center whitespace-nowrap">per</th>
+              <th class="py-0.5 px-1 w-14 text-center whitespace-nowrap">Lead Time</th>
+              <th class="py-0.5 px-1 w-10 text-center whitespace-nowrap">GST%</th>
+              <th class="py-0.5 px-2 w-20 text-right whitespace-nowrap">Amount (${cur()})</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-300 text-slate-900">
             ${(doc.items || []).map((it, idx) => `
-              <tr class="divide-x divide-slate-900 text-[10px]">
-                <td class="py-1 px-1.5 text-center font-mono font-bold align-top">${idx + 1}</td>
-                <td class="py-1 px-2 align-top">
-                  <div class="flex items-start gap-2">
+              <tr class="divide-x divide-slate-900 text-[9.5px]">
+                <td class="py-0.5 px-1 text-center font-mono font-bold align-top">${idx + 1}</td>
+                <td class="py-0.5 px-2 align-top">
+                  <div class="flex items-start gap-1.5">
                     ${it.imageUrl ? `
-                      <div class="w-11 h-11 rounded bg-white border border-slate-300 p-0.5 shrink-0 flex items-center justify-center overflow-hidden shadow-sm mt-0.5">
+                      <div class="w-9 h-9 rounded bg-white border border-slate-300 p-0.5 shrink-0 flex items-center justify-center overflow-hidden shadow-sm mt-0.5">
                         <img src="${it.imageUrl}" class="max-w-full max-h-full object-contain" />
                       </div>
                     ` : ''}
                     <div class="flex-1 min-w-0">
-                      <div class="font-bold text-slate-900 text-[10.5px] uppercase leading-tight tracking-tight">${it.name}</div>
-                      ${it.description ? `<div class="text-[9px] text-slate-600 mt-0.5 whitespace-pre-wrap leading-normal font-normal">${escapeHtml(it.description)}</div>` : ''}
+                      <div class="font-bold text-slate-900 text-[10px] uppercase leading-tight tracking-tight">${it.name}</div>
+                      ${it.description ? `<div class="text-[8.5px] text-slate-600 mt-0.5 whitespace-pre-wrap leading-normal font-normal">${escapeHtml(it.description)}</div>` : ''}
                     </div>
                   </div>
                 </td>
-                <td class="py-1 px-1 text-center font-mono font-semibold align-top whitespace-nowrap text-[9.5px]">${it.hsnCode || '-'}</td>
-                <td class="py-1 px-1 text-center font-mono font-bold align-top whitespace-nowrap text-[10px]">${it.quantity}</td>
-                <td class="py-1 px-1.5 text-right font-mono font-semibold align-top whitespace-nowrap text-[10px]">${fmt(it.price)}</td>
-                <td class="py-1 px-1 text-center font-medium align-top whitespace-nowrap text-[9.5px]">${it.unit || 'PCS'}</td>
-                <td class="py-1 px-1 text-center font-mono text-[9px] align-top font-semibold text-slate-700 whitespace-nowrap">${it.leadTime || '1-2 Days'}</td>
-                <td class="py-1 px-1 text-center font-mono font-bold align-top text-blue-800 whitespace-nowrap text-[9.5px]">${it.taxRate || 0}%</td>
-                <td class="py-1 px-2 text-right font-mono font-bold text-slate-900 align-top whitespace-nowrap text-[10px]">${fmt(it.total)}</td>
+                <td class="py-0.5 px-1 text-center font-mono font-semibold align-top whitespace-nowrap text-[9px]">${it.hsnCode || '-'}</td>
+                <td class="py-0.5 px-1 text-center font-mono font-bold align-top whitespace-nowrap text-[9.5px]">${it.quantity}</td>
+                <td class="py-0.5 px-1.5 text-right font-mono font-semibold align-top whitespace-nowrap text-[9.5px]">${fmt(it.price)}</td>
+                <td class="py-0.5 px-1 text-center font-medium align-top whitespace-nowrap text-[9px]">${it.unit || 'PCS'}</td>
+                <td class="py-0.5 px-1 text-center font-mono text-[8.5px] align-top font-semibold text-slate-700 whitespace-nowrap">${it.leadTime || '1-2 Days'}</td>
+                <td class="py-0.5 px-1 text-center font-mono font-bold align-top text-blue-800 whitespace-nowrap text-[9px]">${it.taxRate || 0}%</td>
+                <td class="py-0.5 px-2 text-right font-mono font-bold text-slate-900 align-top whitespace-nowrap text-[9.5px]">${fmt(it.total)}</td>
               </tr>
             `).join('')}
 
             <!-- Expansion Spacer Row to ensure full-page A4 vertical grid lines -->
-            <tr class="divide-x divide-slate-900 text-[10px]" style="height: 100%;">
-              <td class="py-0.5 px-1.5"></td>
+            <tr class="divide-x divide-slate-900 text-[10px]" style="height: ${spacerHeight}px;">
+              <td class="py-0.5 px-1"></td>
               <td class="py-0.5 px-2"></td>
               <td class="py-0.5 px-1"></td>
               <td class="py-0.5 px-1"></td>
@@ -5259,29 +5252,29 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
             </tr>
 
             <!-- Subtotal Row -->
-            <tr class="divide-x divide-slate-900 border-t border-slate-900 bg-slate-50 font-bold text-[10px]" style="height: 22px !important;">
-              <td colspan="3" class="py-1 px-2 text-right uppercase">Subtotal / Taxable Value</td>
-              <td class="py-1 px-1.5 text-center font-mono">${(doc.items || []).reduce((s, i) => s + Number(i.quantity || 0), 0)}</td>
+            <tr class="divide-x divide-slate-900 border-t border-slate-900 bg-slate-50 font-bold text-[9.5px]" style="height: 20px !important;">
+              <td colspan="3" class="py-0.5 px-2 text-right uppercase">Subtotal / Taxable Value</td>
+              <td class="py-0.5 px-1 text-center font-mono">${(doc.items || []).reduce((s, i) => s + Number(i.quantity || 0), 0)}</td>
               <td colspan="4"></td>
-              <td class="py-1 px-2 text-right font-mono font-black">${cur()}${fmt(doc.taxableAmount || doc.subtotal)}</td>
+              <td class="py-0.5 px-2 text-right font-mono font-black">${cur()}${fmt(doc.taxableAmount || doc.subtotal)}</td>
             </tr>
 
             <!-- Central Tax / State Tax Rows -->
-            <tr class="divide-x divide-slate-900 text-[10px]" style="height: 20px !important;">
+            <tr class="divide-x divide-slate-900 text-[9.5px]" style="height: 18px !important;">
               <td colspan="8" class="py-0.5 px-2 text-right font-semibold text-slate-700">Central Tax (CGST)</td>
               <td class="py-0.5 px-2 text-right font-mono font-bold text-slate-900">${cur()}${fmt(doc.totalTax / 2)}</td>
             </tr>
-            <tr class="divide-x divide-slate-900 text-[10px]" style="height: 20px !important;">
+            <tr class="divide-x divide-slate-900 text-[9.5px]" style="height: 18px !important;">
               <td colspan="8" class="py-0.5 px-2 text-right font-semibold text-slate-700">State Tax (SGST)</td>
               <td class="py-0.5 px-2 text-right font-mono font-bold text-slate-900">${cur()}${fmt(doc.totalTax / 2)}</td>
             </tr>
 
             <!-- Grand Total Row -->
-            <tr class="divide-x divide-slate-900 border-t border-slate-900 bg-slate-100 font-black text-[11px]" style="height: 26px !important;">
-              <td colspan="3" class="py-1 px-2 uppercase text-slate-900">Total</td>
-              <td class="py-1 px-1.5 text-center font-mono">${(doc.items || []).reduce((s, i) => s + Number(i.quantity || 0), 0)}</td>
-              <td colspan="4" class="py-1 px-2 text-right uppercase text-slate-800">Grand Total</td>
-              <td class="py-1 px-2 text-right font-mono font-black text-xs text-slate-900">${cur()}${fmt(doc.grandTotal)}</td>
+            <tr class="divide-x divide-slate-900 border-t border-slate-900 bg-slate-100 font-black text-[10.5px]" style="height: 24px !important;">
+              <td colspan="3" class="py-0.5 px-2 uppercase text-slate-900">Total</td>
+              <td class="py-0.5 px-1 text-center font-mono">${(doc.items || []).reduce((s, i) => s + Number(i.quantity || 0), 0)}</td>
+              <td colspan="4" class="py-0.5 px-2 text-right uppercase text-slate-800">Grand Total</td>
+              <td class="py-0.5 px-2 text-right font-mono font-black text-[11px] text-slate-900">${cur()}${fmt(doc.grandTotal)}</td>
             </tr>
           </tbody>
         </table>
@@ -5290,22 +5283,22 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
       <!-- Bottom Section: Bank Details & Authorized Signatures -->
       <div>
         <!-- Amount in Words Bar -->
-        <div class="p-1 px-2 border-t border-b border-slate-900 bg-slate-50 flex items-baseline justify-between text-[9.5px]">
+        <div class="p-1 px-2 border-t border-b border-slate-900 bg-slate-50 flex items-baseline justify-between text-[9px]">
           <div>
-            <span class="font-bold uppercase text-[8px] text-slate-500 block">Amount Chargeable (in words)</span>
+            <span class="font-bold uppercase text-[7.5px] text-slate-500 block">Amount Chargeable (in words)</span>
             <span class="font-bold text-slate-900">${wordsAmount}</span>
           </div>
-          <span class="font-mono font-bold text-slate-600 text-[8.5px]">E. & O.E.</span>
+          <span class="font-mono font-bold text-slate-600 text-[8px]">E. & O.E.</span>
         </div>
 
         <!-- Bank Details & Authorized Signatory Grid -->
-        <div class="grid grid-cols-12 divide-x divide-slate-900 text-[10px]">
+        <div class="grid grid-cols-12 divide-x divide-slate-900 text-[9.5px]">
           <!-- Left: Banking Particulars & Terms (Col 7 / 12) -->
-          <div class="col-span-7 p-2 space-y-1 bg-white">
+          <div class="col-span-7 p-1.5 space-y-1 bg-white">
             ${comp.bankDetails?.accountNumber ? `
               <div class="border border-slate-300 bg-slate-50/80 p-1.5 rounded">
-                <span class="font-black uppercase text-[8px] text-slate-900 block mb-0.5 underline">Company's Bank Details</span>
-                <div class="grid grid-cols-2 gap-x-2 gap-y-0.5 text-[9px]">
+                <span class="font-black uppercase text-[7.5px] text-slate-900 block mb-0.5 underline">Company's Bank Details</span>
+                <div class="grid grid-cols-2 gap-x-2 gap-y-0.5 text-[8.5px]">
                   <p><span class="font-bold text-slate-700">Bank:</span> ${comp.bankDetails.bankName}</p>
                   <p><span class="font-bold text-slate-700">A/c No:</span> <span class="font-mono font-bold text-slate-900">${comp.bankDetails.accountNumber}</span></p>
                   <p><span class="font-bold text-slate-700">IFSC:</span> <span class="font-mono font-bold text-slate-900">${comp.bankDetails.ifscCode}</span></p>
@@ -5315,28 +5308,28 @@ function renderTallyFormatHTML(doc, type, cust, comp) {
               </div>
             ` : ''}
 
-            <div class="space-y-0.5 text-[8px] text-slate-600 leading-tight">
-              <span class="font-bold uppercase text-[7.5px] text-slate-800 block underline">Declaration / Terms:</span>
-              <p>1. We declare that this document shows the actual price of the goods described and that all particulars are true and correct.</p>
+            <div class="space-y-0.5 text-[7.5px] text-slate-600 leading-tight">
+              <span class="font-bold uppercase text-[7px] text-slate-800 block underline">Declaration / Terms:</span>
+              <p>1. We declare that this document shows the actual price of the goods described.</p>
               ${(doc.terms || []).map((t, i) => `<p>${i + 2}. ${t}</p>`).join('')}
             </div>
           </div>
 
           <!-- Right: Company Stamp & Signature (Col 5 / 12) -->
-          <div class="col-span-5 p-2 flex flex-col items-center justify-between text-center bg-slate-50/30">
+          <div class="col-span-5 p-1.5 flex flex-col items-center justify-between text-center bg-slate-50/30">
             <div class="w-full text-center">
-              <span class="text-[8px] font-bold text-slate-500 uppercase tracking-wider block">for</span>
-              <h4 class="font-black text-xs uppercase tracking-tight text-slate-900 leading-tight">${comp.name}</h4>
+              <span class="text-[7.5px] font-bold text-slate-500 uppercase tracking-wider block">for</span>
+              <h4 class="font-black text-[11px] uppercase tracking-tight text-slate-900 leading-tight">${comp.name}</h4>
             </div>
 
-            <div class="my-1 flex items-center justify-center">
+            <div class="my-0.5 flex items-center justify-center">
               ${comp.stampUrl ? `
-                <img src="${comp.stampUrl}" class="max-h-12 max-w-[130px] object-contain opacity-95 filter drop-shadow-sm" alt="Company Stamp" />
-              ` : `<div class="h-10 flex items-center justify-center text-slate-300 text-[9px] italic">[Company Stamp]</div>`}
+                <img src="${comp.stampUrl}" class="max-h-9 max-w-[110px] object-contain opacity-95 filter drop-shadow-sm" alt="Company Stamp" />
+              ` : `<div class="h-6 flex items-center justify-center text-slate-300 text-[8px] italic">[Company Stamp]</div>`}
             </div>
 
             <div class="w-full border-t border-slate-900 pt-0.5 text-center">
-              <span class="font-black text-[8.5px] uppercase text-slate-900 tracking-wider block">Authorized Signatory</span>
+              <span class="font-black text-[8px] uppercase text-slate-900 tracking-wider block">Authorized Signatory</span>
             </div>
           </div>
         </div>
@@ -5370,96 +5363,96 @@ function renderBusyFormatHTML(doc, type, cust, comp) {
 
   const wordsAmount = numberToWordsINR(doc.grandTotal);
   const itemsCount = (doc.items || []).length;
-  const spacerHeight = Math.max(10, Math.min(45, 100 - (itemsCount * 25)));
+  const spacerHeight = Math.max(6, Math.min(25, 40 - (itemsCount * 10)));
 
   return `
-    <div class="border border-slate-400 font-sans text-xs text-slate-900 bg-white shadow-sm flex flex-col justify-between w-full h-full max-h-full box-border select-text overflow-hidden">
+    <div class="border border-slate-400 font-sans text-xs text-slate-900 bg-white shadow-sm flex flex-col justify-between w-full box-border select-text">
       <!-- Top Section -->
       <div>
         <!-- Busy Top Header Banner -->
-        <div class="p-2.5 bg-[#132f4c] text-white flex items-center justify-between">
-          <div class="flex items-start gap-3">
-            ${comp.logoUrl ? `<div class="w-14 h-14 rounded bg-white p-0.5 shrink-0 flex items-center justify-center overflow-hidden"><img src="${comp.logoUrl}" class="max-w-full max-h-full object-contain" /></div>` : ''}
+        <div class="p-2 bg-[#132f4c] text-white flex items-center justify-between">
+          <div class="flex items-start gap-2.5">
+            ${comp.logoUrl ? `<div class="w-12 h-12 rounded bg-white p-0.5 shrink-0 flex items-center justify-center overflow-hidden"><img src="${comp.logoUrl}" class="max-w-full max-h-full object-contain" /></div>` : ''}
             <div class="space-y-0.5">
-              <h1 class="text-sm font-black tracking-wide uppercase">${comp.name}</h1>
-              <p class="text-[10px] text-slate-200 leading-snug">${comp.address || ''}</p>
-              <p class="text-[9.5px] text-slate-300 font-mono pt-0.5">GSTIN/UIN: <span class="font-bold text-white">${comp.gstin || 'Unregistered'}</span> | State: ${cust?.state || 'Maharashtra'} (27)</p>
-              <p class="text-[9.5px] text-slate-300 font-mono">Contact: ${comp.phone || '-'} | Email: ${comp.email || '-'}</p>
+              <h1 class="text-xs font-black tracking-wide uppercase">${comp.name}</h1>
+              <p class="text-[9.5px] text-slate-200 leading-snug">${comp.address || ''}</p>
+              <p class="text-[9px] text-slate-300 font-mono pt-0.5">GSTIN/UIN: <span class="font-bold text-white">${comp.gstin || 'Unregistered'}</span> | State: ${cust?.state || 'Maharashtra'} (27)</p>
+              <p class="text-[9px] text-slate-300 font-mono">Contact: ${comp.phone || '-'} | Email: ${comp.email || '-'}</p>
             </div>
           </div>
           <div class="text-right">
-            <span class="inline-block font-black text-xs uppercase px-2 py-0.5 bg-blue-500/30 text-blue-200 border border-blue-400/40 rounded">${docTitle}</span>
+            <span class="inline-block font-black text-[11px] uppercase px-2 py-0.5 bg-blue-500/30 text-blue-200 border border-blue-400/40 rounded">${docTitle}</span>
             <div class="font-mono font-bold text-xs mt-0.5 text-white">${docNumber}</div>
           </div>
         </div>
 
         <!-- Ledger & Commercial Details -->
-        <div class="grid grid-cols-2 divide-x divide-slate-300 border-b border-slate-300 text-[10.5px]">
+        <div class="grid grid-cols-2 divide-x divide-slate-300 border-b border-slate-300 text-[10px]">
           <div class="divide-y divide-slate-200">
-            <div class="p-2 bg-slate-50 space-y-0.5">
-              <span class="text-[8.5px] font-bold text-slate-500 uppercase tracking-wider block">Billed To (Buyer)</span>
+            <div class="p-1.5 bg-slate-50 space-y-0.5">
+              <span class="text-[8px] font-bold text-slate-500 uppercase tracking-wider block">Billed To (Buyer)</span>
               <h3 class="font-black text-xs text-blue-700 uppercase tracking-wide">${doc.customerName || cust?.name || 'Direct Customer'}</h3>
-              <p class="text-slate-600 text-[9.5px]">${doc.billingAddress || cust?.billingAddress || cust?.address || ''} ${(doc.billingCity || cust?.city) ? `, ${doc.billingCity || cust.city}` : ''}</p>
-              <p class="text-[9px]"><span class="font-semibold">GSTIN:</span> <span class="font-mono font-bold text-blue-700">${doc.billingGstin || cust?.gstin || 'Unregistered'}</span> | Phone: ${doc.billingPhone || cust?.phone || '-'}</p>
+              <p class="text-slate-600 text-[9px]">${doc.billingAddress || cust?.billingAddress || cust?.address || ''} ${(doc.billingCity || cust?.city) ? `, ${doc.billingCity || cust.city}` : ''}</p>
+              <p class="text-[8.5px]"><span class="font-semibold">GSTIN:</span> <span class="font-mono font-bold text-blue-700">${doc.billingGstin || cust?.gstin || 'Unregistered'}</span> | Phone: ${doc.billingPhone || cust?.phone || '-'}</p>
             </div>
-            <div class="p-2 bg-white space-y-0.5">
-              <span class="text-[8.5px] font-bold text-slate-500 uppercase tracking-wider block">Shipped To (Consignee)</span>
+            <div class="p-1.5 bg-white space-y-0.5">
+              <span class="text-[8px] font-bold text-slate-500 uppercase tracking-wider block">Shipped To (Consignee)</span>
               <h4 class="font-bold text-xs text-slate-900 uppercase tracking-wide">${(doc.shipToDifferent && doc.shippingName) ? doc.shippingName : (doc.shippingName || doc.customerName || cust?.name || 'Direct Customer')}</h4>
-              <p class="text-slate-600 text-[9.5px]">${(doc.shipToDifferent && doc.shippingAddress) ? doc.shippingAddress : (doc.shippingAddress || doc.billingAddress || cust?.shippingAddress || cust?.billingAddress || cust?.address || '')} ${((doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city))) ? `, ${doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city)}` : ''}</p>
+              <p class="text-slate-600 text-[9px]">${(doc.shipToDifferent && doc.shippingAddress) ? doc.shippingAddress : (doc.shippingAddress || doc.billingAddress || cust?.shippingAddress || cust?.billingAddress || cust?.address || '')} ${((doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city))) ? `, ${doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city)}` : ''}</p>
             </div>
           </div>
-          <div class="p-2 grid grid-cols-2 gap-x-2 gap-y-0.5 text-[10px]">
-            <div><span class="text-[8.5px] uppercase font-bold text-slate-500 block">Voucher Date</span><span class="font-mono font-semibold">${doc.date}</span></div>
-            <div><span class="text-[8.5px] uppercase font-bold text-slate-500 block">${type === 'invoice' ? 'Due Date' : 'Validity / Delivery'}</span><span class="font-mono font-semibold">${doc.dueDate || doc.validity || '15 Days'}</span></div>
-            <div><span class="text-[8.5px] uppercase font-bold text-slate-500 block">Delivery / Vehicle</span><span class="font-semibold text-slate-800">${doc.vehicleNo || doc.deliveryTerms || 'Door Delivery'}</span></div>
-            <div><span class="text-[8.5px] uppercase font-bold text-slate-500 block">Payment Terms</span><span class="font-semibold text-slate-800">${doc.paymentTerms || (type === 'invoice' ? 'Net 30 Days' : 'Against PI')}</span></div>
+          <div class="p-1.5 grid grid-cols-2 gap-x-2 gap-y-0.5 text-[9.5px]">
+            <div><span class="text-[8px] uppercase font-bold text-slate-500 block">Voucher Date</span><span class="font-mono font-semibold">${doc.date}</span></div>
+            <div><span class="text-[8px] uppercase font-bold text-slate-500 block">${type === 'invoice' ? 'Due Date' : 'Validity / Delivery'}</span><span class="font-mono font-semibold">${doc.dueDate || doc.validity || '15 Days'}</span></div>
+            <div><span class="text-[8px] uppercase font-bold text-slate-500 block">Delivery / Vehicle</span><span class="font-semibold text-slate-800">${doc.vehicleNo || doc.deliveryTerms || 'Door Delivery'}</span></div>
+            <div><span class="text-[8px] uppercase font-bold text-slate-500 block">Payment Terms</span><span class="font-semibold text-slate-800">${doc.paymentTerms || (type === 'invoice' ? 'Net 30 Days' : 'Against PI')}</span></div>
             ${(doc.originalInvoiceNo || doc.ewayBillNo) ? `
-              <div class="col-span-2 border-t border-slate-200 pt-0.5"><span class="text-[8.5px] uppercase font-bold text-slate-500 block">Ref / E-Way Bill</span><span class="font-mono font-semibold text-blue-700">${doc.originalInvoiceNo ? `Orig Inv: ${doc.originalInvoiceNo}` : ''} ${doc.ewayBillNo ? `E-Way: ${doc.ewayBillNo}` : ''}</span></div>
+              <div class="col-span-2 border-t border-slate-200 pt-0.5"><span class="text-[8px] uppercase font-bold text-slate-500 block">Ref / E-Way Bill</span><span class="font-mono font-semibold text-blue-700">${doc.originalInvoiceNo ? `Orig Inv: ${doc.originalInvoiceNo}` : ''} ${doc.ewayBillNo ? `E-Way: ${doc.ewayBillNo}` : ''}</span></div>
             ` : `
-              <div class="col-span-2 border-t border-slate-200 pt-0.5"><span class="text-[8.5px] uppercase font-bold text-slate-500 block">Taxes</span><span class="font-semibold text-slate-800">${doc.taxTerms || 'Extra as applicable'}</span></div>
+              <div class="col-span-2 border-t border-slate-200 pt-0.5"><span class="text-[8px] uppercase font-bold text-slate-500 block">Taxes</span><span class="font-semibold text-slate-800">${doc.taxTerms || 'Extra as applicable'}</span></div>
             `}
           </div>
         </div>
       </div>
 
-      <!-- Middle Section: Items Grid with Full Vertical Stretch -->
-      <div class="flex-1 flex flex-col min-h-0 overflow-hidden">
-        <table class="w-full h-full text-left text-xs border-collapse">
+      <!-- Middle Section: Items Grid -->
+      <div class="flex-1 flex flex-col min-h-0">
+        <table class="w-full text-left text-xs border-collapse">
           <thead>
-            <tr class="bg-slate-100 border-b border-slate-300 text-slate-700 font-bold uppercase text-[8.5px] divide-x divide-slate-300">
-              <th class="py-1 px-1.5 text-center w-7">#</th>
-              <th class="py-1 px-2.5">Item Description Particulars</th>
-              <th class="py-1 px-1.5 text-center w-16">HSN</th>
-              <th class="py-1 px-1.5 text-center w-14">Qty</th>
-              <th class="py-1 px-2 text-right w-20">Price (${cur()})</th>
-              <th class="py-1 px-1.5 text-center w-20">Lead Time</th>
-              <th class="py-1 px-1 text-center w-12">GST%</th>
-              <th class="py-1 px-2.5 text-right w-24">Amount (${cur()})</th>
+            <tr class="bg-slate-100 border-b border-slate-300 text-slate-700 font-bold uppercase text-[8px] divide-x divide-slate-300">
+              <th class="py-0.5 px-1.5 text-center w-7">#</th>
+              <th class="py-0.5 px-2">Item Description Particulars</th>
+              <th class="py-0.5 px-1.5 text-center w-16">HSN</th>
+              <th class="py-0.5 px-1.5 text-center w-14">Qty</th>
+              <th class="py-0.5 px-2 text-right w-20">Price (${cur()})</th>
+              <th class="py-0.5 px-1.5 text-center w-20">Lead Time</th>
+              <th class="py-0.5 px-1 text-center w-12">GST%</th>
+              <th class="py-0.5 px-2.5 text-right w-24">Amount (${cur()})</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-200">
             ${(doc.items || []).map((it, idx) => `
-              <tr class="divide-x divide-slate-200 hover:bg-slate-50 text-[10px]">
-                <td class="py-1 px-1.5 text-center font-mono text-slate-500 align-top">${idx + 1}</td>
-                <td class="py-1 px-2.5 align-top">
-                  <div class="flex items-start gap-2">
+              <tr class="divide-x divide-slate-200 hover:bg-slate-50 text-[9.5px]">
+                <td class="py-0.5 px-1.5 text-center font-mono text-slate-500 align-top">${idx + 1}</td>
+                <td class="py-0.5 px-2 align-top">
+                  <div class="flex items-start gap-1.5">
                     ${(type === 'quote' && it.imageUrl) ? `
-                      <div class="w-12 h-12 rounded bg-white border border-slate-300 p-0.5 shrink-0 flex items-center justify-center overflow-hidden shadow-sm mt-0.5">
+                      <div class="w-9 h-9 rounded bg-white border border-slate-300 p-0.5 shrink-0 flex items-center justify-center overflow-hidden shadow-sm mt-0.5">
                         <img src="${it.imageUrl}" class="max-w-full max-h-full object-contain" />
                       </div>
                     ` : ''}
                     <div class="flex-1 min-w-0">
-                      <div class="font-bold text-slate-900 text-[10px] uppercase leading-snug">${it.name}</div>
-                      ${it.description ? `<p class="text-[8.5px] text-slate-600 whitespace-pre-wrap mt-0.5 leading-snug">${escapeHtml(it.description)}</p>` : ''}
+                      <div class="font-bold text-slate-900 text-[10px] uppercase leading-tight">${it.name}</div>
+                      ${it.description ? `<p class="text-[8px] text-slate-600 whitespace-pre-wrap mt-0.5 leading-tight">${escapeHtml(it.description)}</p>` : ''}
                     </div>
                   </div>
                 </td>
-                <td class="py-1 px-1.5 text-center font-mono align-top text-[9px]">${it.hsnCode || '-'}</td>
-                <td class="py-1 px-1.5 text-center font-mono font-bold align-top text-[9.5px]">${it.quantity} ${it.unit || ''}</td>
-                <td class="py-1 px-2 text-right font-mono align-top text-[9.5px]">${fmt(it.price)}</td>
-                <td class="py-1 px-1.5 text-center font-mono text-[8.5px] align-top font-semibold text-slate-700">${it.leadTime || '1-2 Days'}</td>
-                <td class="py-1 px-1 text-center font-mono font-semibold align-top text-blue-700 text-[9px]">${it.taxRate || 0}%</td>
-                <td class="py-1 px-2.5 text-right font-mono font-bold text-slate-900 align-top text-[9.5px]">${fmt(it.total)}</td>
+                <td class="py-0.5 px-1.5 text-center font-mono align-top text-[8.5px]">${it.hsnCode || '-'}</td>
+                <td class="py-0.5 px-1.5 text-center font-mono font-bold align-top text-[9px]">${it.quantity} ${it.unit || ''}</td>
+                <td class="py-0.5 px-2 text-right font-mono align-top text-[9px]">${fmt(it.price)}</td>
+                <td class="py-0.5 px-1.5 text-center font-mono text-[8px] align-top font-semibold text-slate-700">${it.leadTime || '1-2 Days'}</td>
+                <td class="py-0.5 px-1 text-center font-mono font-semibold align-top text-blue-700 text-[8.5px]">${it.taxRate || 0}%</td>
+                <td class="py-0.5 px-2.5 text-right font-mono font-bold text-slate-900 align-top text-[9px]">${fmt(it.total)}</td>
               </tr>
             `).join('')}
 
@@ -5480,36 +5473,36 @@ function renderBusyFormatHTML(doc, type, cust, comp) {
 
       <!-- Bottom Ledger Summary Grid -->
       <div>
-        <div class="grid grid-cols-2 divide-x divide-slate-300 border-t border-slate-300 text-[10px]">
-          <div class="p-2 space-y-1.5">
+        <div class="grid grid-cols-2 divide-x divide-slate-300 border-t border-slate-300 text-[9.5px]">
+          <div class="p-1.5 space-y-1">
             ${comp.bankDetails?.accountNumber ? `
               <div>
-                <span class="font-bold uppercase text-[8.5px] text-slate-500 block">Bank Account for Settlement</span>
-                <p class="font-semibold text-slate-800 text-[9.5px]">${comp.bankDetails.bankName} • A/C: ${comp.bankDetails.accountNumber}</p>
-                <p class="text-slate-600 font-mono text-[9px]">IFSC: ${comp.bankDetails.ifscCode} ${comp.bankDetails.upiId ? `• UPI: ${comp.bankDetails.upiId}` : ''}</p>
+                <span class="font-bold uppercase text-[7.5px] text-slate-500 block">Bank Account for Settlement</span>
+                <p class="font-semibold text-slate-800 text-[9px]">${comp.bankDetails.bankName} • A/C: ${comp.bankDetails.accountNumber}</p>
+                <p class="text-slate-600 font-mono text-[8.5px]">IFSC: ${comp.bankDetails.ifscCode} ${comp.bankDetails.upiId ? `• UPI: ${comp.bankDetails.upiId}` : ''}</p>
               </div>
             ` : ''}
             <div>
-              <span class="font-bold uppercase text-[8.5px] text-slate-500 block">Amount in Words</span>
-              <p class="font-bold text-slate-900 text-[9.5px]">${wordsAmount}</p>
+              <span class="font-bold uppercase text-[7.5px] text-slate-500 block">Amount in Words</span>
+              <p class="font-bold text-slate-900 text-[9px]">${wordsAmount}</p>
             </div>
           </div>
 
-          <div class="p-2 space-y-0.5 bg-slate-50 text-right font-mono">
-            <div class="flex justify-between text-slate-600 text-[9.5px]"><span>Taxable Subtotal:</span><span>${cur()}${fmt(doc.taxableAmount || doc.subtotal)}</span></div>
-            <div class="flex justify-between text-blue-700 text-[9.5px]"><span>Total GST:</span><span>+${cur()}${fmt(doc.totalTax)}</span></div>
-            <div class="flex justify-between font-black text-xs text-slate-900 pt-0.5 border-t border-slate-300">
+          <div class="p-1.5 space-y-0.5 bg-slate-50 text-right font-mono">
+            <div class="flex justify-between text-slate-600 text-[9px]"><span>Taxable Subtotal:</span><span>${cur()}${fmt(doc.taxableAmount || doc.subtotal)}</span></div>
+            <div class="flex justify-between text-blue-700 text-[9px]"><span>Total GST:</span><span>+${cur()}${fmt(doc.totalTax)}</span></div>
+            <div class="flex justify-between font-black text-[11px] text-slate-900 pt-0.5 border-t border-slate-300">
               <span>Grand Total:</span><span>${cur()}${fmt(doc.grandTotal)}</span>
             </div>
             ${type === 'invoice' ? `
-              <div class="flex justify-between text-blue-700 font-semibold pt-0.5 text-[9.5px]"><span>Paid Amount:</span><span>${cur()}${fmt(doc.paidAmount)}</span></div>
-              <div class="flex justify-between text-amber-700 font-black text-[9.5px]"><span>Balance Due:</span><span>${cur()}${fmt(doc.balanceDue)}</span></div>
+              <div class="flex justify-between text-blue-700 font-semibold pt-0.5 text-[9px]"><span>Paid Amount:</span><span>${cur()}${fmt(doc.paidAmount)}</span></div>
+              <div class="flex justify-between text-amber-700 font-black text-[9px]"><span>Balance Due:</span><span>${cur()}${fmt(doc.balanceDue)}</span></div>
             ` : ''}
-            <div class="pt-2 flex flex-col items-center text-center w-40 ml-auto">
-              <span class="text-[8.5px] font-bold text-slate-500 uppercase tracking-wider block">for ${comp.name}</span>
-              ${comp.stampUrl ? `<div class="max-h-12 max-w-[120px] my-1 flex items-center justify-center"><img src="${comp.stampUrl}" class="max-w-full max-h-full object-contain opacity-90" alt="Stamp" /></div>` : `<div class="h-6"></div>`}
+            <div class="pt-1 flex flex-col items-center text-center w-36 ml-auto">
+              <span class="text-[7.5px] font-bold text-slate-500 uppercase tracking-wider block">for ${comp.name}</span>
+              ${comp.stampUrl ? `<div class="max-h-9 max-w-[110px] my-0.5 flex items-center justify-center"><img src="${comp.stampUrl}" class="max-w-full max-h-full object-contain opacity-90" alt="Stamp" /></div>` : `<div class="h-5"></div>`}
               <div class="w-full border-t border-slate-400 pt-0.5 text-center">
-                <span class="text-[9px] font-bold uppercase text-slate-700 tracking-wider">Authorized Signatory</span>
+                <span class="text-[8px] font-bold uppercase text-slate-700 tracking-wider">Authorized Signatory</span>
               </div>
             </div>
           </div>
@@ -5543,30 +5536,30 @@ function renderModernFormatHTML(doc, type, cust, comp) {
   }
 
   const itemsCount = (doc.items || []).length;
-  const spacerHeight = Math.max(10, Math.min(40, 100 - (itemsCount * 25)));
+  const spacerHeight = Math.max(6, Math.min(25, 40 - (itemsCount * 10)));
 
   return `
-    <div class="bg-white p-4 rounded-xl border border-slate-200 font-sans text-xs flex flex-col justify-between w-full space-y-4 box-border select-text h-full max-h-full overflow-hidden">
+    <div class="bg-white p-3 rounded-xl border border-slate-200 font-sans text-xs flex flex-col justify-between w-full space-y-2.5 box-border select-text">
       <!-- Top Section -->
-      <div class="space-y-4">
-        <div class="flex justify-between items-start pb-4 border-b border-slate-200">
-          <div class="flex items-start gap-3">
-            <div class="w-16 h-16 rounded-xl bg-white border border-slate-200 flex items-center justify-center overflow-hidden shrink-0 shadow-sm p-1">
-              ${comp.logoUrl ? `<img src="${comp.logoUrl}" class="max-w-full max-h-full object-contain" />` : `<i data-lucide="building" class="w-7 h-7 text-blue-600"></i>`}
+      <div class="space-y-2.5">
+        <div class="flex justify-between items-start pb-2.5 border-b border-slate-200">
+          <div class="flex items-start gap-2.5">
+            <div class="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center overflow-hidden shrink-0 shadow-sm p-0.5">
+              ${comp.logoUrl ? `<img src="${comp.logoUrl}" class="max-w-full max-h-full object-contain" />` : `<i data-lucide="building" class="w-6 h-6 text-blue-600"></i>`}
             </div>
             <div class="space-y-0.5">
-              <h2 class="text-base font-black text-slate-900 tracking-tight">${comp.name}</h2>
-              <p class="text-[10.5px] text-slate-600 leading-snug max-w-md">${comp.address || ''}</p>
-              <p class="text-[10px] font-mono font-bold text-slate-800 pt-0.5">GSTIN/UIN: ${comp.gstin || 'Unregistered'} | State: ${cust?.state || 'Maharashtra'} (27)</p>
-              <p class="text-[10px] text-slate-500">Contact: ${comp.phone || '-'} | Email: ${comp.email || '-'}</p>
+              <h2 class="text-sm font-black text-slate-900 tracking-tight">${comp.name}</h2>
+              <p class="text-[9.5px] text-slate-600 leading-snug max-w-md">${comp.address || ''}</p>
+              <p class="text-[9px] font-mono font-bold text-slate-800 pt-0.5">GSTIN/UIN: ${comp.gstin || 'Unregistered'} | State: ${cust?.state || 'Maharashtra'} (27)</p>
+              <p class="text-[9px] text-slate-500">Contact: ${comp.phone || '-'} | Email: ${comp.email || '-'}</p>
             </div>
           </div>
           <div class="text-right space-y-0.5">
-            <span class="inline-block font-black text-lg tracking-wider text-blue-600">${docTitle}</span>
+            <span class="inline-block font-black text-base tracking-wider text-blue-600">${docTitle}</span>
             <div class="text-xs font-mono font-bold text-slate-900 mt-0.5">${docNumber}</div>
-            <div class="text-[10.5px] text-slate-500">Date: <span class="font-mono text-slate-800">${doc.date}</span></div>
-            <div class="text-[10.5px] text-slate-500">${type === 'invoice' ? 'Due Date:' : 'Validity / Delivery:'} <span class="font-mono text-slate-800">${doc.dueDate || doc.validity || '15 Days'}</span></div>
-            <div class="flex items-center justify-end gap-1.5 flex-wrap pt-0.5 text-[9.5px]">
+            <div class="text-[9.5px] text-slate-500">Date: <span class="font-mono text-slate-800">${doc.date}</span></div>
+            <div class="text-[9.5px] text-slate-500">${type === 'invoice' ? 'Due Date:' : 'Validity / Delivery:'} <span class="font-mono text-slate-800">${doc.dueDate || doc.validity || '15 Days'}</span></div>
+            <div class="flex items-center justify-end gap-1.5 flex-wrap pt-0.5 text-[8.5px]">
               <span class="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700"><strong>Delivery:</strong> ${doc.deliveryTerms || 'Door Delivery'}</span>
               <span class="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700"><strong>Payment:</strong> ${doc.paymentTerms || (type === 'invoice' ? 'Net 30 Days' : 'Against PI')}</span>
               <span class="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700"><strong>Taxes:</strong> ${doc.taxTerms || 'Extra as applicable'}</span>
@@ -5574,95 +5567,95 @@ function renderModernFormatHTML(doc, type, cust, comp) {
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-            <span class="text-[9px] font-black text-slate-500 uppercase tracking-wider">Billed To (Buyer)</span>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+          <div class="p-2 bg-slate-50 rounded-lg border border-slate-200">
+            <span class="text-[8px] font-black text-slate-500 uppercase tracking-wider">Billed To (Buyer)</span>
             <h4 class="font-black text-blue-600 text-xs mt-0.5 uppercase tracking-wide">${doc.customerName || cust?.name || 'Direct Customer'}</h4>
-            <p class="text-[10.5px] text-slate-600 mt-0.5">${doc.billingAddress || cust?.billingAddress || cust?.address || ''}</p>
-            <p class="text-[10px] text-slate-500">${(doc.billingCity || cust?.city) ? `${doc.billingCity || cust.city}, ${doc.billingState || cust?.state || ''} ${doc.billingPincode || cust?.pincode || ''}` : ''}</p>
-            <p class="text-[10px] text-slate-500 mt-0.5"><span class="font-bold text-slate-700">GSTIN:</span> <span class="font-mono font-bold text-slate-900">${doc.billingGstin || cust?.gstin || 'Unregistered'}</span> | Phone: ${doc.billingPhone || cust?.phone || '-'}</p>
+            <p class="text-[9.5px] text-slate-600 mt-0.5">${doc.billingAddress || cust?.billingAddress || cust?.address || ''}</p>
+            <p class="text-[9px] text-slate-500">${(doc.billingCity || cust?.city) ? `${doc.billingCity || cust.city}, ${doc.billingState || cust?.state || ''} ${doc.billingPincode || cust?.pincode || ''}` : ''}</p>
+            <p class="text-[9px] text-slate-500 mt-0.5"><span class="font-bold text-slate-700">GSTIN:</span> <span class="font-mono font-bold text-slate-900">${doc.billingGstin || cust?.gstin || 'Unregistered'}</span> | Phone: ${doc.billingPhone || cust?.phone || '-'}</p>
           </div>
-          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-            <span class="text-[9px] font-black text-slate-500 uppercase tracking-wider">Shipped To (Consignee / Site)</span>
+          <div class="p-2 bg-slate-50 rounded-lg border border-slate-200">
+            <span class="text-[8px] font-black text-slate-500 uppercase tracking-wider">Shipped To (Consignee / Site)</span>
             <h4 class="font-black text-slate-900 text-xs mt-0.5 uppercase tracking-wide">${(doc.shipToDifferent && doc.shippingName) ? doc.shippingName : (doc.shippingName || doc.customerName || cust?.name || 'Direct Customer')}</h4>
-            <p class="text-[10.5px] text-slate-600 mt-0.5">${(doc.shipToDifferent && doc.shippingAddress) ? doc.shippingAddress : (doc.shippingAddress || doc.billingAddress || cust?.shippingAddress || cust?.billingAddress || cust?.address || '')}</p>
-            <p class="text-[10px] text-slate-500">${((doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city))) ? `${doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust.city)}, ${doc.shipToDifferent ? doc.shippingState : (doc.shippingState || doc.billingState || cust?.shippingState || cust?.state || '')} ${doc.shipToDifferent ? doc.shippingPincode : (doc.shippingPincode || doc.billingPincode || cust?.shippingPincode || cust?.pincode || '')}` : ''}</p>
-            <p class="text-[10px] text-slate-500 mt-0.5"><span class="font-bold text-slate-700">GSTIN:</span> <span class="font-mono font-bold text-slate-900">${(doc.shipToDifferent && doc.shippingGstin) ? doc.shippingGstin : (doc.shippingGstin || doc.billingGstin || cust?.shippingGstin || cust?.gstin || 'Unregistered')}</span></p>
+            <p class="text-[9.5px] text-slate-600 mt-0.5">${(doc.shipToDifferent && doc.shippingAddress) ? doc.shippingAddress : (doc.shippingAddress || doc.billingAddress || cust?.shippingAddress || cust?.billingAddress || cust?.address || '')}</p>
+            <p class="text-[9px] text-slate-500">${((doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust?.city))) ? `${doc.shipToDifferent ? doc.shippingCity : (doc.shippingCity || doc.billingCity || cust?.shippingCity || cust.city)}, ${doc.shipToDifferent ? doc.shippingState : (doc.shippingState || doc.billingState || cust?.shippingState || cust?.state || '')} ${doc.shipToDifferent ? doc.shippingPincode : (doc.shippingPincode || doc.billingPincode || cust?.shippingPincode || cust?.pincode || '')}` : ''}</p>
+            <p class="text-[9px] text-slate-500 mt-0.5"><span class="font-bold text-slate-700">GSTIN:</span> <span class="font-mono font-bold text-slate-900">${(doc.shipToDifferent && doc.shippingGstin) ? doc.shippingGstin : (doc.shippingGstin || doc.billingGstin || cust?.shippingGstin || cust?.gstin || 'Unregistered')}</span></p>
           </div>
         </div>
       </div>
 
-      <!-- Middle Section: Items Table with Full Vertical Stretch -->
-      <div class="flex-1 flex flex-col min-h-0 overflow-hidden border border-slate-200 rounded-xl">
-        <table class="w-full h-full text-left text-xs border-collapse">
+      <!-- Middle Section: Items Table -->
+      <div class="flex-1 flex flex-col min-h-0 border border-slate-200 rounded-lg overflow-hidden">
+        <table class="w-full text-left text-xs border-collapse">
           <thead>
-            <tr class="border-b border-slate-200 bg-slate-50 text-slate-600 font-bold uppercase text-[8.5px]">
-              <th class="py-1.5 px-2 w-7 text-center">#</th>
-              <th class="py-1.5 px-2.5">Item Description & Specifications</th>
-              <th class="py-1.5 px-1.5 text-center w-16">HSN/SAC</th>
-              <th class="py-1.5 px-1.5 text-center w-14">Qty</th>
-              <th class="py-1.5 px-2 text-right w-18">Unit Price</th>
-              <th class="py-1.5 px-1.5 text-center w-18">Lead Time</th>
-              <th class="py-1.5 px-1 text-center w-12">GST%</th>
-              <th class="py-1.5 px-2.5 text-right w-22">Total</th>
+            <tr class="border-b border-slate-200 bg-slate-50 text-slate-600 font-bold uppercase text-[8px]">
+              <th class="py-1 px-1.5 w-7 text-center">#</th>
+              <th class="py-1 px-2">Item Description & Specifications</th>
+              <th class="py-1 px-1.5 text-center w-16">HSN/SAC</th>
+              <th class="py-1 px-1.5 text-center w-14">Qty</th>
+              <th class="py-1 px-2 text-right w-18">Unit Price</th>
+              <th class="py-1 px-1.5 text-center w-18">Lead Time</th>
+              <th class="py-1 px-1 text-center w-12">GST%</th>
+              <th class="py-1 px-2 text-right w-22">Total</th>
             </tr>
           </thead>
-          <tbody class="divide-y border-slate-100 text-slate-700 text-[10px]">
+          <tbody class="divide-y border-slate-100 text-slate-700 text-[9.5px]">
             ${(doc.items || []).map((it, idx) => `
               <tr>
-                <td class="py-1.5 px-2 text-slate-400 font-mono text-center align-top">${idx + 1}</td>
-                <td class="py-1.5 px-2.5 align-top">
-                  <div class="flex items-start gap-2.5">
+                <td class="py-1 px-1.5 text-slate-400 font-mono text-center align-top">${idx + 1}</td>
+                <td class="py-1 px-2 align-top">
+                  <div class="flex items-start gap-2">
                     ${it.imageUrl ? `
-                      <div class="w-12 h-12 rounded-lg bg-white border border-slate-200 shadow-sm overflow-hidden flex items-center justify-center shrink-0 p-0.5 mt-0.5">
+                      <div class="w-9 h-9 rounded-lg bg-white border border-slate-200 shadow-sm overflow-hidden flex items-center justify-center shrink-0 p-0.5 mt-0.5">
                         <img src="${it.imageUrl}" class="max-w-full max-h-full object-contain" />
                       </div>
                     ` : ''}
                     <div class="flex-1 min-w-0">
-                      <div class="font-bold text-slate-900 text-[10.5px]">${it.name}</div>
-                      ${it.description ? `<div class="text-[9px] text-slate-600 mt-0.5 whitespace-pre-wrap break-words leading-relaxed">${escapeHtml(it.description)}</div>` : ''}
+                      <div class="font-bold text-slate-900 text-[10px]">${it.name}</div>
+                      ${it.description ? `<div class="text-[8.5px] text-slate-600 mt-0.5 whitespace-pre-wrap break-words leading-tight">${escapeHtml(it.description)}</div>` : ''}
                     </div>
                   </div>
                 </td>
-                <td class="py-1.5 px-1.5 text-center font-mono text-slate-500 font-semibold align-top text-[9.5px]">${it.hsnCode || '-'}</td>
-                <td class="py-1.5 px-1.5 text-center font-mono font-medium align-top text-[10px]">${it.quantity} ${it.unit || ''}</td>
-                <td class="py-1.5 px-2 text-right font-mono font-semibold align-top text-[10px]">${cur()}${fmt(it.price)}</td>
-                <td class="py-1.5 px-1.5 text-center font-mono text-[9px] align-top font-medium text-slate-700">${it.leadTime || '1-2 Days'}</td>
-                <td class="py-1.5 px-1 text-center font-mono text-blue-600 font-semibold align-top text-[9.5px]">${it.taxRate || 0}%</td>
-                <td class="py-1.5 px-2.5 text-right font-mono font-bold text-slate-900 text-[10.5px] align-top">${cur()}${fmt(it.total)}</td>
+                <td class="py-1 px-1.5 text-center font-mono text-slate-500 font-semibold align-top text-[9px]">${it.hsnCode || '-'}</td>
+                <td class="py-1 px-1.5 text-center font-mono font-medium align-top text-[9.5px]">${it.quantity} ${it.unit || ''}</td>
+                <td class="py-1 px-2 text-right font-mono font-semibold align-top text-[9.5px]">${cur()}${fmt(it.price)}</td>
+                <td class="py-1 px-1.5 text-center font-mono text-[8.5px] align-top font-medium text-slate-700">${it.leadTime || '1-2 Days'}</td>
+                <td class="py-1 px-1 text-center font-mono text-blue-600 font-semibold align-top text-[9px]">${it.taxRate || 0}%</td>
+                <td class="py-1 px-2 text-right font-mono font-bold text-slate-900 text-[10px] align-top">${cur()}${fmt(it.total)}</td>
               </tr>
             `).join('')}
 
             <!-- Expansion Spacer Row -->
             <tr style="height: ${spacerHeight}px;">
+              <td class="py-0.5 px-1.5"></td>
               <td class="py-0.5 px-2"></td>
-              <td class="py-0.5 px-2.5"></td>
               <td class="py-0.5 px-1.5"></td>
               <td class="py-0.5 px-1.5"></td>
               <td class="py-0.5 px-2"></td>
               <td class="py-0.5 px-1.5"></td>
               <td class="py-0.5 px-1"></td>
-              <td class="py-0.5 px-2.5"></td>
+              <td class="py-0.5 px-2"></td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <!-- Bottom Section -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
-        <div class="space-y-2">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-0.5">
+        <div class="space-y-1.5">
           ${comp.bankDetails?.accountNumber ? `
-            <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-[10px] space-y-0.5">
-              <span class="text-[8.5px] font-bold text-slate-500 uppercase tracking-wider">Bank Details for Payment</span>
+            <div class="p-2 bg-slate-50 rounded-lg border border-slate-200 text-[9.5px] space-y-0.5">
+              <span class="text-[8px] font-bold text-slate-500 uppercase tracking-wider">Bank Details for Payment</span>
               <p class="font-bold text-slate-900">${comp.bankDetails.bankName}</p>
-              <p class="text-slate-600">A/C No: <span class="font-mono font-bold text-slate-900">${comp.bankDetails.accountNumber}</span> | IFSC: <span class="font-mono font-bold text-slate-900">${comp.bankDetails.ifscCode}</span></p>
-              ${comp.bankDetails.upiId ? `<p class="text-slate-600">UPI ID: <span class="font-mono font-bold text-blue-600">${comp.bankDetails.upiId}</span></p>` : ''}
+              <p class="text-slate-600">A/C: <span class="font-mono font-bold text-slate-900">${comp.bankDetails.accountNumber}</span> | IFSC: <span class="font-mono font-bold text-slate-900">${comp.bankDetails.ifscCode}</span></p>
+              ${comp.bankDetails.upiId ? `<p class="text-slate-600">UPI: <span class="font-mono font-bold text-blue-600">${comp.bankDetails.upiId}</span></p>` : ''}
             </div>
           ` : ''}
 
           ${doc.terms && doc.terms.length > 0 ? `
-            <div class="space-y-0.5 text-[9.5px]">
-              <span class="text-[8.5px] font-bold text-slate-400 uppercase tracking-wider">Terms & Conditions</span>
+            <div class="space-y-0.5 text-[8.5px]">
+              <span class="text-[7.5px] font-bold text-slate-400 uppercase tracking-wider">Terms & Conditions</span>
               <ul class="list-decimal pl-3 text-slate-500 space-y-0.5 leading-snug">
                 ${doc.terms.map(t => `<li>${t}</li>`).join('')}
               </ul>
@@ -5670,14 +5663,14 @@ function renderModernFormatHTML(doc, type, cust, comp) {
           ` : ''}
         </div>
 
-        <div class="space-y-2">
-          <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl space-y-1 text-[10.5px]">
+        <div class="space-y-1.5">
+          <div class="bg-slate-50 border border-slate-200 p-2 rounded-lg space-y-0.5 text-[9.5px]">
             <div class="flex justify-between text-slate-600"><span>Subtotal:</span><span class="font-mono font-semibold text-slate-900">${cur()}${fmt(doc.subtotal)}</span></div>
             <div class="flex justify-between text-slate-600"><span>Taxable Value:</span><span class="font-mono font-semibold text-slate-900">${cur()}${fmt(doc.taxableAmount || doc.subtotal)}</span></div>
             <div class="flex justify-between text-slate-600"><span>Total GST:</span><span class="font-mono font-semibold text-blue-600">+${cur()}${fmt(doc.totalTax)}</span></div>
-            <div class="pt-1 border-t border-slate-300 flex justify-between items-center text-xs font-bold text-slate-900">
+            <div class="pt-0.5 border-t border-slate-300 flex justify-between items-center text-xs font-bold text-slate-900">
               <span>Grand Total:</span>
-              <span class="text-sm font-mono text-blue-700">${cur()}${fmt(doc.grandTotal)}</span>
+              <span class="text-xs font-mono text-blue-700 font-black">${cur()}${fmt(doc.grandTotal)}</span>
             </div>
             ${type === 'invoice' ? `
               <div class="flex justify-between text-slate-600 pt-0.5"><span>Paid Amount:</span><span class="font-mono font-semibold text-blue-600">${cur()}${fmt(doc.paidAmount)}</span></div>
@@ -5685,16 +5678,16 @@ function renderModernFormatHTML(doc, type, cust, comp) {
             ` : ''}
           </div>
 
-          <div class="p-2 bg-slate-50 border border-slate-200 rounded-xl flex flex-col items-end">
-            <div class="flex flex-col items-center text-center w-40">
-              <span class="text-[8.5px] font-bold text-slate-400 uppercase tracking-wider block">for ${comp.name}</span>
+          <div class="p-1.5 bg-slate-50 border border-slate-200 rounded-lg flex flex-col items-end">
+            <div class="flex flex-col items-center text-center w-36">
+              <span class="text-[7.5px] font-bold text-slate-400 uppercase tracking-wider block">for ${comp.name}</span>
               ${comp.stampUrl ? `
-                <div class="max-h-12 max-w-[120px] my-1 flex items-center justify-center">
+                <div class="max-h-9 max-w-[110px] my-0.5 flex items-center justify-center">
                   <img src="${comp.stampUrl}" class="max-w-full max-h-full object-contain opacity-90" alt="Stamp" />
                 </div>
-              ` : `<div class="h-6"></div>`}
+              ` : `<div class="h-5"></div>`}
               <div class="w-full border-t border-slate-400 pt-0.5 text-center">
-                <span class="font-bold text-[9px] uppercase text-slate-800 tracking-wider">Authorized Signatory</span>
+                <span class="font-bold text-[8px] uppercase text-slate-800 tracking-wider">Authorized Signatory</span>
               </div>
             </div>
           </div>
@@ -5779,7 +5772,7 @@ function printCurrentPreview() {
     }
     @page {
       size: A4 portrait;
-      margin: 4mm 5mm !important;
+      margin: 3mm 4mm !important;
     }
     html, body {
       margin: 0 !important;
@@ -5788,8 +5781,6 @@ function printCurrentPreview() {
       font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
       width: 100% !important;
       height: 100% !important;
-      max-height: 100% !important;
-      overflow: hidden !important;
     }
     .font-mono {
       font-family: 'JetBrains Mono', monospace;
@@ -5797,14 +5788,11 @@ function printCurrentPreview() {
     .print-sheet {
       width: 100% !important;
       max-width: 100% !important;
-      height: 284mm !important;
-      max-height: 284mm !important;
       box-sizing: border-box !important;
       display: flex !important;
       flex-direction: column !important;
       justify-content: space-between !important;
       background: #ffffff !important;
-      overflow: hidden !important;
       page-break-inside: avoid !important;
       page-break-after: avoid !important;
       page-break-before: avoid !important;
