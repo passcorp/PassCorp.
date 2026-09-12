@@ -1,7 +1,7 @@
 {
   "app": "PASS_CORP_QUOTEDESK_PRO",
   "version": "2026.1",
-  "lastUpdated": "2026-09-12T12:20:44.009Z",
+  "lastUpdated": "2026-09-12T12:20:55.078Z",
   "companies": [
     {
       "company": "ABC Corp",
@@ -6909,6 +6909,62 @@
           "shippingCity": "Pune",
           "shippingState": "Maharashtra",
           "shippingPincode": "411062"
+        }
+      ],
+      "quotations": [
+        {
+          "id": "quote-1789215601371",
+          "quoteNumber": "QT-2026-001",
+          "date": "2026-09-12",
+          "validity": "15 Days",
+          "validUntil": "2026-09-27",
+          "deliveryTerms": "Door Delivery",
+          "paymentTerms": "Advance",
+          "taxTerms": "Extra as applicable",
+          "status": "Sent",
+          "customerId": "cust-1789215641499",
+          "customerName": "ABC",
+          "items": [
+            {
+              "id": "qi-1",
+              "name": "Power SD",
+              "description": "Wild Bull Power SD heavy-duty industrial safety shoe with steel toe cap & slip resistant sole.",
+              "hsnCode": "85389000",
+              "quantity": 1,
+              "unit": "PCS",
+              "price": 799,
+              "leadTime": "1-2 Days",
+              "taxRate": 18,
+              "amount": 799,
+              "taxAmount": 143.82,
+              "total": 942.8199999999999,
+              "imageUrl": "assets/products/shoes/power_sd.png"
+            }
+          ],
+          "notes": "Thank you for your business interest. We assure you our highest quality products and prompt support.",
+          "terms": [
+            "Prices are inclusive of standard GST as applicable.",
+            "Quotation is valid for 15 days from the date of issue.",
+            "Delivery timeline: Within 3-5 business days upon PO confirmation."
+          ],
+          "subtotal": 799,
+          "taxableAmount": 799,
+          "totalTax": 143.82,
+          "grandTotal": 942.8199999999999,
+          "billingAddress": "Shop No. 01, Kakade Majestic\nSr No. 524, Jadhavwadi, PCMC",
+          "billingCity": "Pune",
+          "billingState": "Maharashtra",
+          "billingPincode": "411062",
+          "billingGstin": "ABC",
+          "billingPhone": "08237929602",
+          "contactPerson": "ABC",
+          "shippingName": "ABC",
+          "shippingAddress": "Shop No. 01, Kakade Majestic\nSr No. 524, Jadhavwadi, PCMC",
+          "shippingCity": "Pune",
+          "shippingState": "Maharashtra",
+          "shippingPincode": "411062",
+          "shippingGstin": "ABC",
+          "shippingPhone": "08237929602"
         }
       ]
     }
